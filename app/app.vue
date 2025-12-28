@@ -156,6 +156,10 @@ const filteredPapers = computed(() => {
 })
 
 const resultCount = computed(() => filteredPapers.value.length)
+const totalPaperCountRounded = computed(() => {
+  const count = allPapers.value.length
+  return Math.floor(count / 100) * 100
+})
 
 const resetFilters = () => {
   filters.value = {
@@ -187,7 +191,7 @@ const downloadPaper = (filename: string) => {
         <p class="subtitle">Access thousands of free high-quality assessment papers from top schools. Download instantly and start practicing today.</p>
         <div class="hero-stats">
           <div class="stat-item">
-            <span class="stat-value">1,800+</span>
+            <span class="stat-value">{{ totalPaperCountRounded.toLocaleString() }}+</span>
             <span class="stat-label">Papers</span>
           </div>
           <div class="stat-divider"></div>
