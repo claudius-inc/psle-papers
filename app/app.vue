@@ -3,21 +3,56 @@ import { ref, computed, onMounted } from 'vue'
 
 // --- SEO Configuration ---
 useHead({
-  title: 'Free Singapore Primary School Exam Papers | All Levels & Subjects',
+  title: 'Free Singapore Primary School Exam Papers (2025 & 2024) | P1 - P6 Test Papers',
   link: [
     { rel: 'preconnect', href: 'https://fonts.googleapis.com' },
     { rel: 'preconnect', href: 'https://fonts.gstatic.com', crossorigin: '' },
     { rel: 'stylesheet', href: 'https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap' }
   ],
   meta: [
-    { name: 'description', content: 'Access free Singapore primary school exam papers for all levels. Download quality assessment papers for Math, Science, and English. Perfect for PSLE preparation.' },
-    { name: 'keywords', content: 'Singapore primary school exam papers, PSLE practice papers, Primary 1-6 exam papers, Free Singapore school papers, 新加坡小学试卷' },
+    { name: 'description', content: 'Download free 2025 and 2024 Singapore primary school exam papers. Access 2,300+ test papers from top schools for Math, Science, English, and Chinese. Perfect for PSLE and P1-P6 revision.' },
+    { name: 'keywords', content: 'Singapore primary school exam papers 2025, 2024 test papers, free exam papers download, top school papers, PSLE practice papers, P1-P6 exam papers, SA2 SA1 WA papers, Math Science English Chinese, 新加坡小学试卷' },
     // Open Graph
-    { property: 'og:title', content: 'Free Singapore Primary School Exam Papers' },
-    { property: 'og:description', content: 'Download free primary school exam papers for all levels and subjects.' },
-    { property: 'og:type', content: 'website' }
+    { property: 'og:title', content: '2025 & 2024 Free Singapore Primary School Exam Papers' },
+    { property: 'og:description', content: 'Access 2,300+ free primary school exam papers from top Singapore schools. All levels (P1-P6) and subjects (English, Math, Science, Chinese) included.' },
+    { property: 'og:type', content: 'website' },
+    { property: 'og:url', content: 'https://sgexamhub.com' }
   ],
   script: [
+    // Structured Data (FAQ Schema)
+    {
+      type: 'application/ld+json',
+      innerHTML: JSON.stringify({
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "Where can I find free Singapore primary school exam papers for 2024 and 2025?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "You can download free 2024 and 2025 Singapore primary school exam papers at sgexamhub.com. We provide a comprehensive database of papers from top schools for all levels."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Which levels and subjects are covered in the exam papers?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "We provide exam papers for all primary school levels (Primary 1 to Primary 6) and core subjects including English, Mathematics, Science, and Chinese."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Are papers from top schools like Nanyang and Raffles included?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Yes, our collection includes test papers from top Singapore primary schools like Nanyang Primary, Raffles Girls', Henry Park, Catholic High, and more."
+            }
+          }
+        ]
+      })
+    },
     // Google Analytics 4
     {
       src: 'https://www.googletagmanager.com/gtag/js?id=G-7WKP91PV8C',
