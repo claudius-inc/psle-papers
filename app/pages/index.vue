@@ -7,14 +7,6 @@ const { loading, options, fetchData, parseFilename } = usePapers();
 useHead({
   title:
     "Free Singapore Primary School Exam Papers (2025 & 2024) | P1 - P6 Test Papers",
-  link: [
-    { rel: "preconnect", href: "https://fonts.googleapis.com" },
-    { rel: "preconnect", href: "https://fonts.gstatic.com", crossorigin: "" },
-    {
-      rel: "stylesheet",
-      href: "https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap",
-    },
-  ],
   meta: [
     {
       name: "description",
@@ -73,20 +65,6 @@ useHead({
           },
         ],
       }),
-    },
-    // Google Analytics 4
-    {
-      src: "https://www.googletagmanager.com/gtag/js?id=G-7WKP91PV8C",
-      async: true,
-    },
-    {
-      innerHTML: `
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
-        gtag('config', 'G-7WKP91PV8C');
-      `,
-      type: "text/javascript",
     },
   ],
   htmlAttrs: {
