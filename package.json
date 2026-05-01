@@ -7,6 +7,7 @@
     "dev": "nuxt dev",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
+    "seo:sitemap": "node scripts/generate-sitemap.mjs",
     "postinstall": "nuxt prepare"
   },
   "dependencies": {

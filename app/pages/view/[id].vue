@@ -1,17 +1,47 @@
 <script setup lang="ts">
-import { ref, computed, onMounted } from "vue";
+import { computed } from "vue";
 import { useRoute } from "vue-router";
+import type { DropdownData, ParsedPaper } from "~/composables/usePapers";
+import dropdownOptions from "../../../public/json/dropdownOptions.json";
 
 const route = useRoute();
 const filename = route.params.id as string;
-const { loading, fetchData, parseFilename } = usePapers();
 
-const paper = ref<any>(null);
+const options = dropdownOptions as DropdownData;
+const loading = computed(() => false);
 
-onMounted(async () => {
-  await fetchData();
-  paper.value = parseFilename(filename);
-});
+const getName = (category: keyof DropdownData, code: string): string => {
+  const found = options[category]?.find((opt) => opt.code === code);
+  return found ? found.name : code;
+};
+
+const parseFilename = (value: string): ParsedPaper | null => {
+  const parts = value.split("_");
+  if (parts.length !== 5) return null;
+
+  const [levelCode, schoolCode, subjectCode, typeCode, yearCode] = parts as [
+    string,
+    string,
+    string,
+    string,
+    string,
+  ];
+
+  return {
+    filename: value,
+    levelCode,
+    schoolCode,
+    subjectCode,
+    typeCode,
+    yearCode,
+    levelName: getName("Level", levelCode),
+    schoolName: getName("School", schoolCode),
+    subjectName: getName("Subject", subjectCode),
+    typeName: getName("Type", typeCode),
+  };
+};
+
+const paper = computed(() => parseFilename(filename));
 
 const pageTitle = computed(() => {
   if (!paper.value) return "Loading Paper...";
@@ -20,16 +50,15 @@ const pageTitle = computed(() => {
 
 const pdfUrl = computed(() => `/files/${filename}.pdf`);
 
-const downloadPaper = () => {
-  const link = document.createElement("a");
-  link.href = pdfUrl.value;
-  link.download = `${filename}.pdf`;
-  link.click();
-};
-
 useHead({
   title: computed(() => `Viewing: ${pageTitle.value} | SG Exam Hub`),
   meta: [{ name: "robots", content: "noindex, follow" }],
+  link: [
+    {
+      rel: "canonical",
+      href: `https://sgexamhub.com/view/${filename}`,
+    },
+  ],
 });
 </script>
 
@@ -72,7 +101,7 @@ useHead({
         </div>
 
         <div class="nav-right">
-          <button class="download-action" @click="downloadPaper">
+          <a class="download-action" :href="pdfUrl" :download="`${filename}.pdf`">
             <span>Download</span>
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -89,7 +118,7 @@ useHead({
               <polyline points="7 10 12 15 17 10"></polyline>
               <line x1="12" y1="15" x2="12" y2="3"></line>
             </svg>
-          </button>
+          </a>
         </div>
       </div>
     </nav>
@@ -240,6 +269,7 @@ useHead({
   gap: 0.6rem;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   box-shadow: 0 4px 10px -2px rgba(79, 70, 229, 0.3);
+  text-decoration: none;
 }
 
 .download-action:hover {

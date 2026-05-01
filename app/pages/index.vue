@@ -1,7 +1,51 @@
 <script setup lang="ts">
 import { ref, computed, onMounted } from "vue";
+import type { DropdownData, ParsedPaper } from "~/composables/usePapers";
+import rawFileList from "../../public/json/files.json";
+import dropdownOptions from "../../public/json/dropdownOptions.json";
 
 const { loading, options, fetchData, parseFilename } = usePapers();
+
+const featuredOptions = dropdownOptions as DropdownData;
+options.value = featuredOptions;
+
+const getFeaturedName = (category: keyof DropdownData, code: string): string => {
+  const found = featuredOptions[category]?.find((opt) => opt.code === code);
+  return found ? found.name : code;
+};
+
+const parseFeaturedFilename = (filename: string): ParsedPaper | null => {
+  const parts = filename.split("_");
+  if (parts.length !== 5) return null;
+
+  const [levelCode, schoolCode, subjectCode, typeCode, yearCode] = parts as [
+    string,
+    string,
+    string,
+    string,
+    string,
+  ];
+
+  return {
+    filename,
+    levelCode,
+    schoolCode,
+    subjectCode,
+    typeCode,
+    yearCode,
+    levelName: getFeaturedName("Level", levelCode),
+    schoolName: getFeaturedName("School", schoolCode),
+    subjectName: getFeaturedName("Subject", subjectCode),
+    typeName: getFeaturedName("Type", typeCode),
+  };
+};
+
+const featuredPapers = computed(() =>
+  (rawFileList as string[])
+    .slice(0, 12)
+    .map((filename) => parseFeaturedFilename(filename))
+    .filter((p): p is ParsedPaper => p !== null),
+);
 
 // --- SEO Configuration ---
 useHead({
@@ -31,6 +75,7 @@ useHead({
     { property: "og:type", content: "website" },
     { property: "og:url", content: "https://sgexamhub.com" },
   ],
+  link: [{ rel: "canonical", href: "https://sgexamhub.com/" }],
   script: [
     // Structured Data (FAQ Schema)
     {
@@ -126,7 +171,7 @@ const filteredPapers = computed(() => {
 
 const resultCount = computed(() => filteredPapers.value.length);
 const totalPaperCountRounded = computed(() => {
-  const count = allPapers.value.length;
+  const count = (rawFileList as string[]).length;
   return Math.floor(count / 100) * 100;
 });
 
@@ -138,10 +183,6 @@ const resetFilters = () => {
     Type: "0",
     Year: "0",
   };
-};
-
-const viewPaper = (filename: string) => {
-  window.open(`/view/${filename}`, "_blank");
 };
 </script>
 
@@ -367,7 +408,7 @@ const viewPaper = (filename: string) => {
               </div>
             </div>
 
-            <button class="view-btn" @click="viewPaper(paper.filename)">
+            <NuxtLink class="view-btn" :to="`/view/${paper.filename}`">
               View Paper
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -383,15 +424,42 @@ const viewPaper = (filename: string) => {
                 <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
                 <circle cx="12" cy="12" r="3"></circle>
               </svg>
-            </button>
+            </NuxtLink>
           </div>
         </div>
       </div>
     </main>
 
+    <section class="content-wrapper seo-links" aria-labelledby="latest-papers">
+      <div class="seo-links-header">
+        <h2 id="latest-papers">Latest exam papers</h2>
+        <NuxtLink to="/exam-papers">Browse all indexed exam paper pages</NuxtLink>
+      </div>
+      <div class="latest-links">
+        <NuxtLink
+          v-for="paper in featuredPapers"
+          :key="paper.filename"
+          :to="`/view/${paper.filename}`"
+        >
+          {{ paper.yearCode }} {{ paper.levelName }} {{ paper.schoolName }}
+          {{ paper.subjectName }} {{ paper.typeName }}
+        </NuxtLink>
+      </div>
+    </section>
+
     <!-- Footer -->
     <footer>
-      <p>&copy; 2025 Dreamon.im - Singapore Primary School Exam Papers</p>
+      <div class="footer-inner">
+        <p>&copy; 2025 Dreamon.im - Singapore Primary School Exam Papers</p>
+        <nav class="footer-links" aria-label="Helpful Singapore education links">
+          <a href="https://www.moe.gov.sg/" rel="noopener" target="_blank"
+            >Ministry of Education</a
+          >
+          <a href="https://www.seab.gov.sg/" rel="noopener" target="_blank"
+            >Singapore Examinations and Assessment Board</a
+          >
+        </nav>
+      </div>
     </footer>
   </div>
 </template>
@@ -847,6 +915,7 @@ select:focus {
   justify-content: center;
   gap: 0.5rem;
   transition: background-color 0.2s;
+  text-decoration: none;
 }
 
 .view-btn:hover {
@@ -889,6 +958,55 @@ select:focus {
   cursor: pointer;
 }
 
+.seo-links {
+  padding-bottom: 3rem;
+}
+
+.seo-links h2 {
+  color: #0f172a;
+  font-size: 1rem;
+  margin: 0;
+}
+
+.seo-links-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.seo-links-header a {
+  color: #4f46e5;
+  font-size: 0.875rem;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.latest-links {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 0.75rem;
+}
+
+.latest-links a {
+  color: #334155;
+  font-size: 0.875rem;
+  font-weight: 600;
+  line-height: 1.4;
+  text-decoration: none;
+}
+
+.latest-links a:hover {
+  color: #2563eb;
+  text-decoration: underline;
+}
+
+.seo-links-header a:hover {
+  color: #2563eb;
+  text-decoration: underline;
+}
+
 /* Footer */
 footer {
   background-color: white;
@@ -897,6 +1015,35 @@ footer {
   text-align: center;
   color: #94a3b8;
   font-size: 0.875rem;
+}
+
+.footer-inner {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  align-items: center;
+}
+
+.footer-inner p {
+  margin: 0;
+}
+
+.footer-links {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.75rem 1.25rem;
+}
+
+.footer-links a {
+  color: #475569;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.footer-links a:hover {
+  color: #2563eb;
+  text-decoration: underline;
 }
 
 /* Responsive */
@@ -909,6 +1056,10 @@ footer {
   }
   .school-select {
     grid-column: span 1;
+  }
+  .seo-links-header {
+    align-items: flex-start;
+    flex-direction: column;
   }
 }
 </style>
