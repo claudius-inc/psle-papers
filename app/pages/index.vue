@@ -159,7 +159,13 @@ const allPapers = computed(() => {
   if (loading.value) return [];
   return rawFiles.value
     .map((filename) => parseFilename(filename))
-    .filter((p): p is any => p !== null);
+    .filter((p): p is any => p !== null)
+    // Newest first: year desc, then level desc within a year, then school asc.
+    .sort((a, b) => {
+      if (a.yearCode !== b.yearCode) return Number(b.yearCode) - Number(a.yearCode);
+      if (a.levelCode !== b.levelCode) return Number(b.levelCode) - Number(a.levelCode);
+      return a.schoolCode.localeCompare(b.schoolCode);
+    });
 });
 
 const filteredPapers = computed(() => {
@@ -175,6 +181,19 @@ const filteredPapers = computed(() => {
 });
 
 const resultCount = computed(() => filteredPapers.value.length);
+
+// View mode (grid vs list) — persists across page loads via localStorage.
+const viewMode = ref<"grid" | "list">("grid");
+onMounted(() => {
+  const saved = localStorage.getItem("paperViewMode");
+  if (saved === "grid" || saved === "list") viewMode.value = saved;
+});
+const setViewMode = (mode: "grid" | "list") => {
+  viewMode.value = mode;
+  if (typeof localStorage !== "undefined") {
+    localStorage.setItem("paperViewMode", mode);
+  }
+};
 const totalPaperCountRounded = computed(() => {
   const count = (rawFileList as string[]).length;
   return Math.floor(count / 100) * 100;
@@ -378,6 +397,37 @@ const resetFilters = () => {
               Showing <strong>{{ resultCount }}</strong> available papers
             </h2>
           </div>
+          <div class="view-toggle" role="group" aria-label="View mode">
+            <button
+              type="button"
+              class="view-toggle-btn"
+              :class="{ active: viewMode === 'grid' }"
+              :aria-pressed="viewMode === 'grid'"
+              aria-label="Grid view"
+              @click="setViewMode('grid')"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="3" y="3" width="7" height="7"></rect>
+                <rect x="14" y="3" width="7" height="7"></rect>
+                <rect x="3" y="14" width="7" height="7"></rect>
+                <rect x="14" y="14" width="7" height="7"></rect>
+              </svg>
+            </button>
+            <button
+              type="button"
+              class="view-toggle-btn"
+              :class="{ active: viewMode === 'list' }"
+              :aria-pressed="viewMode === 'list'"
+              aria-label="List view"
+              @click="setViewMode('list')"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="4" y1="6" x2="20" y2="6"></line>
+                <line x1="4" y1="12" x2="20" y2="12"></line>
+                <line x1="4" y1="18" x2="20" y2="18"></line>
+              </svg>
+            </button>
+          </div>
         </div>
 
         <div v-if="resultCount === 0" class="empty-state">
@@ -389,7 +439,7 @@ const resetFilters = () => {
           </button>
         </div>
 
-        <div v-else class="papers-grid">
+        <div v-else :class="['papers-container', `papers-${viewMode}`]">
           <div
             v-for="paper in filteredPapers"
             :key="paper.filename"
@@ -801,6 +851,11 @@ select:focus {
   margin-bottom: 2rem;
   padding-bottom: 1rem;
   border-bottom: 1px solid #f1f5f9;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
 }
 
 .results-meta {
@@ -808,6 +863,38 @@ select:focus {
   align-items: center;
   gap: 0.75rem;
   color: #475569;
+}
+
+.view-toggle {
+  display: inline-flex;
+  background: #f1f5f9;
+  border-radius: 10px;
+  padding: 4px;
+  gap: 2px;
+}
+
+.view-toggle-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 34px;
+  border: none;
+  background: transparent;
+  color: #64748b;
+  border-radius: 7px;
+  cursor: pointer;
+  transition: background-color 0.15s, color 0.15s;
+}
+
+.view-toggle-btn:hover {
+  color: #1e293b;
+}
+
+.view-toggle-btn.active {
+  background: white;
+  color: #4f46e5;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.06);
 }
 
 .search-icon {
@@ -825,11 +912,86 @@ select:focus {
   font-weight: 700;
 }
 
-/* Papers Grid */
+/* Papers — grid view */
 .papers-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
   gap: 1.5rem;
+}
+
+/* Papers — list view: full-width horizontal rows */
+.papers-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.papers-list .paper-card {
+  flex-direction: row;
+  align-items: center;
+  padding: 1rem 1.25rem;
+  gap: 1.5rem;
+}
+
+.papers-list .card-header {
+  flex-direction: column;
+  align-items: flex-start;
+  margin-bottom: 0;
+  gap: 0.35rem;
+  flex-shrink: 0;
+  min-width: 70px;
+}
+
+.papers-list .school-name {
+  flex: 1 1 auto;
+  margin: 0;
+  font-size: 1rem;
+}
+
+.papers-list .card-details {
+  flex: 0 0 auto;
+  margin-bottom: 0;
+  display: flex;
+  gap: 1.5rem;
+  font-size: 0.85rem;
+}
+
+.papers-list .detail-row {
+  flex-direction: column;
+  margin: 0;
+  min-width: 70px;
+}
+
+.papers-list .detail-row .label {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: #94a3b8;
+}
+
+.papers-list .view-btn {
+  width: auto;
+  flex-shrink: 0;
+  padding: 0.6rem 1.25rem;
+}
+
+@media (max-width: 640px) {
+  .papers-list .paper-card {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.75rem;
+  }
+  .papers-list .card-header {
+    flex-direction: row;
+    justify-content: space-between;
+    min-width: 0;
+  }
+  .papers-list .card-details {
+    justify-content: space-between;
+  }
+  .papers-list .view-btn {
+    width: 100%;
+  }
 }
 
 .paper-card {
