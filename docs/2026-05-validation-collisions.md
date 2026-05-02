@@ -40,3 +40,8 @@ Each row below is a PDF whose OCR-detected metadata maps to a filename that **al
 | `2_5638_4_1_2021.pdf` → `3_5638_4_1_2021.pdf` | Reverted (auto-rename undone) | First-pass auto-rename took P3→P2 because cover title said "PRIMARY 2", but the class field "3.6" indicates P3. Confirmed: actual level is P3 (P2 paper used by P3 class for review). |
 | `3_5638_4_1_2021.pdf` → `3_5001_4_1_2021.pdf` | Renamed (school correction) | OCR cover says "Anglo-Chinese School (Junior)" = code 5001. Original filename had 5638 (ACS Primary) which is a different school. |
 | `3_5638_4_3_2024.pdf` → `4_5638_4_3_2024.pdf` | Reverted (auto-rename undone) | First-pass auto-rename took P4→P3 because OCR text contains "Primary Three topic" (a reference to a P3 topic recalled in this P4 paper). Cover says "2024 P4 Science", "Class: P4". Confirmed P4. |
+| `4_5001_1_2_2018.pdf` → `4_5001_1_2_2019.pdf` | Reverted (auto-rename undone) | OCR-detected year 2018 was a false positive (likely incidental "founded XXXX" or similar date on cover). Filename year 2019 is correct. |
+| `5_5026_1_2_2018.pdf` → `5_5026_1_2_2019.pdf` | Reverted (auto-rename undone) | Same as above — OCR false positive on year. |
+| `4_1121_3_3_2017.pdf` → `4_1121_3_3_2021.pdf` | Reverted (auto-rename undone) | OCR year 2017 was a false positive (likely picked up from a math problem in the body text). Filename year 2021 is correct. |
+| `5_1073_3_1_2027.pdf` → `5_1073_3_1_2021.pdf` | Reverted (auto-rename undone) | OCR year 2027 is impossible (future). Filename year 2021 is correct. |
+| `6_1077_4_4_2026.pdf` → `6_1077_4_4_2020.pdf` | Reverted (auto-rename undone) | OCR year 2026 is impossible (future). Filename year 2020 is correct. |

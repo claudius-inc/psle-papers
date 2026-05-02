@@ -72,7 +72,14 @@ export const parsePaper = (filename: string): ParsedPaper | null => {
 
 export const allParsedPapers = rawFiles
   .map((filename) => parsePaper(filename))
-  .filter((paper): paper is ParsedPaper => paper !== null);
+  .filter((paper): paper is ParsedPaper => paper !== null)
+  // Newest first: year desc, then level desc (P6 above P1 within a year),
+  // then school code asc as a stable tie-breaker.
+  .sort((a, b) => {
+    if (a.yearCode !== b.yearCode) return Number(b.yearCode) - Number(a.yearCode);
+    if (a.levelCode !== b.levelCode) return Number(b.levelCode) - Number(a.levelCode);
+    return a.schoolCode.localeCompare(b.schoolCode);
+  });
 
 const yearOptions = options.Year.filter((option) => option.code !== "0");
 const levelOptions = options.Level.filter((option) => option.code !== "0");

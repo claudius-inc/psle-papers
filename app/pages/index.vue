@@ -42,9 +42,14 @@ const parseFeaturedFilename = (filename: string): ParsedPaper | null => {
 
 const featuredPapers = computed(() =>
   (rawFileList as string[])
-    .slice(0, 12)
     .map((filename) => parseFeaturedFilename(filename))
-    .filter((p): p is ParsedPaper => p !== null),
+    .filter((p): p is ParsedPaper => p !== null)
+    // Sort newest first by year, then by level desc so P6 surfaces above P1 within a year.
+    .sort((a, b) => {
+      if (a.yearCode !== b.yearCode) return Number(b.yearCode) - Number(a.yearCode);
+      return Number(b.levelCode) - Number(a.levelCode);
+    })
+    .slice(0, 12),
 );
 
 // --- SEO Configuration ---
@@ -450,15 +455,11 @@ const resetFilters = () => {
     <!-- Footer -->
     <footer>
       <div class="footer-inner">
-        <p>&copy; 2025 Dreamon.im - Singapore Primary School Exam Papers</p>
-        <nav class="footer-links" aria-label="Helpful Singapore education links">
-          <a href="https://www.moe.gov.sg/" rel="noopener" target="_blank"
-            >Ministry of Education</a
-          >
-          <a href="https://www.seab.gov.sg/" rel="noopener" target="_blank"
-            >Singapore Examinations and Assessment Board</a
-          >
-        </nav>
+        <p>&copy; 2025 Dreamon.im &ndash; Singapore Primary School Exam Papers</p>
+        <span class="footer-sep" aria-hidden="true">|</span>
+        <a href="https://www.moe.gov.sg/" rel="noopener" target="_blank">Ministry of Education</a>
+        <span class="footer-sep" aria-hidden="true">|</span>
+        <a href="https://www.seab.gov.sg/" rel="noopener" target="_blank" aria-label="Singapore Examinations and Assessment Board">SEAB</a>
       </div>
     </footer>
   </div>
@@ -1019,29 +1020,28 @@ footer {
 
 .footer-inner {
   display: flex;
-  flex-direction: column;
-  gap: 0.75rem;
+  flex-wrap: wrap;
+  justify-content: center;
   align-items: center;
+  gap: 0.5rem 1.25rem;
 }
 
 .footer-inner p {
   margin: 0;
 }
 
-.footer-links {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 0.75rem 1.25rem;
+.footer-sep {
+  color: #cbd5e1;
+  user-select: none;
 }
 
-.footer-links a {
+.footer-inner a {
   color: #475569;
-  font-weight: 600;
+  font-weight: 500;
   text-decoration: none;
 }
 
-.footer-links a:hover {
+.footer-inner a:hover {
   color: #2563eb;
   text-decoration: underline;
 }
