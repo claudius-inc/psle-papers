@@ -376,6 +376,23 @@ const resetFilters = () => {
       </div>
 
       <div v-else>
+        <nav class="quick-browse" aria-label="Quick browse by level">
+          <span class="quick-browse-label">QUICK BROWSE</span>
+          <div class="quick-browse-chips">
+            <NuxtLink to="/" class="chip" exact-active-class="chip-active">
+              <span class="chip-dot" aria-hidden="true"></span>All Papers
+            </NuxtLink>
+            <NuxtLink
+              v-for="level in [6, 5, 4, 3, 2, 1]"
+              :key="level"
+              :to="`/exam-papers/primary-${level}`"
+              class="chip"
+            >
+              <span class="chip-dot" aria-hidden="true"></span>P{{ level }} Papers
+            </NuxtLink>
+          </div>
+        </nav>
+
         <div class="results-header">
           <div class="results-meta">
             <svg
@@ -847,6 +864,67 @@ select:focus {
 }
 
 /* Results Section */
+.quick-browse {
+  margin-bottom: 1.5rem;
+  padding: 1rem 1.25rem;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  background: #ffffff;
+}
+
+.quick-browse-label {
+  display: block;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: #94a3b8;
+  margin-bottom: 0.6rem;
+}
+
+.quick-browse-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.45rem 0.95rem;
+  border-radius: 9999px;
+  border: 1px solid #e2e8f0;
+  background: #ffffff;
+  color: #475569;
+  font-size: 0.875rem;
+  font-weight: 500;
+  text-decoration: none;
+  transition: color 0.15s, background-color 0.15s, border-color 0.15s;
+}
+
+.chip:hover {
+  color: #4f46e5;
+  border-color: #c7d2fe;
+}
+
+.chip-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #c7d2fe;
+}
+
+.chip.chip-active {
+  background: #eef2ff;
+  border-color: #c7d2fe;
+  color: #4338ca;
+  font-weight: 600;
+}
+
+.chip.chip-active .chip-dot {
+  background: #4f46e5;
+}
+
 .results-header {
   margin-bottom: 2rem;
   padding-bottom: 1rem;
