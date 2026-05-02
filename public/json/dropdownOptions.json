@@ -49,6 +49,10 @@
     {
       "code": "4",
       "name": "Science"
+    },
+    {
+      "code": "5",
+      "name": "Higher Chinese"
     }
   ],
   "Type": [
@@ -75,6 +79,10 @@
     {
       "code": "5",
       "name": "WA3"
+    },
+    {
+      "code": "6",
+      "name": "Practice Paper"
     }
   ],
   "Year": [
