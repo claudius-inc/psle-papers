@@ -383,7 +383,7 @@ const resetFilters = () => {
               <span class="chip-dot" aria-hidden="true"></span>All Papers
             </NuxtLink>
             <NuxtLink
-              v-for="level in [6, 5, 4, 3, 2, 1]"
+              v-for="level in [6, 5, 4, 3]"
               :key="level"
               :to="`/exam-papers/primary-${level}`"
               class="chip"
