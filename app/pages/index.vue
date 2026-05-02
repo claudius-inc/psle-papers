@@ -376,7 +376,7 @@ const resetFilters = () => {
       </div>
 
       <div v-else>
-        <nav class="quick-browse" aria-label="Quick browse by level">
+        <nav class="quick-browse" aria-label="Quick browse exam paper indexes">
           <span class="quick-browse-label">QUICK BROWSE</span>
           <div class="quick-browse-chips">
             <NuxtLink to="/" class="chip" exact-active-class="chip-active">
@@ -389,6 +389,9 @@ const resetFilters = () => {
               class="chip"
             >
               <span class="chip-dot" aria-hidden="true"></span>P{{ level }} Papers
+            </NuxtLink>
+            <NuxtLink to="/exam-papers/higher-chinese" class="chip">
+              <span class="chip-dot" aria-hidden="true"></span>Higher Chinese
             </NuxtLink>
           </div>
         </nav>
