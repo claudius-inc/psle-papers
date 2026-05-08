@@ -9,6 +9,7 @@ import {
   trackPaperDownload,
   trackPaperViewClick,
 } from "~/utils/analytics";
+import { buildSocialMeta } from "~/utils/socialSeo";
 
 const featuredOptions = dropdownOptions as DropdownData;
 const route = useRoute();
@@ -246,33 +247,33 @@ const siteNavigationItems = examPaperDirectorySections
     url: `https://sgexamhub.com${link.to}`,
   }));
 
+const homepageSeoTitle =
+  "Free Singapore Primary Exam Papers for 2026 Revision | P2-P6";
+const homepageSeoDescription =
+  "Prepare for 2026 with free Singapore primary school exam papers. Download 2,300+ latest 2025 and 2024 PDFs from top schools for Maths, Science, English and Chinese.";
+const homepageSocialTitle =
+  "Free Singapore Primary School Exam Papers for 2026 Revision";
+const homepageSocialDescription =
+  "Access 2,300+ latest 2025 and 2024 primary school exam paper PDFs from top Singapore schools for P2-P6 revision.";
+
 // --- SEO Configuration ---
 useHead({
-  title:
-    "Free Singapore Primary Exam Papers for 2026 Revision | P2-P6",
+  title: homepageSeoTitle,
   meta: [
     {
       name: "description",
-      content:
-        "Prepare for 2026 with free Singapore primary school exam papers. Download 2,300+ latest 2025 and 2024 PDFs from top schools for Maths, Science, English and Chinese.",
+      content: homepageSeoDescription,
     },
     {
       name: "keywords",
       content:
         "Singapore primary school exam papers 2026 revision, 2025 exam papers, 2024 test papers, free exam papers download, top school papers, PSLE practice papers, P2-P6 exam papers, SA2 SA1 WA papers, Maths Science English Chinese, 新加坡小学试卷",
     },
-    // Open Graph
-    {
-      property: "og:title",
-      content: "Free Singapore Primary School Exam Papers for 2026 Revision",
-    },
-    {
-      property: "og:description",
-      content:
-        "Access 2,300+ latest 2025 and 2024 primary school exam paper PDFs from top Singapore schools for P2-P6 revision.",
-    },
-    { property: "og:type", content: "website" },
-    { property: "og:url", content: "https://sgexamhub.com" },
+    ...buildSocialMeta({
+      title: homepageSocialTitle,
+      description: homepageSocialDescription,
+      url: "https://sgexamhub.com/",
+    }),
   ],
   link: [{ rel: "canonical", href: "https://sgexamhub.com/" }],
   script: [

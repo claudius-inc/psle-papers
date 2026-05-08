@@ -13,6 +13,7 @@ import {
   trackPaperDownload,
   trackPaperViewClick,
 } from "~/utils/analytics";
+import { buildSocialMeta } from "~/utils/socialSeo";
 
 const route = useRoute();
 const slugParam = route.params.slug;
@@ -428,10 +429,11 @@ useHead({
   title: seoRoute.title,
   meta: [
     { name: "description", content: seoRoute.description },
-    { property: "og:title", content: seoRoute.title },
-    { property: "og:description", content: seoRoute.description },
-    { property: "og:type", content: "website" },
-    { property: "og:url", content: pageUrl },
+    ...buildSocialMeta({
+      title: seoRoute.title,
+      description: seoRoute.description,
+      url: pageUrl,
+    }),
   ],
   link: [{ rel: "canonical", href: pageUrl }],
   script: [

@@ -10,6 +10,9 @@ const checks = [
       "isAccessibleForFree",
       "DownloadAction",
       "Search papers",
+      'property="og:site_name" content="SG Exam Hub"',
+      'property="og:image" content="https://sgexamhub.com/og-image.png"',
+      'name="twitter:card" content="summary_large_image"',
       "G-7WKP91PV8C",
     ],
   },
@@ -20,6 +23,8 @@ const checks = [
       'rel="canonical"',
       "CollectionPage",
       "Download PDF",
+      'property="og:image" content="https://sgexamhub.com/og-image.png"',
+      'name="twitter:card" content="summary_large_image"',
     ],
   },
   {
@@ -29,6 +34,7 @@ const checks = [
       'rel="canonical"',
       "CollectionPage",
       "Download PDF",
+      'property="og:image" content="https://sgexamhub.com/og-image.png"',
     ],
   },
   {
@@ -51,11 +57,17 @@ const checks = [
       "More from this school",
       "Same exam type",
       "Exam paper sitemap",
+      'property="og:type" content="article"',
+      'property="og:image" content="https://sgexamhub.com/og-image.png"',
     ],
   },
   {
     path: "/sitemap/",
-    snippets: ["Singapore Primary Exam Paper Sitemap", "Top School Exam Paper Collections"],
+    snippets: [
+      "Singapore Primary Exam Paper Sitemap",
+      "Top School Exam Paper Collections",
+      'property="og:image" content="https://sgexamhub.com/og-image.png"',
+    ],
   },
 ];
 
@@ -89,6 +101,15 @@ try {
   const sitemapCount = (sitemap.match(/<url>/g) || []).length;
   if (sitemapCount < 3000) {
     fail(`Live sitemap has only ${sitemapCount} URLs; expected at least 3000.`);
+  }
+
+  const socialImage = await fetch(`${siteUrl}/og-image.png`, {
+    headers: {
+      "user-agent": "SGExamHubLiveSeoAudit/1.0",
+    },
+  });
+  if (!socialImage.ok) {
+    fail(`Live social preview image is unavailable: ${socialImage.status} ${socialImage.statusText}`);
   }
 
   for (const requiredPath of [

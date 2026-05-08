@@ -9,6 +9,7 @@ import {
   trackPaperOpen,
   trackPaperViewClick,
 } from "~/utils/analytics";
+import { buildSocialMeta } from "~/utils/socialSeo";
 
 const route = useRoute();
 const filename = route.params.id as string;
@@ -260,10 +261,12 @@ useHead({
   meta: [
     { name: "description", content: seoDescription },
     { name: "robots", content: computed(() => (paper.value ? "index, follow" : "noindex, follow")) },
-    { property: "og:title", content: seoTitle },
-    { property: "og:description", content: seoDescription },
-    { property: "og:type", content: "article" },
-    { property: "og:url", content: `https://sgexamhub.com/view/${filename}` },
+    ...buildSocialMeta({
+      title: seoTitle,
+      description: seoDescription,
+      url: `https://sgexamhub.com/view/${filename}`,
+      type: "article",
+    }),
   ],
   link: [
     {

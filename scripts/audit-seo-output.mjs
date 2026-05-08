@@ -11,6 +11,7 @@ const keywordMapPath = "SEO_KEYWORD_MAP.md";
 const homePagePath = "app/pages/index.vue";
 const collectionPagePath = "app/pages/exam-papers/[[slug]].vue";
 const viewerPagePath = "app/pages/view/[id].vue";
+const socialAssetPath = ".output/public/og-image.png";
 
 const decodeHtml = (value) =>
   value
@@ -151,13 +152,24 @@ const requiredSnippets = [
   [".output/public/index.html", "isAccessibleForFree"],
   [".output/public/index.html", "DownloadAction"],
   [".output/public/index.html", "Search papers"],
+  [".output/public/index.html", 'property="og:site_name" content="SG Exam Hub"'],
+  [".output/public/index.html", 'property="og:image" content="https://sgexamhub.com/og-image.png"'],
+  [".output/public/index.html", 'name="twitter:card" content="summary_large_image"'],
   [
     ".output/public/sitemap/index.html",
     "Singapore Primary Exam Paper Sitemap",
   ],
   [
+    ".output/public/sitemap/index.html",
+    'property="og:image" content="https://sgexamhub.com/og-image.png"',
+  ],
+  [
     ".output/public/exam-papers/2025-primary-6-mathematics/index.html",
     "2025 P6 Maths Exam Papers",
+  ],
+  [
+    ".output/public/exam-papers/2025-primary-6-mathematics/index.html",
+    'name="twitter:card" content="summary_large_image"',
   ],
   [
     ".output/public/exam-papers/2025-primary-6-sa2/index.html",
@@ -199,6 +211,14 @@ const requiredSnippets = [
   [".output/public/view/6_1073_3_4_2025/index.html", "More from this school"],
   [".output/public/view/6_1073_3_4_2025/index.html", "Same exam type"],
   [".output/public/view/6_1073_3_4_2025/index.html", "Exam paper sitemap"],
+  [
+    ".output/public/view/6_1073_3_4_2025/index.html",
+    'property="og:type" content="article"',
+  ],
+  [
+    ".output/public/view/6_1073_3_4_2025/index.html",
+    'property="og:image" content="https://sgexamhub.com/og-image.png"',
+  ],
 ];
 
 for (const [file, snippet] of requiredSnippets) {
@@ -232,6 +252,9 @@ if (jsonLdFailures.length) {
 if (missingLinks.length) {
   fail(`Missing internal links: ${missingLinks.length}`);
   for (const link of missingLinks.slice(0, 20)) console.error(link);
+}
+if (!existsSync(socialAssetPath)) {
+  fail("Generated social preview image is missing.");
 }
 if (sitemapCount !== htmlFiles.length) {
   fail(`Sitemap URL count ${sitemapCount} does not match generated HTML count ${htmlFiles.length}`);
@@ -277,9 +300,10 @@ for (const snippet of [
   "trackHomePaperView",
   "trackHomePaperDownload",
   "search_query",
+  "buildSocialMeta",
 ]) {
   if (!homePage.includes(snippet)) {
-    fail(`Homepage is missing paper search snippet: ${snippet}.`);
+    fail(`Homepage is missing expected source snippet: ${snippet}.`);
   }
 }
 for (const snippet of [
@@ -293,6 +317,7 @@ for (const snippet of [
   "index_search",
   "Search papers",
   "search_query",
+  "buildSocialMeta",
 ]) {
   if (!collectionPage.includes(snippet)) {
     fail(`Collection page is missing analytics attribution snippet: ${snippet}.`);
@@ -306,6 +331,7 @@ for (const snippet of [
   "trackViewerRelatedPaperView",
   "target_paper_id",
   "related_section",
+  "buildSocialMeta",
 ]) {
   if (!viewerPage.includes(snippet)) {
     fail(`Viewer page is missing analytics attribution snippet: ${snippet}.`);

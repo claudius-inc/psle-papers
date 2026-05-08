@@ -4,8 +4,11 @@ import {
   seoRoutes,
   type PaperSeoRoute,
 } from "~/utils/paperSeo";
+import { buildSocialMeta, siteUrl } from "~/utils/socialSeo";
 
-const siteUrl = "https://sgexamhub.com";
+const sitemapSeoTitle = "SG Exam Hub Sitemap | Singapore Primary Exam Paper Directory";
+const sitemapSeoDescription =
+  "Browse the SG Exam Hub sitemap for Singapore primary school exam papers by year, level, subject, assessment type, school and latest PDF papers.";
 
 const routeLabel = (route: PaperSeoRoute) =>
   route.title.replace(/\s+\|\s+SG Exam Hub$/, "");
@@ -110,17 +113,21 @@ const latestPaperLinks = allParsedPapers.slice(0, 80).map((paper) => ({
 }));
 
 useHead({
-  title: "SG Exam Hub Sitemap | Singapore Primary Exam Paper Directory",
+  title: sitemapSeoTitle,
   meta: [
     {
       name: "description",
-      content:
-        "Browse the SG Exam Hub sitemap for Singapore primary school exam papers by year, level, subject, assessment type, school and latest PDF papers.",
+      content: sitemapSeoDescription,
     },
     {
       name: "robots",
       content: "index, follow",
     },
+    ...buildSocialMeta({
+      title: sitemapSeoTitle,
+      description: sitemapSeoDescription,
+      url: `${siteUrl}/sitemap`,
+    }),
   ],
   link: [{ rel: "canonical", href: `${siteUrl}/sitemap` }],
   script: [
