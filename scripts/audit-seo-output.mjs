@@ -125,6 +125,11 @@ const collectionPage = existsSync(collectionPagePath)
   ? readFileSync(collectionPagePath, "utf8")
   : "";
 const sitemapCount = (sitemap.match(/<url>/g) || []).length;
+const sitemapLastmods = [...sitemap.matchAll(/<lastmod>([^<]+)<\/lastmod>/g)].map(
+  (match) => match[1],
+);
+const uniqueSitemapLastmods = new Set(sitemapLastmods);
+const today = new Date().toISOString().slice(0, 10);
 const keywordMapPaths = [
   ...new Set(
     [...keywordMap.matchAll(/`(\/[^`\s]+)`/g)]
@@ -219,6 +224,15 @@ if (missingLinks.length) {
 }
 if (sitemapCount !== htmlFiles.length) {
   fail(`Sitemap URL count ${sitemapCount} does not match generated HTML count ${htmlFiles.length}`);
+}
+if (sitemapLastmods.length !== sitemapCount) {
+  fail(`Sitemap lastmod count ${sitemapLastmods.length} does not match URL count ${sitemapCount}`);
+}
+if ([...uniqueSitemapLastmods].some((date) => !/^\d{4}-\d{2}-\d{2}$/.test(date))) {
+  fail("Sitemap contains a malformed lastmod date.");
+}
+if (uniqueSitemapLastmods.size === 1 && uniqueSitemapLastmods.has(today)) {
+  fail("Sitemap lastmod dates all use the current build date.");
 }
 if (!sitemap.includes("https://sgexamhub.com/sitemap")) {
   fail("Sitemap is missing the HTML sitemap page.");

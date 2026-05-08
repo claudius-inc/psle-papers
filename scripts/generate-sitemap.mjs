@@ -1,8 +1,80 @@
-import { readFileSync, writeFileSync } from "node:fs";
+import { execFileSync } from "node:child_process";
+import { existsSync, readFileSync, statSync, writeFileSync } from "node:fs";
 
 const siteUrl = "https://sgexamhub.com";
 const files = JSON.parse(readFileSync("public/json/files.json", "utf8"));
 const options = JSON.parse(readFileSync("public/json/dropdownOptions.json", "utf8"));
+const today = new Date().toISOString().slice(0, 10);
+
+const toIsoDate = (date) => date.toISOString().slice(0, 10);
+
+const getGitLastModifiedDates = () => {
+  const dates = new Map();
+
+  try {
+    const output = execFileSync(
+      "git",
+      [
+        "log",
+        "--format=@@date:%cs",
+        "--name-only",
+        "--",
+        "app",
+        "public/files",
+        "public/json/files.json",
+        "public/json/dropdownOptions.json",
+        "scripts/generate-sitemap.mjs",
+      ],
+      { encoding: "utf8" },
+    );
+
+    let currentDate = "";
+    for (const line of output.split("\n")) {
+      if (line.startsWith("@@date:")) {
+        currentDate = line.replace("@@date:", "").trim();
+        continue;
+      }
+      const path = line.trim();
+      if (!path || dates.has(path)) continue;
+      dates.set(path, currentDate);
+    }
+  } catch {
+    // Fall back to filesystem mtimes when git history is unavailable.
+  }
+
+  return dates;
+};
+
+const gitLastModifiedDates = getGitLastModifiedDates();
+
+const getPathLastModified = (path) => {
+  const gitDate = gitLastModifiedDates.get(path);
+  if (gitDate) return gitDate;
+  if (existsSync(path)) return toIsoDate(statSync(path).mtime);
+  return today;
+};
+
+const paperLastModified = new Map(
+  files.map((filename) => [
+    filename,
+    getPathLastModified(`public/files/${filename}.pdf`),
+  ]),
+);
+
+const staticLastModified = [
+  "app/app.vue",
+  "app/pages/index.vue",
+  "app/pages/exam-papers/[[slug]].vue",
+  "app/pages/sitemap.vue",
+  "app/pages/view/[id].vue",
+  "app/utils/paperSeo.ts",
+  "public/json/files.json",
+  "public/json/dropdownOptions.json",
+  "scripts/generate-sitemap.mjs",
+]
+  .map((path) => getPathLastModified(path))
+  .sort()
+  .at(-1) || today;
 
 const slugify = (value) =>
   value
@@ -29,6 +101,30 @@ const hasPapers = ({ year, levelCode, subjectCode, typeCode, schoolCode }) =>
     return true;
   });
 
+const paperMatchesRoute = (
+  filename,
+  { year, levelCode, subjectCode, typeCode, schoolCode },
+) => {
+  const [paperLevel, paperSchool, paperSubject, paperType, paperYear] =
+    filename.split("_");
+  if (year && paperYear !== year) return false;
+  if (levelCode && paperLevel !== levelCode) return false;
+  if (subjectCode && paperSubject !== subjectCode) return false;
+  if (typeCode && paperType !== typeCode) return false;
+  if (schoolCode && paperSchool !== schoolCode) return false;
+  return true;
+};
+
+const getRouteLastModified = (route) => {
+  if (route.lastmod) return route.lastmod;
+  const matchingDates = files
+    .filter((filename) => paperMatchesRoute(filename, route))
+    .map((filename) => paperLastModified.get(filename) || staticLastModified)
+    .sort();
+
+  return matchingDates.at(-1) || staticLastModified;
+};
+
 const paperViewRoutes = files
   .filter((filename) => filename.split("_").length === 5)
   .sort((a, b) => {
@@ -42,11 +138,12 @@ const paperViewRoutes = files
     path: `/view/${filename}`,
     priority: "0.5",
     changefreq: "monthly",
+    lastmod: paperLastModified.get(filename) || staticLastModified,
   }));
 
 const routeEntries = [
-  { path: "/", priority: "1.0" },
-  { path: "/sitemap", priority: "0.7" },
+  { path: "/", priority: "1.0", lastmod: staticLastModified },
+  { path: "/sitemap", priority: "0.7", lastmod: staticLastModified },
   { path: "/exam-papers", priority: "0.9" },
   ...years.map((year) => ({
     path: `/exam-papers/${year.code}`,
@@ -242,12 +339,11 @@ const routeEntries = [
   ...paperViewRoutes,
 ].filter((route) => route.path === "/" || route.path === "/exam-papers" || hasPapers(route));
 
-const today = new Date().toISOString().slice(0, 10);
 const urls = routeEntries
   .map(
     (route) => `  <url>
     <loc>${siteUrl}${route.path}</loc>
-    <lastmod>${today}</lastmod>
+    <lastmod>${getRouteLastModified(route)}</lastmod>
     <changefreq>${route.changefreq || "weekly"}</changefreq>
     <priority>${route.priority}</priority>
   </url>`,
