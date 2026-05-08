@@ -160,12 +160,24 @@ const examPaperDirectorySections = [
         to: "/exam-papers/school-nanyang-primary-school",
       },
       {
+        label: "Nanyang Primary P6 Maths Exam Papers",
+        to: "/exam-papers/primary-6-mathematics-school-nanyang-primary-school",
+      },
+      {
+        label: "Nanyang Primary P6 Science Exam Papers",
+        to: "/exam-papers/primary-6-science-school-nanyang-primary-school",
+      },
+      {
         label: "2025 Nanyang Primary School Exam Papers",
         to: "/exam-papers/2025-school-nanyang-primary-school",
       },
       {
         label: "Henry Park Primary School Exam Papers",
         to: "/exam-papers/school-henry-park-primary-school",
+      },
+      {
+        label: "Henry Park Primary P6 Maths Exam Papers",
+        to: "/exam-papers/primary-6-mathematics-school-henry-park-primary-school",
       },
       {
         label: "2025 Henry Park Primary School Exam Papers",

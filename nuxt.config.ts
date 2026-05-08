@@ -136,6 +136,33 @@ const seoIndexRoutes = [
     ),
   ),
   ...levels.flatMap((level) =>
+    subjects.flatMap((subject) =>
+      schools.map((school) => ({
+        path: `/exam-papers/${slugify(level.name)}-${slugify(
+          subject.name,
+        )}-school-${slugify(school.name)}`,
+        levelCode: level.code,
+        subjectCode: subject.code,
+        schoolCode: school.code,
+      })),
+    ),
+  ),
+  ...years.flatMap((year) =>
+    levels.flatMap((level) =>
+      subjects.flatMap((subject) =>
+        schools.map((school) => ({
+          path: `/exam-papers/${year.code}-${slugify(level.name)}-${slugify(
+            subject.name,
+          )}-school-${slugify(school.name)}`,
+          year: year.code,
+          levelCode: level.code,
+          subjectCode: subject.code,
+          schoolCode: school.code,
+        })),
+      ),
+    ),
+  ),
+  ...levels.flatMap((level) =>
     subjects.map((subject) => ({
       path: `/exam-papers/${slugify(level.name)}-${slugify(subject.name)}`,
       levelCode: level.code,

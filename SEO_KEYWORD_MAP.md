@@ -55,9 +55,13 @@ Use this map with Google Search Console after deployment. The goal is to match e
 | --- | --- | --- | --- |
 | raffles girls primary school exam papers | `/exam-papers/school-raffles-girls-primary-school` | School-specific papers | CTR, downloads |
 | nanyang primary school exam papers | `/exam-papers/school-nanyang-primary-school` | School-specific papers | CTR, downloads |
+| nanyang primary p6 maths exam papers | `/exam-papers/primary-6-mathematics-school-nanyang-primary-school` | School and subject-specific practice | CTR, paper downloads |
+| nanyang primary p6 science exam papers | `/exam-papers/primary-6-science-school-nanyang-primary-school` | School and subject-specific practice | CTR, paper downloads |
 | henry park primary school exam papers | `/exam-papers/school-henry-park-primary-school` | School-specific papers | CTR, downloads |
+| henry park primary p6 maths exam papers | `/exam-papers/primary-6-mathematics-school-henry-park-primary-school` | School and subject-specific practice | CTR, paper downloads |
 | ai tong school exam papers | `/exam-papers/school-ai-tong-school` | School-specific papers | CTR, downloads |
 | nan hua primary school exam papers | `/exam-papers/school-nan-hua-primary-school` | School-specific papers | CTR, downloads |
+| nan hua primary p6 science exam papers | `/exam-papers/primary-6-science-school-nan-hua-primary-school` | School and subject-specific practice | CTR, paper downloads |
 | rosyth school exam papers | `/exam-papers/school-rosyth-school` | School-specific papers | CTR, downloads |
 
 ## GSC Review Workflow

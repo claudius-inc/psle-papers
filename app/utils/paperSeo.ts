@@ -285,6 +285,37 @@ export const seoRoutes: PaperSeoRoute[] = [
     ),
   ),
   ...levelOptions.flatMap((level) =>
+    subjectOptions.flatMap((subject) =>
+      schoolOptions.map((school) =>
+        buildRoute({
+          slug: `${slugify(level.name)}-${slugify(subject.name)}-school-${slugify(
+            school.name,
+          )}`,
+          levelCode: level.code,
+          subjectCode: subject.code,
+          schoolCode: school.code,
+        }),
+      ),
+    ),
+  ),
+  ...yearOptions.flatMap((year) =>
+    levelOptions.flatMap((level) =>
+      subjectOptions.flatMap((subject) =>
+        schoolOptions.map((school) =>
+          buildRoute({
+            slug: `${year.code}-${slugify(level.name)}-${slugify(
+              subject.name,
+            )}-school-${slugify(school.name)}`,
+            year: year.code,
+            levelCode: level.code,
+            subjectCode: subject.code,
+            schoolCode: school.code,
+          }),
+        ),
+      ),
+    ),
+  ),
+  ...levelOptions.flatMap((level) =>
     subjectOptions.map((subject) =>
       buildRoute({
         slug: `${slugify(level.name)}-${slugify(subject.name)}`,
