@@ -74,6 +74,8 @@ const homeItemListElements = computed(() =>
         "@type": "LearningResource",
         name: `${paper.yearCode} ${paper.levelName} ${paper.schoolName} ${paper.subjectName} ${paper.typeName}`,
         learningResourceType: "Exam paper",
+        isAccessibleForFree: true,
+        inLanguage: "en-SG",
         educationalLevel: paper.levelName,
         about: paper.subjectName,
         url: `https://sgexamhub.com/view/${paper.filename}`,
@@ -81,7 +83,18 @@ const homeItemListElements = computed(() =>
           "@type": "MediaObject",
           contentUrl: `https://sgexamhub.com/files/${paper.filename}.pdf`,
           encodingFormat: "application/pdf",
+          name: `${paper.yearCode} ${paper.levelName} ${paper.schoolName} ${paper.subjectName} ${paper.typeName} PDF`,
         },
+        potentialAction: [
+          {
+            "@type": "ViewAction",
+            target: `https://sgexamhub.com/view/${paper.filename}`,
+          },
+          {
+            "@type": "DownloadAction",
+            target: `https://sgexamhub.com/files/${paper.filename}.pdf`,
+          },
+        ],
       },
     })),
 );
@@ -272,6 +285,7 @@ useHead({
             name: "SG Exam Hub",
             alternateName: "Singapore Exam Hub",
             url: "https://sgexamhub.com/",
+            inLanguage: "en-SG",
             description:
               "Free Singapore primary school exam papers for P2 to P6 English, Maths, Science, Chinese and Higher Chinese.",
             hasPart: siteNavigationItems,

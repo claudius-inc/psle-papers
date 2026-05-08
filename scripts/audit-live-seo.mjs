@@ -7,6 +7,8 @@ const checks = [
       "Free Singapore Primary Exam Papers for 2026 Revision",
       "SiteNavigationElement",
       "Primary 6 Maths Exam Papers",
+      "isAccessibleForFree",
+      "DownloadAction",
       "G-7WKP91PV8C",
     ],
   },

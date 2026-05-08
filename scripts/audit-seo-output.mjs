@@ -142,6 +142,8 @@ const requiredSnippets = [
   [".output/public/index.html", "Free Singapore Primary Exam Papers for 2026 Revision"],
   [".output/public/index.html", "SiteNavigationElement"],
   [".output/public/index.html", "Primary 6 Maths Exam Papers"],
+  [".output/public/index.html", "isAccessibleForFree"],
+  [".output/public/index.html", "DownloadAction"],
   [
     ".output/public/sitemap/index.html",
     "Singapore Primary Exam Paper Sitemap",
