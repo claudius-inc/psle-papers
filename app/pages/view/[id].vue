@@ -215,8 +215,44 @@ const sameExamTypePapers = computed(() => {
     .slice(0, 5);
 });
 
+const viewerAnalyticsContext = computed(() => {
+  if (!paper.value) return {};
+
+  return {
+    year: paper.value.yearCode,
+    level: readableLevel.value || paper.value.levelName,
+    subject: readableSubject.value || paper.value.subjectName,
+    exam_type: paper.value.typeName,
+    school: paper.value.schoolName,
+    page_path: `/view/${filename}`,
+  };
+});
+const relatedPaperAnalyticsContext = (item: ParsedPaper, section: string) => ({
+  ...viewerAnalyticsContext.value,
+  related_section: section,
+  target_paper_id: item.filename,
+  target_year: item.yearCode,
+  target_level: item.levelName.replace(/^P([1-6])$/, "Primary $1"),
+  target_subject: item.subjectName === "Mathematics" ? "Maths" : item.subjectName,
+  target_exam_type: item.typeName,
+  target_school: item.schoolName,
+});
+const trackViewerPaperDownload = (source: string) => {
+  trackPaperDownload(filename, source, viewerAnalyticsContext.value);
+};
+const trackViewerPaperOpen = (source: string) => {
+  trackPaperOpen(filename, source, viewerAnalyticsContext.value);
+};
+const trackViewerRelatedPaperView = (item: ParsedPaper, section: string) => {
+  trackPaperViewClick(
+    item.filename,
+    `viewer_${section}`,
+    relatedPaperAnalyticsContext(item, section),
+  );
+};
+
 onMounted(() => {
-  if (paper.value) trackPaperOpen(filename, "viewer_page");
+  if (paper.value) trackViewerPaperOpen("viewer_page");
 });
 
 useHead({
@@ -333,7 +369,7 @@ useHead({
             class="download-action"
             :href="pdfUrl"
             :download="downloadName"
-            @click="trackPaperDownload(filename, 'viewer_top')"
+            @click="trackViewerPaperDownload('viewer_top')"
           >
             <span>Download</span>
             <svg
@@ -408,7 +444,7 @@ useHead({
               class="primary-download"
               :href="pdfUrl"
               :download="downloadName"
-              @click="trackPaperDownload(filename, 'viewer_panel')"
+              @click="trackViewerPaperDownload('viewer_panel')"
             >
               Download PDF
             </a>
@@ -417,7 +453,7 @@ useHead({
               :href="pdfUrl"
               target="_blank"
               rel="noopener"
-              @click="trackPaperOpen(filename, 'viewer_open_new_tab')"
+              @click="trackViewerPaperOpen('viewer_open_new_tab')"
             >
               Open in new tab
             </a>
@@ -440,7 +476,7 @@ useHead({
               v-for="item in relatedPapers"
               :key="item.filename"
               :to="`/view/${item.filename}`"
-              @click="trackPaperViewClick(item.filename, 'viewer_related')"
+              @click="trackViewerRelatedPaperView(item, 'related')"
             >
               <span>{{ item.yearCode }} {{ item.schoolName }}</span>
               <small>{{ item.typeName }}</small>
@@ -455,7 +491,7 @@ useHead({
               v-for="item in sameSchoolPapers"
               :key="item.filename"
               :to="`/view/${item.filename}`"
-              @click="trackPaperViewClick(item.filename, 'viewer_same_school')"
+              @click="trackViewerRelatedPaperView(item, 'same_school')"
             >
               <span>{{ item.yearCode }} {{ item.subjectName }}</span>
               <small>{{ item.typeName }}</small>
@@ -470,7 +506,7 @@ useHead({
               v-for="item in sameExamTypePapers"
               :key="item.filename"
               :to="`/view/${item.filename}`"
-              @click="trackPaperViewClick(item.filename, 'viewer_same_exam_type')"
+              @click="trackViewerRelatedPaperView(item, 'same_exam_type')"
             >
               <span>{{ item.yearCode }} {{ item.schoolName }}</span>
               <small>{{ item.typeName }}</small>

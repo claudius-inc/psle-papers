@@ -10,6 +10,7 @@ const engagementPath = "app/composables/useEngagementTracking.ts";
 const keywordMapPath = "SEO_KEYWORD_MAP.md";
 const homePagePath = "app/pages/index.vue";
 const collectionPagePath = "app/pages/exam-papers/[[slug]].vue";
+const viewerPagePath = "app/pages/view/[id].vue";
 
 const decodeHtml = (value) =>
   value
@@ -125,6 +126,9 @@ const keywordMap = existsSync(keywordMapPath)
 const homePage = existsSync(homePagePath) ? readFileSync(homePagePath, "utf8") : "";
 const collectionPage = existsSync(collectionPagePath)
   ? readFileSync(collectionPagePath, "utf8")
+  : "";
+const viewerPage = existsSync(viewerPagePath)
+  ? readFileSync(viewerPagePath, "utf8")
   : "";
 const sitemapCount = (sitemap.match(/<url>/g) || []).length;
 const sitemapLastmods = [...sitemap.matchAll(/<lastmod>([^<]+)<\/lastmod>/g)].map(
@@ -292,6 +296,19 @@ for (const snippet of [
 ]) {
   if (!collectionPage.includes(snippet)) {
     fail(`Collection page is missing analytics attribution snippet: ${snippet}.`);
+  }
+}
+for (const snippet of [
+  "viewerAnalyticsContext",
+  "relatedPaperAnalyticsContext",
+  "trackViewerPaperDownload",
+  "trackViewerPaperOpen",
+  "trackViewerRelatedPaperView",
+  "target_paper_id",
+  "related_section",
+]) {
+  if (!viewerPage.includes(snippet)) {
+    fail(`Viewer page is missing analytics attribution snippet: ${snippet}.`);
   }
 }
 for (const eventName of ["page_engaged_time", "page_scroll_depth"]) {
