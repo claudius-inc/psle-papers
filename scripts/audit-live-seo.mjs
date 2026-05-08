@@ -43,6 +43,8 @@ const checks = [
       'content="index, follow"',
       "LearningResource",
       "Download PDF",
+      "More from this school",
+      "Same exam type",
       "Exam paper sitemap",
     ],
   },

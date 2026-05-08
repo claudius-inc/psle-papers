@@ -134,6 +134,14 @@ const indexLinks = computed(() => {
       to: `/exam-papers/${paper.value.yearCode}-${levelSlug}-school-${schoolSlug}`,
     },
     {
+      label: `${levelLabel} ${readableSubject.value} ${paper.value.schoolName}`,
+      to: `/exam-papers/${levelSlug}-${subjectSlug}-school-${schoolSlug}`,
+    },
+    {
+      label: `${paper.value.yearCode} ${levelLabel} ${readableSubject.value} ${paper.value.schoolName}`,
+      to: `/exam-papers/${paper.value.yearCode}-${levelSlug}-${subjectSlug}-school-${schoolSlug}`,
+    },
+    {
       label: `${levelLabel} ${readableSubject.value} papers`,
       to: `/exam-papers/${levelSlug}-${subjectSlug}`,
     },
@@ -184,6 +192,27 @@ const relatedPapers = computed(() => {
         item.subjectCode === paper.value!.subjectCode,
     )
     .slice(0, 6);
+});
+
+const sameSchoolPapers = computed(() => {
+  if (!paper.value) return [];
+
+  return allParsedPapers
+    .filter((item) => item.filename !== filename)
+    .filter((item) => item.schoolCode === paper.value!.schoolCode)
+    .filter((item) => item.levelCode === paper.value!.levelCode)
+    .slice(0, 5);
+});
+
+const sameExamTypePapers = computed(() => {
+  if (!paper.value) return [];
+
+  return allParsedPapers
+    .filter((item) => item.filename !== filename)
+    .filter((item) => item.typeCode === paper.value!.typeCode)
+    .filter((item) => item.levelCode === paper.value!.levelCode)
+    .filter((item) => item.subjectCode === paper.value!.subjectCode)
+    .slice(0, 5);
 });
 
 onMounted(() => {
@@ -375,7 +404,7 @@ useHead({
               :href="pdfUrl"
               target="_blank"
               rel="noopener"
-              @click="trackPaperDownload(filename, 'viewer_open_new_tab')"
+              @click="trackPaperOpen(filename, 'viewer_open_new_tab')"
             >
               Open in new tab
             </a>
@@ -399,6 +428,36 @@ useHead({
               :key="item.filename"
               :to="`/view/${item.filename}`"
               @click="trackPaperViewClick(item.filename, 'viewer_related')"
+            >
+              <span>{{ item.yearCode }} {{ item.schoolName }}</span>
+              <small>{{ item.typeName }}</small>
+            </NuxtLink>
+          </div>
+        </section>
+
+        <section v-if="sameSchoolPapers.length" class="panel-card">
+          <h2>More from this school</h2>
+          <div class="related-paper-links">
+            <NuxtLink
+              v-for="item in sameSchoolPapers"
+              :key="item.filename"
+              :to="`/view/${item.filename}`"
+              @click="trackPaperViewClick(item.filename, 'viewer_same_school')"
+            >
+              <span>{{ item.yearCode }} {{ item.subjectName }}</span>
+              <small>{{ item.typeName }}</small>
+            </NuxtLink>
+          </div>
+        </section>
+
+        <section v-if="sameExamTypePapers.length" class="panel-card">
+          <h2>Same exam type</h2>
+          <div class="related-paper-links">
+            <NuxtLink
+              v-for="item in sameExamTypePapers"
+              :key="item.filename"
+              :to="`/view/${item.filename}`"
+              @click="trackPaperViewClick(item.filename, 'viewer_same_exam_type')"
             >
               <span>{{ item.yearCode }} {{ item.schoolName }}</span>
               <small>{{ item.typeName }}</small>

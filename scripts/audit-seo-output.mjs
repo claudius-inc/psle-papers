@@ -176,6 +176,8 @@ const requiredSnippets = [
   [".output/public/view/6_1073_3_4_2025/index.html", "LearningResource"],
   [".output/public/view/6_1073_3_4_2025/index.html", 'content="index, follow"'],
   [".output/public/view/6_1073_3_4_2025/index.html", "Download PDF"],
+  [".output/public/view/6_1073_3_4_2025/index.html", "More from this school"],
+  [".output/public/view/6_1073_3_4_2025/index.html", "Same exam type"],
   [".output/public/view/6_1073_3_4_2025/index.html", "Exam paper sitemap"],
 ];
 
