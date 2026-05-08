@@ -269,6 +269,10 @@ for (const snippet of [
   "trackPaperSearch",
   "paper_search",
   "Search papers",
+  "homeAnalyticsContext",
+  "trackHomePaperView",
+  "trackHomePaperDownload",
+  "search_query",
 ]) {
   if (!homePage.includes(snippet)) {
     fail(`Homepage is missing paper search snippet: ${snippet}.`);

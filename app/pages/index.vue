@@ -450,6 +450,24 @@ const trackPaperSearch = () => {
 const handlePaperSearchInput = () => {
   visibleLimit.value = 60;
 };
+const selectedFilterName = (category: keyof DropdownData, code: string) =>
+  code === "0" ? undefined : getFeaturedName(category, code);
+const homeAnalyticsContext = computed(() => ({
+  result_count: resultCount.value,
+  visible_count: visiblePapers.value.length,
+  search_query: paperSearchQuery.value.trim() || undefined,
+  level: selectedFilterName("Level", filters.value.Level),
+  subject: selectedFilterName("Subject", filters.value.Subject),
+  year: selectedFilterName("Year", filters.value.Year),
+  exam_type: selectedFilterName("Type", filters.value.Type),
+  school: selectedFilterName("School", filters.value.School),
+}));
+const trackHomePaperView = (filename: string) => {
+  trackPaperViewClick(filename, "home_results", homeAnalyticsContext.value);
+};
+const trackHomePaperDownload = (filename: string) => {
+  trackPaperDownload(filename, "home_results", homeAnalyticsContext.value);
+};
 
 // View mode (grid vs list) — persists across page loads via localStorage.
 const viewMode = ref<"grid" | "list">("grid");
@@ -795,7 +813,7 @@ const resetFilters = () => {
               <NuxtLink
                 class="view-btn"
                 :to="`/view/${paper.filename}`"
-                @click="trackPaperViewClick(paper.filename, 'home_results')"
+                @click="trackHomePaperView(paper.filename)"
               >
                 View Paper
                 <svg
@@ -817,7 +835,7 @@ const resetFilters = () => {
                 class="download-btn"
                 :href="`/files/${paper.filename}.pdf`"
                 :download="`${paper.yearCode}-${paper.levelName}-${paper.subjectName}-${paper.typeName}-${paper.schoolName}.pdf`"
-                @click="trackPaperDownload(paper.filename, 'home_results')"
+                @click="trackHomePaperDownload(paper.filename)"
               >
                 Download PDF
               </a>
