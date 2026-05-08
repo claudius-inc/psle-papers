@@ -256,6 +256,8 @@ useHead({
             name: pageTitle.value,
             description: seoDescription.value,
             learningResourceType: "Exam paper",
+            isAccessibleForFree: true,
+            inLanguage: "en-SG",
             educationalLevel: paper.value?.levelName,
             about: paper.value?.subjectName,
             provider: {
@@ -268,7 +270,18 @@ useHead({
               "@type": "MediaObject",
               contentUrl: `https://sgexamhub.com/files/${filename}.pdf`,
               encodingFormat: "application/pdf",
+              name: `${pageTitle.value} PDF`,
             },
+            potentialAction: [
+              {
+                "@type": "ViewAction",
+                target: `https://sgexamhub.com/view/${filename}`,
+              },
+              {
+                "@type": "DownloadAction",
+                target: `https://sgexamhub.com/files/${filename}.pdf`,
+              },
+            ],
           },
         ]),
       ),

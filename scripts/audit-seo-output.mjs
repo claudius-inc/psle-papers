@@ -183,6 +183,8 @@ const requiredSnippets = [
     "Raffles Girls",
   ],
   [".output/public/view/6_1073_3_4_2025/index.html", "LearningResource"],
+  [".output/public/view/6_1073_3_4_2025/index.html", "isAccessibleForFree"],
+  [".output/public/view/6_1073_3_4_2025/index.html", "DownloadAction"],
   [".output/public/view/6_1073_3_4_2025/index.html", 'content="index, follow"'],
   [".output/public/view/6_1073_3_4_2025/index.html", "Download PDF"],
   [".output/public/view/6_1073_3_4_2025/index.html", "More from this school"],

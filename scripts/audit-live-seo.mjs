@@ -42,6 +42,8 @@ const checks = [
     snippets: [
       'content="index, follow"',
       "LearningResource",
+      "isAccessibleForFree",
+      "DownloadAction",
       "Download PDF",
       "More from this school",
       "Same exam type",

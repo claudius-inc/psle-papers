@@ -357,6 +357,8 @@ const itemListElements = computed(() =>
       "@type": "LearningResource",
       name: `${paper.yearCode} ${paper.levelName} ${paper.schoolName} ${paper.subjectName} ${paper.typeName}`,
       learningResourceType: "Exam paper",
+      isAccessibleForFree: true,
+      inLanguage: "en-SG",
       educationalLevel: paper.levelName,
       about: paper.subjectName,
       url: `https://sgexamhub.com/view/${paper.filename}`,
@@ -364,7 +366,18 @@ const itemListElements = computed(() =>
         "@type": "MediaObject",
         contentUrl: `https://sgexamhub.com/files/${paper.filename}.pdf`,
         encodingFormat: "application/pdf",
+        name: `${paper.yearCode} ${paper.levelName} ${paper.schoolName} ${paper.subjectName} ${paper.typeName} PDF`,
       },
+      potentialAction: [
+        {
+          "@type": "ViewAction",
+          target: `https://sgexamhub.com/view/${paper.filename}`,
+        },
+        {
+          "@type": "DownloadAction",
+          target: `https://sgexamhub.com/files/${paper.filename}.pdf`,
+        },
+      ],
     },
   })),
 );
@@ -389,6 +402,7 @@ useHead({
           name: pageTitle,
           description: seoRoute.description,
           url: pageUrl,
+          inLanguage: "en-SG",
           isPartOf: {
             "@type": "WebSite",
             name: "SG Exam Hub",
