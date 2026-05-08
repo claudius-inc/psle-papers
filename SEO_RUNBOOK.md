@@ -8,8 +8,9 @@ Use this checklist after each content or SEO deploy.
 2. Confirm the command prints a `Generated ... sitemap URLs` line.
 3. Run `npm run seo:audit`.
 4. Deploy `.output/public` through the GitHub Pages workflow.
-5. Open `https://sgexamhub.com/sitemap.xml` and confirm it loads.
-6. Open `https://sgexamhub.com/robots.txt` and confirm it points to the sitemap.
+5. Run `npm run seo:audit:live`.
+6. Open `https://sgexamhub.com/sitemap.xml` and confirm it loads.
+7. Open `https://sgexamhub.com/robots.txt` and confirm it points to the sitemap.
 
 ## Google Search Console
 

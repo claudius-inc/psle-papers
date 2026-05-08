@@ -69,6 +69,14 @@ npm run seo:audit
 
 The audit checks generated titles, descriptions, JSON-LD, sitemap coverage, and internal links. The GitHub Pages workflow runs the same audit before uploading the deploy artifact.
 
+After deployment, run:
+
+```bash
+npm run seo:audit:live
+```
+
+The live audit checks `https://sgexamhub.com` for the deployed sitemap, robots.txt, key landing pages, schema markers, and indexed paper pages.
+
 Use [`SEO_KEYWORD_MAP.md`](SEO_KEYWORD_MAP.md) after deployment to map Google Search Console queries to the intended landing pages before changing titles or copy.
 
 ## 📂 Project Structure
