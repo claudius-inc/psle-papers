@@ -5,8 +5,9 @@
   "scripts": {
     "build": "nuxt build",
     "dev": "nuxt dev",
-    "generate": "nuxt generate",
+    "generate": "npm run seo:sitemap && nuxt generate",
     "preview": "nuxt preview",
+    "seo:audit": "node scripts/audit-seo-output.mjs",
     "seo:sitemap": "node scripts/generate-sitemap.mjs",
     "postinstall": "nuxt prepare"
   },

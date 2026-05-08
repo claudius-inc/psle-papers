@@ -1,4 +1,6 @@
 <script setup lang="ts">
+useEngagementTracking();
+
 useHead({
   link: [
     { rel: "preconnect", href: "https://fonts.googleapis.com" },

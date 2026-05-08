@@ -6,7 +6,13 @@ import {
   seoRoutes,
   getSeoRouteBySlug,
   allParsedPapers,
+  getPapersForRoute,
 } from "~/utils/paperSeo";
+import {
+  trackEvent,
+  trackPaperDownload,
+  trackPaperViewClick,
+} from "~/utils/analytics";
 
 const route = useRoute();
 const slugParam = route.params.slug;
@@ -22,19 +28,25 @@ const options = dropdownOptions as DropdownData;
 // Locked filters come from the URL slug; they can't be edited inline.
 const lockedLevel = seoRoute.levelCode || "";
 const lockedSubject = seoRoute.subjectCode || "";
+const lockedType = seoRoute.typeCode || "";
 const lockedYear = seoRoute.year || "";
+const lockedSchool = seoRoute.schoolCode || "";
 
 const initialFilters = () => ({
   Level: lockedLevel || "0",
   Subject: lockedSubject || "0",
   Year: lockedYear || "0",
-  Type: "0",
-  School: "0",
+  Type: lockedType || "0",
+  School: lockedSchool || "0",
 });
 
 const filters = ref(initialFilters());
 const resetFilters = () => {
   filters.value = initialFilters();
+  trackEvent("paper_filters_reset", {
+    source: "index_filters",
+    page_slug: slug,
+  });
 };
 
 const filteredPapers = computed(() =>
@@ -49,7 +61,20 @@ const filteredPapers = computed(() =>
   }),
 );
 
+const routePapers = computed(() => getPapersForRoute(seoRoute));
 const resultCount = computed(() => filteredPapers.value.length);
+const trackFilterChange = (
+  filterName: keyof typeof filters.value,
+  filterValue: string,
+) => {
+  trackEvent("paper_filter_change", {
+    source: "index_filters",
+    page_slug: slug,
+    filter_name: filterName,
+    filter_value: filterValue,
+    result_count: resultCount.value,
+  });
+};
 
 // View mode (grid vs list) — shared with homepage via localStorage.
 const viewMode = ref<"grid" | "list">("grid");
@@ -62,18 +87,32 @@ const setViewMode = (mode: "grid" | "list") => {
   if (typeof localStorage !== "undefined") {
     localStorage.setItem("paperViewMode", mode);
   }
+  trackEvent("paper_view_mode_change", {
+    source: "index_results",
+    page_slug: slug,
+    mode,
+  });
 };
 
 const relatedRoutes = computed(() =>
   seoRoutes
     .filter((item) => item.path !== seoRoute!.path)
     .filter((item) => {
-      if (!seoRoute!.year && !seoRoute!.levelCode && !seoRoute!.subjectCode) {
-        return !item.year && (!item.levelCode || !item.subjectCode);
+      if (
+        !seoRoute!.year &&
+        !seoRoute!.levelCode &&
+        !seoRoute!.subjectCode &&
+        !seoRoute!.typeCode
+      ) {
+        return !item.year && (!item.levelCode || !item.subjectCode || !item.typeCode);
       }
       if (seoRoute!.year && item.year === seoRoute!.year) return true;
       if (seoRoute!.levelCode && item.levelCode === seoRoute!.levelCode) return true;
       if (seoRoute!.subjectCode && item.subjectCode === seoRoute!.subjectCode) {
+        return true;
+      }
+      if (seoRoute!.typeCode && item.typeCode === seoRoute!.typeCode) return true;
+      if (seoRoute!.schoolCode && item.schoolCode === seoRoute!.schoolCode) {
         return true;
       }
       return false;
@@ -82,6 +121,236 @@ const relatedRoutes = computed(() =>
 );
 
 const pageUrl = `https://sgexamhub.com${seoRoute.path}`;
+const pageTitle = seoRoute.title.replace(" | SG Exam Hub", "");
+const breadcrumbItems = computed(() => [
+  { name: "Home", item: "https://sgexamhub.com/" },
+  { name: "Exam Papers", item: "https://sgexamhub.com/exam-papers" },
+  { name: pageTitle, item: pageUrl },
+]);
+const readableLevel = computed(() =>
+  seoRoute.levelCode
+    ? (options.Level.find((item) => item.code === seoRoute.levelCode)?.name || "").replace(
+        /^P([1-6])$/,
+        "Primary $1",
+      )
+    : "",
+);
+const readableSubject = computed(() =>
+  seoRoute.subjectCode
+    ? options.Subject.find((item) => item.code === seoRoute.subjectCode)?.name || ""
+    : "",
+);
+const readableType = computed(() =>
+  seoRoute.typeCode
+    ? (options.Type.find((item) => item.code === seoRoute.typeCode)?.name || "").replace(
+        /^Practice Paper$/,
+        "Practice Papers",
+      )
+    : "",
+);
+const readableSchool = computed(() =>
+  seoRoute.schoolCode
+    ? options.School.find((item) => item.code === seoRoute.schoolCode)?.name || ""
+    : "",
+);
+const landingIntro = computed(() => {
+  const focus = [
+    seoRoute.year,
+    readableLevel.value,
+    readableSubject.value,
+    readableType.value,
+    readableSchool.value,
+  ]
+    .filter(Boolean)
+    .join(" ");
+
+  const focusPaperLabel = focus.endsWith("Papers") ? focus : `${focus} exam papers`;
+
+  return focus
+    ? `This collection gathers ${seoRoute.paperCount.toLocaleString()} ${focusPaperLabel} in one place so parents and students can quickly compare papers, open a PDF viewer, and download useful practice papers for revision.`
+    : `This exam paper index gathers ${seoRoute.paperCount.toLocaleString()} Singapore primary school test papers in one place so parents and students can browse by level, subject, year, school and exam type.`;
+});
+const focusLabel = computed(() =>
+  [
+    seoRoute.year,
+    readableLevel.value,
+    readableSubject.value === "Mathematics" ? "Maths" : readableSubject.value,
+    readableType.value,
+    readableSchool.value,
+  ]
+    .filter(Boolean)
+    .join(" "),
+);
+const keywordPhrases = computed(() => {
+  const focus = focusLabel.value || "Singapore primary school";
+  const focusExamPaperLabel = focus.endsWith("Papers") ? focus : `${focus} exam papers`;
+  const focusTestPaperLabel = focus.endsWith("Papers") ? focus : `${focus} test papers`;
+  const phrases = [
+    `free ${focusExamPaperLabel}`,
+    `${focusTestPaperLabel} PDF download`,
+    `${focus} practice papers for revision`,
+  ];
+
+  if (readableSubject.value === "Mathematics") {
+    phrases.push(`${focus.replace("Maths", "Mathematics")} exam papers`);
+  }
+
+  if (seoRoute.levelCode === "6") {
+    phrases.push(`${focus} PSLE practice papers`);
+  }
+
+  return [...new Set(phrases)];
+});
+const subjectRevisionAdvice = computed(() => {
+  const subject = readableSubject.value;
+
+  if (subject === "Mathematics") {
+    return "For Maths practice, use each paper to check problem-solving speed, careless mistakes, word problems and multi-step questions before moving to another school paper.";
+  }
+  if (subject === "Science") {
+    return "For Science revision, compare your answers with the question requirements and note repeated topics, keywords and explanation gaps after every attempt.";
+  }
+  if (subject === "English") {
+    return "For English practice, focus on comprehension evidence, grammar accuracy, vocabulary use and time control across different school papers.";
+  }
+  if (subject === "Chinese" || subject === "Higher Chinese") {
+    return "For Chinese practice, use the papers to revise comprehension, vocabulary, sentence structure and exam timing across different question types.";
+  }
+
+  return "Use this page to choose a focused set of papers, attempt one under timed conditions, then download related papers for follow-up practice.";
+});
+const studySteps = computed(() => [
+  `Start with recent ${
+    focusLabel.value.endsWith("Papers")
+      ? focusLabel.value
+      : `${focusLabel.value || "Singapore primary school"} papers`
+  }, then use older papers to revise weak topics after each attempt.`,
+  subjectRevisionAdvice.value,
+  `Download selected PDFs for timed practice, marking, corrections and repeated revision before school assessments.`,
+]);
+const examTypeHighlights = computed(() => {
+  const counts = new Map<string, number>();
+  routePapers.value.forEach((paper) => {
+    counts.set(paper.typeName, (counts.get(paper.typeName) || 0) + 1);
+  });
+
+  return [...counts.entries()]
+    .sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]))
+    .slice(0, 6)
+    .map(([name, count]) => ({
+      name: name === "Practice Paper" ? "Practice Papers" : name,
+      count,
+    }));
+});
+const schoolDiscoveryLinks = computed(() => {
+  if (seoRoute.schoolCode) return [];
+
+  const counts = new Map<string, { code: string; name: string; count: number }>();
+  routePapers.value.forEach((paper) => {
+    const existing = counts.get(paper.schoolCode);
+    if (existing) {
+      existing.count += 1;
+      return;
+    }
+    counts.set(paper.schoolCode, {
+      code: paper.schoolCode,
+      name: paper.schoolName,
+      count: 1,
+    });
+  });
+
+  return [...counts.values()]
+    .sort((a, b) => b.count - a.count || a.name.localeCompare(b.name))
+    .slice(0, 8)
+    .map((school) => {
+      const matchingRoutes = seoRoutes.filter((item) => {
+        if (item.schoolCode !== school.code) return false;
+        return true;
+      });
+      const route =
+        matchingRoutes.find(
+          (item) =>
+            item.year === seoRoute.year &&
+            item.levelCode === seoRoute.levelCode &&
+            item.subjectCode === seoRoute.subjectCode,
+        ) ||
+        matchingRoutes.find(
+          (item) =>
+            item.year === seoRoute.year &&
+            item.levelCode === seoRoute.levelCode &&
+            !item.subjectCode,
+        ) ||
+        matchingRoutes.find(
+          (item) =>
+            item.year === seoRoute.year &&
+            item.subjectCode === seoRoute.subjectCode &&
+            !item.levelCode,
+        ) ||
+        matchingRoutes.find(
+          (item) =>
+            item.year === seoRoute.year &&
+            !item.levelCode &&
+            !item.subjectCode,
+        ) ||
+        matchingRoutes.find(
+          (item) =>
+            !item.year &&
+            item.levelCode === seoRoute.levelCode &&
+            item.subjectCode === seoRoute.subjectCode,
+        ) ||
+        matchingRoutes.find(
+          (item) =>
+            !item.year &&
+            !item.levelCode &&
+            !item.subjectCode,
+        );
+
+      return route
+        ? {
+            name: school.name,
+            count: school.count,
+            path: route.path,
+          }
+        : null;
+    })
+    .filter((item): item is { name: string; count: number; path: string } => item !== null);
+});
+const faqItems = computed(() => [
+  {
+    question: `What is included in ${pageTitle}?`,
+    answer: `${pageTitle} includes free Singapore primary school test papers that can be viewed online or downloaded as PDF files for revision practice.`,
+  },
+  {
+    question: "How should students use these exam papers?",
+    answer:
+      "Students should try each paper under timed conditions, mark mistakes carefully, revise weak topics, and then attempt another related paper to check improvement.",
+  },
+  {
+    question: "Can I download the papers for offline practice?",
+    answer:
+      "Yes. Open any paper from the list, then use the Download PDF button on the viewer page to save the paper for offline practice.",
+  },
+]);
+const itemListElements = computed(() =>
+  filteredPapers.value.slice(0, 30).map((paper, index) => ({
+    "@type": "ListItem",
+    position: index + 1,
+    url: `https://sgexamhub.com/view/${paper.filename}`,
+    item: {
+      "@type": "LearningResource",
+      name: `${paper.yearCode} ${paper.levelName} ${paper.schoolName} ${paper.subjectName} ${paper.typeName}`,
+      learningResourceType: "Exam paper",
+      educationalLevel: paper.levelName,
+      about: paper.subjectName,
+      url: `https://sgexamhub.com/view/${paper.filename}`,
+      encoding: {
+        "@type": "MediaObject",
+        contentUrl: `https://sgexamhub.com/files/${paper.filename}.pdf`,
+        encodingFormat: "application/pdf",
+      },
+    },
+  })),
+);
 
 useHead({
   title: seoRoute.title,
@@ -93,6 +362,54 @@ useHead({
     { property: "og:url", content: pageUrl },
   ],
   link: [{ rel: "canonical", href: pageUrl }],
+  script: [
+    {
+      type: "application/ld+json",
+      innerHTML: JSON.stringify([
+        {
+          "@context": "https://schema.org",
+          "@type": "CollectionPage",
+          name: pageTitle,
+          description: seoRoute.description,
+          url: pageUrl,
+          isPartOf: {
+            "@type": "WebSite",
+            name: "SG Exam Hub",
+            url: "https://sgexamhub.com/",
+          },
+        },
+        {
+          "@context": "https://schema.org",
+          "@type": "BreadcrumbList",
+          itemListElement: breadcrumbItems.value.map((item, index) => ({
+            "@type": "ListItem",
+            position: index + 1,
+            name: item.name,
+            item: item.item,
+          })),
+        },
+        {
+          "@context": "https://schema.org",
+          "@type": "FAQPage",
+          mainEntity: faqItems.value.map((item) => ({
+            "@type": "Question",
+            name: item.question,
+            acceptedAnswer: {
+              "@type": "Answer",
+              text: item.answer,
+            },
+          })),
+        },
+        {
+          "@context": "https://schema.org",
+          "@type": "ItemList",
+          name: `${pageTitle} paper list`,
+          numberOfItems: filteredPapers.value.length,
+          itemListElement: itemListElements.value,
+        },
+      ]),
+    },
+  ],
 });
 </script>
 
@@ -118,7 +435,14 @@ useHead({
           </svg>
           Back to SG Exam Hub
         </NuxtLink>
-        <h1>{{ seoRoute.title.replace(" | SG Exam Hub", "") }}</h1>
+        <nav class="breadcrumb" aria-label="Breadcrumb">
+          <NuxtLink to="/">Home</NuxtLink>
+          <span aria-hidden="true">/</span>
+          <NuxtLink to="/exam-papers">Exam Papers</NuxtLink>
+          <span aria-hidden="true">/</span>
+          <span>{{ pageTitle }}</span>
+        </nav>
+        <h1>{{ pageTitle }}</h1>
         <p>{{ seoRoute.description }}</p>
       </div>
     </header>
@@ -128,31 +452,46 @@ useHead({
       <div class="content-wrapper filter-grid">
         <div v-if="!lockedLevel" class="filter-group">
           <label>Level</label>
-          <select v-model="filters.Level">
+          <select
+            v-model="filters.Level"
+            @change="trackFilterChange('Level', filters.Level)"
+          >
             <option v-for="opt in options.Level" :key="opt.code" :value="opt.code">{{ opt.name }}</option>
           </select>
         </div>
         <div v-if="!lockedSubject" class="filter-group">
           <label>Subject</label>
-          <select v-model="filters.Subject">
+          <select
+            v-model="filters.Subject"
+            @change="trackFilterChange('Subject', filters.Subject)"
+          >
             <option v-for="opt in options.Subject" :key="opt.code" :value="opt.code">{{ opt.name }}</option>
           </select>
         </div>
         <div v-if="!lockedYear" class="filter-group">
           <label>Year</label>
-          <select v-model="filters.Year">
+          <select
+            v-model="filters.Year"
+            @change="trackFilterChange('Year', filters.Year)"
+          >
             <option v-for="opt in options.Year" :key="opt.code" :value="opt.code">{{ opt.name }}</option>
           </select>
         </div>
-        <div class="filter-group">
+        <div v-if="!lockedType" class="filter-group">
           <label>Exam Type</label>
-          <select v-model="filters.Type">
+          <select
+            v-model="filters.Type"
+            @change="trackFilterChange('Type', filters.Type)"
+          >
             <option v-for="opt in options.Type" :key="opt.code" :value="opt.code">{{ opt.name }}</option>
           </select>
         </div>
-        <div class="filter-group school-select">
+        <div v-if="!lockedSchool" class="filter-group school-select">
           <label>School</label>
-          <select v-model="filters.School">
+          <select
+            v-model="filters.School"
+            @change="trackFilterChange('School', filters.School)"
+          >
             <option v-for="opt in options.School" :key="opt.code" :value="opt.code">{{ opt.name }}</option>
           </select>
         </div>
@@ -161,6 +500,74 @@ useHead({
     </div>
 
     <main class="content-wrapper main-content">
+      <section class="landing-support" aria-labelledby="revision-guide">
+        <div>
+          <h2 id="revision-guide">Use these papers for focused revision</h2>
+          <p>{{ landingIntro }}</p>
+        </div>
+        <ol>
+          <li v-for="step in studySteps" :key="step">{{ step }}</li>
+        </ol>
+      </section>
+
+      <section class="search-support" aria-labelledby="search-support-heading">
+        <div>
+          <h2 id="search-support-heading">Find the right paper faster</h2>
+          <p>
+            This page is organized around searches parents and students commonly make
+            before downloading Singapore primary school exam papers.
+          </p>
+        </div>
+        <div class="search-support-grid">
+          <div class="support-panel">
+            <h3>Matching searches</h3>
+            <ul>
+              <li v-for="phrase in keywordPhrases" :key="phrase">{{ phrase }}</li>
+            </ul>
+          </div>
+          <div v-if="examTypeHighlights.length" class="support-panel">
+            <h3>Available exam types</h3>
+            <ul>
+              <li v-for="examType in examTypeHighlights" :key="examType.name">
+                {{ examType.name }}: {{ examType.count }} PDFs
+              </li>
+            </ul>
+          </div>
+          <div v-if="schoolDiscoveryLinks.length" class="support-panel">
+            <h3>Schools in this collection</h3>
+            <div class="school-link-list">
+              <NuxtLink
+                v-for="school in schoolDiscoveryLinks"
+                :key="school.path"
+                :to="school.path"
+              >
+                {{ school.name }} ({{ school.count }})
+              </NuxtLink>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="collection-faq" aria-labelledby="collection-faq-heading">
+        <div class="collection-faq-header">
+          <h2 id="collection-faq-heading">Questions about this collection</h2>
+          <p>
+            Check what is included before opening a paper online or downloading
+            a PDF for revision practice.
+          </p>
+        </div>
+        <div class="collection-faq-grid">
+          <article
+            v-for="item in faqItems"
+            :key="item.question"
+            class="faq-card"
+          >
+            <h3>{{ item.question }}</h3>
+            <p>{{ item.answer }}</p>
+          </article>
+        </div>
+      </section>
+
       <div class="results-header">
         <div class="results-meta">
           <svg
@@ -243,13 +650,27 @@ useHead({
               <span class="value">{{ paper.typeName }}</span>
             </div>
           </div>
-          <NuxtLink class="view-btn" :to="`/view/${paper.filename}`">
-            View Paper
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
-              <circle cx="12" cy="12" r="3"></circle>
-            </svg>
-          </NuxtLink>
+          <div class="card-actions">
+            <NuxtLink
+              class="view-btn"
+              :to="`/view/${paper.filename}`"
+              @click="trackPaperViewClick(paper.filename, 'index_results')"
+            >
+              View Paper
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                <circle cx="12" cy="12" r="3"></circle>
+              </svg>
+            </NuxtLink>
+            <a
+              class="download-btn"
+              :href="`/files/${paper.filename}.pdf`"
+              :download="`${paper.yearCode}-${paper.levelName}-${paper.subjectName}-${paper.typeName}-${paper.schoolName}.pdf`"
+              @click="trackPaperDownload(paper.filename, 'index_results')"
+            >
+              Download PDF
+            </a>
+          </div>
         </div>
       </div>
 
@@ -266,6 +687,15 @@ useHead({
         </div>
       </section>
     </main>
+    <footer class="index-footer">
+      <div class="footer-inner">
+        <NuxtLink to="/">SG Exam Hub</NuxtLink>
+        <span class="footer-sep" aria-hidden="true">|</span>
+        <NuxtLink to="/exam-papers">All exam papers</NuxtLink>
+        <span class="footer-sep" aria-hidden="true">|</span>
+        <NuxtLink to="/sitemap">Sitemap</NuxtLink>
+      </div>
+    </footer>
   </div>
 </template>
 
@@ -312,6 +742,27 @@ useHead({
   text-decoration: underline;
 }
 
+.breadcrumb {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+  color: #64748b;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  margin-bottom: 0.75rem;
+}
+
+.breadcrumb a {
+  color: #4f46e5;
+  text-decoration: none;
+}
+
+.breadcrumb a:hover {
+  color: #4338ca;
+  text-decoration: underline;
+}
+
 .index-hero h1 {
   color: #0f172a;
   font-size: 2.25rem;
@@ -329,6 +780,163 @@ useHead({
 .main-content {
   padding-top: 2rem;
   padding-bottom: 4rem;
+}
+
+.landing-support {
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(260px, 0.9fr);
+  gap: 1.5rem;
+  align-items: start;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  background: #ffffff;
+  padding: 1.25rem;
+  margin-bottom: 2rem;
+}
+
+.landing-support h2 {
+  color: #0f172a;
+  font-size: 1.15rem;
+  line-height: 1.35;
+  margin: 0 0 0.5rem;
+}
+
+.landing-support p {
+  color: #475569;
+  line-height: 1.65;
+  margin: 0;
+}
+
+.landing-support ol {
+  color: #334155;
+  display: grid;
+  gap: 0.65rem;
+  line-height: 1.5;
+  margin: 0;
+  padding-left: 1.25rem;
+}
+
+.landing-support li::marker {
+  color: #4f46e5;
+  font-weight: 800;
+}
+
+.search-support {
+  border-bottom: 1px solid #e2e8f0;
+  padding-bottom: 2rem;
+  margin-bottom: 2rem;
+}
+
+.search-support h2 {
+  color: #0f172a;
+  font-size: 1.25rem;
+  line-height: 1.35;
+  margin: 0 0 0.5rem;
+}
+
+.search-support p {
+  color: #475569;
+  line-height: 1.65;
+  max-width: 760px;
+  margin: 0 0 1.25rem;
+}
+
+.search-support-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1rem;
+}
+
+.support-panel {
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  background: #ffffff;
+  padding: 1rem;
+}
+
+.support-panel h3 {
+  color: #0f172a;
+  font-size: 0.95rem;
+  line-height: 1.35;
+  margin: 0 0 0.75rem;
+}
+
+.support-panel ul {
+  color: #334155;
+  display: grid;
+  gap: 0.5rem;
+  line-height: 1.45;
+  margin: 0;
+  padding-left: 1.1rem;
+}
+
+.school-link-list {
+  display: grid;
+  gap: 0.55rem;
+}
+
+.school-link-list a {
+  color: #334155;
+  font-size: 0.9rem;
+  font-weight: 650;
+  line-height: 1.35;
+  text-decoration: none;
+}
+
+.school-link-list a:hover {
+  color: #2563eb;
+  text-decoration: underline;
+}
+
+.collection-faq {
+  border-bottom: 1px solid #e2e8f0;
+  padding-bottom: 2rem;
+  margin-bottom: 2rem;
+}
+
+.collection-faq-header {
+  margin-bottom: 1rem;
+}
+
+.collection-faq h2 {
+  color: #0f172a;
+  font-size: 1.25rem;
+  line-height: 1.35;
+  margin: 0 0 0.5rem;
+}
+
+.collection-faq-header p {
+  color: #475569;
+  line-height: 1.65;
+  max-width: 760px;
+  margin: 0;
+}
+
+.collection-faq-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1rem;
+}
+
+.faq-card {
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  background: #ffffff;
+  padding: 1rem;
+}
+
+.faq-card h3 {
+  color: #0f172a;
+  font-size: 0.95rem;
+  line-height: 1.4;
+  margin: 0 0 0.55rem;
+}
+
+.faq-card p {
+  color: #475569;
+  font-size: 0.9rem;
+  line-height: 1.6;
+  margin: 0;
 }
 
 /* Filter bar (mirrors homepage) */
@@ -547,15 +1155,17 @@ useHead({
   color: #334155;
 }
 
-.view-btn {
+.card-actions {
+  display: grid;
+  gap: 0.55rem;
+}
+
+.view-btn,
+.download-btn {
   width: 100%;
   padding: 0.75rem;
-  background-color: #4f46e5;
-  color: white;
-  border: none;
   border-radius: 0.5rem;
   font-weight: 600;
-  cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -564,8 +1174,27 @@ useHead({
   text-decoration: none;
 }
 
+.view-btn {
+  background-color: #4f46e5;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
 .view-btn:hover {
   background-color: #4338ca;
+}
+
+.download-btn {
+  background: #ffffff;
+  border: 1px solid #cbd5e1;
+  color: #334155;
+}
+
+.download-btn:hover {
+  background: #f8fafc;
+  border-color: #94a3b8;
+  color: #0f172a;
 }
 
 /* List view overrides */
@@ -612,9 +1241,13 @@ useHead({
   color: #94a3b8;
 }
 
-.papers-list .view-btn {
+.papers-list .card-actions {
+  flex: 0 0 150px;
+}
+
+.papers-list .view-btn,
+.papers-list .download-btn {
   width: auto;
-  flex-shrink: 0;
   padding: 0.6rem 1.25rem;
 }
 
@@ -682,9 +1315,44 @@ useHead({
   border-color: #c7d2fe;
 }
 
+.index-footer {
+  border-top: 1px solid #e2e8f0;
+  color: #64748b;
+  padding: 1.5rem;
+}
+
+.footer-inner {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1rem;
+  justify-content: center;
+  margin: 0 auto;
+  max-width: 1100px;
+}
+
+.footer-inner a {
+  color: #475569;
+  font-size: 0.9rem;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.footer-inner a:hover {
+  color: #2563eb;
+  text-decoration: underline;
+}
+
+.footer-sep {
+  color: #cbd5e1;
+  user-select: none;
+}
+
 @media (max-width: 640px) {
   .index-hero h1 {
     font-size: 1.875rem;
+  }
+  .landing-support {
+    grid-template-columns: 1fr;
   }
   .filter-grid {
     flex-direction: column;
@@ -706,7 +1374,11 @@ useHead({
   .papers-list .card-details {
     justify-content: space-between;
   }
-  .papers-list .view-btn {
+  .papers-list .card-actions {
+    flex: 0 0 auto;
+  }
+  .papers-list .view-btn,
+  .papers-list .download-btn {
     width: 100%;
   }
 }

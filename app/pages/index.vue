@@ -3,11 +3,15 @@ import { ref, computed, onMounted } from "vue";
 import type { DropdownData, ParsedPaper } from "~/composables/usePapers";
 import rawFileList from "../../public/json/files.json";
 import dropdownOptions from "../../public/json/dropdownOptions.json";
-
-const { loading, options, fetchData, parseFilename } = usePapers();
+import {
+  trackEvent,
+  trackPaperDownload,
+  trackPaperViewClick,
+} from "~/utils/analytics";
 
 const featuredOptions = dropdownOptions as DropdownData;
-options.value = featuredOptions;
+const loading = ref(false);
+const options = ref<DropdownData>(featuredOptions);
 
 const getFeaturedName = (category: keyof DropdownData, code: string): string => {
   const found = featuredOptions[category]?.find((opt) => opt.code === code);
@@ -44,7 +48,7 @@ const featuredPapers = computed(() =>
   (rawFileList as string[])
     .map((filename) => parseFeaturedFilename(filename))
     .filter((p): p is ParsedPaper => p !== null)
-    // Sort newest first by year, then by level desc so P6 surfaces above P1 within a year.
+    // Sort newest first by year, then by level desc so P6 surfaces above lower levels.
     .sort((a, b) => {
       if (a.yearCode !== b.yearCode) return Number(b.yearCode) - Number(a.yearCode);
       return Number(b.levelCode) - Number(a.levelCode);
@@ -52,69 +56,226 @@ const featuredPapers = computed(() =>
     .slice(0, 12),
 );
 
+const homeItemListElements = computed(() =>
+  (rawFileList as string[])
+    .map((filename) => parseFeaturedFilename(filename))
+    .filter((paper): paper is ParsedPaper => paper !== null)
+    .sort((a, b) => {
+      if (a.yearCode !== b.yearCode) return Number(b.yearCode) - Number(a.yearCode);
+      if (a.levelCode !== b.levelCode) return Number(b.levelCode) - Number(a.levelCode);
+      return a.schoolCode.localeCompare(b.schoolCode);
+    })
+    .slice(0, 30)
+    .map((paper, index) => ({
+      "@type": "ListItem",
+      position: index + 1,
+      url: `https://sgexamhub.com/view/${paper.filename}`,
+      item: {
+        "@type": "LearningResource",
+        name: `${paper.yearCode} ${paper.levelName} ${paper.schoolName} ${paper.subjectName} ${paper.typeName}`,
+        learningResourceType: "Exam paper",
+        educationalLevel: paper.levelName,
+        about: paper.subjectName,
+        url: `https://sgexamhub.com/view/${paper.filename}`,
+        encoding: {
+          "@type": "MediaObject",
+          contentUrl: `https://sgexamhub.com/files/${paper.filename}.pdf`,
+          encodingFormat: "application/pdf",
+        },
+      },
+    })),
+);
+
+const examPaperDirectorySections = [
+  {
+    title: "Primary exam papers by level",
+    links: [6, 5, 4, 3, 2].map((level) => ({
+      label: `Primary ${level} Exam Papers`,
+      to: `/exam-papers/primary-${level}`,
+    })),
+  },
+  {
+    title: "Popular subject collections",
+    links: [
+      { label: "Primary 6 Maths Exam Papers", to: "/exam-papers/primary-6-mathematics" },
+      { label: "Primary 6 Science Exam Papers", to: "/exam-papers/primary-6-science" },
+      { label: "Primary 6 English Exam Papers", to: "/exam-papers/primary-6-english" },
+      { label: "Primary 5 Maths Exam Papers", to: "/exam-papers/primary-5-mathematics" },
+      { label: "Primary 5 Science Exam Papers", to: "/exam-papers/primary-5-science" },
+      { label: "Primary 4 Maths Exam Papers", to: "/exam-papers/primary-4-mathematics" },
+      { label: "Higher Chinese Exam Papers", to: "/exam-papers/higher-chinese" },
+      { label: "2025 Primary Exam Papers", to: "/exam-papers/2025" },
+      { label: "2025 Primary 6 Exam Papers", to: "/exam-papers/2025-primary-6" },
+      { label: "2025 Maths Exam Papers", to: "/exam-papers/2025-mathematics" },
+      { label: "2024 Primary 6 Exam Papers", to: "/exam-papers/2024-primary-6" },
+      { label: "2024 Science Exam Papers", to: "/exam-papers/2024-science" },
+    ],
+  },
+  {
+    title: "Assessment type collections",
+    links: [
+      { label: "SA2 Exam Papers", to: "/exam-papers/sa2" },
+      { label: "SA1 Exam Papers", to: "/exam-papers/sa1" },
+      { label: "WA1 Exam Papers", to: "/exam-papers/wa1" },
+      { label: "WA2 Exam Papers", to: "/exam-papers/wa2" },
+      { label: "WA3 Exam Papers", to: "/exam-papers/wa3" },
+      { label: "Practice Papers", to: "/exam-papers/practice-paper" },
+      { label: "2025 Primary 6 SA2 Exam Papers", to: "/exam-papers/2025-primary-6-sa2" },
+      { label: "Primary 6 SA1 Exam Papers", to: "/exam-papers/primary-6-sa1" },
+      { label: "Primary 6 SA2 Exam Papers", to: "/exam-papers/primary-6-sa2" },
+      { label: "Maths SA2 Exam Papers", to: "/exam-papers/mathematics-sa2" },
+      { label: "Science SA2 Exam Papers", to: "/exam-papers/science-sa2" },
+      { label: "English SA2 Exam Papers", to: "/exam-papers/english-sa2" },
+    ],
+  },
+  {
+    title: "Top school exam papers",
+    links: [
+      {
+        label: "Raffles Girls' Primary School Exam Papers",
+        to: "/exam-papers/school-raffles-girls-primary-school",
+      },
+      {
+        label: "2025 Raffles Girls' Primary School Exam Papers",
+        to: "/exam-papers/2025-school-raffles-girls-primary-school",
+      },
+      {
+        label: "Nanyang Primary School Exam Papers",
+        to: "/exam-papers/school-nanyang-primary-school",
+      },
+      {
+        label: "2025 Nanyang Primary School Exam Papers",
+        to: "/exam-papers/2025-school-nanyang-primary-school",
+      },
+      {
+        label: "Henry Park Primary School Exam Papers",
+        to: "/exam-papers/school-henry-park-primary-school",
+      },
+      {
+        label: "2025 Henry Park Primary School Exam Papers",
+        to: "/exam-papers/2025-school-henry-park-primary-school",
+      },
+      {
+        label: "Ai Tong School Exam Papers",
+        to: "/exam-papers/school-ai-tong-school",
+      },
+      {
+        label: "Nan Hua Primary School Exam Papers",
+        to: "/exam-papers/school-nan-hua-primary-school",
+      },
+      {
+        label: "Rosyth School Exam Papers",
+        to: "/exam-papers/school-rosyth-school",
+      },
+    ],
+  },
+];
+
+const homeFaqItems = [
+  {
+    question: "Where can I find free Singapore primary school exam papers for 2026 revision?",
+    answer:
+      "You can use SG Exam Hub for 2026 revision by downloading the latest available 2025 and 2024 Singapore primary school exam papers from top schools across P2 to P6.",
+  },
+  {
+    question: "Which levels and subjects are covered in the exam papers?",
+    answer:
+      "SG Exam Hub currently has Primary 2 to Primary 6 papers for English, Mathematics, Science, Chinese and Higher Chinese, depending on what is available for each school and year.",
+  },
+  {
+    question: "Are papers from top schools like Nanyang and Raffles included?",
+    answer:
+      "Yes. The collection includes papers from schools such as Nanyang Primary School, Raffles Girls' Primary School, Henry Park Primary School, Catholic High School and more.",
+  },
+  {
+    question: "Should students view papers online or download the PDF?",
+    answer:
+      "Open a paper online first to check the level, subject, school and exam type, then download useful PDFs for timed practice, marking and repeated revision.",
+  },
+];
+
+const siteNavigationItems = examPaperDirectorySections
+  .flatMap((section) => section.links)
+  .slice(0, 30)
+  .map((link) => ({
+    "@type": "SiteNavigationElement",
+    name: link.label,
+    url: `https://sgexamhub.com${link.to}`,
+  }));
+
 // --- SEO Configuration ---
 useHead({
   title:
-    "Free Singapore Primary School Exam Papers (2025 & 2024) | P1 - P6 Test Papers",
+    "Free Singapore Primary Exam Papers for 2026 Revision | P2-P6",
   meta: [
     {
       name: "description",
       content:
-        "Download free 2025 and 2024 Singapore primary school exam papers. Access 2,300+ test papers from top schools for Math, Science, English, and Chinese. Perfect for PSLE and P1-P6 revision.",
+        "Prepare for 2026 with free Singapore primary school exam papers. Download 2,300+ latest 2025 and 2024 PDFs from top schools for Maths, Science, English and Chinese.",
     },
     {
       name: "keywords",
       content:
-        "Singapore primary school exam papers 2025, 2024 test papers, free exam papers download, top school papers, PSLE practice papers, P1-P6 exam papers, SA2 SA1 WA papers, Math Science English Chinese, 新加坡小学试卷",
+        "Singapore primary school exam papers 2026 revision, 2025 exam papers, 2024 test papers, free exam papers download, top school papers, PSLE practice papers, P2-P6 exam papers, SA2 SA1 WA papers, Maths Science English Chinese, 新加坡小学试卷",
     },
     // Open Graph
     {
       property: "og:title",
-      content: "2025 & 2024 Free Singapore Primary School Exam Papers",
+      content: "Free Singapore Primary School Exam Papers for 2026 Revision",
     },
     {
       property: "og:description",
       content:
-        "Access 2,300+ free primary school exam papers from top Singapore schools. All levels (P1-P6) and subjects (English, Math, Science, Chinese) included.",
+        "Access 2,300+ latest 2025 and 2024 primary school exam paper PDFs from top Singapore schools for P2-P6 revision.",
     },
     { property: "og:type", content: "website" },
     { property: "og:url", content: "https://sgexamhub.com" },
   ],
   link: [{ rel: "canonical", href: "https://sgexamhub.com/" }],
   script: [
-    // Structured Data (FAQ Schema)
+    // Structured data for crawlers and rich result eligibility.
     {
       type: "application/ld+json",
-      innerHTML: JSON.stringify({
-        "@context": "https://schema.org",
-        "@type": "FAQPage",
-        mainEntity: [
+      innerHTML: JSON.stringify([
           {
-            "@type": "Question",
-            name: "Where can I find free Singapore primary school exam papers for 2024 and 2025?",
-            acceptedAnswer: {
-              "@type": "Answer",
-              text: "You can download free 2024 and 2025 Singapore primary school exam papers at sgexamhub.com. We provide a comprehensive database of papers from top schools for all levels.",
-            },
+            "@context": "https://schema.org",
+            "@type": "WebSite",
+            "@id": "https://sgexamhub.com/#website",
+            name: "SG Exam Hub",
+            alternateName: "Singapore Exam Hub",
+            url: "https://sgexamhub.com/",
+            description:
+              "Free Singapore primary school exam papers for P2 to P6 English, Maths, Science, Chinese and Higher Chinese.",
+            hasPart: siteNavigationItems,
           },
           {
-            "@type": "Question",
-            name: "Which levels and subjects are covered in the exam papers?",
-            acceptedAnswer: {
-              "@type": "Answer",
-              text: "We provide exam papers for all primary school levels (Primary 1 to Primary 6) and core subjects including English, Mathematics, Science, and Chinese.",
-            },
+            "@context": "https://schema.org",
+            "@type": "Organization",
+            "@id": "https://sgexamhub.com/#organization",
+            name: "SG Exam Hub",
+            url: "https://sgexamhub.com/",
+            logo: "https://sgexamhub.com/favicon.ico",
           },
           {
-            "@type": "Question",
-            name: "Are papers from top schools like Nanyang and Raffles included?",
-            acceptedAnswer: {
-              "@type": "Answer",
-              text: "Yes, our collection includes test papers from top Singapore primary schools like Nanyang Primary, Raffles Girls', Henry Park, Catholic High, and more.",
-            },
+            "@context": "https://schema.org",
+            "@type": "FAQPage",
+            mainEntity: homeFaqItems.map((item) => ({
+              "@type": "Question",
+              name: item.question,
+              acceptedAnswer: {
+                "@type": "Answer",
+                text: item.answer,
+              },
+            })),
           },
-        ],
-      }),
+          {
+            "@context": "https://schema.org",
+            "@type": "ItemList",
+            name: "Latest Singapore primary school exam papers",
+            numberOfItems: homeItemListElements.value.length,
+            itemListElement: homeItemListElements.value,
+          },
+      ]),
     },
   ],
   htmlAttrs: {
@@ -123,7 +284,7 @@ useHead({
 });
 
 // --- State ---
-const rawFiles = ref<string[]>([]);
+const rawFiles = ref<string[]>(rawFileList as string[]);
 const filters = ref({
   Level: "0",
   School: "0",
@@ -144,10 +305,7 @@ const activeFilterCount = computed(() => {
 // --- Data Fetching ---
 onMounted(async () => {
   try {
-    const [filesRes, _] = await Promise.all([
-      fetch("/json/files.json"),
-      fetchData(), // Fetches options
-    ]);
+    const filesRes = await fetch("/json/files.json");
     rawFiles.value = await filesRes.json();
   } catch (e) {
     console.error("Failed to load data", e);
@@ -156,10 +314,9 @@ onMounted(async () => {
 
 // --- Computed ---
 const allPapers = computed(() => {
-  if (loading.value) return [];
   return rawFiles.value
-    .map((filename) => parseFilename(filename))
-    .filter((p): p is any => p !== null)
+    .map((filename) => parseFeaturedFilename(filename))
+    .filter((p): p is ParsedPaper => p !== null)
     // Newest first: year desc, then level desc within a year, then school asc.
     .sort((a, b) => {
       if (a.yearCode !== b.yearCode) return Number(b.yearCode) - Number(a.yearCode);
@@ -180,7 +337,30 @@ const filteredPapers = computed(() => {
   });
 });
 
+const visibleLimit = ref(60);
+const visiblePapers = computed(() => filteredPapers.value.slice(0, visibleLimit.value));
 const resultCount = computed(() => filteredPapers.value.length);
+const canShowMore = computed(() => visiblePapers.value.length < resultCount.value);
+const showMorePapers = () => {
+  visibleLimit.value += 60;
+  trackEvent("paper_show_more", {
+    source: "home_results",
+    visible_count: visiblePapers.value.length,
+    result_count: resultCount.value,
+  });
+};
+const trackFilterChange = (
+  filterName: keyof typeof filters.value,
+  filterValue: string,
+) => {
+  visibleLimit.value = 60;
+  trackEvent("paper_filter_change", {
+    source: "home_filters",
+    filter_name: filterName,
+    filter_value: filterValue,
+    result_count: resultCount.value,
+  });
+};
 
 // View mode (grid vs list) — persists across page loads via localStorage.
 const viewMode = ref<"grid" | "list">("grid");
@@ -193,6 +373,10 @@ const setViewMode = (mode: "grid" | "list") => {
   if (typeof localStorage !== "undefined") {
     localStorage.setItem("paperViewMode", mode);
   }
+  trackEvent("paper_view_mode_change", {
+    source: "home_results",
+    mode,
+  });
 };
 const totalPaperCountRounded = computed(() => {
   const count = (rawFileList as string[]).length;
@@ -200,6 +384,7 @@ const totalPaperCountRounded = computed(() => {
 });
 
 const resetFilters = () => {
+  visibleLimit.value = 60;
   filters.value = {
     Level: "0",
     School: "0",
@@ -207,6 +392,9 @@ const resetFilters = () => {
     Type: "0",
     Year: "0",
   };
+  trackEvent("paper_filters_reset", {
+    source: "home_filters",
+  });
 };
 </script>
 
@@ -226,8 +414,8 @@ const resetFilters = () => {
           <span class="text-gradient">Exam Papers</span>
         </h1>
         <p class="subtitle">
-          Access thousands of free high-quality assessment papers from top
-          schools. View online or download for practice.
+          Prepare for 2026 with thousands of free assessment papers from top
+          Singapore schools. View online or download PDFs for practice.
         </p>
         <div class="hero-stats">
           <div class="stat-item">
@@ -243,7 +431,7 @@ const resetFilters = () => {
           </div>
           <div class="stat-divider"></div>
           <div class="stat-item">
-            <span class="stat-value">P1 - P6</span>
+            <span class="stat-value">P2 - P6</span>
             <span class="stat-label">Levels</span>
           </div>
         </div>
@@ -300,7 +488,10 @@ const resetFilters = () => {
         <div class="filter-grid">
           <div class="filter-group">
             <label>Level</label>
-            <select v-model="filters.Level">
+            <select
+              v-model="filters.Level"
+              @change="trackFilterChange('Level', filters.Level)"
+            >
               <option
                 v-for="opt in options.Level"
                 :key="opt.code"
@@ -313,7 +504,10 @@ const resetFilters = () => {
 
           <div class="filter-group">
             <label>Subject</label>
-            <select v-model="filters.Subject">
+            <select
+              v-model="filters.Subject"
+              @change="trackFilterChange('Subject', filters.Subject)"
+            >
               <option
                 v-for="opt in options.Subject"
                 :key="opt.code"
@@ -326,7 +520,10 @@ const resetFilters = () => {
 
           <div class="filter-group">
             <label>Year</label>
-            <select v-model="filters.Year">
+            <select
+              v-model="filters.Year"
+              @change="trackFilterChange('Year', filters.Year)"
+            >
               <option
                 v-for="opt in options.Year"
                 :key="opt.code"
@@ -339,7 +536,10 @@ const resetFilters = () => {
 
           <div class="filter-group">
             <label>Exam Type</label>
-            <select v-model="filters.Type">
+            <select
+              v-model="filters.Type"
+              @change="trackFilterChange('Type', filters.Type)"
+            >
               <option
                 v-for="opt in options.Type"
                 :key="opt.code"
@@ -352,7 +552,10 @@ const resetFilters = () => {
 
           <div class="filter-group school-select">
             <label>School</label>
-            <select v-model="filters.School">
+            <select
+              v-model="filters.School"
+              @change="trackFilterChange('School', filters.School)"
+            >
               <option
                 v-for="opt in options.School"
                 :key="opt.code"
@@ -414,7 +617,8 @@ const resetFilters = () => {
               <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
             </svg>
             <h2>
-              Showing <strong>{{ resultCount }}</strong> available papers
+              Showing <strong>{{ visiblePapers.length }}</strong> of
+              <strong>{{ resultCount }}</strong> available papers
             </h2>
           </div>
           <div class="view-toggle" role="group" aria-label="View mode">
@@ -461,7 +665,7 @@ const resetFilters = () => {
 
         <div v-else :class="['papers-container', `papers-${viewMode}`]">
           <div
-            v-for="paper in filteredPapers"
+            v-for="paper in visiblePapers"
             :key="paper.filename"
             class="paper-card"
           >
@@ -483,27 +687,77 @@ const resetFilters = () => {
               </div>
             </div>
 
-            <NuxtLink class="view-btn" :to="`/view/${paper.filename}`">
-              View Paper
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="16"
-                height="16"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
+            <div class="card-actions">
+              <NuxtLink
+                class="view-btn"
+                :to="`/view/${paper.filename}`"
+                @click="trackPaperViewClick(paper.filename, 'home_results')"
               >
-                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
-                <circle cx="12" cy="12" r="3"></circle>
-              </svg>
-            </NuxtLink>
+                View Paper
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="16"
+                  height="16"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                  <circle cx="12" cy="12" r="3"></circle>
+                </svg>
+              </NuxtLink>
+              <a
+                class="download-btn"
+                :href="`/files/${paper.filename}.pdf`"
+                :download="`${paper.yearCode}-${paper.levelName}-${paper.subjectName}-${paper.typeName}-${paper.schoolName}.pdf`"
+                @click="trackPaperDownload(paper.filename, 'home_results')"
+              >
+                Download PDF
+              </a>
+            </div>
           </div>
+        </div>
+
+        <div v-if="canShowMore" class="load-more-wrap">
+          <button class="load-more-btn" type="button" @click="showMorePapers">
+            Show more papers
+          </button>
         </div>
       </div>
     </main>
+
+    <section class="content-wrapper seo-directory" aria-labelledby="paper-directory">
+      <div class="seo-directory-intro">
+        <h2 id="paper-directory">Browse Singapore primary school exam papers</h2>
+        <p>
+          Find free exam papers for 2026 revision by primary level, subject,
+          assessment type, year and top Singapore schools. Each collection opens a focused index for viewing
+          papers online or downloading PDF test papers.
+        </p>
+      </div>
+      <div class="directory-grid">
+        <section
+          v-for="section in examPaperDirectorySections"
+          :key="section.title"
+          class="directory-column"
+          :aria-labelledby="section.title.replaceAll(' ', '-')"
+        >
+          <h3 :id="section.title.replaceAll(' ', '-')">{{ section.title }}</h3>
+          <div class="directory-links">
+            <NuxtLink
+              v-for="link in section.links"
+              :key="link.to"
+              :to="link.to"
+            >
+              {{ link.label }}
+            </NuxtLink>
+          </div>
+        </section>
+      </div>
+    </section>
 
     <section class="content-wrapper seo-links" aria-labelledby="latest-papers">
       <div class="seo-links-header">
@@ -522,10 +776,32 @@ const resetFilters = () => {
       </div>
     </section>
 
+    <section class="content-wrapper home-faq" aria-labelledby="home-faq-heading">
+      <div class="home-faq-header">
+        <h2 id="home-faq-heading">Exam paper questions</h2>
+        <p>
+          Use these answers to choose the right Singapore primary school test
+          papers before opening or downloading a PDF.
+        </p>
+      </div>
+      <div class="home-faq-grid">
+        <article
+          v-for="item in homeFaqItems"
+          :key="item.question"
+          class="faq-card"
+        >
+          <h3>{{ item.question }}</h3>
+          <p>{{ item.answer }}</p>
+        </article>
+      </div>
+    </section>
+
     <!-- Footer -->
     <footer>
       <div class="footer-inner">
-        <p>&copy; 2025 Dreamon.im &ndash; Singapore Primary School Exam Papers</p>
+        <p>&copy; 2026 Dreamon.im &ndash; Singapore Primary School Exam Papers</p>
+        <span class="footer-sep" aria-hidden="true">|</span>
+        <NuxtLink to="/sitemap">Sitemap</NuxtLink>
         <span class="footer-sep" aria-hidden="true">|</span>
         <a href="https://www.moe.gov.sg/" rel="noopener" target="_blank">Ministry of Education</a>
         <span class="footer-sep" aria-hidden="true">|</span>
@@ -1050,9 +1326,13 @@ select:focus {
   color: #94a3b8;
 }
 
-.papers-list .view-btn {
+.papers-list .card-actions {
+  flex: 0 0 150px;
+}
+
+.papers-list .view-btn,
+.papers-list .download-btn {
   width: auto;
-  flex-shrink: 0;
   padding: 0.6rem 1.25rem;
 }
 
@@ -1070,7 +1350,11 @@ select:focus {
   .papers-list .card-details {
     justify-content: space-between;
   }
-  .papers-list .view-btn {
+  .papers-list .card-actions {
+    flex: 0 0 auto;
+  }
+  .papers-list .view-btn,
+  .papers-list .download-btn {
     width: 100%;
   }
 }
@@ -1145,15 +1429,17 @@ select:focus {
   color: #334155;
 }
 
-.view-btn {
+.card-actions {
+  display: grid;
+  gap: 0.55rem;
+}
+
+.view-btn,
+.download-btn {
   width: 100%;
   padding: 0.75rem;
-  background-color: #4f46e5;
-  color: white;
-  border: none;
   border-radius: 0.5rem;
   font-weight: 600;
-  cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1162,8 +1448,52 @@ select:focus {
   text-decoration: none;
 }
 
+.view-btn {
+  background-color: #4f46e5;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
 .view-btn:hover {
   background-color: #4338ca;
+}
+
+.download-btn {
+  background: #ffffff;
+  border: 1px solid #cbd5e1;
+  color: #334155;
+}
+
+.download-btn:hover {
+  background: #f8fafc;
+  border-color: #94a3b8;
+  color: #0f172a;
+}
+
+.load-more-wrap {
+  display: flex;
+  justify-content: center;
+  margin-top: 2rem;
+}
+
+.load-more-btn {
+  background: #ffffff;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  color: #334155;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 0.95rem;
+  font-weight: 800;
+  min-height: 44px;
+  padding: 0.75rem 1.4rem;
+}
+
+.load-more-btn:hover {
+  background: #f8fafc;
+  border-color: #94a3b8;
+  color: #0f172a;
 }
 
 /* Empty State */
@@ -1200,6 +1530,68 @@ select:focus {
   border-radius: 0.5rem;
   font-weight: 600;
   cursor: pointer;
+}
+
+.seo-directory {
+  padding-bottom: 3rem;
+}
+
+.seo-directory-intro {
+  border-top: 1px solid #e2e8f0;
+  padding-top: 2rem;
+  margin-bottom: 1.25rem;
+}
+
+.seo-directory h2 {
+  color: #0f172a;
+  font-size: 1.4rem;
+  line-height: 1.25;
+  margin: 0 0 0.5rem;
+}
+
+.seo-directory p {
+  color: #475569;
+  line-height: 1.65;
+  max-width: 760px;
+  margin: 0;
+}
+
+.directory-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1.25rem;
+}
+
+.directory-column {
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  padding: 1.25rem;
+  background: #ffffff;
+}
+
+.directory-column h3 {
+  color: #0f172a;
+  font-size: 0.95rem;
+  line-height: 1.35;
+  margin: 0 0 0.9rem;
+}
+
+.directory-links {
+  display: grid;
+  gap: 0.65rem;
+}
+
+.directory-links a {
+  color: #334155;
+  font-size: 0.9rem;
+  font-weight: 650;
+  line-height: 1.35;
+  text-decoration: none;
+}
+
+.directory-links a:hover {
+  color: #2563eb;
+  text-decoration: underline;
 }
 
 .seo-links {
@@ -1251,6 +1643,57 @@ select:focus {
   text-decoration: underline;
 }
 
+.home-faq {
+  padding-bottom: 3rem;
+}
+
+.home-faq-header {
+  border-top: 1px solid #e2e8f0;
+  padding-top: 2rem;
+  margin-bottom: 1.25rem;
+}
+
+.home-faq h2 {
+  color: #0f172a;
+  font-size: 1.4rem;
+  line-height: 1.25;
+  margin: 0 0 0.5rem;
+}
+
+.home-faq-header p {
+  color: #475569;
+  line-height: 1.65;
+  max-width: 760px;
+  margin: 0;
+}
+
+.home-faq-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.faq-card {
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  background: #ffffff;
+  padding: 1.1rem;
+}
+
+.faq-card h3 {
+  color: #0f172a;
+  font-size: 0.98rem;
+  line-height: 1.4;
+  margin: 0 0 0.55rem;
+}
+
+.faq-card p {
+  color: #475569;
+  font-size: 0.92rem;
+  line-height: 1.6;
+  margin: 0;
+}
+
 /* Footer */
 footer {
   background-color: white;
@@ -1297,12 +1740,18 @@ footer {
   .filter-grid {
     grid-template-columns: 1fr;
   }
-  .school-select {
-    grid-column: span 1;
+	  .school-select {
+	    grid-column: span 1;
+	  }
+	  .directory-grid {
+	    grid-template-columns: 1fr;
+	  }
+	  .seo-links-header {
+	    align-items: flex-start;
+	    flex-direction: column;
   }
-  .seo-links-header {
-    align-items: flex-start;
-    flex-direction: column;
+  .home-faq-grid {
+    grid-template-columns: 1fr;
   }
 }
 </style>

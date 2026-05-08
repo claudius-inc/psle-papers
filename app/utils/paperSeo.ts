@@ -7,9 +7,12 @@ export interface PaperSeoRoute {
   path: string;
   title: string;
   description: string;
+  paperCount: number;
   year?: string;
   levelCode?: string;
   subjectCode?: string;
+  typeCode?: string;
+  schoolCode?: string;
 }
 
 const options = dropdownOptions as DropdownData;
@@ -31,6 +34,20 @@ export const levelSlugMap = Object.fromEntries(
 
 export const subjectSlugMap = Object.fromEntries(
   options.Subject.filter((option) => option.code !== "0").map((option) => [
+    slugify(option.name),
+    option.code,
+  ]),
+);
+
+export const typeSlugMap = Object.fromEntries(
+  options.Type.filter((option) => option.code !== "0").map((option) => [
+    slugify(option.name),
+    option.code,
+  ]),
+);
+
+export const schoolSlugMap = Object.fromEntries(
+  options.School.filter((option) => option.code !== "0").map((option) => [
     slugify(option.name),
     option.code,
   ]),
@@ -73,7 +90,7 @@ export const parsePaper = (filename: string): ParsedPaper | null => {
 export const allParsedPapers = rawFiles
   .map((filename) => parsePaper(filename))
   .filter((paper): paper is ParsedPaper => paper !== null)
-  // Newest first: year desc, then level desc (P6 above P1 within a year),
+  // Newest first: year desc, then level desc (P6 above lower levels within a year),
   // then school code asc as a stable tie-breaker.
   .sort((a, b) => {
     if (a.yearCode !== b.yearCode) return Number(b.yearCode) - Number(a.yearCode);
@@ -84,33 +101,102 @@ export const allParsedPapers = rawFiles
 const yearOptions = options.Year.filter((option) => option.code !== "0");
 const levelOptions = options.Level.filter((option) => option.code !== "0");
 const subjectOptions = options.Subject.filter((option) => option.code !== "0");
+const typeOptions = options.Type.filter((option) => option.code !== "0");
+const schoolOptions = options.School.filter((option) => option.code !== "0");
+
+const formatLevelName = (name: string) => name.replace(/^P([1-6])$/, "Primary $1");
+const formatLevelTitle = (name: string) => name.replace(/^P([1-6])$/, "P$1");
+const formatSubjectName = (name: string) =>
+  name === "Mathematics" ? "Maths" : name;
+const formatTypeTitle = (name: string) =>
+  name === "Practice Paper" ? "Practice Papers" : name;
+const formatSchoolTitle = (name: string) =>
+  name.replace(/\s+\(primary\)$/i, "").replace(/\s+\(junior\)$/i, " Junior");
+
+const countPapers = ({
+  year,
+  levelCode,
+  subjectCode,
+  typeCode,
+  schoolCode,
+}: {
+  year?: string;
+  levelCode?: string;
+  subjectCode?: string;
+  typeCode?: string;
+  schoolCode?: string;
+}) =>
+  allParsedPapers.filter((paper) => {
+    if (year && paper.yearCode !== year) return false;
+    if (levelCode && paper.levelCode !== levelCode) return false;
+    if (subjectCode && paper.subjectCode !== subjectCode) return false;
+    if (typeCode && paper.typeCode !== typeCode) return false;
+    if (schoolCode && paper.schoolCode !== schoolCode) return false;
+    return true;
+  }).length;
 
 const buildRoute = ({
   slug,
   year,
   levelCode,
   subjectCode,
+  typeCode,
+  schoolCode,
 }: {
   slug: string;
   year?: string;
   levelCode?: string;
   subjectCode?: string;
+  typeCode?: string;
+  schoolCode?: string;
 }): PaperSeoRoute => {
-  const levelName = getOptionName("Level", levelCode);
-  const subjectName = getOptionName("Subject", subjectCode);
-  const parts = [year, levelName, subjectName].filter(Boolean);
-  const label = parts.length ? `${parts.join(" ")} exam papers` : "exam papers";
-  const title = `${label.replace(/^./, (char) => char.toUpperCase())} | SG Exam Hub`;
-  const description = `Browse free Singapore primary school ${label} with online viewing and PDF downloads for revision practice.`;
+  const levelName = formatLevelName(getOptionName("Level", levelCode));
+  const levelTitle = formatLevelTitle(getOptionName("Level", levelCode));
+  const subjectName = formatSubjectName(getOptionName("Subject", subjectCode));
+  const typeName = getOptionName("Type", typeCode);
+  const typeTitle = formatTypeTitle(typeName);
+  const schoolName = getOptionName("School", schoolCode);
+  const schoolTitle = formatSchoolTitle(schoolName);
+  const parts = [year, levelName, subjectName, typeTitle, schoolName].filter(Boolean);
+  const titleParts = [year, levelTitle, subjectName, typeTitle, schoolTitle].filter(Boolean);
+  const label = parts.length
+    ? parts.includes("Practice Papers")
+      ? parts.join(" ")
+      : `${parts.join(" ")} exam papers`
+    : "exam papers";
+  const paperCount = countPapers({
+    year,
+    levelCode,
+    subjectCode,
+    typeCode,
+    schoolCode,
+  });
+  const bareTitle = titleParts.length
+    ? titleParts.includes("Practice Papers")
+      ? titleParts.join(" ")
+      : `${titleParts.join(" ")} Exam Papers`
+    : "Free Singapore Primary Exam Papers";
+  const titleWithBrand = `${bareTitle} | SG Exam Hub`;
+  const title = titleWithBrand.length > 70 ? bareTitle : titleWithBrand;
+  const description = titleParts.length
+    ? `${paperCount.toLocaleString()} free ${
+        titleParts.includes("Practice Papers")
+          ? `${titleParts.join(" ")} PDFs`
+          : `${titleParts.join(" ")} exam paper PDFs`
+      } for Singapore primary revision. View online or download for SA1, SA2 and PSLE practice.`
+    : `Download ${paperCount.toLocaleString()} free Singapore primary school exam paper PDFs for P2-P6 Maths, Science, English and Chinese revision.`;
 
   return {
     slug,
     path: slug ? `/exam-papers/${slug}` : "/exam-papers",
     title,
     description,
+    paperCount,
     year,
     levelCode,
     subjectCode,
+    typeCode,
+    schoolCode,
   };
 };
 
@@ -122,6 +208,81 @@ export const seoRoutes: PaperSeoRoute[] = [
   ),
   ...subjectOptions.map((subject) =>
     buildRoute({ slug: slugify(subject.name), subjectCode: subject.code }),
+  ),
+  ...typeOptions.map((type) =>
+    buildRoute({ slug: slugify(type.name), typeCode: type.code }),
+  ),
+  ...schoolOptions.map((school) =>
+    buildRoute({
+      slug: `school-${slugify(school.name)}`,
+      schoolCode: school.code,
+    }),
+  ),
+  ...yearOptions.flatMap((year) =>
+    levelOptions.map((level) =>
+      buildRoute({
+        slug: `${year.code}-${slugify(level.name)}`,
+        year: year.code,
+        levelCode: level.code,
+      }),
+    ),
+  ),
+  ...yearOptions.flatMap((year) =>
+    subjectOptions.map((subject) =>
+      buildRoute({
+        slug: `${year.code}-${slugify(subject.name)}`,
+        year: year.code,
+        subjectCode: subject.code,
+      }),
+    ),
+  ),
+  ...yearOptions.flatMap((year) =>
+    typeOptions.map((type) =>
+      buildRoute({
+        slug: `${year.code}-${slugify(type.name)}`,
+        year: year.code,
+        typeCode: type.code,
+      }),
+    ),
+  ),
+  ...levelOptions.flatMap((level) =>
+    typeOptions.map((type) =>
+      buildRoute({
+        slug: `${slugify(level.name)}-${slugify(type.name)}`,
+        levelCode: level.code,
+        typeCode: type.code,
+      }),
+    ),
+  ),
+  ...subjectOptions.flatMap((subject) =>
+    typeOptions.map((type) =>
+      buildRoute({
+        slug: `${slugify(subject.name)}-${slugify(type.name)}`,
+        subjectCode: subject.code,
+        typeCode: type.code,
+      }),
+    ),
+  ),
+  ...yearOptions.flatMap((year) =>
+    schoolOptions.map((school) =>
+      buildRoute({
+        slug: `${year.code}-school-${slugify(school.name)}`,
+        year: year.code,
+        schoolCode: school.code,
+      }),
+    ),
+  ),
+  ...yearOptions.flatMap((year) =>
+    levelOptions.flatMap((level) =>
+      schoolOptions.map((school) =>
+        buildRoute({
+          slug: `${year.code}-${slugify(level.name)}-school-${slugify(school.name)}`,
+          year: year.code,
+          levelCode: level.code,
+          schoolCode: school.code,
+        }),
+      ),
+    ),
   ),
   ...levelOptions.flatMap((level) =>
     subjectOptions.map((subject) =>
@@ -144,6 +305,30 @@ export const seoRoutes: PaperSeoRoute[] = [
       ),
     ),
   ),
+  ...yearOptions.flatMap((year) =>
+    levelOptions.flatMap((level) =>
+      typeOptions.map((type) =>
+        buildRoute({
+          slug: `${year.code}-${slugify(level.name)}-${slugify(type.name)}`,
+          year: year.code,
+          levelCode: level.code,
+          typeCode: type.code,
+        }),
+      ),
+    ),
+  ),
+  ...yearOptions.flatMap((year) =>
+    subjectOptions.flatMap((subject) =>
+      typeOptions.map((type) =>
+        buildRoute({
+          slug: `${year.code}-${slugify(subject.name)}-${slugify(type.name)}`,
+          year: year.code,
+          subjectCode: subject.code,
+          typeCode: type.code,
+        }),
+      ),
+    ),
+  ),
 ].filter((route) =>
   route.slug === ""
     ? true
@@ -153,6 +338,8 @@ export const seoRoutes: PaperSeoRoute[] = [
         if (route.subjectCode && paper.subjectCode !== route.subjectCode) {
           return false;
         }
+        if (route.typeCode && paper.typeCode !== route.typeCode) return false;
+        if (route.schoolCode && paper.schoolCode !== route.schoolCode) return false;
         return true;
       }),
 );
@@ -165,5 +352,7 @@ export const getPapersForRoute = (route: PaperSeoRoute) =>
     if (route.year && paper.yearCode !== route.year) return false;
     if (route.levelCode && paper.levelCode !== route.levelCode) return false;
     if (route.subjectCode && paper.subjectCode !== route.subjectCode) return false;
+    if (route.typeCode && paper.typeCode !== route.typeCode) return false;
+    if (route.schoolCode && paper.schoolCode !== route.schoolCode) return false;
     return true;
   });
