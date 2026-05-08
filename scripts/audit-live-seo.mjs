@@ -9,6 +9,7 @@ const checks = [
       "Primary 6 Maths Exam Papers",
       "isAccessibleForFree",
       "DownloadAction",
+      "Search papers",
       "G-7WKP91PV8C",
     ],
   },

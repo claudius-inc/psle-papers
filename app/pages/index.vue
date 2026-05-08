@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { ref, computed, onMounted } from "vue";
+import { useRoute } from "vue-router";
 import type { DropdownData, ParsedPaper } from "~/composables/usePapers";
 import rawFileList from "../../public/json/files.json";
 import dropdownOptions from "../../public/json/dropdownOptions.json";
@@ -10,6 +11,7 @@ import {
 } from "~/utils/analytics";
 
 const featuredOptions = dropdownOptions as DropdownData;
+const route = useRoute();
 const loading = ref(false);
 const options = ref<DropdownData>(featuredOptions);
 
@@ -334,6 +336,7 @@ const filters = ref({
   Type: "0",
   Year: "0",
 });
+const paperSearchQuery = ref("");
 
 const showFiltersMobile = ref(false);
 const toggleFilters = () => {
@@ -341,11 +344,19 @@ const toggleFilters = () => {
 };
 
 const activeFilterCount = computed(() => {
-  return Object.values(filters.value).filter((v) => v !== "0").length;
+  return (
+    Object.values(filters.value).filter((v) => v !== "0").length +
+    (paperSearchQuery.value.trim() ? 1 : 0)
+  );
 });
 
 // --- Data Fetching ---
 onMounted(async () => {
+  const initialSearchQuery = route.query.q;
+  if (typeof initialSearchQuery === "string") {
+    paperSearchQuery.value = initialSearchQuery.slice(0, 120);
+  }
+
   try {
     const filesRes = await fetch("/json/files.json");
     rawFiles.value = await filesRes.json();
@@ -368,6 +379,12 @@ const allPapers = computed(() => {
 });
 
 const filteredPapers = computed(() => {
+  const searchTerms = paperSearchQuery.value
+    .toLowerCase()
+    .trim()
+    .split(/\s+/)
+    .filter(Boolean);
+
   return allPapers.value.filter((paper) => {
     const f = filters.value;
     if (f.Level !== "0" && paper.levelCode !== f.Level) return false;
@@ -375,6 +392,25 @@ const filteredPapers = computed(() => {
     if (f.Subject !== "0" && paper.subjectCode !== f.Subject) return false;
     if (f.Type !== "0" && paper.typeCode !== f.Type) return false;
     if (f.Year !== "0" && paper.yearCode !== f.Year) return false;
+    if (searchTerms.length) {
+      const searchableText = [
+        paper.filename,
+        paper.yearCode,
+        paper.levelCode,
+        paper.levelName,
+        paper.levelName.replace(/^P([1-6])$/, "Primary $1"),
+        paper.schoolName,
+        paper.subjectName,
+        paper.subjectName === "Mathematics" ? "Maths" : "",
+        paper.typeName,
+      ]
+        .join(" ")
+        .toLowerCase();
+
+      if (!searchTerms.every((term) => searchableText.includes(term))) {
+        return false;
+      }
+    }
     return true;
   });
 });
@@ -403,6 +439,17 @@ const trackFilterChange = (
     result_count: resultCount.value,
   });
 };
+const trackPaperSearch = () => {
+  visibleLimit.value = 60;
+  trackEvent("paper_search", {
+    source: "home_search",
+    query: paperSearchQuery.value.trim(),
+    result_count: resultCount.value,
+  });
+};
+const handlePaperSearchInput = () => {
+  visibleLimit.value = 60;
+};
 
 // View mode (grid vs list) — persists across page loads via localStorage.
 const viewMode = ref<"grid" | "list">("grid");
@@ -427,6 +474,7 @@ const totalPaperCountRounded = computed(() => {
 
 const resetFilters = () => {
   visibleLimit.value = 60;
+  paperSearchQuery.value = "";
   filters.value = {
     Level: "0",
     School: "0",
@@ -528,6 +576,20 @@ const resetFilters = () => {
 
       <div class="content-wrapper filter-container">
         <div class="filter-grid">
+          <div class="filter-group search-filter">
+            <label for="paper-search">Search papers</label>
+            <input
+              id="paper-search"
+              v-model="paperSearchQuery"
+              type="search"
+              inputmode="search"
+              autocomplete="off"
+              placeholder="Nanyang P6 Maths 2025"
+              @input="handlePaperSearchInput"
+              @change="trackPaperSearch"
+            />
+          </div>
+
           <div class="filter-group">
             <label>Level</label>
             <select
@@ -1090,11 +1152,13 @@ const resetFilters = () => {
   align-items: end;
 }
 
+.search-filter,
 .school-select {
   grid-column: span 2;
 }
 
 @media (max-width: 768px) {
+  .search-filter,
   .school-select {
     grid-column: span 1;
   }
@@ -1112,7 +1176,8 @@ const resetFilters = () => {
   color: #64748b;
 }
 
-select {
+select,
+input[type="search"] {
   padding: 0.625rem;
   border: 1px solid #cbd5e1;
   border-radius: 0.5rem;
@@ -1122,6 +1187,9 @@ select {
   width: 100%;
   transition: all 0.2s;
   cursor: pointer;
+}
+
+select {
   appearance: none;
   background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
   background-position: right 0.5rem center;
@@ -1130,7 +1198,16 @@ select {
   padding-right: 2.5rem;
 }
 
-select:focus {
+input[type="search"] {
+  cursor: text;
+}
+
+input[type="search"]::placeholder {
+  color: #94a3b8;
+}
+
+select:focus,
+input[type="search"]:focus {
   outline: none;
   border-color: #4f46e5;
   box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
