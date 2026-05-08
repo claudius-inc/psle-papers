@@ -37,6 +37,10 @@ Use this map with Google Search Console after deployment. The goal is to match e
 | 2025 primary 6 maths exam papers | `/exam-papers/2025-primary-6-mathematics` | Latest P6 Maths papers | CTR, paper downloads |
 | 2025 primary 6 science exam papers | `/exam-papers/2025-primary-6-science` | Latest P6 Science papers | CTR, paper downloads |
 | 2025 primary 6 SA2 exam papers | `/exam-papers/2025-primary-6-sa2` | Latest P6 SA2 papers | CTR, paper opens |
+| 2025 primary 6 maths SA2 exam papers | `/exam-papers/2025-primary-6-mathematics-sa2` | Latest P6 Maths final assessment papers | CTR, paper downloads |
+| 2025 primary 6 science SA2 exam papers | `/exam-papers/2025-primary-6-science-sa2` | Latest P6 Science final assessment papers | CTR, paper downloads |
+| primary 6 maths SA2 exam papers | `/exam-papers/primary-6-mathematics-sa2` | P6 Maths SA2 practice | CTR, paper downloads |
+| primary 6 science SA2 exam papers | `/exam-papers/primary-6-science-sa2` | P6 Science SA2 practice | CTR, paper downloads |
 | primary 6 SA2 exam papers | `/exam-papers/primary-6-sa2` | P6 final assessment practice | CTR, downloads |
 | primary 6 SA1 exam papers | `/exam-papers/primary-6-sa1` | P6 mid-year practice | CTR, downloads |
 | SA2 exam papers | `/exam-papers/sa2` | Broad SA2 practice | CTR, paper opens |

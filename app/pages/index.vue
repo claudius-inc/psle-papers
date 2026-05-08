@@ -121,8 +121,24 @@ const examPaperDirectorySections = [
       { label: "WA3 Exam Papers", to: "/exam-papers/wa3" },
       { label: "Practice Papers", to: "/exam-papers/practice-paper" },
       { label: "2025 Primary 6 SA2 Exam Papers", to: "/exam-papers/2025-primary-6-sa2" },
+      {
+        label: "2025 Primary 6 Maths SA2 Exam Papers",
+        to: "/exam-papers/2025-primary-6-mathematics-sa2",
+      },
+      {
+        label: "2025 Primary 6 Science SA2 Exam Papers",
+        to: "/exam-papers/2025-primary-6-science-sa2",
+      },
       { label: "Primary 6 SA1 Exam Papers", to: "/exam-papers/primary-6-sa1" },
       { label: "Primary 6 SA2 Exam Papers", to: "/exam-papers/primary-6-sa2" },
+      {
+        label: "Primary 6 Maths SA2 Exam Papers",
+        to: "/exam-papers/primary-6-mathematics-sa2",
+      },
+      {
+        label: "Primary 6 Science SA2 Exam Papers",
+        to: "/exam-papers/primary-6-science-sa2",
+      },
       { label: "Maths SA2 Exam Papers", to: "/exam-papers/mathematics-sa2" },
       { label: "Science SA2 Exam Papers", to: "/exam-papers/science-sa2" },
       { label: "English SA2 Exam Papers", to: "/exam-papers/english-sa2" },

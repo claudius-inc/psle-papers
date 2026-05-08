@@ -146,6 +146,14 @@ const requiredSnippets = [
     "2025 P6 SA2 Exam Papers",
   ],
   [
+    ".output/public/exam-papers/2025-primary-6-mathematics-sa2/index.html",
+    "2025 P6 Maths SA2 Exam Papers",
+  ],
+  [
+    ".output/public/exam-papers/primary-6-mathematics-sa2/index.html",
+    "P6 Maths SA2 Exam Papers",
+  ],
+  [
     ".output/public/exam-papers/sa2/index.html",
     "SA2 Exam Papers",
   ],
@@ -200,6 +208,9 @@ if (sitemapCount !== htmlFiles.length) {
 }
 if (!sitemap.includes("https://sgexamhub.com/sitemap")) {
   fail("Sitemap is missing the HTML sitemap page.");
+}
+if (!sitemap.includes("https://sgexamhub.com/exam-papers/2025-primary-6-mathematics-sa2")) {
+  fail("Sitemap is missing representative level-subject-type route.");
 }
 if (!sitemap.includes("https://sgexamhub.com/view/2_7118_3_4_2019")) {
   fail("Sitemap is missing representative older paper viewer URL.");

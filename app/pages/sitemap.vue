@@ -78,6 +78,15 @@ const directorySections = [
     ),
   },
   {
+    title: "Popular Level Subject And Exam Type Collections",
+    links: buildLinks(
+      seoRoutes.filter((route) =>
+        isRoute(route, ["levelCode", "subjectCode", "typeCode"]),
+      ),
+      60,
+    ),
+  },
+  {
     title: "Top School Exam Paper Collections",
     links: buildLinks(
       seoRoutes.filter((route) => isRoute(route, ["schoolCode"])),

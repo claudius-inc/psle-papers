@@ -329,6 +329,37 @@ export const seoRoutes: PaperSeoRoute[] = [
       ),
     ),
   ),
+  ...levelOptions.flatMap((level) =>
+    subjectOptions.flatMap((subject) =>
+      typeOptions.map((type) =>
+        buildRoute({
+          slug: `${slugify(level.name)}-${slugify(subject.name)}-${slugify(
+            type.name,
+          )}`,
+          levelCode: level.code,
+          subjectCode: subject.code,
+          typeCode: type.code,
+        }),
+      ),
+    ),
+  ),
+  ...yearOptions.flatMap((year) =>
+    levelOptions.flatMap((level) =>
+      subjectOptions.flatMap((subject) =>
+        typeOptions.map((type) =>
+          buildRoute({
+            slug: `${year.code}-${slugify(level.name)}-${slugify(
+              subject.name,
+            )}-${slugify(type.name)}`,
+            year: year.code,
+            levelCode: level.code,
+            subjectCode: subject.code,
+            typeCode: type.code,
+          }),
+        ),
+      ),
+    ),
+  ),
 ].filter((route) =>
   route.slug === ""
     ? true

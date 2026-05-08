@@ -20,6 +20,15 @@ const checks = [
     ],
   },
   {
+    path: "/exam-papers/2025-primary-6-mathematics-sa2/",
+    snippets: [
+      "2025 P6 Maths SA2 Exam Papers",
+      'rel="canonical"',
+      "CollectionPage",
+      "Download PDF",
+    ],
+  },
+  {
     path: "/view/6_1073_3_4_2025/",
     snippets: [
       'content="index, follow"',
@@ -70,6 +79,8 @@ try {
     "/",
     "/sitemap",
     "/exam-papers/2025-primary-6-mathematics",
+    "/exam-papers/2025-primary-6-mathematics-sa2",
+    "/exam-papers/primary-6-mathematics-sa2",
     "/exam-papers/primary-6-sa2",
     "/view/6_1073_3_4_2025",
   ]) {

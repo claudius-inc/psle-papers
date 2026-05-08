@@ -181,6 +181,35 @@ const routeEntries = [
       })),
     ),
   ),
+  ...levels.flatMap((level) =>
+    subjects.flatMap((subject) =>
+      types.map((type) => ({
+        path: `/exam-papers/${slugify(level.name)}-${slugify(
+          subject.name,
+        )}-${slugify(type.name)}`,
+        levelCode: level.code,
+        subjectCode: subject.code,
+        typeCode: type.code,
+        priority: "0.7",
+      })),
+    ),
+  ),
+  ...years.flatMap((year) =>
+    levels.flatMap((level) =>
+      subjects.flatMap((subject) =>
+        types.map((type) => ({
+          path: `/exam-papers/${year.code}-${slugify(level.name)}-${slugify(
+            subject.name,
+          )}-${slugify(type.name)}`,
+          year: year.code,
+          levelCode: level.code,
+          subjectCode: subject.code,
+          typeCode: type.code,
+          priority: "0.6",
+        })),
+      ),
+    ),
+  ),
   ...paperViewRoutes,
 ].filter((route) => route.path === "/" || route.path === "/exam-papers" || hasPapers(route));
 
