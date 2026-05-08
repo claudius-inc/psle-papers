@@ -5,7 +5,7 @@
   "scripts": {
     "build": "nuxt build",
     "dev": "nuxt dev",
-    "generate": "npm run seo:sitemap && nuxt generate",
+    "generate": "rm -rf .output && npm run seo:sitemap && nuxt generate",
     "preview": "nuxt preview",
     "seo:audit": "node scripts/audit-seo-output.mjs",
     "seo:sitemap": "node scripts/generate-sitemap.mjs",
