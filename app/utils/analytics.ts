@@ -17,23 +17,40 @@ export const trackEvent = (
   });
 };
 
-export const trackPaperViewClick = (filename: string, source: string) => {
+type AnalyticsParams = Record<string, string | number | boolean | undefined>;
+
+export const trackPaperViewClick = (
+  filename: string,
+  source: string,
+  params: AnalyticsParams = {},
+) => {
   trackEvent("paper_view_click", {
     paper_id: filename,
     source,
+    ...params,
   });
 };
 
-export const trackPaperOpen = (filename: string, source: string) => {
+export const trackPaperOpen = (
+  filename: string,
+  source: string,
+  params: AnalyticsParams = {},
+) => {
   trackEvent("paper_open", {
     paper_id: filename,
     source,
+    ...params,
   });
 };
 
-export const trackPaperDownload = (filename: string, source: string) => {
+export const trackPaperDownload = (
+  filename: string,
+  source: string,
+  params: AnalyticsParams = {},
+) => {
   trackEvent("paper_download", {
     paper_id: filename,
     source,
+    ...params,
   });
 };

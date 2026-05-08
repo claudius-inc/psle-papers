@@ -8,6 +8,7 @@ const appPath = "app/app.vue";
 const analyticsPath = "app/utils/analytics.ts";
 const engagementPath = "app/composables/useEngagementTracking.ts";
 const keywordMapPath = "SEO_KEYWORD_MAP.md";
+const collectionPagePath = "app/pages/exam-papers/[[slug]].vue";
 
 const decodeHtml = (value) =>
   value
@@ -119,6 +120,9 @@ const engagement = existsSync(engagementPath)
   : "";
 const keywordMap = existsSync(keywordMapPath)
   ? readFileSync(keywordMapPath, "utf8")
+  : "";
+const collectionPage = existsSync(collectionPagePath)
+  ? readFileSync(collectionPagePath, "utf8")
   : "";
 const sitemapCount = (sitemap.match(/<url>/g) || []).length;
 const keywordMapPaths = [
@@ -237,6 +241,17 @@ if (!appShell.includes("G-7WKP91PV8C") || !appShell.includes("useEngagementTrack
 for (const eventName of ["paper_view_click", "paper_open", "paper_download"]) {
   if (!analytics.includes(eventName)) {
     fail(`Analytics helper is missing ${eventName}.`);
+  }
+}
+for (const snippet of [
+  "collectionAnalyticsContext",
+  "page_slug",
+  "page_path",
+  "trackCollectionPaperView",
+  "trackCollectionPaperDownload",
+]) {
+  if (!collectionPage.includes(snippet)) {
+    fail(`Collection page is missing analytics attribution snippet: ${snippet}.`);
   }
 }
 for (const eventName of ["page_engaged_time", "page_scroll_depth"]) {

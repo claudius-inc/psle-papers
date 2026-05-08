@@ -153,6 +153,23 @@ const readableSchool = computed(() =>
     ? options.School.find((item) => item.code === seoRoute.schoolCode)?.name || ""
     : "",
 );
+const collectionAnalyticsContext = computed(() => ({
+  page_slug: slug || "exam-papers",
+  page_path: seoRoute.path,
+  page_title: pageTitle,
+  paper_count: seoRoute.paperCount,
+  year: seoRoute.year || undefined,
+  level: readableLevel.value || undefined,
+  subject: readableSubject.value || undefined,
+  exam_type: readableType.value || undefined,
+  school: readableSchool.value || undefined,
+}));
+const trackCollectionPaperView = (filename: string) => {
+  trackPaperViewClick(filename, "index_results", collectionAnalyticsContext.value);
+};
+const trackCollectionPaperDownload = (filename: string) => {
+  trackPaperDownload(filename, "index_results", collectionAnalyticsContext.value);
+};
 const landingIntro = computed(() => {
   const focus = [
     seoRoute.year,
@@ -654,7 +671,7 @@ useHead({
             <NuxtLink
               class="view-btn"
               :to="`/view/${paper.filename}`"
-              @click="trackPaperViewClick(paper.filename, 'index_results')"
+              @click="trackCollectionPaperView(paper.filename)"
             >
               View Paper
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -666,7 +683,7 @@ useHead({
               class="download-btn"
               :href="`/files/${paper.filename}.pdf`"
               :download="`${paper.yearCode}-${paper.levelName}-${paper.subjectName}-${paper.typeName}-${paper.schoolName}.pdf`"
-              @click="trackPaperDownload(paper.filename, 'index_results')"
+              @click="trackCollectionPaperDownload(paper.filename)"
             >
               Download PDF
             </a>
