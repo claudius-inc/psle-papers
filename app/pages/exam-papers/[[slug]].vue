@@ -41,25 +41,52 @@ const initialFilters = () => ({
 });
 
 const filters = ref(initialFilters());
+const paperSearchQuery = ref("");
 const resetFilters = () => {
   filters.value = initialFilters();
+  paperSearchQuery.value = "";
   trackEvent("paper_filters_reset", {
     source: "index_filters",
     page_slug: slug,
   });
 };
 
-const filteredPapers = computed(() =>
-  allParsedPapers.filter((paper) => {
+const filteredPapers = computed(() => {
+  const searchTerms = paperSearchQuery.value
+    .trim()
+    .toLowerCase()
+    .split(/\s+/)
+    .filter(Boolean);
+
+  return allParsedPapers.filter((paper) => {
     const f = filters.value;
     if (f.Level !== "0" && paper.levelCode !== f.Level) return false;
     if (f.School !== "0" && paper.schoolCode !== f.School) return false;
     if (f.Subject !== "0" && paper.subjectCode !== f.Subject) return false;
     if (f.Type !== "0" && paper.typeCode !== f.Type) return false;
     if (f.Year !== "0" && paper.yearCode !== f.Year) return false;
+
+    if (searchTerms.length) {
+      const searchableText = [
+        paper.filename,
+        paper.yearCode,
+        paper.levelCode,
+        paper.levelName,
+        paper.levelName.replace(/^P([1-6])$/, "Primary $1"),
+        paper.schoolName,
+        paper.subjectName,
+        paper.subjectName === "Mathematics" ? "Maths" : "",
+        paper.typeName,
+      ]
+        .join(" ")
+        .toLowerCase();
+
+      if (!searchTerms.every((term) => searchableText.includes(term))) return false;
+    }
+
     return true;
-  }),
-);
+  });
+});
 
 const routePapers = computed(() => getPapersForRoute(seoRoute));
 const resultCount = computed(() => filteredPapers.value.length);
@@ -75,10 +102,24 @@ const trackFilterChange = (
     result_count: resultCount.value,
   });
 };
+const trackCollectionPaperSearch = () => {
+  trackEvent("paper_search", {
+    source: "index_search",
+    page_slug: slug,
+    page_path: seoRoute.path,
+    query: paperSearchQuery.value.trim(),
+    result_count: resultCount.value,
+  });
+};
 
 // View mode (grid vs list) — shared with homepage via localStorage.
 const viewMode = ref<"grid" | "list">("grid");
 onMounted(() => {
+  const initialSearchQuery = route.query.q;
+  if (typeof initialSearchQuery === "string") {
+    paperSearchQuery.value = initialSearchQuery.slice(0, 120);
+  }
+
   const saved = localStorage.getItem("paperViewMode");
   if (saved === "grid" || saved === "list") viewMode.value = saved;
 });
@@ -163,6 +204,7 @@ const collectionAnalyticsContext = computed(() => ({
   subject: readableSubject.value || undefined,
   exam_type: readableType.value || undefined,
   school: readableSchool.value || undefined,
+  search_query: paperSearchQuery.value.trim() || undefined,
 }));
 const trackCollectionPaperView = (filename: string) => {
   trackPaperViewClick(filename, "index_results", collectionAnalyticsContext.value);
@@ -481,6 +523,18 @@ useHead({
     <!-- Filter bar (locked fields hidden) -->
     <div class="filter-container">
       <div class="content-wrapper filter-grid">
+        <div class="filter-group search-filter">
+          <label for="collection-paper-search">Search papers</label>
+          <input
+            id="collection-paper-search"
+            v-model="paperSearchQuery"
+            type="search"
+            inputmode="search"
+            autocomplete="off"
+            placeholder="Nanyang P6 Maths 2025"
+            @change="trackCollectionPaperSearch"
+          />
+        </div>
         <div v-if="!lockedLevel" class="filter-group">
           <label>Level</label>
           <select
@@ -995,6 +1049,11 @@ useHead({
   flex: 1 1 220px;
 }
 
+.filter-group.search-filter {
+  flex: 1 1 260px;
+  min-width: min(100%, 240px);
+}
+
 .filter-group label {
   font-size: 0.75rem;
   color: #64748b;
@@ -1003,7 +1062,8 @@ useHead({
   letter-spacing: 0.04em;
 }
 
-.filter-group select {
+.filter-group select,
+.filter-group input[type="search"] {
   padding: 0.55rem 0.75rem;
   border: 1px solid #e2e8f0;
   border-radius: 8px;
@@ -1013,7 +1073,12 @@ useHead({
   font-family: inherit;
 }
 
-.filter-group select:focus {
+.filter-group input[type="search"]::placeholder {
+  color: #94a3b8;
+}
+
+.filter-group select:focus,
+.filter-group input[type="search"]:focus {
   outline: none;
   border-color: #4f46e5;
   box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.15);

@@ -280,6 +280,11 @@ for (const snippet of [
   "page_path",
   "trackCollectionPaperView",
   "trackCollectionPaperDownload",
+  "paperSearchQuery",
+  "trackCollectionPaperSearch",
+  "index_search",
+  "Search papers",
+  "search_query",
 ]) {
   if (!collectionPage.includes(snippet)) {
     fail(`Collection page is missing analytics attribution snippet: ${snippet}.`);
