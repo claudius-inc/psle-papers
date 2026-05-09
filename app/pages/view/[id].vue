@@ -183,6 +183,12 @@ const indexLinks = computed(() => {
       to: `/exam-papers/${paper.value.yearCode}-school-${schoolSlug}`,
     },
     {
+      label: `${paper.value.yearCode} ${paper.value.typeName} ${paper.value.schoolName} papers`,
+      to: `/exam-papers/${paper.value.yearCode}-${slugify(
+        paper.value.typeName,
+      )}-school-${schoolSlug}`,
+    },
+    {
       label: `${paper.value.yearCode} ${levelLabel} ${paper.value.schoolName}`,
       to: `/exam-papers/${paper.value.yearCode}-${levelSlug}-school-${schoolSlug}`,
     },
@@ -201,6 +207,10 @@ const indexLinks = computed(() => {
     {
       label: `${paper.value.yearCode} ${levelLabel} ${readableSubject.value}`,
       to: `/exam-papers/${paper.value.yearCode}-${levelSlug}-${subjectSlug}`,
+    },
+    {
+      label: `${paper.value.typeName} ${paper.value.schoolName} papers`,
+      to: `/exam-papers/${slugify(paper.value.typeName)}-school-${schoolSlug}`,
     },
     {
       label: `${paper.value.schoolName} papers`,
@@ -238,6 +248,14 @@ const practiceSetLinks = computed(() => {
       detail: "More from this school",
       to: `/exam-papers/school-${schoolSlug}`,
       kind: "school",
+    },
+    {
+      label: `${paper.value.yearCode} ${paper.value.typeName} ${paper.value.schoolName}`,
+      detail: "Same school and assessment",
+      to: `/exam-papers/${paper.value.yearCode}-${slugify(
+        paper.value.typeName,
+      )}-school-${schoolSlug}`,
+      kind: "year_school_assessment",
     },
   ];
 });

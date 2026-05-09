@@ -455,6 +455,18 @@ const requiredSnippets = [
   [".output/public/view/6_1073_3_4_2025/index.html", "Using this paper"],
   [".output/public/view/6_1073_3_4_2025/index.html", "Continue revision"],
   [".output/public/view/6_1073_3_4_2025/index.html", "More Primary 6 Maths papers"],
+  [
+    ".output/public/view/6_1073_3_4_2025/index.html",
+    "Same school and assessment",
+  ],
+  [
+    ".output/public/view/6_1073_3_4_2025/index.html",
+    'href="/exam-papers/2025-sa2-school-raffles-girls-primary-school"',
+  ],
+  [
+    ".output/public/view/6_1073_3_4_2025/index.html",
+    "2025 SA2 Raffles Girls",
+  ],
   [".output/public/view/6_1073_3_4_2025/index.html", "Is the 2025 Raffles Girls"],
   [".output/public/view/6_1073_3_4_2025/index.html", "More from this school"],
   [".output/public/view/6_1073_3_4_2025/index.html", "Same exam type"],
