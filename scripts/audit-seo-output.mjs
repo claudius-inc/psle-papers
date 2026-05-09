@@ -210,6 +210,11 @@ const requiredSnippets = [
     "Raffles Girls",
   ],
   [".output/public/view/6_1073_3_4_2025/index.html", "LearningResource"],
+  [".output/public/view/6_1073_3_4_2025/index.html", "Free PDF Download"],
+  [
+    ".output/public/view/6_1073_3_4_2025/index.html",
+    "Free PDF download for this 2025 P6 Maths SA2 exam paper",
+  ],
   [".output/public/view/6_1073_3_4_2025/index.html", "isAccessibleForFree"],
   [".output/public/view/6_1073_3_4_2025/index.html", "DownloadAction"],
   [".output/public/view/6_1073_3_4_2025/index.html", 'content="index, follow"'],
@@ -359,6 +364,8 @@ for (const snippet of [
   "viewerFaqItems",
   "Using this paper",
   "FAQPage",
+  "Free PDF Download",
+  "Free PDF download for",
 ]) {
   if (!viewerPage.includes(snippet)) {
     fail(`Viewer page is missing analytics attribution snippet: ${snippet}.`);

@@ -72,15 +72,19 @@ const seoPaperTitle = computed(() => {
 });
 const seoTitle = computed(() =>
   paper.value
-    ? `${seoPaperTitle.value} PDF | SG Exam Hub`.length > 70
-      ? `${seoPaperTitle.value} PDF`
-      : `${seoPaperTitle.value} PDF | SG Exam Hub`
-    : "Exam paper PDF | SG Exam Hub",
+    ? `${seoPaperTitle.value} Free PDF Download | SG Exam Hub`.length <= 70
+      ? `${seoPaperTitle.value} Free PDF Download | SG Exam Hub`
+      : `${seoPaperTitle.value} Free PDF Download`.length <= 70
+        ? `${seoPaperTitle.value} Free PDF Download`
+        : `${seoPaperTitle.value} PDF | SG Exam Hub`.length <= 70
+          ? `${seoPaperTitle.value} PDF | SG Exam Hub`
+          : `${seoPaperTitle.value} PDF`
+    : "Free exam paper PDF download | SG Exam Hub",
 );
 const seoDescription = computed(() =>
   paper.value
-    ? `${seoPaperTitle.value} exam paper PDF for Singapore primary revision. View online or download for SA1, SA2 and PSLE practice.`
-    : "View or download free Singapore primary school exam paper PDFs for revision practice.",
+    ? `Free PDF download for this ${paper.value.yearCode} ${titleLevel.value} ${readableSubject.value} ${paper.value.typeName} exam paper. View online, then download it for Singapore primary revision.`
+    : "View online or download free Singapore primary school exam paper PDFs for revision practice.",
 );
 const viewerFaqItems = computed(() => {
   if (!paper.value) return [];

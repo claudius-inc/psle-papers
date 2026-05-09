@@ -53,6 +53,8 @@ const checks = [
     snippets: [
       'content="index, follow"',
       "LearningResource",
+      "Free PDF Download",
+      "Free PDF download for this 2025 P6 Maths SA2 exam paper",
       "isAccessibleForFree",
       "DownloadAction",
       "Download PDF",
