@@ -536,6 +536,14 @@ const requiredSnippets = [
   ],
   [
     ".output/public/exam-papers/sa2/index.html",
+    "HowTo",
+  ],
+  [
+    ".output/public/exam-papers/sa2/index.html",
+    "HowToStep",
+  ],
+  [
+    ".output/public/exam-papers/sa2/index.html",
     'href="/sitemap"',
   ],
   [
@@ -562,6 +570,8 @@ const requiredSnippets = [
   [".output/public/view/6_1073_3_4_2025/index.html", "Open one related paper after marking this PDF"],
   [".output/public/view/6_1073_3_4_2025/index.html", "Download the PDF or open the next Primary 6 Maths paper"],
   [".output/public/view/6_1073_3_4_2025/index.html", "FAQPage"],
+  [".output/public/view/6_1073_3_4_2025/index.html", "HowTo"],
+  [".output/public/view/6_1073_3_4_2025/index.html", "HowToStep"],
   [".output/public/view/6_1073_3_4_2025/index.html", "Using this paper"],
   [".output/public/view/6_1073_3_4_2025/index.html", "Continue revision"],
   [".output/public/view/6_1073_3_4_2025/index.html", "More Primary 6 Maths papers"],
@@ -758,6 +768,8 @@ for (const snippet of [
   "trackCollectionHeroPaperView",
   "trackCollectionHeroPaperDownload",
   "collection_hero_cta",
+  "HowTo",
+  "HowToStep",
   "paperSearchQuery",
   "trackCollectionPaperSearch",
   "index_search",
@@ -787,6 +799,8 @@ for (const snippet of [
   "viewerFaqItems",
   "Using this paper",
   "FAQPage",
+  "HowTo",
+  "HowToStep",
   "revisionChecklistItems",
   "Revision checklist",
   "Free PDF Download",

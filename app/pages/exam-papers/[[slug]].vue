@@ -980,6 +980,18 @@ useHead({
         },
         {
           "@context": "https://schema.org",
+          "@type": "HowTo",
+          name: `How to use ${pageTitle} for revision`,
+          description: landingIntro.value,
+          step: studySteps.value.map((step, index) => ({
+            "@type": "HowToStep",
+            position: index + 1,
+            name: `Step ${index + 1}`,
+            text: step,
+          })),
+        },
+        {
+          "@context": "https://schema.org",
           "@type": "ItemList",
           name: `${pageTitle} paper list`,
           numberOfItems: filteredPapers.value.length,

@@ -489,6 +489,18 @@ useHead({
               },
             })),
           },
+          {
+            "@context": "https://schema.org",
+            "@type": "HowTo",
+            name: `How to use ${pageTitle.value} for revision`,
+            description: seoDescription.value,
+            step: revisionChecklistItems.value.map((step, index) => ({
+              "@type": "HowToStep",
+              position: index + 1,
+              name: `Step ${index + 1}`,
+              text: step,
+            })),
+          },
         ]),
       ),
     },
