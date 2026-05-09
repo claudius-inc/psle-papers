@@ -85,11 +85,22 @@ const seoTitle = computed(() =>
           : `${seoPaperTitle.value} PDF`
     : "Free exam paper PDF download | SG Exam Hub",
 );
-const seoDescription = computed(() =>
-  paper.value
-    ? `Free PDF download for this ${paper.value.yearCode} ${titleLevel.value} ${readableSubject.value} ${paper.value.typeName} exam paper. View online, then download it for Singapore primary revision.`
-    : "View online or download free Singapore primary school exam paper PDFs for revision practice.",
-);
+const seoDescription = computed(() => {
+  if (!paper.value) {
+    return "View online or download free Singapore primary school exam paper PDFs for revision practice.";
+  }
+
+  const paperLabel = `${paper.value.yearCode} ${titleSchool.value} ${titleLevel.value} ${readableSubject.value} ${paper.value.typeName}`;
+  const revisionGoal =
+    paper.value.levelCode === "6" ? "PSLE revision practice" : "Singapore primary revision";
+  const descriptions = [
+    `Free ${paperLabel} exam paper PDF. View online, then download for ${revisionGoal}.`,
+    `Download this free ${paperLabel} exam paper PDF. View online for ${revisionGoal}.`,
+    `Free PDF download for this ${paper.value.yearCode} ${titleLevel.value} ${readableSubject.value} ${paper.value.typeName} exam paper. View online, then download it for Singapore primary revision.`,
+  ];
+
+  return descriptions.find((description) => description.length <= 160) || descriptions[2];
+});
 const viewerFaqItems = computed(() => {
   if (!paper.value) return [];
 

@@ -690,7 +690,7 @@ const requiredSnippets = [
   [".output/public/view/6_1073_3_4_2025/index.html", "Free PDF Download"],
   [
     ".output/public/view/6_1073_3_4_2025/index.html",
-    "Free PDF download for this 2025 P6 Maths SA2 exam paper",
+    "Free 2025 Raffles Girls' Primary School P6 Maths SA2 exam paper PDF",
   ],
   [".output/public/view/6_1073_3_4_2025/index.html", "isAccessibleForFree"],
   [".output/public/view/6_1073_3_4_2025/index.html", "DownloadAction"],
@@ -1002,7 +1002,8 @@ for (const snippet of [
   "revisionChecklistItems",
   "Revision checklist",
   "Free PDF Download",
-  "Free PDF download for",
+  "paperLabel",
+  "PSLE revision practice",
   "practiceSetLinks",
   "Continue revision",
   "nextPracticePaper",

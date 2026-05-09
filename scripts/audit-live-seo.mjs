@@ -261,7 +261,7 @@ const checks = [
       'content="index, follow"',
       "LearningResource",
       "Free PDF Download",
-      "Free PDF download for this 2025 P6 Maths SA2 exam paper",
+      "Free 2025 Raffles Girls' Primary School P6 Maths SA2 exam paper PDF",
       "isAccessibleForFree",
       "DownloadAction",
       "raw.githubusercontent.com/airbob/PrimarySchoolExamPapers",
