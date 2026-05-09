@@ -197,6 +197,26 @@ const requiredSnippets = [
     "P6 Maths Nanyang Primary School Exam Papers",
   ],
   [
+    ".output/public/exam-papers/2025/index.html",
+    "2025 Exam Papers",
+  ],
+  [
+    ".output/public/exam-papers/2025/index.html",
+    "Year paper paths",
+  ],
+  [
+    ".output/public/exam-papers/2025/index.html",
+    "Start with 2025 primary exam papers",
+  ],
+  [
+    ".output/public/exam-papers/2025/index.html",
+    'href="/exam-papers/2025-primary-6"',
+  ],
+  [
+    ".output/public/exam-papers/2025/index.html",
+    'href="/exam-papers/2025-primary-6-mathematics"',
+  ],
+  [
     ".output/public/exam-papers/2025-primary-6-mathematics/index.html",
     "2025 P6 Maths Exam Papers",
   ],

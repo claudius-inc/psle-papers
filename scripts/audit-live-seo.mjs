@@ -30,6 +30,17 @@ const checks = [
     ],
   },
   {
+    path: "/exam-papers/2025/",
+    snippets: [
+      "2025 Exam Papers",
+      "Year paper paths",
+      "Start with 2025 primary exam papers",
+      'href="/exam-papers/2025-primary-6"',
+      'href="/exam-papers/2025-primary-6-mathematics"',
+      "Download PDF",
+    ],
+  },
+  {
     path: "/exam-papers/2025-primary-6-mathematics/",
     snippets: [
       "2025 P6 Maths Exam Papers",
