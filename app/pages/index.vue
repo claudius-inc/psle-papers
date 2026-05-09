@@ -218,6 +218,11 @@ const examPaperDirectorySections = [
 
 const homeFaqItems = [
   {
+    question: "Is SG Exam Hub the same as searching for SG exam papers?",
+    answer:
+      "SG Exam Hub is a free Singapore primary school exam paper directory. Parents and students searching for SG exam papers can browse by level, subject, year, school and assessment type.",
+  },
+  {
     question: "Where can I find free Singapore primary school exam papers for 2026 revision?",
     answer:
       "You can use SG Exam Hub for 2026 revision by downloading the latest available 2025 and 2024 Singapore primary school exam papers from top schools across P2 to P6.",
@@ -249,13 +254,13 @@ const siteNavigationItems = examPaperDirectorySections
   }));
 
 const homepageSeoTitle =
-  "Free Singapore Primary Exam Papers for 2026 Revision | P2-P6";
+  "SG Exam Hub: Free Singapore Primary Exam Papers | 2026";
 const homepageSeoDescription =
-  "Prepare for 2026 with free Singapore primary school exam papers. Download 2,300+ latest 2025 and 2024 PDFs from top schools for Maths, Science, English and Chinese.";
+  "Use SG Exam Hub for free Singapore primary school exam papers. Download 2,300+ latest 2025 and 2024 SG exam paper PDFs for Maths, Science, English and Chinese.";
 const homepageSocialTitle =
-  "Free Singapore Primary School Exam Papers for 2026 Revision";
+  "SG Exam Hub: Free Singapore Primary School Exam Papers";
 const homepageSocialDescription =
-  "Access 2,300+ latest 2025 and 2024 primary school exam paper PDFs from top Singapore schools for P2-P6 revision.";
+  "Access 2,300+ latest 2025 and 2024 SG exam paper PDFs from top Singapore schools for P2-P6 revision.";
 
 // --- SEO Configuration ---
 useHead({
@@ -287,11 +292,11 @@ useHead({
             "@type": "WebSite",
             "@id": "https://sgexamhub.com/#website",
             name: "SG Exam Hub",
-            alternateName: "Singapore Exam Hub",
+            alternateName: ["Singapore Exam Hub", "SG Exam Papers", "SG Exam Paper Hub"],
             url: "https://sgexamhub.com/",
             inLanguage: "en-SG",
             description:
-              "Free Singapore primary school exam papers for P2 to P6 English, Maths, Science, Chinese and Higher Chinese.",
+              "Free SG exam papers and Singapore primary school exam papers for P2 to P6 English, Maths, Science, Chinese and Higher Chinese.",
             potentialAction: {
               "@type": "SearchAction",
               target: "https://sgexamhub.com/?q={search_term_string}",
@@ -525,12 +530,12 @@ const resetFilters = () => {
       <div class="content-wrapper hero-content">
         <div class="tagline">Exam Papers Preparation Portal</div>
         <h1 class="title">
-          Singapore Primary School
+          SG Exam Hub
           <span class="text-gradient">Exam Papers</span>
         </h1>
         <p class="subtitle">
-          Prepare for 2026 with thousands of free assessment papers from top
-          Singapore schools. View online or download PDFs for practice.
+          Prepare for 2026 with thousands of free SG exam papers from top
+          Singapore primary schools. View online or download PDFs for practice.
         </p>
         <div class="hero-stats">
           <div class="stat-item">
@@ -862,7 +867,7 @@ const resetFilters = () => {
       <div class="seo-directory-intro">
         <h2 id="paper-directory">Browse Singapore primary school exam papers</h2>
         <p>
-          Find free exam papers for 2026 revision by primary level, subject,
+          Find free SG exam papers for 2026 revision by primary level, subject,
           assessment type, year and top Singapore schools. Each collection opens a focused index for viewing
           papers online or downloading PDF test papers.
         </p>

@@ -4,7 +4,9 @@ const checks = [
   {
     path: "/",
     snippets: [
-      "Free Singapore Primary Exam Papers for 2026 Revision",
+      "SG Exam Hub: Free Singapore Primary Exam Papers | 2026",
+      "SG exam papers",
+      "SG Exam Papers",
       "SiteNavigationElement",
       "Primary 6 Maths Exam Papers",
       "isAccessibleForFree",

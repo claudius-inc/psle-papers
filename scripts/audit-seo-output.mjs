@@ -154,7 +154,9 @@ const keywordMapPaths = [
 ];
 
 const requiredSnippets = [
-  [".output/public/index.html", "Free Singapore Primary Exam Papers for 2026 Revision"],
+  [".output/public/index.html", "SG Exam Hub: Free Singapore Primary Exam Papers | 2026"],
+  [".output/public/index.html", "SG exam papers"],
+  [".output/public/index.html", "SG Exam Papers"],
   [".output/public/index.html", "SiteNavigationElement"],
   [".output/public/index.html", "Primary 6 Maths Exam Papers"],
   [".output/public/index.html", "isAccessibleForFree"],
