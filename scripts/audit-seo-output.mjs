@@ -179,6 +179,18 @@ const requiredSnippets = [
     'property="og:image" content="https://sgexamhub.com/og-image.png"',
   ],
   [
+    ".output/public/sitemap/index.html",
+    "Quick Revision Paths",
+  ],
+  [
+    ".output/public/sitemap/index.html",
+    "2025 P6 Maths SA2 Exam Papers",
+  ],
+  [
+    ".output/public/sitemap/index.html",
+    "P6 Maths Nanyang Primary School Exam Papers",
+  ],
+  [
     ".output/public/exam-papers/2025-primary-6-mathematics/index.html",
     "2025 P6 Maths Exam Papers",
   ],

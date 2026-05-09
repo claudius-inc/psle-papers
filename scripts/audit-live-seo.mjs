@@ -97,6 +97,9 @@ const checks = [
     snippets: [
       "Singapore Primary Exam Paper Sitemap",
       "Top School Exam Paper Collections",
+      "Quick Revision Paths",
+      "2025 P6 Maths SA2 Exam Papers",
+      "P6 Maths Nanyang Primary School Exam Papers",
       'property="og:image" content="https://sgexamhub.com/og-image.png"',
     ],
   },

@@ -33,6 +33,34 @@ const buildLinks = (routes: PaperSeoRoute[], limit?: number) =>
       count: route.paperCount,
     }));
 
+const findRouteLink = (slug: string) => {
+  const route = seoRoutes.find((item) => item.slug === slug);
+  return route
+    ? {
+        label: routeLabel(route),
+        to: route.path,
+        count: route.paperCount,
+      }
+    : null;
+};
+
+const quickRevisionLinks = [
+  "2025-primary-6-mathematics-sa2",
+  "2025-primary-6-science-sa2",
+  "2025-primary-6-english-sa2",
+  "primary-6-mathematics-sa2",
+  "primary-6-science-sa2",
+  "primary-6-english-sa2",
+  "2025-primary-6",
+  "2024-primary-6",
+  "primary-6-mathematics-school-nanyang-primary-school",
+  "primary-6-science-school-nanyang-primary-school",
+  "primary-6-mathematics-school-henry-park-primary-school",
+  "2025-primary-6-school-raffles-girls-primary-school",
+]
+  .map(findRouteLink)
+  .filter((link): link is NonNullable<typeof link> => Boolean(link));
+
 const directorySections = [
   {
     title: "Core Pages",
@@ -112,6 +140,12 @@ const latestPaperLinks = allParsedPapers.slice(0, 80).map((paper) => ({
   to: `/view/${paper.filename}`,
 }));
 
+const structuredSitemapLinks = [
+  ...quickRevisionLinks,
+  ...directorySections.flatMap((section) => section.links),
+  ...latestPaperLinks,
+].slice(0, 120);
+
 useHead({
   title: sitemapSeoTitle,
   meta: [
@@ -137,15 +171,12 @@ useHead({
         "@context": "https://schema.org",
         "@type": "ItemList",
         name: "SG Exam Hub sitemap",
-        itemListElement: directorySections
-          .flatMap((section) => section.links)
-          .slice(0, 100)
-          .map((link, index) => ({
-            "@type": "ListItem",
-            position: index + 1,
-            name: link.label,
-            url: `${siteUrl}${link.to}`,
-          })),
+        itemListElement: structuredSitemapLinks.map((link, index) => ({
+          "@type": "ListItem",
+          position: index + 1,
+          name: link.label,
+          url: `${siteUrl}${link.to}`,
+        })),
       }),
     },
   ],
@@ -163,6 +194,29 @@ useHead({
           assessment type and school. Each link opens an indexed page with papers
           available to view online or download as PDF.
         </p>
+      </div>
+    </section>
+
+    <section class="quick-paths" aria-labelledby="quick-paths-heading">
+      <div class="content-wrapper">
+        <div class="quick-header">
+          <p class="eyebrow">High-intent collections</p>
+          <h2 id="quick-paths-heading">Quick Revision Paths</h2>
+          <p>
+            Jump straight to popular Singapore primary exam paper collections for
+            P6, SA2, latest-year revision and top schools.
+          </p>
+        </div>
+        <div class="quick-links">
+          <NuxtLink
+            v-for="link in quickRevisionLinks"
+            :key="link.to"
+            :to="link.to"
+          >
+            <span>{{ link.label }}</span>
+            <small>{{ link.count.toLocaleString() }} papers</small>
+          </NuxtLink>
+        </div>
       </div>
     </section>
 
@@ -260,6 +314,68 @@ h1 {
   max-width: 760px;
 }
 
+.quick-paths {
+  border-bottom: 1px solid #e2e8f0;
+  padding: 2rem 0;
+}
+
+.quick-header {
+  max-width: 760px;
+}
+
+.quick-header h2 {
+  color: #0f172a;
+  font-size: 1.35rem;
+  line-height: 1.3;
+  margin: 0 0 0.65rem;
+}
+
+.quick-header p:last-child {
+  color: #475569;
+  font-size: 0.95rem;
+  line-height: 1.65;
+  margin: 0;
+}
+
+.quick-links {
+  display: grid;
+  gap: 0.75rem;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  margin-top: 1.25rem;
+}
+
+.quick-links a {
+  align-items: flex-start;
+  border: 1px solid #dbeafe;
+  border-radius: 8px;
+  color: #1e3a8a;
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+  min-height: 6rem;
+  padding: 1rem;
+  text-decoration: none;
+}
+
+.quick-links a:hover {
+  background: #eff6ff;
+  border-color: #93c5fd;
+  color: #1d4ed8;
+}
+
+.quick-links span {
+  font-size: 0.94rem;
+  font-weight: 800;
+  line-height: 1.35;
+}
+
+.quick-links small {
+  color: #475569;
+  font-size: 0.78rem;
+  font-weight: 700;
+  line-height: 1.4;
+}
+
 .directory-grid {
   display: grid;
   gap: 1.25rem;
@@ -355,6 +471,7 @@ h1 {
     font-size: 2.1rem;
   }
 
+  .quick-links,
   .directory-grid,
   .latest-links {
     grid-template-columns: 1fr;
