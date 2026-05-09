@@ -12,6 +12,7 @@ const homePagePath = "app/pages/index.vue";
 const collectionPagePath = "app/pages/exam-papers/[[slug]].vue";
 const viewerPagePath = "app/pages/view/[id].vue";
 const socialAssetPath = ".output/public/og-image.png";
+const pagesWorkflowPath = ".github/workflows/nuxtjs.yml";
 
 const decodeHtml = (value) =>
   value
@@ -130,6 +131,9 @@ const collectionPage = existsSync(collectionPagePath)
   : "";
 const viewerPage = existsSync(viewerPagePath)
   ? readFileSync(viewerPagePath, "utf8")
+  : "";
+const pagesWorkflow = existsSync(pagesWorkflowPath)
+  ? readFileSync(pagesWorkflowPath, "utf8")
   : "";
 const sitemapCount = (sitemap.match(/<url>/g) || []).length;
 const sitemapLastmods = [...sitemap.matchAll(/<lastmod>([^<]+)<\/lastmod>/g)].map(
@@ -290,6 +294,12 @@ if (!robots.includes("Sitemap: https://sgexamhub.com/sitemap.xml")) {
 }
 if (!appShell.includes("G-7WKP91PV8C") || !appShell.includes("useEngagementTracking()")) {
   fail("Global app shell is missing GA4 or engagement tracking setup.");
+}
+if (
+  !pagesWorkflow.includes("FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true") ||
+  !pagesWorkflow.includes('node-version: "24"')
+) {
+  fail("Pages workflow is not pinned to the Node 24 actions/build runtime.");
 }
 for (const eventName of ["paper_view_click", "paper_open", "paper_download"]) {
   if (!analytics.includes(eventName)) {
