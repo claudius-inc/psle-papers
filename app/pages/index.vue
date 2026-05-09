@@ -115,6 +115,7 @@ const examPaperDirectorySections = [
     title: "Popular subject collections",
     links: [
       { label: "2026 Primary Exam Papers Revision", to: "/exam-papers/2026-revision" },
+      { label: "PSLE Revision Papers", to: "/exam-papers/psle-revision" },
       { label: "Primary 6 Maths Exam Papers", to: "/exam-papers/primary-6-mathematics" },
       { label: "Primary 6 Science Exam Papers", to: "/exam-papers/primary-6-science" },
       { label: "Primary 6 English Exam Papers", to: "/exam-papers/primary-6-english" },
@@ -230,6 +231,11 @@ const examPaperDirectorySections = [
 ];
 
 const psleRevisionShortcuts = [
+  {
+    label: "PSLE Revision Papers",
+    description: "Use Primary 6 SA2 papers for PSLE-style timed practice.",
+    to: "/exam-papers/psle-revision",
+  },
   {
     label: "2026 Primary Exam Papers Revision",
     description: "Start with the latest 2025 and 2024 papers for 2026 practice.",

@@ -15,6 +15,8 @@ Use this map with Google Search Console after deployment. The goal is to match e
 | primary school test papers | `/exam-papers` | General test paper search | Impressions, top clicked filters |
 | 2026 primary exam papers | `/exam-papers/2026-revision` | Current-year revision using latest available PDFs | CTR, paper opens, downloads |
 | primary exam papers 2026 revision | `/exam-papers/2026-revision` | 2026 revision planning | CTR, collection clicks, downloads |
+| psle revision papers | `/exam-papers/psle-revision` | Primary 6 PSLE preparation | CTR, paper opens, downloads |
+| psle practice papers | `/exam-papers/psle-revision` | PSLE-style timed practice | CTR, P6 paper downloads |
 | 2025 primary exam papers | `/exam-papers/2025` | Latest paper search | CTR, paper opens |
 | 2024 primary exam papers | `/exam-papers/2024` | Recent past-year papers | CTR, downloads |
 | primary 6 exam papers | `/exam-papers/primary-6` | Level-specific revision | CTR, paper opens |

@@ -12,6 +12,7 @@ const homePagePath = "app/pages/index.vue";
 const collectionPagePath = "app/pages/exam-papers/[[slug]].vue";
 const viewerPagePath = "app/pages/view/[id].vue";
 const revisionPagePath = "app/pages/exam-papers/2026-revision.vue";
+const pslePagePath = "app/pages/exam-papers/psle-revision.vue";
 const socialAssetPath = ".output/public/og-image.png";
 const pagesWorkflowPath = ".github/workflows/nuxtjs.yml";
 
@@ -140,6 +141,7 @@ const viewerPage = existsSync(viewerPagePath)
 const revisionPage = existsSync(revisionPagePath)
   ? readFileSync(revisionPagePath, "utf8")
   : "";
+const pslePage = existsSync(pslePagePath) ? readFileSync(pslePagePath, "utf8") : "";
 const pagesWorkflow = existsSync(pagesWorkflowPath)
   ? readFileSync(pagesWorkflowPath, "utf8")
   : "";
@@ -167,6 +169,8 @@ const requiredSnippets = [
   [".output/public/index.html", "2025 P6 English SA2"],
   [".output/public/index.html", "2026 Primary Exam Papers Revision"],
   [".output/public/index.html", 'href="/exam-papers/2026-revision"'],
+  [".output/public/index.html", "PSLE Revision Papers"],
+  [".output/public/index.html", 'href="/exam-papers/psle-revision"'],
   [".output/public/index.html", "PSLE revision paths"],
   [".output/public/index.html", "Start with Primary 6 SA2 exam papers"],
   [".output/public/index.html", "2025 Primary 6 SA2 Exam Papers"],
@@ -236,6 +240,46 @@ const requiredSnippets = [
   ],
   [
     ".output/public/exam-papers/2026-revision/index.html",
+    "raw.githubusercontent.com/airbob/PrimarySchoolExamPapers",
+  ],
+  [
+    ".output/public/exam-papers/psle-revision/index.html",
+    "PSLE Revision Papers",
+  ],
+  [
+    ".output/public/exam-papers/psle-revision/index.html",
+    "Use free Primary 6 exam papers for PSLE revision",
+  ],
+  [
+    ".output/public/exam-papers/psle-revision/index.html",
+    "Choose a Primary 6 practice set",
+  ],
+  [
+    ".output/public/exam-papers/psle-revision/index.html",
+    'href="/exam-papers/2025-primary-6-sa2"',
+  ],
+  [
+    ".output/public/exam-papers/psle-revision/index.html",
+    "Recent Primary 6 papers for PSLE revision",
+  ],
+  [
+    ".output/public/exam-papers/psle-revision/index.html",
+    "Primary 6 SA2 papers for PSLE timing",
+  ],
+  [
+    ".output/public/exam-papers/psle-revision/index.html",
+    "Are these papers useful for PSLE revision?",
+  ],
+  [
+    ".output/public/exam-papers/psle-revision/index.html",
+    "FAQPage",
+  ],
+  [
+    ".output/public/exam-papers/psle-revision/index.html",
+    "DownloadAction",
+  ],
+  [
+    ".output/public/exam-papers/psle-revision/index.html",
     "raw.githubusercontent.com/airbob/PrimarySchoolExamPapers",
   ],
   [
@@ -584,6 +628,9 @@ if (!sitemap.includes("https://sgexamhub.com/sitemap")) {
 if (!sitemap.includes("https://sgexamhub.com/exam-papers/2026-revision")) {
   fail("Sitemap is missing the 2026 revision landing page.");
 }
+if (!sitemap.includes("https://sgexamhub.com/exam-papers/psle-revision")) {
+  fail("Sitemap is missing the PSLE revision landing page.");
+}
 if (!sitemap.includes("https://sgexamhub.com/exam-papers/2025-primary-6-mathematics-sa2")) {
   fail("Sitemap is missing representative level-subject-type route.");
 }
@@ -633,6 +680,7 @@ for (const eventName of ["paper_view_click", "paper_open", "paper_download"]) {
 }
 for (const snippet of [
   "2026 Primary Exam Papers Revision",
+  "PSLE Revision Papers",
   "paperSearchQuery",
   "trackPaperSearch",
   "paper_search",
@@ -665,6 +713,20 @@ for (const snippet of [
 ]) {
   if (!revisionPage.includes(snippet)) {
     fail(`2026 revision page is missing expected source snippet: ${snippet}.`);
+  }
+}
+for (const snippet of [
+  "PSLE Revision Papers",
+  "Primary 6 exam papers for PSLE revision",
+  "psleCollections",
+  "trackPslePaperView",
+  "trackPslePaperDownload",
+  "FAQPage",
+  "DownloadAction",
+  "buildPdfFileUrl",
+]) {
+  if (!pslePage.includes(snippet)) {
+    fail(`PSLE revision page is missing expected source snippet: ${snippet}.`);
   }
 }
 for (const snippet of [

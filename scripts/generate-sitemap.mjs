@@ -151,6 +151,12 @@ const routeEntries = [
     changefreq: "weekly",
     lastmod: staticLastModified,
   },
+  {
+    path: "/exam-papers/psle-revision",
+    priority: "0.9",
+    changefreq: "weekly",
+    lastmod: staticLastModified,
+  },
   ...years.map((year) => ({
     path: `/exam-papers/${year.code}`,
     year: year.code,
