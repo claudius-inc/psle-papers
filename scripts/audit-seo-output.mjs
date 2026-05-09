@@ -556,6 +556,14 @@ const requiredSnippets = [
   ],
   [
     ".output/public/exam-papers/sa2/index.html",
+    "Showing <strong",
+  ],
+  [
+    ".output/public/exam-papers/sa2/index.html",
+    "Show more papers",
+  ],
+  [
+    ".output/public/exam-papers/sa2/index.html",
     "HowTo",
   ],
   [
@@ -788,6 +796,11 @@ for (const snippet of [
   "trackCollectionHeroPaperView",
   "trackCollectionHeroPaperDownload",
   "collection_hero_cta",
+  "visiblePapers",
+  "canShowMore",
+  "showMorePapers",
+  "paper_show_more",
+  "Show more papers",
   "HowTo",
   "HowToStep",
   "paperSearchQuery",

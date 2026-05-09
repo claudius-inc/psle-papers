@@ -143,6 +143,18 @@ const checks = [
     ],
   },
   {
+    path: "/exam-papers/sa2/",
+    snippets: [
+      "SA2 Exam Papers",
+      "View online or download free PDFs for timed practice.",
+      "Showing <strong",
+      "Show more papers",
+      "Download PDF",
+      "HowTo",
+      "HowToStep",
+    ],
+  },
+  {
     path: "/exam-papers/primary-6-mathematics-school-nanyang-primary-school/",
     snippets: [
       "P6 Maths Nanyang Primary School Exam Papers",

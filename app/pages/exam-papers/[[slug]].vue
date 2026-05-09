@@ -45,9 +45,11 @@ const initialFilters = () => ({
 
 const filters = ref(initialFilters());
 const paperSearchQuery = ref("");
+const visibleLimit = ref(60);
 const resetFilters = () => {
   filters.value = initialFilters();
   paperSearchQuery.value = "";
+  visibleLimit.value = 60;
   trackEvent("paper_filters_reset", {
     source: "index_filters",
     page_slug: slug,
@@ -107,10 +109,23 @@ const collectionFreshnessLabel = computed(() =>
     : `${seoRoute.paperCount.toLocaleString()} PDF papers indexed`,
 );
 const resultCount = computed(() => filteredPapers.value.length);
+const visiblePapers = computed(() => filteredPapers.value.slice(0, visibleLimit.value));
+const canShowMore = computed(() => visiblePapers.value.length < resultCount.value);
+const showMorePapers = () => {
+  visibleLimit.value += 60;
+  trackEvent("paper_show_more", {
+    source: "index_results",
+    page_slug: slug,
+    page_path: seoRoute.path,
+    visible_count: visiblePapers.value.length,
+    result_count: resultCount.value,
+  });
+};
 const trackFilterChange = (
   filterName: keyof typeof filters.value,
   filterValue: string,
 ) => {
+  visibleLimit.value = 60;
   trackEvent("paper_filter_change", {
     source: "index_filters",
     page_slug: slug,
@@ -119,7 +134,11 @@ const trackFilterChange = (
     result_count: resultCount.value,
   });
 };
+const handlePaperSearchInput = () => {
+  visibleLimit.value = 60;
+};
 const trackCollectionPaperSearch = () => {
+  visibleLimit.value = 60;
   trackEvent("paper_search", {
     source: "index_search",
     page_slug: slug,
@@ -1076,6 +1095,7 @@ useHead({
             inputmode="search"
             autocomplete="off"
             placeholder="Nanyang P6 Maths 2025"
+            @input="handlePaperSearchInput"
             @change="trackCollectionPaperSearch"
           />
         </div>
@@ -1420,7 +1440,8 @@ useHead({
             <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
           </svg>
           <h2>
-            Showing <strong>{{ resultCount }}</strong> available papers
+            Showing <strong>{{ visiblePapers.length }}</strong> of
+            <strong>{{ resultCount }}</strong> available papers
           </h2>
         </div>
         <div class="view-toggle" role="group" aria-label="View mode">
@@ -1465,7 +1486,7 @@ useHead({
 
       <div v-else :class="['papers-container', `papers-${viewMode}`]">
         <div
-          v-for="paper in filteredPapers"
+          v-for="paper in visiblePapers"
           :key="paper.filename"
           class="paper-card"
         >
@@ -1505,6 +1526,11 @@ useHead({
               Download PDF
             </a>
           </div>
+        </div>
+        <div v-if="canShowMore" class="load-more-wrap">
+          <button class="load-more-btn" type="button" @click="showMorePapers">
+            Show more papers
+          </button>
         </div>
       </div>
     </main>
@@ -2481,6 +2507,32 @@ useHead({
 }
 
 .download-btn:hover {
+  background: #f8fafc;
+  border-color: #94a3b8;
+  color: #0f172a;
+}
+
+.load-more-wrap {
+  display: flex;
+  grid-column: 1 / -1;
+  justify-content: center;
+  margin-top: 2rem;
+}
+
+.load-more-btn {
+  background: #ffffff;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  color: #334155;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 0.95rem;
+  font-weight: 800;
+  min-height: 44px;
+  padding: 0.75rem 1.4rem;
+}
+
+.load-more-btn:hover {
   background: #f8fafc;
   border-color: #94a3b8;
   color: #0f172a;
