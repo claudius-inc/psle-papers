@@ -442,6 +442,45 @@ const studySteps = computed(() => [
   subjectRevisionAdvice.value,
   `Download selected PDFs for timed practice, marking, corrections and repeated revision before school assessments.`,
 ]);
+const isPrimarySixCollection = computed(() => seoRoute.levelCode === "6");
+const pslePracticeLinks = computed(() => {
+  if (!isPrimarySixCollection.value) return [];
+
+  const preferredRoutes = [
+    seoRoutes.find(
+      (route) =>
+        route.year === seoRoute.year &&
+        route.levelCode === "6" &&
+        route.subjectCode === seoRoute.subjectCode &&
+        route.typeCode === "4",
+    ),
+    seoRoutes.find(
+      (route) =>
+        !route.year &&
+        route.levelCode === "6" &&
+        route.subjectCode === seoRoute.subjectCode &&
+        route.typeCode === "4",
+    ),
+    seoRoutes.find(
+      (route) => route.year === "2025" && route.levelCode === "6" && route.typeCode === "4",
+    ),
+    seoRoutes.find((route) => !route.year && route.levelCode === "6" && route.typeCode === "4"),
+  ];
+
+  return preferredRoutes
+    .filter((route): route is PaperSeoRoute => Boolean(route))
+    .filter((route) => route.path !== seoRoute.path)
+    .filter(
+      (route, index, routes) =>
+        routes.findIndex((candidate) => candidate.path === route.path) === index,
+    )
+    .slice(0, 3)
+    .map((route) => ({
+      label: route.title.replace(" | SG Exam Hub", ""),
+      path: route.path,
+      count: route.paperCount,
+    }));
+});
 const examTypeHighlights = computed(() => {
   const counts = new Map<string, number>();
   routePapers.value.forEach((paper) => {
@@ -529,22 +568,34 @@ const schoolDiscoveryLinks = computed(() => {
     })
     .filter((item): item is { name: string; count: number; path: string } => item !== null);
 });
-const faqItems = computed(() => [
-  {
-    question: `What is included in ${pageTitle}?`,
-    answer: `${pageTitle} includes free Singapore primary school test papers that can be viewed online or downloaded as PDF files for revision practice.`,
-  },
-  {
-    question: "How should students use these exam papers?",
-    answer:
-      "Students should try each paper under timed conditions, mark mistakes carefully, revise weak topics, and then attempt another related paper to check improvement.",
-  },
-  {
-    question: "Can I download the papers for offline practice?",
-    answer:
-      "Yes. Open any paper from the list, then use the Download PDF button on the viewer page to save the paper for offline practice.",
-  },
-]);
+const faqItems = computed(() => {
+  const items = [
+    {
+      question: `What is included in ${pageTitle}?`,
+      answer: `${pageTitle} includes free Singapore primary school test papers that can be viewed online or downloaded as PDF files for revision practice.`,
+    },
+    {
+      question: "How should students use these exam papers?",
+      answer:
+        "Students should try each paper under timed conditions, mark mistakes carefully, revise weak topics, and then attempt another related paper to check improvement.",
+    },
+    {
+      question: "Can I download the papers for offline practice?",
+      answer:
+        "Yes. Open any paper from the list, then use the Download PDF button on the viewer page to save the paper for offline practice.",
+    },
+  ];
+
+  if (isPrimarySixCollection.value) {
+    items.splice(1, 0, {
+      question: `Are these ${pageTitle} useful for PSLE revision?`,
+      answer:
+        "Yes. Primary 6 exam papers are useful for PSLE revision because students can practise timing, compare question styles across schools, and build a correction list before attempting another related paper.",
+    });
+  }
+
+  return items;
+});
 const itemListElements = computed(() =>
   filteredPapers.value.slice(0, 30).map((paper, index) => ({
     "@type": "ListItem",
@@ -776,6 +827,31 @@ useHead({
         <ol>
           <li v-for="step in studySteps" :key="step">{{ step }}</li>
         </ol>
+      </section>
+
+      <section
+        v-if="isPrimarySixCollection"
+        class="psle-practice-panel"
+        aria-labelledby="psle-practice-heading"
+      >
+        <div>
+          <span>PSLE practice focus</span>
+          <h2 id="psle-practice-heading">Use these Primary 6 papers before PSLE revision</h2>
+          <p>
+            Start with one recent paper, mark mistakes by topic, then open a related
+            SA2 paper to check whether timing, accuracy and exam confidence improve.
+          </p>
+        </div>
+        <div v-if="pslePracticeLinks.length" class="psle-practice-links">
+          <NuxtLink
+            v-for="link in pslePracticeLinks"
+            :key="link.path"
+            :to="link.path"
+          >
+            <strong>{{ link.label }}</strong>
+            <small>{{ link.count }} PDF papers</small>
+          </NuxtLink>
+        </div>
       </section>
 
       <section class="search-support" aria-labelledby="search-support-heading">
@@ -1035,6 +1111,10 @@ useHead({
 </template>
 
 <style scoped>
+* {
+  box-sizing: border-box;
+}
+
 .index-page {
   min-height: 100vh;
   background: #ffffff;
@@ -1242,6 +1322,79 @@ useHead({
 .landing-support li::marker {
   color: #4f46e5;
   font-weight: 800;
+}
+
+.psle-practice-panel {
+  align-items: start;
+  background: #ffffff;
+  border: 1px solid #dbeafe;
+  border-radius: 8px;
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: minmax(0, 1.05fr) minmax(260px, 0.95fr);
+  margin-bottom: 2rem;
+  padding: 1.25rem;
+}
+
+.psle-practice-panel span {
+  color: #4f46e5;
+  display: block;
+  font-size: 0.72rem;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  line-height: 1.2;
+  margin-bottom: 0.5rem;
+  text-transform: uppercase;
+}
+
+.psle-practice-panel h2 {
+  color: #0f172a;
+  font-size: 1.15rem;
+  line-height: 1.35;
+  margin: 0 0 0.5rem;
+}
+
+.psle-practice-panel p {
+  color: #475569;
+  line-height: 1.65;
+  margin: 0;
+}
+
+.psle-practice-links {
+  display: grid;
+  gap: 0.65rem;
+}
+
+.psle-practice-links a {
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  display: grid;
+  gap: 0.2rem;
+  min-width: 0;
+  padding: 0.85rem;
+  text-decoration: none;
+}
+
+.psle-practice-links strong {
+  color: #0f172a;
+  font-size: 0.9rem;
+  line-height: 1.35;
+}
+
+.psle-practice-links small {
+  color: #64748b;
+  font-size: 0.78rem;
+  font-weight: 750;
+  line-height: 1.35;
+}
+
+.psle-practice-links a:hover {
+  border-color: #93c5fd;
+  box-shadow: 0 14px 28px rgba(37, 99, 235, 0.1);
+}
+
+.psle-practice-links a:hover strong {
+  color: #2563eb;
 }
 
 .search-support {
@@ -1955,6 +2108,9 @@ useHead({
     flex-direction: column;
   }
   .landing-support {
+    grid-template-columns: 1fr;
+  }
+  .psle-practice-panel {
     grid-template-columns: 1fr;
   }
   .filter-grid {

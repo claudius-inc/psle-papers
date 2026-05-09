@@ -254,6 +254,18 @@ const requiredSnippets = [
   ],
   [
     ".output/public/exam-papers/2025-primary-6-mathematics-sa2/index.html",
+    "PSLE practice focus",
+  ],
+  [
+    ".output/public/exam-papers/2025-primary-6-mathematics-sa2/index.html",
+    "Use these Primary 6 papers before PSLE revision",
+  ],
+  [
+    ".output/public/exam-papers/2025-primary-6-mathematics-sa2/index.html",
+    "Are these 2025 P6 Maths SA2 Exam Papers useful for PSLE revision?",
+  ],
+  [
+    ".output/public/exam-papers/2025-primary-6-mathematics-sa2/index.html",
     'href="/exam-papers/primary-6-mathematics-sa2"',
   ],
   [
