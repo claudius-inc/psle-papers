@@ -295,11 +295,18 @@ if (!robots.includes("Sitemap: https://sgexamhub.com/sitemap.xml")) {
 if (!appShell.includes("G-7WKP91PV8C") || !appShell.includes("useEngagementTracking()")) {
   fail("Global app shell is missing GA4 or engagement tracking setup.");
 }
-if (
-  !pagesWorkflow.includes("FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true") ||
-  !pagesWorkflow.includes('node-version: "24"')
-) {
-  fail("Pages workflow is not pinned to the Node 24 actions/build runtime.");
+for (const snippet of [
+  "FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true",
+  'node-version: "24"',
+  "actions/checkout@v5",
+  "actions/setup-node@v6",
+  "actions/configure-pages@v6",
+  "actions/upload-pages-artifact@v5",
+  "actions/deploy-pages@v5",
+]) {
+  if (!pagesWorkflow.includes(snippet)) {
+    fail(`Pages workflow is missing Node 24 deployment snippet: ${snippet}`);
+  }
 }
 for (const eventName of ["paper_view_click", "paper_open", "paper_download"]) {
   if (!analytics.includes(eventName)) {
