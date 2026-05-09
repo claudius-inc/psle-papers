@@ -232,6 +232,14 @@ const routeEntries = [
     ),
   ),
   ...levels.flatMap((level) =>
+    schools.map((school) => ({
+      path: `/exam-papers/${slugify(level.name)}-school-${slugify(school.name)}`,
+      levelCode: level.code,
+      schoolCode: school.code,
+      priority: "0.6",
+    })),
+  ),
+  ...levels.flatMap((level) =>
     subjects.flatMap((subject) =>
       schools.map((school) => ({
         path: `/exam-papers/${slugify(level.name)}-${slugify(
