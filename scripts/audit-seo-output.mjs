@@ -9,6 +9,7 @@ const analyticsPath = "app/utils/analytics.ts";
 const engagementPath = "app/composables/useEngagementTracking.ts";
 const keywordMapPath = "SEO_KEYWORD_MAP.md";
 const homePagePath = "app/pages/index.vue";
+const testPaperPagePath = "app/pages/test-papers.vue";
 const collectionPagePath = "app/pages/exam-papers/[[slug]].vue";
 const viewerPagePath = "app/pages/view/[id].vue";
 const revisionPagePath = "app/pages/exam-papers/2026-revision.vue";
@@ -132,6 +133,9 @@ const keywordMap = existsSync(keywordMapPath)
   ? readFileSync(keywordMapPath, "utf8")
   : "";
 const homePage = existsSync(homePagePath) ? readFileSync(homePagePath, "utf8") : "";
+const testPaperPage = existsSync(testPaperPagePath)
+  ? readFileSync(testPaperPagePath, "utf8")
+  : "";
 const collectionPage = existsSync(collectionPagePath)
   ? readFileSync(collectionPagePath, "utf8")
   : "";
@@ -169,6 +173,8 @@ const requiredSnippets = [
   [".output/public/index.html", "2025 P6 English SA2"],
   [".output/public/index.html", "2026 Primary Exam Papers Revision"],
   [".output/public/index.html", 'href="/exam-papers/2026-revision"'],
+  [".output/public/index.html", "Singapore Primary Test Papers"],
+  [".output/public/index.html", 'href="/test-papers"'],
   [".output/public/index.html", "PSLE Revision Papers"],
   [".output/public/index.html", 'href="/exam-papers/psle-revision"'],
   [".output/public/index.html", "PSLE revision paths"],
@@ -300,6 +306,14 @@ const requiredSnippets = [
   ],
   [
     ".output/public/sitemap/index.html",
+    "Singapore Primary Test Papers",
+  ],
+  [
+    ".output/public/sitemap/index.html",
+    'href="/test-papers"',
+  ],
+  [
+    ".output/public/sitemap/index.html",
     "2026 Primary Exam Papers Revision",
   ],
   [
@@ -321,6 +335,42 @@ const requiredSnippets = [
   [
     ".output/public/sitemap/index.html",
     "P6 Maths Nanyang Primary School Exam Papers",
+  ],
+  [
+    ".output/public/test-papers/index.html",
+    "Singapore Primary Test Papers",
+  ],
+  [
+    ".output/public/test-papers/index.html",
+    "Download free Singapore primary test papers",
+  ],
+  [
+    ".output/public/test-papers/index.html",
+    "Start with a recent test paper",
+  ],
+  [
+    ".output/public/test-papers/index.html",
+    "Choose a test paper path",
+  ],
+  [
+    ".output/public/test-papers/index.html",
+    "Latest primary test papers",
+  ],
+  [
+    ".output/public/test-papers/index.html",
+    "Are these Singapore primary test papers free?",
+  ],
+  [
+    ".output/public/test-papers/index.html",
+    "FAQPage",
+  ],
+  [
+    ".output/public/test-papers/index.html",
+    "DownloadAction",
+  ],
+  [
+    ".output/public/test-papers/index.html",
+    "raw.githubusercontent.com/airbob/PrimarySchoolExamPapers",
   ],
   [
     ".output/public/exam-papers/2025/index.html",
@@ -683,6 +733,9 @@ if (uniqueSitemapLastmods.size === 1 && uniqueSitemapLastmods.has(today)) {
 if (!sitemap.includes("https://sgexamhub.com/sitemap")) {
   fail("Sitemap is missing the HTML sitemap page.");
 }
+if (!sitemap.includes("https://sgexamhub.com/test-papers")) {
+  fail("Sitemap is missing the primary test papers landing page.");
+}
 if (!sitemap.includes("https://sgexamhub.com/exam-papers/2026-revision")) {
   fail("Sitemap is missing the 2026 revision landing page.");
 }
@@ -739,6 +792,8 @@ for (const eventName of ["paper_view_click", "paper_open", "paper_download"]) {
 for (const snippet of [
   "2026 Primary Exam Papers Revision",
   "PSLE Revision Papers",
+  "Singapore Primary Test Papers",
+  "/test-papers",
   "paperSearchQuery",
   "trackPaperSearch",
   "paper_search",
@@ -757,6 +812,21 @@ for (const snippet of [
 ]) {
   if (!homePage.includes(snippet)) {
     fail(`Homepage is missing expected source snippet: ${snippet}.`);
+  }
+}
+for (const snippet of [
+  "Singapore Primary Test Papers",
+  "primary school test papers",
+  "testPaperCollections",
+  "trackTestPaperView",
+  "trackTestPaperDownload",
+  "test_papers_hero",
+  "FAQPage",
+  "DownloadAction",
+  "buildPdfFileUrl",
+]) {
+  if (!testPaperPage.includes(snippet)) {
+    fail(`Test papers page is missing expected source snippet: ${snippet}.`);
   }
 }
 for (const snippet of [

@@ -114,6 +114,7 @@ const examPaperDirectorySections = [
   {
     title: "Popular subject collections",
     links: [
+      { label: "Singapore Primary Test Papers", to: "/test-papers" },
       { label: "2026 Primary Exam Papers Revision", to: "/exam-papers/2026-revision" },
       { label: "PSLE Revision Papers", to: "/exam-papers/psle-revision" },
       { label: "Primary 6 Maths Exam Papers", to: "/exam-papers/primary-6-mathematics" },
@@ -843,6 +844,9 @@ const resetFilters = () => {
             </NuxtLink>
             <NuxtLink to="/exam-papers/higher-chinese" class="chip">
               <span class="chip-dot" aria-hidden="true"></span>Higher Chinese
+            </NuxtLink>
+            <NuxtLink to="/test-papers" class="chip">
+              <span class="chip-dot" aria-hidden="true"></span>Test Papers
             </NuxtLink>
           </div>
         </nav>

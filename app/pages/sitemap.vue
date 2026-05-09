@@ -63,6 +63,11 @@ const quickRevisionLinks = [
 
 const revisionHubLinks = [
   {
+    label: "Singapore Primary Test Papers",
+    to: "/test-papers",
+    description: "Free P2-P6 test papers with PDF downloads",
+  },
+  {
     label: "2026 Primary Exam Papers Revision",
     to: "/exam-papers/2026-revision",
     description: "Latest 2025 and 2024 papers for 2026 revision",
@@ -79,6 +84,11 @@ const directorySections = [
     title: "Core Pages",
     links: [
       { label: "Free Singapore Primary Exam Papers", to: "/", count: allParsedPapers.length },
+      {
+        label: "Singapore Primary Test Papers",
+        to: "/test-papers",
+        count: allParsedPapers.length,
+      },
       {
         label: "All Singapore Primary Exam Papers",
         to: "/exam-papers",
