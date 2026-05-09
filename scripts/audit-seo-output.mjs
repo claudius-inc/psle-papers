@@ -432,6 +432,8 @@ for (const snippet of [
   "trackViewerPaperDownload",
   "trackViewerPaperOpen",
   "trackViewerRelatedPaperView",
+  "trackViewerRelatedPaperDownload",
+  "viewer_${section}_download",
   "target_paper_id",
   "related_section",
   "buildSocialMeta",

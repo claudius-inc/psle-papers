@@ -135,12 +135,16 @@ const pdfUrl = computed(() => buildPdfFileUrl(filename));
 const downloadName = computed(() => {
   if (!paper.value) return `${filename}.pdf`;
 
+  return buildPaperDownloadName(paper.value);
+});
+
+const buildPaperDownloadName = (item: ParsedPaper) => {
   const baseName = [
-    paper.value.yearCode,
-    paper.value.levelName,
-    paper.value.subjectName,
-    paper.value.typeName,
-    paper.value.schoolName,
+    item.yearCode,
+    item.levelName,
+    item.subjectName,
+    item.typeName,
+    item.schoolName,
   ]
     .join("-")
     .replace(/[^\w.-]+/g, "-")
@@ -148,7 +152,7 @@ const downloadName = computed(() => {
     .replace(/^-|-$/g, "");
 
   return `${baseName}.pdf`;
-});
+};
 
 const slugify = (value: string) =>
   value
@@ -329,6 +333,13 @@ const trackViewerRelatedPaperView = (item: ParsedPaper, section: string) => {
   trackPaperViewClick(
     item.filename,
     `viewer_${section}`,
+    relatedPaperAnalyticsContext(item, section),
+  );
+};
+const trackViewerRelatedPaperDownload = (item: ParsedPaper, section: string) => {
+  trackPaperDownload(
+    item.filename,
+    `viewer_${section}_download`,
     relatedPaperAnalyticsContext(item, section),
   );
 };
@@ -642,45 +653,81 @@ useHead({
         <section class="panel-card">
           <h2>Related papers</h2>
           <div class="related-paper-links">
-            <NuxtLink
+            <div
               v-for="item in relatedPapers"
               :key="item.filename"
-              :to="`/view/${item.filename}`"
-              @click="trackViewerRelatedPaperView(item, 'related')"
+              class="related-paper-card"
             >
-              <span>{{ item.yearCode }} {{ item.schoolName }}</span>
-              <small>{{ item.typeName }}</small>
-            </NuxtLink>
+              <NuxtLink
+                :to="`/view/${item.filename}`"
+                @click="trackViewerRelatedPaperView(item, 'related')"
+              >
+                <span>{{ item.yearCode }} {{ item.schoolName }}</span>
+                <small>{{ item.typeName }}</small>
+              </NuxtLink>
+              <a
+                class="related-download"
+                :href="buildPdfFileUrl(item.filename)"
+                :download="buildPaperDownloadName(item)"
+                @click="trackViewerRelatedPaperDownload(item, 'related')"
+              >
+                Download PDF
+              </a>
+            </div>
           </div>
         </section>
 
         <section v-if="sameSchoolPapers.length" class="panel-card">
           <h2>More from this school</h2>
           <div class="related-paper-links">
-            <NuxtLink
+            <div
               v-for="item in sameSchoolPapers"
               :key="item.filename"
-              :to="`/view/${item.filename}`"
-              @click="trackViewerRelatedPaperView(item, 'same_school')"
+              class="related-paper-card"
             >
-              <span>{{ item.yearCode }} {{ item.subjectName }}</span>
-              <small>{{ item.typeName }}</small>
-            </NuxtLink>
+              <NuxtLink
+                :to="`/view/${item.filename}`"
+                @click="trackViewerRelatedPaperView(item, 'same_school')"
+              >
+                <span>{{ item.yearCode }} {{ item.subjectName }}</span>
+                <small>{{ item.typeName }}</small>
+              </NuxtLink>
+              <a
+                class="related-download"
+                :href="buildPdfFileUrl(item.filename)"
+                :download="buildPaperDownloadName(item)"
+                @click="trackViewerRelatedPaperDownload(item, 'same_school')"
+              >
+                Download PDF
+              </a>
+            </div>
           </div>
         </section>
 
         <section v-if="sameExamTypePapers.length" class="panel-card">
           <h2>Same exam type</h2>
           <div class="related-paper-links">
-            <NuxtLink
+            <div
               v-for="item in sameExamTypePapers"
               :key="item.filename"
-              :to="`/view/${item.filename}`"
-              @click="trackViewerRelatedPaperView(item, 'same_exam_type')"
+              class="related-paper-card"
             >
-              <span>{{ item.yearCode }} {{ item.schoolName }}</span>
-              <small>{{ item.typeName }}</small>
-            </NuxtLink>
+              <NuxtLink
+                :to="`/view/${item.filename}`"
+                @click="trackViewerRelatedPaperView(item, 'same_exam_type')"
+              >
+                <span>{{ item.yearCode }} {{ item.schoolName }}</span>
+                <small>{{ item.typeName }}</small>
+              </NuxtLink>
+              <a
+                class="related-download"
+                :href="buildPdfFileUrl(item.filename)"
+                :download="buildPaperDownloadName(item)"
+                @click="trackViewerRelatedPaperDownload(item, 'same_exam_type')"
+              >
+                Download PDF
+              </a>
+            </div>
           </div>
         </section>
       </aside>
@@ -1133,15 +1180,29 @@ useHead({
   text-decoration: underline;
 }
 
-.related-paper-links a {
+.related-paper-card {
+  align-items: center;
   border: 1px solid #e2e8f0;
-  display: grid;
-  gap: 0.2rem;
+  border-radius: 7px;
+  display: flex;
+  gap: 0.75rem;
+  justify-content: space-between;
+  min-width: 0;
   padding: 0.65rem 0.75rem;
 }
 
-.related-paper-links a:hover {
+.related-paper-card:hover {
   border-color: #c7d2fe;
+}
+
+.related-paper-card a:first-child {
+  display: grid;
+  flex: 1 1 auto;
+  gap: 0.2rem;
+  min-width: 0;
+}
+
+.related-paper-card a:first-child:hover {
   text-decoration: none;
 }
 
@@ -1149,6 +1210,21 @@ useHead({
   color: #64748b;
   font-size: 0.75rem;
   font-weight: 600;
+}
+
+.related-download {
+  background: #f8fafc;
+  border: 1px solid #cbd5e1;
+  box-sizing: border-box;
+  flex: 0 0 auto;
+  padding: 0.45rem 0.6rem;
+  text-align: center;
+}
+
+.related-download:hover {
+  background: #eef2ff;
+  border-color: #a5b4fc;
+  text-decoration: none;
 }
 
 .spinner {
@@ -1209,6 +1285,15 @@ useHead({
   .viewer-nav {
     height: 85px;
     padding: 0 1rem;
+  }
+
+  .related-paper-card {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .related-download {
+    width: 100%;
   }
 
   .info-school {
