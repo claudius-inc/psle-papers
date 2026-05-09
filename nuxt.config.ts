@@ -64,6 +64,7 @@ const seoIndexRoutes = [
   "/",
   "/sitemap",
   "/exam-papers",
+  "/exam-papers/2026-revision",
   ...years.map((year) => ({ path: `/exam-papers/${year.code}`, year: year.code })),
   ...levels.map((level) => ({
     path: `/exam-papers/${slugify(level.name)}`,

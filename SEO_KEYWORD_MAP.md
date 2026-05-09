@@ -13,6 +13,8 @@ Use this map with Google Search Console after deployment. The goal is to match e
 | free exam papers singapore | `/` | Broad discovery and download | CTR, paper downloads |
 | singapore primary exam papers pdf | `/exam-papers` | Browse all PDFs | CTR, paper opens, downloads |
 | primary school test papers | `/exam-papers` | General test paper search | Impressions, top clicked filters |
+| 2026 primary exam papers | `/exam-papers/2026-revision` | Current-year revision using latest available PDFs | CTR, paper opens, downloads |
+| primary exam papers 2026 revision | `/exam-papers/2026-revision` | 2026 revision planning | CTR, collection clicks, downloads |
 | 2025 primary exam papers | `/exam-papers/2025` | Latest paper search | CTR, paper opens |
 | 2024 primary exam papers | `/exam-papers/2024` | Recent past-year papers | CTR, downloads |
 | primary 6 exam papers | `/exam-papers/primary-6` | Level-specific revision | CTR, paper opens |

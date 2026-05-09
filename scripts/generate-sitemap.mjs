@@ -145,6 +145,12 @@ const routeEntries = [
   { path: "/", priority: "1.0", lastmod: staticLastModified },
   { path: "/sitemap", priority: "0.7", lastmod: staticLastModified },
   { path: "/exam-papers", priority: "0.9" },
+  {
+    path: "/exam-papers/2026-revision",
+    priority: "0.9",
+    changefreq: "weekly",
+    lastmod: staticLastModified,
+  },
   ...years.map((year) => ({
     path: `/exam-papers/${year.code}`,
     year: year.code,

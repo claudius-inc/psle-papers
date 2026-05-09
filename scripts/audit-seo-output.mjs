@@ -11,6 +11,7 @@ const keywordMapPath = "SEO_KEYWORD_MAP.md";
 const homePagePath = "app/pages/index.vue";
 const collectionPagePath = "app/pages/exam-papers/[[slug]].vue";
 const viewerPagePath = "app/pages/view/[id].vue";
+const revisionPagePath = "app/pages/exam-papers/2026-revision.vue";
 const socialAssetPath = ".output/public/og-image.png";
 const pagesWorkflowPath = ".github/workflows/nuxtjs.yml";
 
@@ -136,6 +137,9 @@ const collectionPage = existsSync(collectionPagePath)
 const viewerPage = existsSync(viewerPagePath)
   ? readFileSync(viewerPagePath, "utf8")
   : "";
+const revisionPage = existsSync(revisionPagePath)
+  ? readFileSync(revisionPagePath, "utf8")
+  : "";
 const pagesWorkflow = existsSync(pagesWorkflowPath)
   ? readFileSync(pagesWorkflowPath, "utf8")
   : "";
@@ -161,6 +165,8 @@ const requiredSnippets = [
   [".output/public/index.html", "2,299 PDF exam papers indexed"],
   [".output/public/index.html", "Start with a latest paper"],
   [".output/public/index.html", "2025 P6 English SA2"],
+  [".output/public/index.html", "2026 Primary Exam Papers Revision"],
+  [".output/public/index.html", 'href="/exam-papers/2026-revision"'],
   [".output/public/index.html", "PSLE revision paths"],
   [".output/public/index.html", "Start with Primary 6 SA2 exam papers"],
   [".output/public/index.html", "2025 Primary 6 SA2 Exam Papers"],
@@ -192,6 +198,46 @@ const requiredSnippets = [
   [".output/public/index.html", 'property="og:site_name" content="SG Exam Hub"'],
   [".output/public/index.html", 'property="og:image" content="https://sgexamhub.com/og-image.png"'],
   [".output/public/index.html", 'name="twitter:card" content="summary_large_image"'],
+  [
+    ".output/public/exam-papers/2026-revision/index.html",
+    "2026 Primary Exam Papers Revision",
+  ],
+  [
+    ".output/public/exam-papers/2026-revision/index.html",
+    "Use the latest available 2025 and 2024 Singapore primary school exam",
+  ],
+  [
+    ".output/public/exam-papers/2026-revision/index.html",
+    "Choose a 2026 revision collection",
+  ],
+  [
+    ".output/public/exam-papers/2026-revision/index.html",
+    'href="/exam-papers/2025-primary-6-sa2"',
+  ],
+  [
+    ".output/public/exam-papers/2026-revision/index.html",
+    "Latest papers for 2026 revision",
+  ],
+  [
+    ".output/public/exam-papers/2026-revision/index.html",
+    "Primary 6 SA2 papers for 2026 preparation",
+  ],
+  [
+    ".output/public/exam-papers/2026-revision/index.html",
+    "Are there 2026 Singapore primary exam papers here?",
+  ],
+  [
+    ".output/public/exam-papers/2026-revision/index.html",
+    "FAQPage",
+  ],
+  [
+    ".output/public/exam-papers/2026-revision/index.html",
+    "DownloadAction",
+  ],
+  [
+    ".output/public/exam-papers/2026-revision/index.html",
+    "raw.githubusercontent.com/airbob/PrimarySchoolExamPapers",
+  ],
   [
     ".output/public/sitemap/index.html",
     "Singapore Primary Exam Paper Sitemap",
@@ -535,6 +581,9 @@ if (uniqueSitemapLastmods.size === 1 && uniqueSitemapLastmods.has(today)) {
 if (!sitemap.includes("https://sgexamhub.com/sitemap")) {
   fail("Sitemap is missing the HTML sitemap page.");
 }
+if (!sitemap.includes("https://sgexamhub.com/exam-papers/2026-revision")) {
+  fail("Sitemap is missing the 2026 revision landing page.");
+}
 if (!sitemap.includes("https://sgexamhub.com/exam-papers/2025-primary-6-mathematics-sa2")) {
   fail("Sitemap is missing representative level-subject-type route.");
 }
@@ -583,6 +632,7 @@ for (const eventName of ["paper_view_click", "paper_open", "paper_download"]) {
   }
 }
 for (const snippet of [
+  "2026 Primary Exam Papers Revision",
   "paperSearchQuery",
   "trackPaperSearch",
   "paper_search",
@@ -601,6 +651,20 @@ for (const snippet of [
 ]) {
   if (!homePage.includes(snippet)) {
     fail(`Homepage is missing expected source snippet: ${snippet}.`);
+  }
+}
+for (const snippet of [
+  "2026 Primary Exam Papers Revision",
+  "latest available 2025 and 2024",
+  "revisionCollections",
+  "trackRevisionPaperView",
+  "trackRevisionPaperDownload",
+  "FAQPage",
+  "DownloadAction",
+  "buildPdfFileUrl",
+]) {
+  if (!revisionPage.includes(snippet)) {
+    fail(`2026 revision page is missing expected source snippet: ${snippet}.`);
   }
 }
 for (const snippet of [
