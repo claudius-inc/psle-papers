@@ -568,6 +568,61 @@ const schoolDiscoveryLinks = computed(() => {
     })
     .filter((item): item is { name: string; count: number; path: string } => item !== null);
 });
+const schoolPracticeLinks = computed(() => {
+  if (!seoRoute.schoolCode) return [];
+
+  const preferredRoutes = [
+    seoRoutes.find(
+      (route) =>
+        route.year === "2025" &&
+        route.levelCode === "6" &&
+        route.schoolCode === seoRoute.schoolCode &&
+        !route.subjectCode,
+    ),
+    seoRoutes.find(
+      (route) =>
+        route.levelCode === "6" &&
+        route.subjectCode === "3" &&
+        route.schoolCode === seoRoute.schoolCode &&
+        !route.year,
+    ),
+    seoRoutes.find(
+      (route) =>
+        route.levelCode === "6" &&
+        route.subjectCode === "4" &&
+        route.schoolCode === seoRoute.schoolCode &&
+        !route.year,
+    ),
+    seoRoutes.find(
+      (route) =>
+        route.year === "2025" &&
+        route.schoolCode === seoRoute.schoolCode &&
+        !route.levelCode &&
+        !route.subjectCode,
+    ),
+    seoRoutes.find(
+      (route) =>
+        route.schoolCode === seoRoute.schoolCode &&
+        !route.year &&
+        !route.levelCode &&
+        !route.subjectCode,
+    ),
+  ];
+
+  return preferredRoutes
+    .filter((route): route is PaperSeoRoute => Boolean(route))
+    .filter((route) => route.path !== seoRoute.path)
+    .filter(
+      (route, index, routes) =>
+        routes.findIndex((candidate) => candidate.path === route.path) === index,
+    )
+    .slice(0, 4)
+    .map((route) => ({
+      label: route.title.replace(" | SG Exam Hub", ""),
+      path: route.path,
+      count: route.paperCount,
+    }));
+});
 const faqItems = computed(() => {
   const items = [
     {
@@ -845,6 +900,31 @@ useHead({
         <div v-if="pslePracticeLinks.length" class="psle-practice-links">
           <NuxtLink
             v-for="link in pslePracticeLinks"
+            :key="link.path"
+            :to="link.path"
+          >
+            <strong>{{ link.label }}</strong>
+            <small>{{ link.count }} PDF papers</small>
+          </NuxtLink>
+        </div>
+      </section>
+
+      <section
+        v-if="seoRoute.schoolCode && schoolPracticeLinks.length"
+        class="school-practice-panel"
+        aria-labelledby="school-practice-heading"
+      >
+        <div>
+          <span>School paper paths</span>
+          <h2 id="school-practice-heading">More {{ readableSchool }} exam papers</h2>
+          <p>
+            Continue with the same school, then compare P6 Maths, P6 Science and
+            latest-year papers before choosing PDFs to download for revision.
+          </p>
+        </div>
+        <div class="school-practice-links">
+          <NuxtLink
+            v-for="link in schoolPracticeLinks"
             :key="link.path"
             :to="link.path"
           >
@@ -1395,6 +1475,79 @@ useHead({
 
 .psle-practice-links a:hover strong {
   color: #2563eb;
+}
+
+.school-practice-panel {
+  align-items: start;
+  background: #ffffff;
+  border: 1px solid #e0f2fe;
+  border-radius: 8px;
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: minmax(0, 1.05fr) minmax(260px, 0.95fr);
+  margin-bottom: 2rem;
+  padding: 1.25rem;
+}
+
+.school-practice-panel span {
+  color: #0369a1;
+  display: block;
+  font-size: 0.72rem;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  line-height: 1.2;
+  margin-bottom: 0.5rem;
+  text-transform: uppercase;
+}
+
+.school-practice-panel h2 {
+  color: #0f172a;
+  font-size: 1.15rem;
+  line-height: 1.35;
+  margin: 0 0 0.5rem;
+}
+
+.school-practice-panel p {
+  color: #475569;
+  line-height: 1.65;
+  margin: 0;
+}
+
+.school-practice-links {
+  display: grid;
+  gap: 0.65rem;
+}
+
+.school-practice-links a {
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  display: grid;
+  gap: 0.2rem;
+  min-width: 0;
+  padding: 0.85rem;
+  text-decoration: none;
+}
+
+.school-practice-links strong {
+  color: #0f172a;
+  font-size: 0.9rem;
+  line-height: 1.35;
+}
+
+.school-practice-links small {
+  color: #64748b;
+  font-size: 0.78rem;
+  font-weight: 750;
+  line-height: 1.35;
+}
+
+.school-practice-links a:hover {
+  border-color: #7dd3fc;
+  box-shadow: 0 14px 28px rgba(14, 165, 233, 0.1);
+}
+
+.school-practice-links a:hover strong {
+  color: #0369a1;
 }
 
 .search-support {
@@ -2111,6 +2264,9 @@ useHead({
     grid-template-columns: 1fr;
   }
   .psle-practice-panel {
+    grid-template-columns: 1fr;
+  }
+  .school-practice-panel {
     grid-template-columns: 1fr;
   }
   .filter-grid {
