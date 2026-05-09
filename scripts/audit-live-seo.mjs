@@ -9,6 +9,7 @@ const checks = [
       "Primary 6 Maths Exam Papers",
       "isAccessibleForFree",
       "DownloadAction",
+      "raw.githubusercontent.com/airbob/PrimarySchoolExamPapers",
       "SearchAction",
       "search_term_string",
       "Search papers",
@@ -27,6 +28,7 @@ const checks = [
       "Download PDF",
       'property="og:image" content="https://sgexamhub.com/og-image.png"',
       'name="twitter:card" content="summary_large_image"',
+      "raw.githubusercontent.com/airbob/PrimarySchoolExamPapers",
     ],
   },
   {
@@ -37,6 +39,7 @@ const checks = [
       "CollectionPage",
       "Download PDF",
       'property="og:image" content="https://sgexamhub.com/og-image.png"',
+      "raw.githubusercontent.com/airbob/PrimarySchoolExamPapers",
     ],
   },
   {
@@ -46,6 +49,7 @@ const checks = [
       'rel="canonical"',
       "CollectionPage",
       "Download PDF",
+      "raw.githubusercontent.com/airbob/PrimarySchoolExamPapers",
     ],
   },
   {
@@ -57,6 +61,8 @@ const checks = [
       "Free PDF download for this 2025 P6 Maths SA2 exam paper",
       "isAccessibleForFree",
       "DownloadAction",
+      "raw.githubusercontent.com/airbob/PrimarySchoolExamPapers",
+      "Opening exam paper",
       "Download PDF",
       "FAQPage",
       "Using this paper",
@@ -97,6 +103,9 @@ const fetchText = async (url) => {
   return response.text();
 };
 
+const representativePdfUrl =
+  "https://raw.githubusercontent.com/airbob/PrimarySchoolExamPapers/main/public/files/6_1073_3_4_2025.pdf";
+
 try {
   const [robots, sitemap] = await Promise.all([
     fetchText(`${siteUrl}/robots.txt`),
@@ -121,6 +130,22 @@ try {
     fail(`Live social preview image is unavailable: ${socialImage.status} ${socialImage.statusText}`);
   }
 
+  const representativePdf = await fetch(representativePdfUrl, {
+    method: "HEAD",
+    headers: {
+      "user-agent": "SGExamHubLiveSeoAudit/1.0",
+    },
+  });
+  if (!representativePdf.ok) {
+    fail(
+      `Representative raw PDF is unavailable: ${representativePdf.status} ${representativePdf.statusText}`,
+    );
+  }
+  const contentLength = Number(representativePdf.headers.get("content-length") || 0);
+  if (contentLength < 1_000_000) {
+    fail(`Representative raw PDF content length is unexpectedly small: ${contentLength}`);
+  }
+
   for (const requiredPath of [
     "/",
     "/sitemap",
@@ -138,6 +163,9 @@ try {
 
   for (const check of checks) {
     const html = await fetchText(`${siteUrl}${check.path}`);
+    if (html.includes('href="/files/') || html.includes(`${siteUrl}/files/`)) {
+      fail(`Live ${check.path} still links to self-hosted PDF files.`);
+    }
     for (const snippet of check.snippets) {
       if (!html.includes(snippet)) {
         fail(`Live ${check.path} is missing expected snippet: ${snippet}`);

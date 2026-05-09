@@ -46,6 +46,7 @@ const rows = [];
 let jsonLdScripts = 0;
 const jsonLdFailures = [];
 const missingLinks = [];
+const selfHostedPdfLinks = [];
 const checkedLinks = new Set();
 
 const pageExists = (href) => {
@@ -63,6 +64,9 @@ for (const file of htmlFiles) {
   const description = decodeHtml(
     html.match(/<meta name="description" content="([^"]*)"/)?.[1] || "",
   );
+  if (html.includes('href="/files/') || html.includes("https://sgexamhub.com/files/")) {
+    selfHostedPdfLinks.push(file);
+  }
 
   rows.push({
     url,
@@ -155,6 +159,7 @@ const requiredSnippets = [
   [".output/public/index.html", "Primary 6 Maths Exam Papers"],
   [".output/public/index.html", "isAccessibleForFree"],
   [".output/public/index.html", "DownloadAction"],
+  [".output/public/index.html", "raw.githubusercontent.com/airbob/PrimarySchoolExamPapers"],
   [".output/public/index.html", "SearchAction"],
   [".output/public/index.html", "search_term_string"],
   [".output/public/index.html", "Search papers"],
@@ -217,6 +222,10 @@ const requiredSnippets = [
   ],
   [".output/public/view/6_1073_3_4_2025/index.html", "isAccessibleForFree"],
   [".output/public/view/6_1073_3_4_2025/index.html", "DownloadAction"],
+  [
+    ".output/public/view/6_1073_3_4_2025/index.html",
+    "raw.githubusercontent.com/airbob/PrimarySchoolExamPapers",
+  ],
   [".output/public/view/6_1073_3_4_2025/index.html", 'content="index, follow"'],
   [".output/public/view/6_1073_3_4_2025/index.html", "Download PDF"],
   [".output/public/view/6_1073_3_4_2025/index.html", "FAQPage"],
@@ -269,6 +278,10 @@ if (missingLinks.length) {
   fail(`Missing internal links: ${missingLinks.length}`);
   for (const link of missingLinks.slice(0, 20)) console.error(link);
 }
+if (selfHostedPdfLinks.length) {
+  fail(`Generated pages still link to self-hosted PDF files: ${selfHostedPdfLinks.length}`);
+  for (const file of selfHostedPdfLinks.slice(0, 20)) console.error(file);
+}
 if (!existsSync(socialAssetPath)) {
   fail("Generated social preview image is missing.");
 }
@@ -310,6 +323,8 @@ for (const snippet of [
   "actions/configure-pages@v6",
   "actions/upload-pages-artifact@v5",
   "actions/deploy-pages@v5",
+  "Remove PDFs from Pages artifact",
+  "rm -rf ./.output/public/files",
 ]) {
   if (!pagesWorkflow.includes(snippet)) {
     fail(`Pages workflow is missing Node 24 deployment snippet: ${snippet}`);
@@ -332,6 +347,7 @@ for (const snippet of [
   "buildSocialMeta",
   "SearchAction",
   "search_term_string",
+  "buildPdfFileUrl",
 ]) {
   if (!homePage.includes(snippet)) {
     fail(`Homepage is missing expected source snippet: ${snippet}.`);
@@ -349,6 +365,7 @@ for (const snippet of [
   "Search papers",
   "search_query",
   "buildSocialMeta",
+  "buildPdfFileUrl",
 ]) {
   if (!collectionPage.includes(snippet)) {
     fail(`Collection page is missing analytics attribution snippet: ${snippet}.`);
@@ -363,6 +380,9 @@ for (const snippet of [
   "target_paper_id",
   "related_section",
   "buildSocialMeta",
+  "buildPdfFileUrl",
+  "URL.createObjectURL",
+  "pdfObjectUrl",
   "viewerFaqItems",
   "Using this paper",
   "FAQPage",

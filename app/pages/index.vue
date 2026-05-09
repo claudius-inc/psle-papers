@@ -9,6 +9,7 @@ import {
   trackPaperDownload,
   trackPaperViewClick,
 } from "~/utils/analytics";
+import { buildPdfFileUrl } from "~/utils/pdfUrls";
 import { buildSocialMeta } from "~/utils/socialSeo";
 
 const featuredOptions = dropdownOptions as DropdownData;
@@ -84,7 +85,7 @@ const homeItemListElements = computed(() =>
         url: `https://sgexamhub.com/view/${paper.filename}`,
         encoding: {
           "@type": "MediaObject",
-          contentUrl: `https://sgexamhub.com/files/${paper.filename}.pdf`,
+          contentUrl: buildPdfFileUrl(paper.filename),
           encodingFormat: "application/pdf",
           name: `${paper.yearCode} ${paper.levelName} ${paper.schoolName} ${paper.subjectName} ${paper.typeName} PDF`,
         },
@@ -95,7 +96,7 @@ const homeItemListElements = computed(() =>
           },
           {
             "@type": "DownloadAction",
-            target: `https://sgexamhub.com/files/${paper.filename}.pdf`,
+            target: buildPdfFileUrl(paper.filename),
           },
         ],
       },
@@ -839,7 +840,7 @@ const resetFilters = () => {
               </NuxtLink>
               <a
                 class="download-btn"
-                :href="`/files/${paper.filename}.pdf`"
+                :href="buildPdfFileUrl(paper.filename)"
                 :download="`${paper.yearCode}-${paper.levelName}-${paper.subjectName}-${paper.typeName}-${paper.schoolName}.pdf`"
                 @click="trackHomePaperDownload(paper.filename)"
               >

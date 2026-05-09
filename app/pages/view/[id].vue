@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, onMounted } from "vue";
+import { computed, onMounted, onUnmounted, ref } from "vue";
 import { useRoute } from "vue-router";
 import type { DropdownData, ParsedPaper } from "~/composables/usePapers";
 import dropdownOptions from "../../../public/json/dropdownOptions.json";
@@ -10,12 +10,15 @@ import {
   trackPaperOpen,
   trackPaperViewClick,
 } from "~/utils/analytics";
+import { buildPdfFileUrl } from "~/utils/pdfUrls";
 import { buildSocialMeta } from "~/utils/socialSeo";
 
 const route = useRoute();
 const filename = route.params.id as string;
 
 const options = dropdownOptions as DropdownData;
+const pdfLoading = ref(true);
+const pdfObjectUrl = ref("");
 const loading = computed(() => false);
 
 const getName = (category: keyof DropdownData, code: string): string => {
@@ -103,7 +106,7 @@ const viewerFaqItems = computed(() => {
   ];
 });
 
-const pdfUrl = computed(() => `/files/${filename}.pdf`);
+const pdfUrl = computed(() => buildPdfFileUrl(filename));
 const downloadName = computed(() => {
   if (!paper.value) return `${filename}.pdf`;
 
@@ -310,8 +313,27 @@ const trackViewerCollectionClick = (link: { kind: string; to: string }) => {
   });
 };
 
-onMounted(() => {
+onMounted(async () => {
   if (paper.value) trackViewerPaperOpen("viewer_page");
+
+  try {
+    const response = await fetch(pdfUrl.value);
+    if (!response.ok) throw new Error(`PDF request failed: ${response.status}`);
+    const blob = await response.blob();
+    pdfObjectUrl.value = URL.createObjectURL(
+      new Blob([blob], { type: "application/pdf" }),
+    );
+  } catch {
+    pdfObjectUrl.value = "";
+  } finally {
+    pdfLoading.value = false;
+  }
+});
+
+onUnmounted(() => {
+  if (pdfObjectUrl.value) {
+    URL.revokeObjectURL(pdfObjectUrl.value);
+  }
 });
 
 useHead({
@@ -365,7 +387,7 @@ useHead({
             url: `https://sgexamhub.com/view/${filename}`,
             encoding: {
               "@type": "MediaObject",
-              contentUrl: `https://sgexamhub.com/files/${filename}.pdf`,
+              contentUrl: buildPdfFileUrl(filename),
               encodingFormat: "application/pdf",
               name: `${pageTitle.value} PDF`,
             },
@@ -376,7 +398,7 @@ useHead({
               },
               {
                 "@type": "DownloadAction",
-                target: `https://sgexamhub.com/files/${filename}.pdf`,
+                target: buildPdfFileUrl(filename),
               },
             ],
           },
@@ -468,17 +490,21 @@ useHead({
     <div class="viewer-main">
       <!-- PDF Viewer Area -->
       <div class="pdf-viewer">
-        <div v-if="loading" class="pdf-loading">
+        <div v-if="pdfLoading" class="pdf-loading">
           <div class="spinner"></div>
           <p>Opening exam paper...</p>
         </div>
         <iframe
-          v-else
-          :src="pdfUrl"
+          v-else-if="pdfObjectUrl"
+          :src="pdfObjectUrl"
           class="pdf-frame"
           title="Exam paper PDF viewer"
           frameborder="0"
         ></iframe>
+        <div v-else class="pdf-loading">
+          <p>Preview unavailable.</p>
+          <a :href="pdfUrl" target="_blank" rel="noopener">Open PDF in a new tab</a>
+        </div>
       </div>
 
       <aside v-if="paper" class="viewer-panel" aria-label="Paper actions and related papers">
