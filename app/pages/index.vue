@@ -216,6 +216,39 @@ const examPaperDirectorySections = [
   },
 ];
 
+const psleRevisionShortcuts = [
+  {
+    label: "2025 Primary 6 SA2 Exam Papers",
+    description: "Newest P6 SA2 papers for PSLE-style timed revision.",
+    to: "/exam-papers/2025-primary-6-sa2",
+  },
+  {
+    label: "P6 Maths SA2 Papers",
+    description: "Primary 6 Maths papers for problem-solving practice.",
+    to: "/exam-papers/primary-6-mathematics-sa2",
+  },
+  {
+    label: "P6 Science SA2 Papers",
+    description: "Science papers for explanation, keyword and concept revision.",
+    to: "/exam-papers/primary-6-science-sa2",
+  },
+  {
+    label: "P6 English SA2 Papers",
+    description: "English papers for comprehension, grammar and composition practice.",
+    to: "/exam-papers/primary-6-english-sa2",
+  },
+  {
+    label: "P6 Chinese SA2 Papers",
+    description: "Chinese papers for language practice before major assessments.",
+    to: "/exam-papers/primary-6-chinese-sa2",
+  },
+  {
+    label: "Nanyang P6 Maths Papers",
+    description: "Top-school P6 Maths papers from Nanyang Primary School.",
+    to: "/exam-papers/primary-6-mathematics-school-nanyang-primary-school",
+  },
+];
+
 const homeFaqItems = [
   {
     question: "Is SG Exam Hub the same as searching for SG exam papers?",
@@ -246,6 +279,7 @@ const homeFaqItems = [
 
 const siteNavigationItems = examPaperDirectorySections
   .flatMap((section) => section.links)
+  .concat(psleRevisionShortcuts)
   .slice(0, 30)
   .map((link) => ({
     "@type": "SiteNavigationElement",
@@ -918,6 +952,28 @@ const resetFilters = () => {
         </div>
       </div>
     </main>
+
+    <section class="content-wrapper psle-shortcuts" aria-labelledby="psle-shortcuts-heading">
+      <div class="psle-shortcuts-intro">
+        <span>PSLE revision paths</span>
+        <h2 id="psle-shortcuts-heading">Start with Primary 6 SA2 exam papers</h2>
+        <p>
+          For PSLE preparation, open a recent Primary 6 SA2 paper first, then
+          download related Maths, Science, English or Chinese PDFs for timed practice.
+        </p>
+      </div>
+      <div class="psle-shortcut-grid">
+        <NuxtLink
+          v-for="shortcut in psleRevisionShortcuts"
+          :key="shortcut.to"
+          :to="shortcut.to"
+          class="psle-shortcut"
+        >
+          <strong>{{ shortcut.label }}</strong>
+          <small>{{ shortcut.description }}</small>
+        </NuxtLink>
+      </div>
+    </section>
 
     <section class="content-wrapper seo-directory" aria-labelledby="paper-directory">
       <div class="seo-directory-intro">
@@ -1832,6 +1888,80 @@ input[type="search"]:focus {
   cursor: pointer;
 }
 
+.psle-shortcuts {
+  padding-bottom: 3rem;
+}
+
+.psle-shortcuts-intro {
+  border-top: 1px solid #e2e8f0;
+  padding-top: 2rem;
+  margin-bottom: 1.25rem;
+}
+
+.psle-shortcuts-intro span {
+  color: #4f46e5;
+  display: block;
+  font-size: 0.72rem;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  line-height: 1.2;
+  margin-bottom: 0.5rem;
+  text-transform: uppercase;
+}
+
+.psle-shortcuts h2 {
+  color: #0f172a;
+  font-size: 1.4rem;
+  line-height: 1.25;
+  margin: 0 0 0.5rem;
+}
+
+.psle-shortcuts p {
+  color: #475569;
+  line-height: 1.65;
+  max-width: 760px;
+  margin: 0;
+}
+
+.psle-shortcut-grid {
+  display: grid;
+  gap: 0.75rem;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.psle-shortcut {
+  background: #ffffff;
+  border: 1px solid #dbeafe;
+  border-radius: 8px;
+  display: grid;
+  gap: 0.35rem;
+  min-width: 0;
+  padding: 1rem;
+  text-decoration: none;
+}
+
+.psle-shortcut strong {
+  color: #0f172a;
+  font-size: 0.95rem;
+  line-height: 1.35;
+}
+
+.psle-shortcut small {
+  color: #475569;
+  font-size: 0.82rem;
+  font-weight: 650;
+  line-height: 1.45;
+}
+
+.psle-shortcut:hover {
+  border-color: #93c5fd;
+  box-shadow: 0 14px 28px rgba(37, 99, 235, 0.1);
+}
+
+.psle-shortcut:hover strong {
+  color: #2563eb;
+}
+
 .seo-directory {
   padding-bottom: 3rem;
 }
@@ -2043,6 +2173,7 @@ footer {
 	  .school-select {
 	    grid-column: span 1;
 	  }
+	  .psle-shortcut-grid,
 	  .directory-grid {
 	    grid-template-columns: 1fr;
 	  }
