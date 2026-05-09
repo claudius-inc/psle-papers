@@ -67,6 +67,16 @@ const checks = [
     ],
   },
   {
+    path: "/exam-papers/primary-6-mathematics-sa2/",
+    snippets: [
+      "P6 Maths SA2 Exam Papers",
+      "Assessment practice path",
+      "Compare P6 Maths assessment papers",
+      'href="/exam-papers/primary-6-mathematics-wa2"',
+      "Download PDF",
+    ],
+  },
+  {
     path: "/exam-papers/primary-6-mathematics-school-nanyang-primary-school/",
     snippets: [
       "P6 Maths Nanyang Primary School Exam Papers",

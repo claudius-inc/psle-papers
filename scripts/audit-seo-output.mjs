@@ -273,6 +273,18 @@ const requiredSnippets = [
     "P6 Maths SA2 Exam Papers",
   ],
   [
+    ".output/public/exam-papers/primary-6-mathematics-sa2/index.html",
+    "Assessment practice path",
+  ],
+  [
+    ".output/public/exam-papers/primary-6-mathematics-sa2/index.html",
+    "Compare P6 Maths assessment papers",
+  ],
+  [
+    ".output/public/exam-papers/primary-6-mathematics-sa2/index.html",
+    'href="/exam-papers/primary-6-mathematics-wa2"',
+  ],
+  [
     ".output/public/exam-papers/primary-6-mathematics-school-nanyang-primary-school/index.html",
     "P6 Maths Nanyang Primary School Exam Papers",
   ],
