@@ -151,6 +151,8 @@ const requiredSnippets = [
   [".output/public/index.html", "Primary 6 Maths Exam Papers"],
   [".output/public/index.html", "isAccessibleForFree"],
   [".output/public/index.html", "DownloadAction"],
+  [".output/public/index.html", "SearchAction"],
+  [".output/public/index.html", "search_term_string"],
   [".output/public/index.html", "Search papers"],
   [".output/public/index.html", 'property="og:site_name" content="SG Exam Hub"'],
   [".output/public/index.html", 'property="og:image" content="https://sgexamhub.com/og-image.png"'],
@@ -304,6 +306,8 @@ for (const snippet of [
   "trackHomePaperDownload",
   "search_query",
   "buildSocialMeta",
+  "SearchAction",
+  "search_term_string",
 ]) {
   if (!homePage.includes(snippet)) {
     fail(`Homepage is missing expected source snippet: ${snippet}.`);

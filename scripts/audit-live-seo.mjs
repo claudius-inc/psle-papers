@@ -9,6 +9,8 @@ const checks = [
       "Primary 6 Maths Exam Papers",
       "isAccessibleForFree",
       "DownloadAction",
+      "SearchAction",
+      "search_term_string",
       "Search papers",
       'property="og:site_name" content="SG Exam Hub"',
       'property="og:image" content="https://sgexamhub.com/og-image.png"',

@@ -291,6 +291,11 @@ useHead({
             inLanguage: "en-SG",
             description:
               "Free Singapore primary school exam papers for P2 to P6 English, Maths, Science, Chinese and Higher Chinese.",
+            potentialAction: {
+              "@type": "SearchAction",
+              target: "https://sgexamhub.com/?q={search_term_string}",
+              "query-input": "required name=search_term_string",
+            },
             hasPart: siteNavigationItems,
           },
           {
