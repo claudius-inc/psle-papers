@@ -82,6 +82,21 @@ const seoDescription = computed(() =>
     ? `${seoPaperTitle.value} exam paper PDF for Singapore primary revision. View online or download for SA1, SA2 and PSLE practice.`
     : "View or download free Singapore primary school exam paper PDFs for revision practice.",
 );
+const viewerFaqItems = computed(() => {
+  if (!paper.value) return [];
+
+  return [
+    {
+      question: `Is the ${pageTitle.value} PDF free to download?`,
+      answer:
+        "Yes. You can view this exam paper online or download the PDF for personal revision practice.",
+    },
+    {
+      question: `How should students use this ${paper.value.typeName} paper?`,
+      answer: `Attempt it under timed conditions, mark mistakes, revise weak topics, then try related ${readableLevel.value} ${readableSubject.value} papers.`,
+    },
+  ];
+});
 
 const pdfUrl = computed(() => `/files/${filename}.pdf`);
 const downloadName = computed(() => {
@@ -322,6 +337,18 @@ useHead({
               },
             ],
           },
+          {
+            "@context": "https://schema.org",
+            "@type": "FAQPage",
+            mainEntity: viewerFaqItems.value.map((item) => ({
+              "@type": "Question",
+              name: item.question,
+              acceptedAnswer: {
+                "@type": "Answer",
+                text: item.answer,
+              },
+            })),
+          },
         ]),
       ),
     },
@@ -461,6 +488,14 @@ useHead({
               Open in new tab
             </a>
           </div>
+        </section>
+
+        <section class="panel-card viewer-faq" aria-labelledby="viewer-faq-heading">
+          <h2 id="viewer-faq-heading">Using this paper</h2>
+          <article v-for="item in viewerFaqItems" :key="item.question">
+            <h3>{{ item.question }}</h3>
+            <p>{{ item.answer }}</p>
+          </article>
         </section>
 
         <section class="panel-card">
@@ -770,6 +805,30 @@ useHead({
   font-size: 0.95rem;
   line-height: 1.35;
   margin: 0 0 0.75rem;
+}
+
+.viewer-faq {
+  display: grid;
+  gap: 0.85rem;
+}
+
+.viewer-faq article {
+  display: grid;
+  gap: 0.25rem;
+}
+
+.viewer-faq h3 {
+  color: #1e293b;
+  font-size: 0.84rem;
+  line-height: 1.35;
+  margin: 0;
+}
+
+.viewer-faq p {
+  color: #64748b;
+  font-size: 0.8rem;
+  line-height: 1.55;
+  margin: 0;
 }
 
 .paper-details {

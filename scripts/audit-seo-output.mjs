@@ -208,6 +208,9 @@ const requiredSnippets = [
   [".output/public/view/6_1073_3_4_2025/index.html", "DownloadAction"],
   [".output/public/view/6_1073_3_4_2025/index.html", 'content="index, follow"'],
   [".output/public/view/6_1073_3_4_2025/index.html", "Download PDF"],
+  [".output/public/view/6_1073_3_4_2025/index.html", "FAQPage"],
+  [".output/public/view/6_1073_3_4_2025/index.html", "Using this paper"],
+  [".output/public/view/6_1073_3_4_2025/index.html", "Is the 2025 Raffles Girls"],
   [".output/public/view/6_1073_3_4_2025/index.html", "More from this school"],
   [".output/public/view/6_1073_3_4_2025/index.html", "Same exam type"],
   [".output/public/view/6_1073_3_4_2025/index.html", "Exam paper sitemap"],
@@ -332,6 +335,9 @@ for (const snippet of [
   "target_paper_id",
   "related_section",
   "buildSocialMeta",
+  "viewerFaqItems",
+  "Using this paper",
+  "FAQPage",
 ]) {
   if (!viewerPage.includes(snippet)) {
     fail(`Viewer page is missing analytics attribution snippet: ${snippet}.`);
