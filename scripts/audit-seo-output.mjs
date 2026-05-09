@@ -200,6 +200,14 @@ const requiredSnippets = [
   ],
   [
     ".output/public/exam-papers/2025-primary-6-mathematics/index.html",
+    "Best first step",
+  ],
+  [
+    ".output/public/exam-papers/2025-primary-6-mathematics/index.html",
+    "Open the newest paper, then download PDFs for timed revision.",
+  ],
+  [
+    ".output/public/exam-papers/2025-primary-6-mathematics/index.html",
     "Start with recent papers",
   ],
   [
@@ -414,6 +422,9 @@ for (const snippet of [
   "page_path",
   "trackCollectionPaperView",
   "trackCollectionPaperDownload",
+  "trackCollectionHeroPaperView",
+  "trackCollectionHeroPaperDownload",
+  "collection_hero_cta",
   "paperSearchQuery",
   "trackCollectionPaperSearch",
   "index_search",

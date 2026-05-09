@@ -93,6 +93,7 @@ const filteredPapers = computed(() => {
 
 const routePapers = computed(() => getPapersForRoute(seoRoute));
 const starterPapers = computed(() => routePapers.value.slice(0, 3));
+const primaryCollectionPaper = computed(() => starterPapers.value[0] || routePapers.value[0]);
 const routeLatestYear = computed(() => {
   const years = routePapers.value
     .map((paper) => Number(paper.yearCode))
@@ -342,6 +343,30 @@ const trackStarterPaperView = (filename: string) => {
 const trackStarterPaperDownload = (filename: string) => {
   trackPaperDownload(filename, "collection_starter_papers", collectionAnalyticsContext.value);
 };
+const trackCollectionHeroPaperView = (filename: string) => {
+  trackPaperViewClick(filename, "collection_hero_cta", collectionAnalyticsContext.value);
+};
+const trackCollectionHeroPaperDownload = (filename: string) => {
+  trackPaperDownload(filename, "collection_hero_cta", collectionAnalyticsContext.value);
+};
+const buildPaperDownloadName = (paper: {
+  yearCode: string;
+  levelName: string;
+  subjectName: string;
+  typeName: string;
+  schoolName: string;
+}) =>
+  `${[
+    paper.yearCode,
+    paper.levelName,
+    paper.subjectName,
+    paper.typeName,
+    paper.schoolName,
+  ]
+    .join("-")
+    .replace(/[^\w.-]+/g, "-")
+    .replace(/-+/g, "-")
+    .replace(/^-|-$/g, "")}.pdf`;
 const landingIntro = computed(() => {
   const focus = [
     seoRoute.year,
@@ -649,6 +674,32 @@ useHead({
         <h1>{{ pageTitle }}</h1>
         <p>{{ seoRoute.description }}</p>
         <p class="collection-freshness">{{ collectionFreshnessLabel }}</p>
+        <div v-if="primaryCollectionPaper" class="collection-action-strip">
+          <div>
+            <span class="action-eyebrow">Best first step</span>
+            <strong>Open the newest paper, then download PDFs for timed revision.</strong>
+            <small>
+              {{ primaryCollectionPaper.yearCode }} {{ primaryCollectionPaper.levelName }}
+              {{ primaryCollectionPaper.subjectName }} {{ primaryCollectionPaper.typeName }}
+              · {{ primaryCollectionPaper.schoolName }}
+            </small>
+          </div>
+          <div class="collection-action-buttons">
+            <NuxtLink
+              :to="`/view/${primaryCollectionPaper.filename}`"
+              @click="trackCollectionHeroPaperView(primaryCollectionPaper.filename)"
+            >
+              View Paper
+            </NuxtLink>
+            <a
+              :href="buildPdfFileUrl(primaryCollectionPaper.filename)"
+              :download="buildPaperDownloadName(primaryCollectionPaper)"
+              @click="trackCollectionHeroPaperDownload(primaryCollectionPaper.filename)"
+            >
+              Download PDF
+            </a>
+          </div>
+        </div>
       </div>
     </header>
 
@@ -820,7 +871,7 @@ useHead({
               </NuxtLink>
               <a
                 :href="buildPdfFileUrl(paper.filename)"
-                :download="`${paper.yearCode}-${paper.levelName}-${paper.subjectName}-${paper.typeName}-${paper.schoolName}.pdf`"
+                :download="buildPaperDownloadName(paper)"
                 @click="trackStarterPaperDownload(paper.filename)"
               >
                 Download PDF
@@ -962,7 +1013,7 @@ useHead({
             <a
               class="download-btn"
               :href="buildPdfFileUrl(paper.filename)"
-              :download="`${paper.yearCode}-${paper.levelName}-${paper.subjectName}-${paper.typeName}-${paper.schoolName}.pdf`"
+              :download="buildPaperDownloadName(paper)"
               @click="trackCollectionPaperDownload(paper.filename)"
             >
               Download PDF
@@ -1066,6 +1117,87 @@ useHead({
   font-size: 0.9rem;
   font-weight: 800;
   margin-top: 0.75rem;
+}
+
+.collection-action-strip {
+  align-items: center;
+  background: #ffffff;
+  border: 1px solid #dbeafe;
+  border-radius: 8px;
+  display: flex;
+  gap: 1rem;
+  justify-content: space-between;
+  margin-top: 1.25rem;
+  max-width: 880px;
+  padding: 1rem;
+}
+
+.collection-action-strip div:first-child {
+  display: grid;
+  gap: 0.25rem;
+  min-width: 0;
+}
+
+.action-eyebrow {
+  color: #4f46e5;
+  font-size: 0.72rem;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  line-height: 1.2;
+  text-transform: uppercase;
+}
+
+.collection-action-strip strong {
+  color: #0f172a;
+  font-size: 0.98rem;
+  line-height: 1.35;
+}
+
+.collection-action-strip small {
+  color: #475569;
+  font-size: 0.8rem;
+  font-weight: 700;
+  line-height: 1.4;
+}
+
+.collection-action-buttons {
+  display: flex;
+  flex: 0 0 auto;
+  gap: 0.5rem;
+}
+
+.collection-action-buttons a {
+  align-items: center;
+  border-radius: 8px;
+  display: inline-flex;
+  font-size: 0.84rem;
+  font-weight: 900;
+  justify-content: center;
+  line-height: 1.2;
+  min-height: 40px;
+  padding: 0.65rem 0.85rem;
+  text-align: center;
+  text-decoration: none;
+}
+
+.collection-action-buttons a:first-child {
+  background: #4f46e5;
+  color: #ffffff;
+}
+
+.collection-action-buttons a:first-child:hover {
+  background: #4338ca;
+}
+
+.collection-action-buttons a:last-child {
+  background: #ffffff;
+  border: 1px solid #cbd5e1;
+  color: #334155;
+}
+
+.collection-action-buttons a:last-child:hover {
+  background: #f8fafc;
+  border-color: #94a3b8;
 }
 
 .main-content {
@@ -1816,6 +1948,11 @@ useHead({
 @media (max-width: 640px) {
   .index-hero h1 {
     font-size: 1.875rem;
+  }
+  .collection-action-strip,
+  .collection-action-buttons {
+    align-items: stretch;
+    flex-direction: column;
   }
   .landing-support {
     grid-template-columns: 1fr;

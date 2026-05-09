@@ -30,6 +30,8 @@ const checks = [
       'rel="canonical"',
       "CollectionPage",
       "Latest available in this collection: 2025 · 12 PDF papers",
+      "Best first step",
+      "Open the newest paper, then download PDFs for timed revision.",
       "Start with recent papers",
       "Open one paper from this collection first",
       "Related exam paper collections",
