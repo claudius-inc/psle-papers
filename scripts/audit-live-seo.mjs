@@ -67,6 +67,17 @@ const checks = [
     ],
   },
   {
+    path: "/exam-papers/primary-6-mathematics/",
+    snippets: [
+      "P6 Maths Exam Papers",
+      "Subject revision path",
+      "Continue P6 Maths revision",
+      'href="/exam-papers/2025-primary-6-mathematics"',
+      'href="/exam-papers/primary-6-science"',
+      "Download PDF",
+    ],
+  },
+  {
     path: "/exam-papers/primary-6-mathematics-sa2/",
     snippets: [
       "P6 Maths SA2 Exam Papers",

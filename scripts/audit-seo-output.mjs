@@ -241,6 +241,26 @@ const requiredSnippets = [
     'name="twitter:card" content="summary_large_image"',
   ],
   [
+    ".output/public/exam-papers/primary-6-mathematics/index.html",
+    "P6 Maths Exam Papers",
+  ],
+  [
+    ".output/public/exam-papers/primary-6-mathematics/index.html",
+    "Subject revision path",
+  ],
+  [
+    ".output/public/exam-papers/primary-6-mathematics/index.html",
+    "Continue P6 Maths revision",
+  ],
+  [
+    ".output/public/exam-papers/primary-6-mathematics/index.html",
+    'href="/exam-papers/2025-primary-6-mathematics"',
+  ],
+  [
+    ".output/public/exam-papers/primary-6-mathematics/index.html",
+    'href="/exam-papers/primary-6-science"',
+  ],
+  [
     ".output/public/exam-papers/2025-primary-6-sa2/index.html",
     "2025 P6 SA2 Exam Papers",
   ],

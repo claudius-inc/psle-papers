@@ -315,6 +315,13 @@ const assessmentPracticeHeading = computed(() => {
     ? `Compare ${focus} assessment papers`
     : "Compare primary assessment papers";
 });
+const subjectPracticeHeading = computed(() => {
+  const level = readableLevel.value.replace(/^Primary ([1-6])$/, "P$1");
+  const subject =
+    readableSubject.value === "Mathematics" ? "Maths" : readableSubject.value;
+  const focus = [level, subject].filter(Boolean).join(" ");
+  return focus ? `Continue ${focus} revision` : "Continue subject revision";
+});
 const readableType = computed(() =>
   seoRoute.typeCode
     ? (options.Type.find((item) => item.code === seoRoute.typeCode)?.name || "").replace(
@@ -626,6 +633,56 @@ const schoolPracticeLinks = computed(() => {
         routes.findIndex((candidate) => candidate.path === route.path) === index,
     )
     .slice(0, 4)
+    .map((route) => ({
+      label: route.title.replace(" | SG Exam Hub", ""),
+      path: route.path,
+      count: route.paperCount,
+    }));
+});
+const subjectPracticeLinks = computed(() => {
+  if (!seoRoute.levelCode || !seoRoute.subjectCode || seoRoute.typeCode || seoRoute.schoolCode) {
+    return [];
+  }
+
+  const preferredRoutes = [
+    seoRoutes.find(
+      (route) =>
+        route.year === "2025" &&
+        route.levelCode === seoRoute.levelCode &&
+        route.subjectCode === seoRoute.subjectCode &&
+        !route.typeCode &&
+        !route.schoolCode,
+    ),
+    seoRoutes.find(
+      (route) =>
+        route.levelCode === seoRoute.levelCode &&
+        route.subjectCode === seoRoute.subjectCode &&
+        route.typeCode === "4" &&
+        !route.year &&
+        !route.schoolCode,
+    ),
+    ...["3", "4", "1", "2", "5"]
+      .filter((subjectCode) => subjectCode !== seoRoute.subjectCode)
+      .map((subjectCode) =>
+        seoRoutes.find(
+          (route) =>
+            route.levelCode === seoRoute.levelCode &&
+            route.subjectCode === subjectCode &&
+            !route.year &&
+            !route.typeCode &&
+            !route.schoolCode,
+        ),
+      ),
+  ];
+
+  return preferredRoutes
+    .filter((route): route is PaperSeoRoute => Boolean(route))
+    .filter((route) => route.path !== seoRoute.path)
+    .filter(
+      (route, index, routes) =>
+        routes.findIndex((candidate) => candidate.path === route.path) === index,
+    )
+    .slice(0, 5)
     .map((route) => ({
       label: route.title.replace(" | SG Exam Hub", ""),
       path: route.path,
@@ -1001,6 +1058,31 @@ useHead({
         <div class="school-practice-links">
           <NuxtLink
             v-for="link in schoolPracticeLinks"
+            :key="link.path"
+            :to="link.path"
+          >
+            <strong>{{ link.label }}</strong>
+            <small>{{ link.count }} PDF papers</small>
+          </NuxtLink>
+        </div>
+      </section>
+
+      <section
+        v-if="subjectPracticeLinks.length"
+        class="subject-practice-panel"
+        aria-labelledby="subject-practice-heading"
+      >
+        <div>
+          <span>Subject revision path</span>
+          <h2 id="subject-practice-heading">{{ subjectPracticeHeading }}</h2>
+          <p>
+            Open the latest papers for this subject first, then compare SA2 and
+            nearby subject collections before downloading PDFs for timed practice.
+          </p>
+        </div>
+        <div class="subject-practice-links">
+          <NuxtLink
+            v-for="link in subjectPracticeLinks"
             :key="link.path"
             :to="link.path"
           >
@@ -1649,6 +1731,79 @@ useHead({
 
 .school-practice-links a:hover strong {
   color: #0369a1;
+}
+
+.subject-practice-panel {
+  align-items: start;
+  background: #ffffff;
+  border: 1px solid #fed7aa;
+  border-radius: 8px;
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: minmax(0, 1.05fr) minmax(260px, 0.95fr);
+  margin-bottom: 2rem;
+  padding: 1.25rem;
+}
+
+.subject-practice-panel span {
+  color: #c2410c;
+  display: block;
+  font-size: 0.72rem;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  line-height: 1.2;
+  margin-bottom: 0.5rem;
+  text-transform: uppercase;
+}
+
+.subject-practice-panel h2 {
+  color: #0f172a;
+  font-size: 1.15rem;
+  line-height: 1.35;
+  margin: 0 0 0.5rem;
+}
+
+.subject-practice-panel p {
+  color: #475569;
+  line-height: 1.65;
+  margin: 0;
+}
+
+.subject-practice-links {
+  display: grid;
+  gap: 0.65rem;
+}
+
+.subject-practice-links a {
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  display: grid;
+  gap: 0.2rem;
+  min-width: 0;
+  padding: 0.85rem;
+  text-decoration: none;
+}
+
+.subject-practice-links strong {
+  color: #0f172a;
+  font-size: 0.9rem;
+  line-height: 1.35;
+}
+
+.subject-practice-links small {
+  color: #64748b;
+  font-size: 0.78rem;
+  font-weight: 750;
+  line-height: 1.35;
+}
+
+.subject-practice-links a:hover {
+  border-color: #fdba74;
+  box-shadow: 0 14px 28px rgba(234, 88, 12, 0.1);
+}
+
+.subject-practice-links a:hover strong {
+  color: #c2410c;
 }
 
 .assessment-practice-panel {
@@ -2441,6 +2596,9 @@ useHead({
     grid-template-columns: 1fr;
   }
   .school-practice-panel {
+    grid-template-columns: 1fr;
+  }
+  .subject-practice-panel {
     grid-template-columns: 1fr;
   }
   .assessment-practice-panel {
