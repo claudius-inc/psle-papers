@@ -60,6 +60,8 @@ const checks = [
       "Download PDF",
       "FAQPage",
       "Using this paper",
+      "Continue revision",
+      "More Primary 6 Maths papers",
       "Is the 2025 Raffles Girls",
       "More from this school",
       "Same exam type",

@@ -5,6 +5,7 @@ import type { DropdownData, ParsedPaper } from "~/composables/usePapers";
 import dropdownOptions from "../../../public/json/dropdownOptions.json";
 import { allParsedPapers } from "~/utils/paperSeo";
 import {
+  trackEvent,
   trackPaperDownload,
   trackPaperOpen,
   trackPaperViewClick,
@@ -179,6 +180,35 @@ const indexLinks = computed(() => {
     },
   ];
 });
+const practiceSetLinks = computed(() => {
+  if (!paper.value) return [];
+
+  const levelSlug = slugify(paper.value.levelName);
+  const subjectSlug = slugify(paper.value.subjectName);
+  const schoolSlug = slugify(paper.value.schoolName);
+  const levelLabel = paper.value.levelName.replace(/^P/, "Primary ");
+
+  return [
+    {
+      label: `More ${levelLabel} ${readableSubject.value} papers`,
+      detail: "Same level and subject",
+      to: `/exam-papers/${levelSlug}-${subjectSlug}`,
+      kind: "level_subject",
+    },
+    {
+      label: `${paper.value.yearCode} ${levelLabel} ${readableSubject.value}`,
+      detail: "Same year, level and subject",
+      to: `/exam-papers/${paper.value.yearCode}-${levelSlug}-${subjectSlug}`,
+      kind: "year_level_subject",
+    },
+    {
+      label: `${paper.value.schoolName} papers`,
+      detail: "More from this school",
+      to: `/exam-papers/school-${schoolSlug}`,
+      kind: "school",
+    },
+  ];
+});
 const breadcrumbLinks = computed(() => {
   if (!paper.value) {
     return [
@@ -269,6 +299,15 @@ const trackViewerRelatedPaperView = (item: ParsedPaper, section: string) => {
     `viewer_${section}`,
     relatedPaperAnalyticsContext(item, section),
   );
+};
+const trackViewerCollectionClick = (link: { kind: string; to: string }) => {
+  trackEvent("viewer_collection_click", {
+    paper_id: filename,
+    source: "viewer_continue_revision",
+    collection_kind: link.kind,
+    collection_path: link.to,
+    ...viewerAnalyticsContext.value,
+  });
 };
 
 onMounted(() => {
@@ -491,6 +530,21 @@ useHead({
             >
               Open in new tab
             </a>
+          </div>
+        </section>
+
+        <section class="panel-card continue-revision" aria-labelledby="continue-revision-heading">
+          <h2 id="continue-revision-heading">Continue revision</h2>
+          <div class="practice-set-links">
+            <NuxtLink
+              v-for="link in practiceSetLinks"
+              :key="link.to"
+              :to="link.to"
+              @click="trackViewerCollectionClick(link)"
+            >
+              <span>{{ link.label }}</span>
+              <small>{{ link.detail }}</small>
+            </NuxtLink>
           </div>
         </section>
 
@@ -898,6 +952,44 @@ useHead({
 .secondary-open:hover {
   border-color: #94a3b8;
   color: #0f172a;
+}
+
+.continue-revision {
+  background: #f9fafb;
+  border-color: #d1d5db;
+}
+
+.practice-set-links {
+  display: grid;
+  gap: 0.6rem;
+}
+
+.practice-set-links a {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 7px;
+  color: #1e293b;
+  display: grid;
+  gap: 0.2rem;
+  line-height: 1.35;
+  padding: 0.7rem 0.75rem;
+  text-decoration: none;
+}
+
+.practice-set-links a:hover {
+  border-color: #4f46e5;
+  box-shadow: 0 8px 18px -14px rgba(15, 23, 42, 0.4);
+}
+
+.practice-set-links span {
+  font-size: 0.86rem;
+  font-weight: 800;
+}
+
+.practice-set-links small {
+  color: #64748b;
+  font-size: 0.74rem;
+  font-weight: 650;
 }
 
 .panel-links,
