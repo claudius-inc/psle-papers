@@ -57,10 +57,13 @@ Use this map with Google Search Console after deployment. The goal is to match e
 | Query cluster | Preferred landing page | Search intent | What to monitor |
 | --- | --- | --- | --- |
 | raffles girls primary school exam papers | `/exam-papers/school-raffles-girls-primary-school` | School-specific papers | CTR, downloads |
+| 2025 raffles girls primary school SA2 exam papers | `/exam-papers/2025-sa2-school-raffles-girls-primary-school` | Latest school-specific final assessment papers | CTR, paper opens, downloads |
 | nanyang primary school exam papers | `/exam-papers/school-nanyang-primary-school` | School-specific papers | CTR, downloads |
+| 2025 nanyang primary school SA2 exam papers | `/exam-papers/2025-sa2-school-nanyang-primary-school` | Latest school-specific final assessment papers | CTR, paper opens, downloads |
 | nanyang primary p6 maths exam papers | `/exam-papers/primary-6-mathematics-school-nanyang-primary-school` | School and subject-specific practice | CTR, paper downloads |
 | nanyang primary p6 science exam papers | `/exam-papers/primary-6-science-school-nanyang-primary-school` | School and subject-specific practice | CTR, paper downloads |
 | henry park primary school exam papers | `/exam-papers/school-henry-park-primary-school` | School-specific papers | CTR, downloads |
+| 2025 henry park primary school SA2 exam papers | `/exam-papers/2025-sa2-school-henry-park-primary-school` | Latest school-specific final assessment papers | CTR, paper opens, downloads |
 | henry park primary p6 maths exam papers | `/exam-papers/primary-6-mathematics-school-henry-park-primary-school` | School and subject-specific practice | CTR, paper downloads |
 | ai tong school exam papers | `/exam-papers/school-ai-tong-school` | School-specific papers | CTR, downloads |
 | nan hua primary school exam papers | `/exam-papers/school-nan-hua-primary-school` | School-specific papers | CTR, downloads |

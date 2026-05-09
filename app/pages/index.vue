@@ -173,6 +173,10 @@ const examPaperDirectorySections = [
         to: "/exam-papers/2025-school-raffles-girls-primary-school",
       },
       {
+        label: "2025 Raffles Girls' Primary School SA2 Exam Papers",
+        to: "/exam-papers/2025-sa2-school-raffles-girls-primary-school",
+      },
+      {
         label: "Nanyang Primary School Exam Papers",
         to: "/exam-papers/school-nanyang-primary-school",
       },
@@ -189,6 +193,10 @@ const examPaperDirectorySections = [
         to: "/exam-papers/2025-school-nanyang-primary-school",
       },
       {
+        label: "2025 Nanyang Primary School SA2 Exam Papers",
+        to: "/exam-papers/2025-sa2-school-nanyang-primary-school",
+      },
+      {
         label: "Henry Park Primary School Exam Papers",
         to: "/exam-papers/school-henry-park-primary-school",
       },
@@ -199,6 +207,10 @@ const examPaperDirectorySections = [
       {
         label: "2025 Henry Park Primary School Exam Papers",
         to: "/exam-papers/2025-school-henry-park-primary-school",
+      },
+      {
+        label: "2025 Henry Park Primary School SA2 Exam Papers",
+        to: "/exam-papers/2025-sa2-school-henry-park-primary-school",
       },
       {
         label: "Ai Tong School Exam Papers",

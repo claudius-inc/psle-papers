@@ -164,6 +164,22 @@ const requiredSnippets = [
   [".output/public/index.html", "PSLE revision paths"],
   [".output/public/index.html", "Start with Primary 6 SA2 exam papers"],
   [".output/public/index.html", "2025 Primary 6 SA2 Exam Papers"],
+  [
+    ".output/public/index.html",
+    "2025 Nanyang Primary School SA2 Exam Papers",
+  ],
+  [
+    ".output/public/index.html",
+    'href="/exam-papers/2025-sa2-school-nanyang-primary-school"',
+  ],
+  [
+    ".output/public/index.html",
+    "2025 Raffles Girls&#39; Primary School SA2 Exam Papers",
+  ],
+  [
+    ".output/public/index.html",
+    'href="/exam-papers/2025-sa2-school-raffles-girls-primary-school"',
+  ],
   [".output/public/index.html", 'href="/exam-papers/primary-6-science-sa2"'],
   [".output/public/index.html", "SiteNavigationElement"],
   [".output/public/index.html", "Primary 6 Maths Exam Papers"],
