@@ -67,6 +67,8 @@ const checks = [
       "Opening exam paper",
       "Download PDF",
       "Next paper to try",
+      "Revision checklist",
+      "Download the PDF or open the next Primary 6 Maths paper",
       "FAQPage",
       "Using this paper",
       "Continue revision",

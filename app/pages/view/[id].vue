@@ -105,6 +105,31 @@ const viewerFaqItems = computed(() => {
     },
   ];
 });
+const subjectPracticeFocus = computed(() => {
+  if (readableSubject.value === "Maths") {
+    return "Mark careless errors, multi-step questions and slow problem types before trying another Maths paper.";
+  }
+  if (readableSubject.value === "Science") {
+    return "Review keywords, explanation gaps and repeated topics before moving to another Science paper.";
+  }
+  if (readableSubject.value === "English") {
+    return "Check grammar accuracy, comprehension evidence and time control before trying another English paper.";
+  }
+  if (readableSubject.value === "Chinese" || readableSubject.value === "Higher Chinese") {
+    return "Revise vocabulary, comprehension answers and sentence structure before trying another Chinese paper.";
+  }
+
+  return "Mark mistakes, group weak topics, then try a related paper to check improvement.";
+});
+const revisionChecklistItems = computed(() => {
+  if (!paper.value) return [];
+
+  return [
+    `Try this ${paper.value.typeName} paper under timed conditions before checking notes.`,
+    subjectPracticeFocus.value,
+    `Download the PDF or open the next ${readableLevel.value} ${readableSubject.value} paper to repeat the correction cycle.`,
+  ];
+});
 
 const pdfUrl = computed(() => buildPdfFileUrl(filename));
 const downloadName = computed(() => {
@@ -575,6 +600,13 @@ useHead({
           </NuxtLink>
         </section>
 
+        <section class="panel-card revision-checklist" aria-labelledby="revision-checklist-heading">
+          <h2 id="revision-checklist-heading">Revision checklist</h2>
+          <ol>
+            <li v-for="item in revisionChecklistItems" :key="item">{{ item }}</li>
+          </ol>
+        </section>
+
         <section class="panel-card continue-revision" aria-labelledby="continue-revision-heading">
           <h2 id="continue-revision-heading">Continue revision</h2>
           <div class="practice-set-links">
@@ -910,6 +942,21 @@ useHead({
 .viewer-faq {
   display: grid;
   gap: 0.85rem;
+}
+
+.revision-checklist ol {
+  color: #334155;
+  display: grid;
+  gap: 0.55rem;
+  font-size: 0.82rem;
+  line-height: 1.5;
+  margin: 0;
+  padding-left: 1.15rem;
+}
+
+.revision-checklist li::marker {
+  color: #4f46e5;
+  font-weight: 800;
 }
 
 .viewer-faq article {
