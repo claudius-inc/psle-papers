@@ -480,6 +480,25 @@ const trackHomePaperView = (filename: string) => {
 const trackHomePaperDownload = (filename: string) => {
   trackPaperDownload(filename, "home_results", homeAnalyticsContext.value);
 };
+const heroPaper = computed(() => featuredPapers.value[0]);
+const buildPaperDownloadName = (paper: ParsedPaper) =>
+  `${[
+    paper.yearCode,
+    paper.levelName,
+    paper.subjectName,
+    paper.typeName,
+    paper.schoolName,
+  ]
+    .join("-")
+    .replace(/[^\w.-]+/g, "-")
+    .replace(/-+/g, "-")
+    .replace(/^-|-$/g, "")}.pdf`;
+const trackHeroPaperView = (filename: string) => {
+  trackPaperViewClick(filename, "home_hero_cta", homeAnalyticsContext.value);
+};
+const trackHeroPaperDownload = (filename: string) => {
+  trackPaperDownload(filename, "home_hero_cta", homeAnalyticsContext.value);
+};
 
 // View mode (grid vs list) — persists across page loads via localStorage.
 const viewMode = ref<"grid" | "list">("grid");
@@ -549,6 +568,31 @@ const resetFilters = () => {
           Latest available papers: {{ latestAvailableYear }} ·
           {{ totalPaperCount.toLocaleString() }} PDF exam papers indexed
         </p>
+        <div v-if="heroPaper" class="hero-paper-cta">
+          <div class="hero-paper-copy">
+            <span>Start with a latest paper</span>
+            <strong>
+              {{ heroPaper.yearCode }} {{ heroPaper.levelName }}
+              {{ heroPaper.subjectName }} {{ heroPaper.typeName }}
+            </strong>
+            <small>{{ heroPaper.schoolName }}</small>
+          </div>
+          <div class="hero-paper-actions">
+            <NuxtLink
+              :to="`/view/${heroPaper.filename}`"
+              @click="trackHeroPaperView(heroPaper.filename)"
+            >
+              View Paper
+            </NuxtLink>
+            <a
+              :href="buildPdfFileUrl(heroPaper.filename)"
+              :download="buildPaperDownloadName(heroPaper)"
+              @click="trackHeroPaperDownload(heroPaper.filename)"
+            >
+              Download PDF
+            </a>
+          </div>
+        </div>
         <div class="hero-stats">
           <div class="stat-item">
             <span class="stat-value"
@@ -858,7 +902,7 @@ const resetFilters = () => {
               <a
                 class="download-btn"
                 :href="buildPdfFileUrl(paper.filename)"
-                :download="`${paper.yearCode}-${paper.levelName}-${paper.subjectName}-${paper.typeName}-${paper.schoolName}.pdf`"
+                :download="buildPaperDownloadName(paper)"
                 @click="trackHomePaperDownload(paper.filename)"
               >
                 Download PDF
@@ -1064,7 +1108,89 @@ const resetFilters = () => {
   color: #334155;
   font-size: 0.9rem;
   font-weight: 700;
-  margin: 0 auto 2.5rem;
+  margin: 0 auto 1.25rem;
+}
+
+.hero-paper-cta {
+  align-items: center;
+  background: #ffffff;
+  border: 1px solid #dbeafe;
+  border-radius: 8px;
+  display: flex;
+  gap: 1rem;
+  justify-content: space-between;
+  margin: 0 auto 2.25rem;
+  max-width: 740px;
+  padding: 1rem;
+  text-align: left;
+}
+
+.hero-paper-copy {
+  display: grid;
+  gap: 0.25rem;
+  min-width: 0;
+}
+
+.hero-paper-copy span {
+  color: #4f46e5;
+  font-size: 0.72rem;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  line-height: 1.2;
+  text-transform: uppercase;
+}
+
+.hero-paper-copy strong {
+  color: #0f172a;
+  font-size: 1rem;
+  line-height: 1.35;
+}
+
+.hero-paper-copy small {
+  color: #475569;
+  font-size: 0.82rem;
+  font-weight: 700;
+  line-height: 1.4;
+}
+
+.hero-paper-actions {
+  display: flex;
+  flex: 0 0 auto;
+  gap: 0.5rem;
+}
+
+.hero-paper-actions a {
+  align-items: center;
+  border-radius: 8px;
+  display: inline-flex;
+  font-size: 0.85rem;
+  font-weight: 900;
+  justify-content: center;
+  line-height: 1.2;
+  min-height: 40px;
+  padding: 0.65rem 0.85rem;
+  text-align: center;
+  text-decoration: none;
+}
+
+.hero-paper-actions a:first-child {
+  background: #4f46e5;
+  color: #ffffff;
+}
+
+.hero-paper-actions a:first-child:hover {
+  background: #4338ca;
+}
+
+.hero-paper-actions a:last-child {
+  background: #ffffff;
+  border: 1px solid #cbd5e1;
+  color: #334155;
+}
+
+.hero-paper-actions a:last-child:hover {
+  background: #f8fafc;
+  border-color: #94a3b8;
 }
 
 .hero-stats {
@@ -1104,6 +1230,12 @@ const resetFilters = () => {
 }
 
 @media (max-width: 640px) {
+  .hero-paper-cta,
+  .hero-paper-actions {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
   .hero-stats {
     gap: 1.5rem;
   }

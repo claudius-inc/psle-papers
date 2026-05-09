@@ -9,6 +9,8 @@ const checks = [
       "SG Exam Papers",
       "Latest available papers: 2025",
       "2,299 PDF exam papers indexed",
+      "Start with a latest paper",
+      "2025 P6 English SA2",
       "SiteNavigationElement",
       "Primary 6 Maths Exam Papers",
       "isAccessibleForFree",
