@@ -66,6 +66,7 @@ const checks = [
       "raw.githubusercontent.com/airbob/PrimarySchoolExamPapers",
       "Opening exam paper",
       "Download PDF",
+      "Next paper to try",
       "FAQPage",
       "Using this paper",
       "Continue revision",

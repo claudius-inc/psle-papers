@@ -268,6 +268,10 @@ const sameExamTypePapers = computed(() => {
     .slice(0, 5);
 });
 
+const nextPracticePaper = computed(() =>
+  sameExamTypePapers.value[0] || relatedPapers.value[0] || sameSchoolPapers.value[0],
+);
+
 const viewerAnalyticsContext = computed(() => {
   if (!paper.value) return {};
 
@@ -557,6 +561,18 @@ useHead({
               Open in new tab
             </a>
           </div>
+          <NuxtLink
+            v-if="nextPracticePaper"
+            class="next-paper-cta"
+            :to="`/view/${nextPracticePaper.filename}`"
+            @click="trackViewerRelatedPaperView(nextPracticePaper, 'next_paper')"
+          >
+            <span>Next paper to try</span>
+            <strong>
+              {{ nextPracticePaper.yearCode }} {{ nextPracticePaper.schoolName }}
+              {{ nextPracticePaper.typeName }}
+            </strong>
+          </NuxtLink>
         </section>
 
         <section class="panel-card continue-revision" aria-labelledby="continue-revision-heading">
@@ -945,6 +961,36 @@ useHead({
 .panel-actions {
   display: grid;
   gap: 0.6rem;
+}
+
+.next-paper-cta {
+  border: 1px solid #c7d2fe;
+  border-radius: 8px;
+  color: #1e293b;
+  display: grid;
+  gap: 0.25rem;
+  line-height: 1.35;
+  margin-top: 0.75rem;
+  padding: 0.75rem 0.85rem;
+  text-decoration: none;
+}
+
+.next-paper-cta:hover {
+  border-color: #4f46e5;
+  box-shadow: 0 8px 18px -14px rgba(15, 23, 42, 0.4);
+}
+
+.next-paper-cta span {
+  color: #4f46e5;
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.next-paper-cta strong {
+  color: #0f172a;
+  font-size: 0.9rem;
 }
 
 .primary-download,

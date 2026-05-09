@@ -230,6 +230,7 @@ const requiredSnippets = [
   ],
   [".output/public/view/6_1073_3_4_2025/index.html", 'content="index, follow"'],
   [".output/public/view/6_1073_3_4_2025/index.html", "Download PDF"],
+  [".output/public/view/6_1073_3_4_2025/index.html", "Next paper to try"],
   [".output/public/view/6_1073_3_4_2025/index.html", "FAQPage"],
   [".output/public/view/6_1073_3_4_2025/index.html", "Using this paper"],
   [".output/public/view/6_1073_3_4_2025/index.html", "Continue revision"],
@@ -392,6 +393,8 @@ for (const snippet of [
   "Free PDF download for",
   "practiceSetLinks",
   "Continue revision",
+  "nextPracticePaper",
+  "next_paper",
   "viewer_collection_click",
   "trackViewerCollectionClick",
 ]) {
