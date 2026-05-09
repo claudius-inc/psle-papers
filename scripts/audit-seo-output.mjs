@@ -851,6 +851,21 @@ for (const eventName of ["paper_view_click", "paper_open", "paper_download"]) {
   }
 }
 for (const snippet of [
+  "page_engaged_time",
+  "page_scroll_depth",
+  "page_session_summary",
+  "max_scroll_percent",
+  "window.setTimeout(() => sendEngagedTime(10), 10000)",
+  "window.setTimeout(() => sendEngagedTime(120), 120000)",
+  "for (const threshold of [25, 50, 75, 90])",
+  'sendPageSummary("route_change")',
+  'sendPageSummary("pagehide")',
+]) {
+  if (!engagement.includes(snippet)) {
+    fail(`Engagement tracking is missing expected snippet: ${snippet}.`);
+  }
+}
+for (const snippet of [
   "2026 Primary Exam Papers Revision",
   "PSLE Revision Papers",
   "Singapore Primary Test Papers",
