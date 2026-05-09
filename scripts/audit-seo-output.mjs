@@ -328,6 +328,10 @@ const requiredSnippets = [
   ],
   [
     ".output/public/exam-papers/2025/index.html",
+    "Latest available for 2026 revision. View online or download free PDFs.",
+  ],
+  [
+    ".output/public/exam-papers/2025/index.html",
     "Year paper paths",
   ],
   [
@@ -345,6 +349,10 @@ const requiredSnippets = [
   [
     ".output/public/exam-papers/2025-primary-6-mathematics/index.html",
     "2025 P6 Maths Exam Papers",
+  ],
+  [
+    ".output/public/exam-papers/2025-primary-6-mathematics/index.html",
+    "View online or download free PDFs for PSLE revision.",
   ],
   [
     ".output/public/exam-papers/2025-primary-6-mathematics/index.html",
@@ -416,6 +424,10 @@ const requiredSnippets = [
   ],
   [
     ".output/public/exam-papers/2025-primary-6-mathematics-sa2/index.html",
+    "View online or download free PDFs for PSLE revision.",
+  ],
+  [
+    ".output/public/exam-papers/2025-primary-6-mathematics-sa2/index.html",
     "Start with recent papers",
   ],
   [
@@ -453,6 +465,10 @@ const requiredSnippets = [
   [
     ".output/public/exam-papers/primary-6-mathematics-school-nanyang-primary-school/index.html",
     "P6 Maths Nanyang Primary School Exam Papers",
+  ],
+  [
+    ".output/public/exam-papers/primary-6-mathematics-school-nanyang-primary-school/index.html",
+    "Compare school papers online, then download free PDFs for revision.",
   ],
   [
     ".output/public/exam-papers/primary-6-mathematics-school-nanyang-primary-school/index.html",
@@ -533,6 +549,10 @@ const requiredSnippets = [
   [
     ".output/public/exam-papers/sa2/index.html",
     "SA2 Exam Papers",
+  ],
+  [
+    ".output/public/exam-papers/sa2/index.html",
+    "View online or download free PDFs for timed practice.",
   ],
   [
     ".output/public/exam-papers/sa2/index.html",

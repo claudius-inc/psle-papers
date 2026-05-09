@@ -73,6 +73,7 @@ const checks = [
     path: "/exam-papers/2025/",
     snippets: [
       "2025 Exam Papers",
+      "Latest available for 2026 revision. View online or download free PDFs.",
       "Year paper paths",
       "Start with 2025 primary exam papers",
       'href="/exam-papers/2025-primary-6"',
@@ -84,6 +85,7 @@ const checks = [
     path: "/exam-papers/2025-primary-6-mathematics/",
     snippets: [
       "2025 P6 Maths Exam Papers",
+      "View online or download free PDFs for PSLE revision.",
       'rel="canonical"',
       "CollectionPage",
       "Latest available in this collection: 2025 · 12 PDF papers",
@@ -105,6 +107,7 @@ const checks = [
     path: "/exam-papers/2025-primary-6-mathematics-sa2/",
     snippets: [
       "2025 P6 Maths SA2 Exam Papers",
+      "View online or download free PDFs for PSLE revision.",
       'rel="canonical"',
       "CollectionPage",
       "Start with recent papers",
@@ -132,6 +135,7 @@ const checks = [
     path: "/exam-papers/primary-6-mathematics-sa2/",
     snippets: [
       "P6 Maths SA2 Exam Papers",
+      "View online or download free PDFs for PSLE revision.",
       "Assessment practice path",
       "Compare P6 Maths assessment papers",
       'href="/exam-papers/primary-6-mathematics-wa2"',
@@ -142,6 +146,7 @@ const checks = [
     path: "/exam-papers/primary-6-mathematics-school-nanyang-primary-school/",
     snippets: [
       "P6 Maths Nanyang Primary School Exam Papers",
+      "Compare school papers online, then download free PDFs for revision.",
       'rel="canonical"',
       "CollectionPage",
       "School paper paths",
@@ -179,6 +184,7 @@ const checks = [
     path: "/exam-papers/sa2-school-nanyang-primary-school/",
     snippets: [
       "SA2 Nanyang Primary School Exam Papers",
+      "Compare school papers online, then download free PDFs for revision.",
       'rel="canonical"',
       "CollectionPage",
       "School paper paths",

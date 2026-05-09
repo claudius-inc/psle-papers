@@ -112,6 +112,7 @@ const formatTypeTitle = (name: string) =>
   name === "Practice Paper" ? "Practice Papers" : name;
 const formatSchoolTitle = (name: string) =>
   name.replace(/\s+\(primary\)$/i, "").replace(/\s+\(junior\)$/i, " Junior");
+const latestYear = Math.max(...yearOptions.map((year) => Number(year.code))).toString();
 
 const countPapers = ({
   year,
@@ -134,6 +135,52 @@ const countPapers = ({
     if (schoolCode && paper.schoolCode !== schoolCode) return false;
     return true;
   }).length;
+
+const buildCollectionDescription = ({
+  paperCount,
+  titleParts,
+  year,
+  levelCode,
+  typeCode,
+  schoolCode,
+}: {
+  paperCount: number;
+  titleParts: string[];
+  year?: string;
+  levelCode?: string;
+  typeCode?: string;
+  schoolCode?: string;
+}) => {
+  const count = paperCount.toLocaleString();
+
+  if (!titleParts.length) {
+    return `Download ${count} free Singapore primary school exam paper PDFs for P2-P6 Maths, Science, English and Chinese. View online for 2026 revision.`;
+  }
+
+  const focus = titleParts.join(" ");
+  const fullPaperLabel = titleParts.includes("Practice Papers")
+    ? `${focus} PDFs`
+    : `${focus} exam paper PDFs`;
+  const shortPaperLabel = titleParts.includes("Practice Papers")
+    ? `${focus} PDFs`
+    : `${focus} papers`;
+  const action = schoolCode
+    ? "Compare school papers online, then download free PDFs for revision."
+    : levelCode === "6"
+      ? "View online or download free PDFs for PSLE revision."
+      : year === latestYear
+        ? "Latest available for 2026 revision. View online or download free PDFs."
+        : typeCode
+          ? "View online or download free PDFs for timed practice."
+          : "View online or download free PDFs for Singapore primary revision.";
+  const descriptions = [
+    `${count} free ${fullPaperLabel}. ${action}`,
+    `${count} free ${shortPaperLabel}. ${action}`,
+    `${count} free exam paper PDFs in this collection. ${action}`,
+  ];
+
+  return descriptions.find((description) => description.length <= 170) || descriptions[2];
+};
 
 const buildRoute = ({
   slug,
@@ -178,13 +225,14 @@ const buildRoute = ({
     : "Free Singapore Primary Exam Papers";
   const titleWithBrand = `${bareTitle} | SG Exam Hub`;
   const title = titleWithBrand.length > 70 ? bareTitle : titleWithBrand;
-  const description = titleParts.length
-    ? `${paperCount.toLocaleString()} free ${
-        titleParts.includes("Practice Papers")
-          ? `${titleParts.join(" ")} PDFs`
-          : `${titleParts.join(" ")} exam paper PDFs`
-      } for Singapore primary revision. View online or download for SA1, SA2 and PSLE practice.`
-    : `Download ${paperCount.toLocaleString()} free Singapore primary school exam paper PDFs for P2-P6 Maths, Science, English and Chinese revision.`;
+  const description = buildCollectionDescription({
+    paperCount,
+    titleParts,
+    year,
+    levelCode,
+    typeCode,
+    schoolCode,
+  });
 
   return {
     slug,
