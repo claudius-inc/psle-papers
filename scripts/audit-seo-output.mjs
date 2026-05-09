@@ -10,6 +10,7 @@ const engagementPath = "app/composables/useEngagementTracking.ts";
 const keywordMapPath = "SEO_KEYWORD_MAP.md";
 const homePagePath = "app/pages/index.vue";
 const testPaperPagePath = "app/pages/test-papers.vue";
+const topSchoolPagePath = "app/pages/top-school-exam-papers.vue";
 const collectionPagePath = "app/pages/exam-papers/[[slug]].vue";
 const viewerPagePath = "app/pages/view/[id].vue";
 const revisionPagePath = "app/pages/exam-papers/2026-revision.vue";
@@ -136,6 +137,9 @@ const homePage = existsSync(homePagePath) ? readFileSync(homePagePath, "utf8") :
 const testPaperPage = existsSync(testPaperPagePath)
   ? readFileSync(testPaperPagePath, "utf8")
   : "";
+const topSchoolPage = existsSync(topSchoolPagePath)
+  ? readFileSync(topSchoolPagePath, "utf8")
+  : "";
 const collectionPage = existsSync(collectionPagePath)
   ? readFileSync(collectionPagePath, "utf8")
   : "";
@@ -175,6 +179,8 @@ const requiredSnippets = [
   [".output/public/index.html", 'href="/exam-papers/2026-revision"'],
   [".output/public/index.html", "Singapore Primary Test Papers"],
   [".output/public/index.html", 'href="/test-papers"'],
+  [".output/public/index.html", "Top School Exam Papers Singapore"],
+  [".output/public/index.html", 'href="/top-school-exam-papers"'],
   [".output/public/index.html", "PSLE Revision Papers"],
   [".output/public/index.html", 'href="/exam-papers/psle-revision"'],
   [".output/public/index.html", "PSLE revision paths"],
@@ -314,6 +320,14 @@ const requiredSnippets = [
   ],
   [
     ".output/public/sitemap/index.html",
+    "Top School Exam Papers Singapore",
+  ],
+  [
+    ".output/public/sitemap/index.html",
+    'href="/top-school-exam-papers"',
+  ],
+  [
+    ".output/public/sitemap/index.html",
     "2026 Primary Exam Papers Revision",
   ],
   [
@@ -370,6 +384,50 @@ const requiredSnippets = [
   ],
   [
     ".output/public/test-papers/index.html",
+    "raw.githubusercontent.com/airbob/PrimarySchoolExamPapers",
+  ],
+  [
+    ".output/public/top-school-exam-papers/index.html",
+    "Top School Exam Papers Singapore",
+  ],
+  [
+    ".output/public/top-school-exam-papers/index.html",
+    "Download free Singapore top school exam papers",
+  ],
+  [
+    ".output/public/top-school-exam-papers/index.html",
+    "Start with a recent top school paper",
+  ],
+  [
+    ".output/public/top-school-exam-papers/index.html",
+    "Choose a school collection",
+  ],
+  [
+    ".output/public/top-school-exam-papers/index.html",
+    "Latest top school exam papers",
+  ],
+  [
+    ".output/public/top-school-exam-papers/index.html",
+    "Are these top school exam papers free to download?",
+  ],
+  [
+    ".output/public/top-school-exam-papers/index.html",
+    "Raffles Girls&#39; Primary School exam papers",
+  ],
+  [
+    ".output/public/top-school-exam-papers/index.html",
+    "Nanyang Primary School exam papers",
+  ],
+  [
+    ".output/public/top-school-exam-papers/index.html",
+    "FAQPage",
+  ],
+  [
+    ".output/public/top-school-exam-papers/index.html",
+    "DownloadAction",
+  ],
+  [
+    ".output/public/top-school-exam-papers/index.html",
     "raw.githubusercontent.com/airbob/PrimarySchoolExamPapers",
   ],
   [
@@ -736,6 +794,9 @@ if (!sitemap.includes("https://sgexamhub.com/sitemap")) {
 if (!sitemap.includes("https://sgexamhub.com/test-papers")) {
   fail("Sitemap is missing the primary test papers landing page.");
 }
+if (!sitemap.includes("https://sgexamhub.com/top-school-exam-papers")) {
+  fail("Sitemap is missing the top school exam papers landing page.");
+}
 if (!sitemap.includes("https://sgexamhub.com/exam-papers/2026-revision")) {
   fail("Sitemap is missing the 2026 revision landing page.");
 }
@@ -794,6 +855,8 @@ for (const snippet of [
   "PSLE Revision Papers",
   "Singapore Primary Test Papers",
   "/test-papers",
+  "Top School Exam Papers Singapore",
+  "/top-school-exam-papers",
   "paperSearchQuery",
   "trackPaperSearch",
   "paper_search",
@@ -827,6 +890,23 @@ for (const snippet of [
 ]) {
   if (!testPaperPage.includes(snippet)) {
     fail(`Test papers page is missing expected source snippet: ${snippet}.`);
+  }
+}
+for (const snippet of [
+  "Top School Exam Papers Singapore",
+  "top school exam papers",
+  "topSchoolCollections",
+  "trackTopSchoolPaperView",
+  "trackTopSchoolPaperDownload",
+  "top_school_hero",
+  "Raffles Girls' Primary School",
+  "Nanyang Primary School",
+  "FAQPage",
+  "DownloadAction",
+  "buildPdfFileUrl",
+]) {
+  if (!topSchoolPage.includes(snippet)) {
+    fail(`Top school page is missing expected source snippet: ${snippet}.`);
   }
 }
 for (const snippet of [

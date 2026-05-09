@@ -68,6 +68,11 @@ const revisionHubLinks = [
     description: "Free P2-P6 test papers with PDF downloads",
   },
   {
+    label: "Top School Exam Papers Singapore",
+    to: "/top-school-exam-papers",
+    description: "Raffles, Nanyang, Henry Park, Ai Tong and more",
+  },
+  {
     label: "2026 Primary Exam Papers Revision",
     to: "/exam-papers/2026-revision",
     description: "Latest 2025 and 2024 papers for 2026 revision",
@@ -87,6 +92,11 @@ const directorySections = [
       {
         label: "Singapore Primary Test Papers",
         to: "/test-papers",
+        count: allParsedPapers.length,
+      },
+      {
+        label: "Top School Exam Papers Singapore",
+        to: "/top-school-exam-papers",
         count: allParsedPapers.length,
       },
       {

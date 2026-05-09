@@ -15,6 +15,8 @@ Use this map with Google Search Console after deployment. The goal is to match e
 | primary school test papers | `/test-papers` | General test paper search | CTR, paper opens, downloads |
 | free test papers singapore | `/test-papers` | Free PDF test paper search | CTR, paper opens, downloads |
 | singapore primary test papers | `/test-papers` | Broad primary test paper discovery | CTR, paper opens, downloads |
+| top school exam papers singapore | `/top-school-exam-papers` | Top school comparison and download | CTR, school collection clicks, downloads |
+| singapore top school exam papers | `/top-school-exam-papers` | Top school paper discovery | CTR, school collection clicks, downloads |
 | 2026 primary exam papers | `/exam-papers/2026-revision` | Current-year revision using latest available PDFs | CTR, paper opens, downloads |
 | primary exam papers 2026 revision | `/exam-papers/2026-revision` | 2026 revision planning | CTR, collection clicks, downloads |
 | psle revision papers | `/exam-papers/psle-revision` | Primary 6 PSLE preparation | CTR, paper opens, downloads |

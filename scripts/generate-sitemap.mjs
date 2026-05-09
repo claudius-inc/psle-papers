@@ -65,6 +65,7 @@ const staticLastModified = [
   "app/app.vue",
   "app/pages/index.vue",
   "app/pages/test-papers.vue",
+  "app/pages/top-school-exam-papers.vue",
   "app/pages/exam-papers/[[slug]].vue",
   "app/pages/sitemap.vue",
   "app/pages/view/[id].vue",
@@ -147,6 +148,12 @@ const routeEntries = [
   { path: "/sitemap", priority: "0.7", lastmod: staticLastModified },
   {
     path: "/test-papers",
+    priority: "0.9",
+    changefreq: "weekly",
+    lastmod: staticLastModified,
+  },
+  {
+    path: "/top-school-exam-papers",
     priority: "0.9",
     changefreq: "weekly",
     lastmod: staticLastModified,
@@ -394,7 +401,9 @@ const routeEntries = [
   ),
   ...paperViewRoutes,
 ].filter((route) =>
-  ["/", "/test-papers", "/exam-papers"].includes(route.path) || hasPapers(route),
+  ["/", "/test-papers", "/top-school-exam-papers", "/exam-papers"].includes(
+    route.path,
+  ) || hasPapers(route),
 );
 
 const urls = routeEntries
