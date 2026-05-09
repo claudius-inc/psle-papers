@@ -646,6 +646,14 @@ const schoolPracticeLinks = computed(() => {
     seoRoutes.find(
       (route) =>
         route.year === "2025" &&
+        route.typeCode === "4" &&
+        route.schoolCode === seoRoute.schoolCode &&
+        !route.levelCode &&
+        !route.subjectCode,
+    ),
+    seoRoutes.find(
+      (route) =>
+        route.year === "2025" &&
         route.schoolCode === seoRoute.schoolCode &&
         !route.levelCode &&
         !route.subjectCode,

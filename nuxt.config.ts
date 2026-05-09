@@ -135,6 +135,18 @@ const seoIndexRoutes = [
       })),
     ),
   ),
+  ...years.flatMap((year) =>
+    types.flatMap((type) =>
+      schools.map((school) => ({
+        path: `/exam-papers/${year.code}-${slugify(type.name)}-school-${slugify(
+          school.name,
+        )}`,
+        year: year.code,
+        typeCode: type.code,
+        schoolCode: school.code,
+      })),
+    ),
+  ),
   ...levels.flatMap((level) =>
     schools.map((school) => ({
       path: `/exam-papers/${slugify(level.name)}-school-${slugify(school.name)}`,

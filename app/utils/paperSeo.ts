@@ -284,6 +284,18 @@ export const seoRoutes: PaperSeoRoute[] = [
       ),
     ),
   ),
+  ...yearOptions.flatMap((year) =>
+    typeOptions.flatMap((type) =>
+      schoolOptions.map((school) =>
+        buildRoute({
+          slug: `${year.code}-${slugify(type.name)}-school-${slugify(school.name)}`,
+          year: year.code,
+          typeCode: type.code,
+          schoolCode: school.code,
+        }),
+      ),
+    ),
+  ),
   ...levelOptions.flatMap((level) =>
     schoolOptions.map((school) =>
       buildRoute({

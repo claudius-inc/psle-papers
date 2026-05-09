@@ -377,12 +377,28 @@ const requiredSnippets = [
     'href="/exam-papers/primary-6-mathematics-school-nanyang-primary-school"',
   ],
   [
+    ".output/public/exam-papers/2025-sa2-school-nanyang-primary-school/index.html",
+    "2025 SA2 Nanyang Primary School Exam Papers",
+  ],
+  [
+    ".output/public/exam-papers/2025-sa2-school-nanyang-primary-school/index.html",
+    "School paper paths",
+  ],
+  [
+    ".output/public/exam-papers/2025-sa2-school-nanyang-primary-school/index.html",
+    'href="/exam-papers/primary-6-mathematics-school-nanyang-primary-school"',
+  ],
+  [
     ".output/public/sitemap/index.html",
     "Popular School Subject Collections",
   ],
   [
     ".output/public/sitemap/index.html",
     "Popular School Assessment Collections",
+  ],
+  [
+    ".output/public/sitemap/index.html",
+    "Popular Year School Assessment Collections",
   ],
   [
     ".output/public/exam-papers/2025-primary-6-mathematics-school-nanyang-primary-school/index.html",
@@ -505,6 +521,9 @@ if (!sitemap.includes("https://sgexamhub.com/exam-papers/mathematics-school-nany
 }
 if (!sitemap.includes("https://sgexamhub.com/exam-papers/sa2-school-nanyang-primary-school")) {
   fail("Sitemap is missing representative school assessment route.");
+}
+if (!sitemap.includes("https://sgexamhub.com/exam-papers/2025-sa2-school-nanyang-primary-school")) {
+  fail("Sitemap is missing representative year school assessment route.");
 }
 if (!sitemap.includes("https://sgexamhub.com/view/2_7118_3_4_2019")) {
   fail("Sitemap is missing representative older paper viewer URL.");
