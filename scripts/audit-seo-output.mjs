@@ -188,6 +188,22 @@ const requiredSnippets = [
   ],
   [
     ".output/public/exam-papers/2025-primary-6-mathematics/index.html",
+    "Related exam paper collections",
+  ],
+  [
+    ".output/public/exam-papers/2025-primary-6-mathematics/index.html",
+    "Add a filter",
+  ],
+  [
+    ".output/public/exam-papers/2025-primary-6-mathematics/index.html",
+    'href="/exam-papers/2025-primary-6-mathematics-sa2"',
+  ],
+  [
+    ".output/public/exam-papers/2025-primary-6-mathematics/index.html",
+    "Broader searches",
+  ],
+  [
+    ".output/public/exam-papers/2025-primary-6-mathematics/index.html",
     'name="twitter:card" content="summary_large_image"',
   ],
   [
@@ -197,6 +213,10 @@ const requiredSnippets = [
   [
     ".output/public/exam-papers/2025-primary-6-mathematics-sa2/index.html",
     "2025 P6 Maths SA2 Exam Papers",
+  ],
+  [
+    ".output/public/exam-papers/2025-primary-6-mathematics-sa2/index.html",
+    'href="/exam-papers/primary-6-mathematics-sa2"',
   ],
   [
     ".output/public/exam-papers/primary-6-mathematics-sa2/index.html",

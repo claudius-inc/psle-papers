@@ -8,6 +8,7 @@ import {
   allParsedPapers,
   getPapersForRoute,
 } from "~/utils/paperSeo";
+import type { PaperSeoRoute } from "~/utils/paperSeo";
 import {
   trackEvent,
   trackPaperDownload,
@@ -149,31 +150,139 @@ const setViewMode = (mode: "grid" | "list") => {
   });
 };
 
-const relatedRoutes = computed(() =>
-  seoRoutes
-    .filter((item) => item.path !== seoRoute!.path)
-    .filter((item) => {
-      if (
-        !seoRoute!.year &&
-        !seoRoute!.levelCode &&
-        !seoRoute!.subjectCode &&
-        !seoRoute!.typeCode
-      ) {
-        return !item.year && (!item.levelCode || !item.subjectCode || !item.typeCode);
-      }
-      if (seoRoute!.year && item.year === seoRoute!.year) return true;
-      if (seoRoute!.levelCode && item.levelCode === seoRoute!.levelCode) return true;
-      if (seoRoute!.subjectCode && item.subjectCode === seoRoute!.subjectCode) {
-        return true;
-      }
-      if (seoRoute!.typeCode && item.typeCode === seoRoute!.typeCode) return true;
-      if (seoRoute!.schoolCode && item.schoolCode === seoRoute!.schoolCode) {
-        return true;
-      }
-      return false;
-    })
-    .slice(0, 24),
+type RelatedCollectionLink = {
+  path: string;
+  title: string;
+  paperCount: number;
+};
+
+const routeDimensionKeys = [
+  "year",
+  "levelCode",
+  "subjectCode",
+  "typeCode",
+  "schoolCode",
+] as const;
+
+const cleanRouteTitle = (item: PaperSeoRoute) =>
+  item.title.replace(" | SG Exam Hub", "");
+
+const routeDimensionCount = (item: PaperSeoRoute) =>
+  routeDimensionKeys.filter((key) => Boolean(item[key])).length;
+
+const currentDimensions = computed(() =>
+  routeDimensionKeys.filter((key) => Boolean(seoRoute[key])),
 );
+
+const routeMatchesAllCurrentDimensions = (item: PaperSeoRoute) =>
+  currentDimensions.value.every((key) => item[key] === seoRoute[key]);
+
+const routeIsBroaderThanCurrent = (item: PaperSeoRoute) =>
+  routeDimensionCount(item) < currentDimensions.value.length &&
+  routeDimensionKeys.every((key) => !item[key] || item[key] === seoRoute[key]);
+
+const routeOverlapScore = (item: PaperSeoRoute) =>
+  routeDimensionKeys.reduce(
+    (score, key) => score + (seoRoute[key] && item[key] === seoRoute[key] ? 1 : 0),
+    0,
+  );
+
+const relatedRouteSort = (a: PaperSeoRoute, b: PaperSeoRoute) => {
+  const aSchoolPenalty = a.schoolCode ? 1 : 0;
+  const bSchoolPenalty = b.schoolCode ? 1 : 0;
+  if (aSchoolPenalty !== bSchoolPenalty) return aSchoolPenalty - bSchoolPenalty;
+  const aDimensions = routeDimensionCount(a);
+  const bDimensions = routeDimensionCount(b);
+  if (aDimensions !== bDimensions) return bDimensions - aDimensions;
+  if (a.paperCount !== b.paperCount) return b.paperCount - a.paperCount;
+  return cleanRouteTitle(a).localeCompare(cleanRouteTitle(b));
+};
+
+const toRelatedCollectionLink = (item: PaperSeoRoute): RelatedCollectionLink => ({
+  path: item.path,
+  title: cleanRouteTitle(item),
+  paperCount: item.paperCount,
+});
+
+const relatedCollectionGroups = computed(() => {
+  const usedPaths = new Set<string>([seoRoute.path]);
+  const takeRoutes = (
+    routes: PaperSeoRoute[],
+    limit: number,
+    sortBy: (a: PaperSeoRoute, b: PaperSeoRoute) => number = relatedRouteSort,
+  ) => {
+    const selected = routes
+      .filter((item) => item.paperCount > 0 && !usedPaths.has(item.path))
+      .sort(sortBy)
+      .slice(0, limit);
+
+    selected.forEach((item) => usedPaths.add(item.path));
+    return selected.map(toRelatedCollectionLink);
+  };
+
+  const addFilterLinks = takeRoutes(
+    seoRoutes.filter(
+      (item) =>
+        routeMatchesAllCurrentDimensions(item) &&
+        routeDimensionCount(item) > currentDimensions.value.length,
+    ),
+    8,
+  );
+
+  const nearbyMinimumOverlap = Math.max(1, Math.min(2, currentDimensions.value.length));
+  const nearbyLinks = takeRoutes(
+    seoRoutes.filter(
+      (item) =>
+        routeOverlapScore(item) >= nearbyMinimumOverlap &&
+        !routeMatchesAllCurrentDimensions(item) &&
+        !routeIsBroaderThanCurrent(item),
+    ),
+    8,
+    (a, b) => {
+      const overlapDifference = routeOverlapScore(b) - routeOverlapScore(a);
+      return overlapDifference || relatedRouteSort(a, b);
+    },
+  );
+
+  const broaderLinks = takeRoutes(
+    seoRoutes.filter((item) => routeIsBroaderThanCurrent(item)),
+    6,
+    (a, b) => routeDimensionCount(b) - routeDimensionCount(a) || relatedRouteSort(a, b),
+  );
+
+  return [
+    {
+      title: "Add a filter",
+      description: "Narrow this collection by exam type, school, year, level or subject.",
+      items: addFilterLinks,
+    },
+    {
+      title: "Nearby collections",
+      description: "Move sideways to similar exam paper searches with overlapping filters.",
+      items: nearbyLinks,
+    },
+    {
+      title: "Broader searches",
+      description: "Step back to larger collections when you want more papers to compare.",
+      items: broaderLinks,
+    },
+  ].filter((group) => group.items.length);
+});
+
+const trackRelatedCollectionClick = (
+  item: RelatedCollectionLink,
+  groupTitle: string,
+) => {
+  trackEvent("related_collection_click", {
+    source: "collection_related_collections",
+    page_slug: slug || "exam-papers",
+    page_path: seoRoute.path,
+    related_group: groupTitle,
+    related_path: item.path,
+    related_title: item.title,
+    related_paper_count: item.paperCount,
+  });
+};
 
 const pageUrl = `https://sgexamhub.com${seoRoute.path}`;
 const pageTitle = seoRoute.title.replace(" | SG Exam Hub", "");
@@ -669,6 +778,41 @@ useHead({
         </div>
       </section>
 
+      <section
+        v-if="relatedCollectionGroups.length"
+        class="related-section"
+        aria-labelledby="related-collections-heading"
+      >
+        <div class="related-section-header">
+          <h2 id="related-collections-heading">Related exam paper collections</h2>
+          <p>
+            Continue browsing with more focused, similar or broader Singapore
+            primary exam paper pages.
+          </p>
+        </div>
+        <div class="related-group-grid">
+          <article
+            v-for="group in relatedCollectionGroups"
+            :key="group.title"
+            class="related-group"
+          >
+            <h3>{{ group.title }}</h3>
+            <p>{{ group.description }}</p>
+            <div class="related-links">
+              <NuxtLink
+                v-for="item in group.items"
+                :key="item.path"
+                :to="item.path"
+                @click="trackRelatedCollectionClick(item, group.title)"
+              >
+                <span>{{ item.title }}</span>
+                <small>{{ item.paperCount.toLocaleString() }} PDFs</small>
+              </NuxtLink>
+            </div>
+          </article>
+        </div>
+      </section>
+
       <div class="results-header">
         <div class="results-meta">
           <svg
@@ -774,19 +918,6 @@ useHead({
           </div>
         </div>
       </div>
-
-      <section class="related-section" aria-labelledby="related-indexes">
-        <h2 id="related-indexes">Browse related indexes</h2>
-        <div class="related-links">
-          <NuxtLink
-            v-for="item in relatedRoutes"
-            :key="item.path"
-            :to="item.path"
-          >
-            {{ item.title.replace(" | SG Exam Hub", "") }}
-          </NuxtLink>
-        </div>
-      </section>
     </main>
     <footer class="index-footer">
       <div class="footer-inner">
@@ -1403,30 +1534,86 @@ useHead({
 
 /* Related indexes */
 .related-section {
-  margin-top: 3rem;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  margin: 2rem 0;
+  padding: 1.5rem;
+}
+
+.related-section-header {
+  max-width: 720px;
+  margin-bottom: 1.25rem;
+}
+
+.related-section h2,
+.related-section h3,
+.related-section p {
+  margin: 0;
 }
 
 .related-section h2 {
   color: #0f172a;
   font-size: 1.25rem;
-  margin: 0 0 1rem;
+  line-height: 1.25;
+}
+
+.related-section-header p,
+.related-group p {
+  color: #64748b;
+  font-size: 0.9rem;
+  line-height: 1.6;
+  margin-top: 0.45rem;
+}
+
+.related-group-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.related-group {
+  min-width: 0;
+}
+
+.related-group h3 {
+  color: #0f172a;
+  font-size: 0.95rem;
+  line-height: 1.35;
 }
 
 .related-links {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 0.75rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  margin-top: 0.85rem;
 }
 
 .related-links a {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 0.75rem;
   color: #334155;
   font-weight: 600;
   line-height: 1.4;
   text-decoration: none;
-  padding: 0.65rem 0.85rem;
+  padding: 0.7rem 0.8rem;
   border: 1px solid #e2e8f0;
   border-radius: 8px;
   background: #ffffff;
+}
+
+.related-links span {
+  min-width: 0;
+}
+
+.related-links small {
+  color: #64748b;
+  flex: 0 0 auto;
+  font-size: 0.75rem;
+  font-weight: 700;
+  white-space: nowrap;
 }
 
 .related-links a:hover {
@@ -1476,6 +1663,12 @@ useHead({
   .filter-grid {
     flex-direction: column;
     align-items: stretch;
+  }
+  .related-section {
+    padding: 1rem;
+  }
+  .related-group-grid {
+    grid-template-columns: 1fr;
   }
   .reset-btn {
     margin-left: 0;
