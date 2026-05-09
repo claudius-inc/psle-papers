@@ -372,6 +372,8 @@ const requiredSnippets = [
   [".output/public/view/6_1073_3_4_2025/index.html", "Download PDF"],
   [".output/public/view/6_1073_3_4_2025/index.html", "Next paper to try"],
   [".output/public/view/6_1073_3_4_2025/index.html", "Revision checklist"],
+  [".output/public/view/6_1073_3_4_2025/index.html", "Practice sequence"],
+  [".output/public/view/6_1073_3_4_2025/index.html", "Open one related paper after marking this PDF"],
   [".output/public/view/6_1073_3_4_2025/index.html", "Download the PDF or open the next Primary 6 Maths paper"],
   [".output/public/view/6_1073_3_4_2025/index.html", "FAQPage"],
   [".output/public/view/6_1073_3_4_2025/index.html", "Using this paper"],

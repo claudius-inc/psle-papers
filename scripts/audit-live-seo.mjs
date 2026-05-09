@@ -125,6 +125,8 @@ const checks = [
       "Download PDF",
       "Next paper to try",
       "Revision checklist",
+      "Practice sequence",
+      "Open one related paper after marking this PDF",
       "Download the PDF or open the next Primary 6 Maths paper",
       "FAQPage",
       "Using this paper",

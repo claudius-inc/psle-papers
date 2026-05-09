@@ -300,6 +300,23 @@ const sameExamTypePapers = computed(() => {
 const nextPracticePaper = computed(() =>
   sameExamTypePapers.value[0] || relatedPapers.value[0] || sameSchoolPapers.value[0],
 );
+const practiceSequencePapers = computed(() => {
+  if (!paper.value) return [];
+
+  const seen = new Set<string>([filename]);
+
+  return [
+    ...sameExamTypePapers.value,
+    ...relatedPapers.value,
+    ...sameSchoolPapers.value,
+  ]
+    .filter((item) => {
+      if (seen.has(item.filename)) return false;
+      seen.add(item.filename);
+      return true;
+    })
+    .slice(0, 3);
+});
 
 const viewerAnalyticsContext = computed(() => {
   if (!paper.value) return {};
@@ -616,6 +633,46 @@ useHead({
           <ol>
             <li v-for="item in revisionChecklistItems" :key="item">{{ item }}</li>
           </ol>
+        </section>
+
+        <section
+          v-if="practiceSequencePapers.length"
+          class="panel-card practice-sequence"
+          aria-labelledby="practice-sequence-heading"
+        >
+          <h2 id="practice-sequence-heading">Practice sequence</h2>
+          <p>
+            Open one related paper after marking this PDF, then download useful
+            follow-up papers for the next timed attempt.
+          </p>
+          <div class="practice-sequence-list">
+            <div
+              v-for="(item, index) in practiceSequencePapers"
+              :key="item.filename"
+              class="practice-sequence-card"
+            >
+              <div>
+                <span>Step {{ index + 1 }}</span>
+                <strong>{{ item.yearCode }} {{ item.schoolName }}</strong>
+                <small>{{ item.levelName }} {{ item.subjectName }} {{ item.typeName }}</small>
+              </div>
+              <div class="practice-sequence-actions">
+                <NuxtLink
+                  :to="`/view/${item.filename}`"
+                  @click="trackViewerRelatedPaperView(item, 'practice_sequence')"
+                >
+                  View Paper
+                </NuxtLink>
+                <a
+                  :href="buildPdfFileUrl(item.filename)"
+                  :download="buildPaperDownloadName(item)"
+                  @click="trackViewerRelatedPaperDownload(item, 'practice_sequence')"
+                >
+                  Download PDF
+                </a>
+              </div>
+            </div>
+          </div>
         </section>
 
         <section class="panel-card continue-revision" aria-labelledby="continue-revision-heading">
@@ -1006,6 +1063,101 @@ useHead({
   font-weight: 800;
 }
 
+.practice-sequence {
+  background: #f8fafc;
+  border-color: #c7d2fe;
+}
+
+.practice-sequence p {
+  color: #64748b;
+  font-size: 0.8rem;
+  line-height: 1.55;
+  margin: 0 0 0.75rem;
+}
+
+.practice-sequence-list {
+  display: grid;
+  gap: 0.7rem;
+}
+
+.practice-sequence-card {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  display: grid;
+  gap: 0.65rem;
+  padding: 0.75rem;
+}
+
+.practice-sequence-card > div:first-child {
+  display: grid;
+  gap: 0.2rem;
+  min-width: 0;
+}
+
+.practice-sequence-card span {
+  color: #4f46e5;
+  font-size: 0.7rem;
+  font-weight: 850;
+  letter-spacing: 0.05em;
+  line-height: 1.2;
+  text-transform: uppercase;
+}
+
+.practice-sequence-card strong {
+  color: #0f172a;
+  font-size: 0.9rem;
+  line-height: 1.35;
+}
+
+.practice-sequence-card small {
+  color: #64748b;
+  font-size: 0.76rem;
+  font-weight: 650;
+  line-height: 1.35;
+}
+
+.practice-sequence-actions {
+  display: grid;
+  gap: 0.5rem;
+  grid-template-columns: 1fr 1fr;
+}
+
+.practice-sequence-actions a {
+  align-items: center;
+  border-radius: 7px;
+  display: inline-flex;
+  font-size: 0.78rem;
+  font-weight: 800;
+  justify-content: center;
+  line-height: 1.25;
+  min-height: 36px;
+  padding: 0.5rem 0.55rem;
+  text-align: center;
+  text-decoration: none;
+}
+
+.practice-sequence-actions a:first-child {
+  background: #4f46e5;
+  color: #ffffff;
+}
+
+.practice-sequence-actions a:first-child:hover {
+  background: #4338ca;
+}
+
+.practice-sequence-actions a:last-child {
+  background: #ffffff;
+  border: 1px solid #cbd5e1;
+  color: #334155;
+}
+
+.practice-sequence-actions a:last-child:hover {
+  background: #eef2ff;
+  border-color: #a5b4fc;
+  color: #1e293b;
+}
+
 .viewer-faq article {
   display: grid;
   gap: 0.25rem;
@@ -1285,6 +1437,10 @@ useHead({
   .viewer-nav {
     height: 85px;
     padding: 0 1rem;
+  }
+
+  .practice-sequence-actions {
+    grid-template-columns: 1fr;
   }
 
   .related-paper-card {
