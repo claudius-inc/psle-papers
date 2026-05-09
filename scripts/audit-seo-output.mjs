@@ -851,6 +851,18 @@ for (const eventName of ["paper_view_click", "paper_open", "paper_download"]) {
   }
 }
 for (const snippet of [
+  "sg_exam_hub_attribution",
+  "landing_path",
+  "referrer_host",
+  "is_google_referrer",
+  "window.sessionStorage",
+  "/(^|\\.)google\\./i",
+]) {
+  if (!analytics.includes(snippet)) {
+    fail(`Analytics helper is missing attribution snippet: ${snippet}.`);
+  }
+}
+for (const snippet of [
   "page_engaged_time",
   "page_scroll_depth",
   "page_session_summary",

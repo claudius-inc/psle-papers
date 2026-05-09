@@ -2,9 +2,55 @@ type GtagWindow = Window & {
   gtag?: (...args: unknown[]) => void;
 };
 
+type AnalyticsParams = Record<string, string | number | boolean | undefined>;
+
+const attributionStorageKey = "sg_exam_hub_attribution";
+
+const getReferrerHost = () => {
+  if (!document.referrer) return "direct";
+
+  try {
+    return new URL(document.referrer).hostname || "unknown";
+  } catch {
+    return "unknown";
+  }
+};
+
+const getSessionAttribution = (): AnalyticsParams => {
+  if (import.meta.server) return {};
+
+  try {
+    const existingAttribution = window.sessionStorage.getItem(attributionStorageKey);
+    if (existingAttribution) {
+      return JSON.parse(existingAttribution) as AnalyticsParams;
+    }
+  } catch {
+    try {
+      window.sessionStorage.removeItem(attributionStorageKey);
+    } catch {
+      // Ignore blocked storage and send volatile attribution below.
+    }
+  }
+
+  const referrerHost = getReferrerHost();
+  const attribution = {
+    landing_path: `${window.location.pathname}${window.location.search}`,
+    referrer_host: referrerHost,
+    is_google_referrer: /(^|\.)google\./i.test(referrerHost),
+  };
+
+  try {
+    window.sessionStorage.setItem(attributionStorageKey, JSON.stringify(attribution));
+  } catch {
+    // Keep analytics working even when storage is blocked.
+  }
+
+  return attribution;
+};
+
 export const trackEvent = (
   name: string,
-  params: Record<string, string | number | boolean | undefined> = {},
+  params: AnalyticsParams = {},
 ) => {
   if (import.meta.server) return;
 
@@ -13,11 +59,10 @@ export const trackEvent = (
 
   gtag("event", name, {
     event_category: "exam_papers",
+    ...getSessionAttribution(),
     ...params,
   });
 };
-
-type AnalyticsParams = Record<string, string | number | boolean | undefined>;
 
 export const trackPaperViewClick = (
   filename: string,

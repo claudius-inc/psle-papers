@@ -46,12 +46,15 @@ Track whether search users move deeper into the site:
 - `paper_show_more`
 - `page_engaged_time`
 - `page_scroll_depth`
+- `page_session_summary`
 
 Useful report segments:
 
 - Source / medium contains `google / organic`.
 - Landing page starts with `/exam-papers`.
-- Event name is `paper_view_click`, `paper_open`, `paper_download`, `page_engaged_time`, or `page_scroll_depth`.
+- Event name is `paper_view_click`, `paper_open`, `paper_download`, `page_engaged_time`, `page_scroll_depth`, or `page_session_summary`.
+- Custom event parameter `landing_path` shows the first page in the session.
+- Custom event parameter `referrer_host` shows the external host, with `is_google_referrer` set for Google referrers.
 
 ## Monthly Improvements
 
