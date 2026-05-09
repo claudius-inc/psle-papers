@@ -13,6 +13,8 @@ const checks = [
       "2025 P6 English SA2",
       "2026 Primary Exam Papers Revision",
       'href="/exam-papers/2026-revision"',
+      "Free Exam Papers Singapore",
+      'href="/free-exam-papers"',
       "Singapore Primary Test Papers",
       'href="/test-papers"',
       "Top School Exam Papers Singapore",
@@ -39,6 +41,21 @@ const checks = [
       'property="og:image" content="https://sgexamhub.com/og-image.png"',
       'name="twitter:card" content="summary_large_image"',
       "G-7WKP91PV8C",
+    ],
+  },
+  {
+    path: "/free-exam-papers/",
+    snippets: [
+      "Free Exam Papers Singapore",
+      "Download free Singapore primary exam papers",
+      "Start with a free paper",
+      "Free exam paper collections",
+      "Latest free exam papers",
+      "Are these Singapore exam papers free to download?",
+      "FAQPage",
+      "DownloadAction",
+      "raw.githubusercontent.com/airbob/PrimarySchoolExamPapers",
+      'property="og:image" content="https://sgexamhub.com/og-image.png"',
     ],
   },
   {
@@ -374,6 +391,7 @@ try {
   for (const requiredPath of [
     "/",
     "/sitemap",
+    "/free-exam-papers",
     "/test-papers",
     "/top-school-exam-papers",
     "/exam-papers/2026-revision",

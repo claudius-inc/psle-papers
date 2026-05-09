@@ -114,6 +114,7 @@ const examPaperDirectorySections = [
   {
     title: "Popular subject collections",
     links: [
+      { label: "Free Exam Papers Singapore", to: "/free-exam-papers" },
       { label: "Singapore Primary Test Papers", to: "/test-papers" },
       { label: "Top School Exam Papers Singapore", to: "/top-school-exam-papers" },
       { label: "2026 Primary Exam Papers Revision", to: "/exam-papers/2026-revision" },

@@ -9,6 +9,7 @@ const analyticsPath = "app/utils/analytics.ts";
 const engagementPath = "app/composables/useEngagementTracking.ts";
 const keywordMapPath = "SEO_KEYWORD_MAP.md";
 const homePagePath = "app/pages/index.vue";
+const freeExamPapersPagePath = "app/pages/free-exam-papers.vue";
 const testPaperPagePath = "app/pages/test-papers.vue";
 const topSchoolPagePath = "app/pages/top-school-exam-papers.vue";
 const collectionPagePath = "app/pages/exam-papers/[[slug]].vue";
@@ -134,6 +135,9 @@ const keywordMap = existsSync(keywordMapPath)
   ? readFileSync(keywordMapPath, "utf8")
   : "";
 const homePage = existsSync(homePagePath) ? readFileSync(homePagePath, "utf8") : "";
+const freeExamPapersPage = existsSync(freeExamPapersPagePath)
+  ? readFileSync(freeExamPapersPagePath, "utf8")
+  : "";
 const testPaperPage = existsSync(testPaperPagePath)
   ? readFileSync(testPaperPagePath, "utf8")
   : "";
@@ -177,6 +181,8 @@ const requiredSnippets = [
   [".output/public/index.html", "2025 P6 English SA2"],
   [".output/public/index.html", "2026 Primary Exam Papers Revision"],
   [".output/public/index.html", 'href="/exam-papers/2026-revision"'],
+  [".output/public/index.html", "Free Exam Papers Singapore"],
+  [".output/public/index.html", 'href="/free-exam-papers"'],
   [".output/public/index.html", "Singapore Primary Test Papers"],
   [".output/public/index.html", 'href="/test-papers"'],
   [".output/public/index.html", "Top School Exam Papers Singapore"],
@@ -312,6 +318,14 @@ const requiredSnippets = [
   ],
   [
     ".output/public/sitemap/index.html",
+    "Free Exam Papers Singapore",
+  ],
+  [
+    ".output/public/sitemap/index.html",
+    'href="/free-exam-papers"',
+  ],
+  [
+    ".output/public/sitemap/index.html",
     "Singapore Primary Test Papers",
   ],
   [
@@ -349,6 +363,46 @@ const requiredSnippets = [
   [
     ".output/public/sitemap/index.html",
     "P6 Maths Nanyang Primary School Exam Papers",
+  ],
+  [
+    ".output/public/free-exam-papers/index.html",
+    "Free Exam Papers Singapore",
+  ],
+  [
+    ".output/public/free-exam-papers/index.html",
+    "Download free Singapore primary exam papers",
+  ],
+  [
+    ".output/public/free-exam-papers/index.html",
+    "Start with a free paper",
+  ],
+  [
+    ".output/public/free-exam-papers/index.html",
+    "Free exam paper collections",
+  ],
+  [
+    ".output/public/free-exam-papers/index.html",
+    "Latest free exam papers",
+  ],
+  [
+    ".output/public/free-exam-papers/index.html",
+    "Are these Singapore exam papers free to download?",
+  ],
+  [
+    ".output/public/free-exam-papers/index.html",
+    "FAQPage",
+  ],
+  [
+    ".output/public/free-exam-papers/index.html",
+    "DownloadAction",
+  ],
+  [
+    ".output/public/free-exam-papers/index.html",
+    "raw.githubusercontent.com/airbob/PrimarySchoolExamPapers",
+  ],
+  [
+    ".output/public/free-exam-papers/index.html",
+    'property="og:image" content="https://sgexamhub.com/og-image.png"',
   ],
   [
     ".output/public/test-papers/index.html",
@@ -791,6 +845,9 @@ if (uniqueSitemapLastmods.size === 1 && uniqueSitemapLastmods.has(today)) {
 if (!sitemap.includes("https://sgexamhub.com/sitemap")) {
   fail("Sitemap is missing the HTML sitemap page.");
 }
+if (!sitemap.includes("https://sgexamhub.com/free-exam-papers")) {
+  fail("Sitemap is missing the free exam papers landing page.");
+}
 if (!sitemap.includes("https://sgexamhub.com/test-papers")) {
   fail("Sitemap is missing the primary test papers landing page.");
 }
@@ -880,6 +937,8 @@ for (const snippet of [
 for (const snippet of [
   "2026 Primary Exam Papers Revision",
   "PSLE Revision Papers",
+  "Free Exam Papers Singapore",
+  "/free-exam-papers",
   "Singapore Primary Test Papers",
   "/test-papers",
   "Top School Exam Papers Singapore",
@@ -902,6 +961,21 @@ for (const snippet of [
 ]) {
   if (!homePage.includes(snippet)) {
     fail(`Homepage is missing expected source snippet: ${snippet}.`);
+  }
+}
+for (const snippet of [
+  "Free Exam Papers Singapore",
+  "free exam papers Singapore",
+  "freePaperCollections",
+  "trackFreePaperView",
+  "trackFreePaperDownload",
+  "free_exam_papers_hero",
+  "FAQPage",
+  "DownloadAction",
+  "buildPdfFileUrl",
+]) {
+  if (!freeExamPapersPage.includes(snippet)) {
+    fail(`Free exam papers page is missing expected source snippet: ${snippet}.`);
   }
 }
 for (const snippet of [

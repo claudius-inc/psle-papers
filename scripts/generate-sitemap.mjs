@@ -64,6 +64,7 @@ const paperLastModified = new Map(
 const staticLastModified = [
   "app/app.vue",
   "app/pages/index.vue",
+  "app/pages/free-exam-papers.vue",
   "app/pages/test-papers.vue",
   "app/pages/top-school-exam-papers.vue",
   "app/pages/exam-papers/[[slug]].vue",
@@ -146,6 +147,12 @@ const paperViewRoutes = files
 const routeEntries = [
   { path: "/", priority: "1.0", lastmod: staticLastModified },
   { path: "/sitemap", priority: "0.7", lastmod: staticLastModified },
+  {
+    path: "/free-exam-papers",
+    priority: "0.9",
+    changefreq: "weekly",
+    lastmod: staticLastModified,
+  },
   {
     path: "/test-papers",
     priority: "0.9",

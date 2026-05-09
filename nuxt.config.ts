@@ -63,6 +63,7 @@ const paperViewRoutes = files
 const seoIndexRoutes = [
   "/",
   "/sitemap",
+  "/free-exam-papers",
   "/test-papers",
   "/top-school-exam-papers",
   "/exam-papers",

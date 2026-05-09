@@ -63,6 +63,11 @@ const quickRevisionLinks = [
 
 const revisionHubLinks = [
   {
+    label: "Free Exam Papers Singapore",
+    to: "/free-exam-papers",
+    description: "Free P2-P6 exam paper PDFs by subject, level and school",
+  },
+  {
     label: "Singapore Primary Test Papers",
     to: "/test-papers",
     description: "Free P2-P6 test papers with PDF downloads",
@@ -89,6 +94,11 @@ const directorySections = [
     title: "Core Pages",
     links: [
       { label: "Free Singapore Primary Exam Papers", to: "/", count: allParsedPapers.length },
+      {
+        label: "Free Exam Papers Singapore",
+        to: "/free-exam-papers",
+        count: allParsedPapers.length,
+      },
       {
         label: "Singapore Primary Test Papers",
         to: "/test-papers",
