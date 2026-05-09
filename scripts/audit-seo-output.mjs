@@ -188,6 +188,14 @@ const requiredSnippets = [
   ],
   [
     ".output/public/exam-papers/2025-primary-6-mathematics/index.html",
+    "Start with recent papers",
+  ],
+  [
+    ".output/public/exam-papers/2025-primary-6-mathematics/index.html",
+    "Open one paper from this collection first",
+  ],
+  [
+    ".output/public/exam-papers/2025-primary-6-mathematics/index.html",
     "Related exam paper collections",
   ],
   [
@@ -213,6 +221,10 @@ const requiredSnippets = [
   [
     ".output/public/exam-papers/2025-primary-6-mathematics-sa2/index.html",
     "2025 P6 Maths SA2 Exam Papers",
+  ],
+  [
+    ".output/public/exam-papers/2025-primary-6-mathematics-sa2/index.html",
+    "Start with recent papers",
   ],
   [
     ".output/public/exam-papers/2025-primary-6-mathematics-sa2/index.html",

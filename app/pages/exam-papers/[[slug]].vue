@@ -92,6 +92,7 @@ const filteredPapers = computed(() => {
 });
 
 const routePapers = computed(() => getPapersForRoute(seoRoute));
+const starterPapers = computed(() => routePapers.value.slice(0, 3));
 const routeLatestYear = computed(() => {
   const years = routePapers.value
     .map((paper) => Number(paper.yearCode))
@@ -334,6 +335,12 @@ const trackCollectionPaperView = (filename: string) => {
 };
 const trackCollectionPaperDownload = (filename: string) => {
   trackPaperDownload(filename, "index_results", collectionAnalyticsContext.value);
+};
+const trackStarterPaperView = (filename: string) => {
+  trackPaperViewClick(filename, "collection_starter_papers", collectionAnalyticsContext.value);
+};
+const trackStarterPaperDownload = (filename: string) => {
+  trackPaperDownload(filename, "collection_starter_papers", collectionAnalyticsContext.value);
 };
 const landingIntro = computed(() => {
   const focus = [
@@ -774,6 +781,51 @@ useHead({
           >
             <h3>{{ item.question }}</h3>
             <p>{{ item.answer }}</p>
+          </article>
+        </div>
+      </section>
+
+      <section
+        v-if="starterPapers.length"
+        class="starter-section"
+        aria-labelledby="starter-papers-heading"
+      >
+        <div class="starter-section-header">
+          <h2 id="starter-papers-heading">Start with recent papers</h2>
+          <p>
+            Open one paper from this collection first, then download useful PDFs
+            for timed revision.
+          </p>
+        </div>
+        <div class="starter-paper-grid">
+          <article
+            v-for="paper in starterPapers"
+            :key="paper.filename"
+            class="starter-paper"
+          >
+            <div class="starter-paper-meta">
+              <span>{{ paper.yearCode }}</span>
+              <span>{{ paper.levelName }}</span>
+              <span>{{ paper.typeName }}</span>
+            </div>
+            <h3>
+              {{ paper.schoolName }} {{ paper.subjectName }} paper
+            </h3>
+            <div class="starter-paper-actions">
+              <NuxtLink
+                :to="`/view/${paper.filename}`"
+                @click="trackStarterPaperView(paper.filename)"
+              >
+                View Paper
+              </NuxtLink>
+              <a
+                :href="buildPdfFileUrl(paper.filename)"
+                :download="`${paper.yearCode}-${paper.levelName}-${paper.subjectName}-${paper.typeName}-${paper.schoolName}.pdf`"
+                @click="trackStarterPaperDownload(paper.filename)"
+              >
+                Download PDF
+              </a>
+            </div>
           </article>
         </div>
       </section>
@@ -1532,6 +1584,114 @@ useHead({
   font-family: inherit;
 }
 
+/* Starter papers */
+.starter-section {
+  border-bottom: 1px solid #e2e8f0;
+  margin-bottom: 2rem;
+  padding-bottom: 2rem;
+}
+
+.starter-section-header {
+  margin-bottom: 1rem;
+  max-width: 740px;
+}
+
+.starter-section h2,
+.starter-section h3,
+.starter-section p {
+  margin: 0;
+}
+
+.starter-section h2 {
+  color: #0f172a;
+  font-size: 1.25rem;
+  line-height: 1.35;
+}
+
+.starter-section-header p {
+  color: #475569;
+  line-height: 1.65;
+  margin-top: 0.45rem;
+}
+
+.starter-paper-grid {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.starter-paper {
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+  padding: 1rem;
+}
+
+.starter-paper-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+}
+
+.starter-paper-meta span {
+  background: #f1f5f9;
+  border-radius: 999px;
+  color: #475569;
+  font-size: 0.72rem;
+  font-weight: 800;
+  padding: 0.2rem 0.55rem;
+}
+
+.starter-paper h3 {
+  color: #0f172a;
+  flex: 1 1 auto;
+  font-size: 1rem;
+  line-height: 1.4;
+}
+
+.starter-paper-actions {
+  display: grid;
+  gap: 0.5rem;
+  grid-template-columns: 1fr 1fr;
+}
+
+.starter-paper-actions a {
+  align-items: center;
+  border-radius: 8px;
+  display: inline-flex;
+  font-size: 0.85rem;
+  font-weight: 800;
+  justify-content: center;
+  line-height: 1.25;
+  min-height: 40px;
+  padding: 0.55rem 0.75rem;
+  text-align: center;
+  text-decoration: none;
+}
+
+.starter-paper-actions a:first-child {
+  background: #4f46e5;
+  color: #ffffff;
+}
+
+.starter-paper-actions a:first-child:hover {
+  background: #4338ca;
+}
+
+.starter-paper-actions a:last-child {
+  background: #ffffff;
+  border: 1px solid #cbd5e1;
+  color: #334155;
+}
+
+.starter-paper-actions a:last-child:hover {
+  background: #f8fafc;
+  border-color: #94a3b8;
+  color: #0f172a;
+}
+
 /* Related indexes */
 .related-section {
   background: #f8fafc;
@@ -1666,6 +1826,12 @@ useHead({
   }
   .related-section {
     padding: 1rem;
+  }
+  .starter-paper-grid {
+    grid-template-columns: 1fr;
+  }
+  .starter-paper-actions {
+    grid-template-columns: 1fr;
   }
   .related-group-grid {
     grid-template-columns: 1fr;
