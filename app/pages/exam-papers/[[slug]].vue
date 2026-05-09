@@ -91,6 +91,18 @@ const filteredPapers = computed(() => {
 });
 
 const routePapers = computed(() => getPapersForRoute(seoRoute));
+const routeLatestYear = computed(() => {
+  const years = routePapers.value
+    .map((paper) => Number(paper.yearCode))
+    .filter((year) => Number.isFinite(year));
+
+  return years.length ? Math.max(...years) : "";
+});
+const collectionFreshnessLabel = computed(() =>
+  routeLatestYear.value
+    ? `Latest available in this collection: ${routeLatestYear.value} · ${seoRoute.paperCount.toLocaleString()} PDF papers`
+    : `${seoRoute.paperCount.toLocaleString()} PDF papers indexed`,
+);
 const resultCount = computed(() => filteredPapers.value.length);
 const trackFilterChange = (
   filterName: keyof typeof filters.value,
@@ -520,6 +532,7 @@ useHead({
         </nav>
         <h1>{{ pageTitle }}</h1>
         <p>{{ seoRoute.description }}</p>
+        <p class="collection-freshness">{{ collectionFreshnessLabel }}</p>
       </div>
     </header>
 
@@ -863,6 +876,13 @@ useHead({
   line-height: 1.6;
   max-width: 680px;
   margin: 0;
+}
+
+.index-hero .collection-freshness {
+  color: #334155;
+  font-size: 0.9rem;
+  font-weight: 800;
+  margin-top: 0.75rem;
 }
 
 .main-content {

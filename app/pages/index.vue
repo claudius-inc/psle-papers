@@ -501,6 +501,14 @@ const totalPaperCountRounded = computed(() => {
   const count = (rawFileList as string[]).length;
   return Math.floor(count / 100) * 100;
 });
+const totalPaperCount = computed(() => (rawFileList as string[]).length);
+const latestAvailableYear = computed(() =>
+  Math.max(
+    ...(rawFileList as string[])
+      .map((filename) => Number(filename.split("_")[4]))
+      .filter((year) => Number.isFinite(year)),
+  ),
+);
 
 const resetFilters = () => {
   visibleLimit.value = 60;
@@ -536,6 +544,10 @@ const resetFilters = () => {
         <p class="subtitle">
           Prepare for 2026 with thousands of free SG exam papers from top
           Singapore primary schools. View online or download PDFs for practice.
+        </p>
+        <p class="hero-freshness">
+          Latest available papers: {{ latestAvailableYear }} ·
+          {{ totalPaperCount.toLocaleString() }} PDF exam papers indexed
         </p>
         <div class="hero-stats">
           <div class="stat-item">
@@ -1044,8 +1056,15 @@ const resetFilters = () => {
   font-size: 1.125rem;
   color: #475569;
   max-width: 600px;
-  margin: 0 auto 2.5rem;
+  margin: 0 auto 1rem;
   line-height: 1.6;
+}
+
+.hero-freshness {
+  color: #334155;
+  font-size: 0.9rem;
+  font-weight: 700;
+  margin: 0 auto 2.5rem;
 }
 
 .hero-stats {

@@ -157,6 +157,8 @@ const requiredSnippets = [
   [".output/public/index.html", "SG Exam Hub: Free Singapore Primary Exam Papers | 2026"],
   [".output/public/index.html", "SG exam papers"],
   [".output/public/index.html", "SG Exam Papers"],
+  [".output/public/index.html", "Latest available papers: 2025"],
+  [".output/public/index.html", "2,299 PDF exam papers indexed"],
   [".output/public/index.html", "SiteNavigationElement"],
   [".output/public/index.html", "Primary 6 Maths Exam Papers"],
   [".output/public/index.html", "isAccessibleForFree"],
@@ -179,6 +181,10 @@ const requiredSnippets = [
   [
     ".output/public/exam-papers/2025-primary-6-mathematics/index.html",
     "2025 P6 Maths Exam Papers",
+  ],
+  [
+    ".output/public/exam-papers/2025-primary-6-mathematics/index.html",
+    "Latest available in this collection: 2025 · 12 PDF papers",
   ],
   [
     ".output/public/exam-papers/2025-primary-6-mathematics/index.html",
