@@ -293,6 +293,15 @@ export const seoRoutes: PaperSeoRoute[] = [
       }),
     ),
   ),
+  ...subjectOptions.flatMap((subject) =>
+    schoolOptions.map((school) =>
+      buildRoute({
+        slug: `${slugify(subject.name)}-school-${slugify(school.name)}`,
+        subjectCode: subject.code,
+        schoolCode: school.code,
+      }),
+    ),
+  ),
   ...levelOptions.flatMap((level) =>
     subjectOptions.flatMap((subject) =>
       schoolOptions.map((school) =>

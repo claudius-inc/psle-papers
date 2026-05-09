@@ -127,6 +127,13 @@ const directorySections = [
     ),
   },
   {
+    title: "Popular School Subject Collections",
+    links: buildLinks(
+      seoRoutes.filter((route) => isRoute(route, ["subjectCode", "schoolCode"])),
+      80,
+    ),
+  },
+  {
     title: "Top School Exam Paper Collections",
     links: buildLinks(
       seoRoutes.filter((route) => isRoute(route, ["schoolCode"])),

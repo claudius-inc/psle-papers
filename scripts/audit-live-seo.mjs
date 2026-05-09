@@ -124,6 +124,18 @@ const checks = [
     ],
   },
   {
+    path: "/exam-papers/mathematics-school-nanyang-primary-school/",
+    snippets: [
+      "Maths Nanyang Primary School Exam Papers",
+      'rel="canonical"',
+      "CollectionPage",
+      "School paper paths",
+      'href="/exam-papers/primary-6-mathematics-school-nanyang-primary-school"',
+      "Download PDF",
+      "raw.githubusercontent.com/airbob/PrimarySchoolExamPapers",
+    ],
+  },
+  {
     path: "/view/6_1073_3_4_2025/",
     snippets: [
       'content="index, follow"',
@@ -233,6 +245,7 @@ try {
     "/exam-papers/primary-6-mathematics-sa2",
     "/exam-papers/primary-6-mathematics-school-nanyang-primary-school",
     "/exam-papers/primary-6-school-nanyang-primary-school",
+    "/exam-papers/mathematics-school-nanyang-primary-school",
     "/exam-papers/primary-6-sa2",
     "/view/6_1073_3_4_2025",
   ]) {
