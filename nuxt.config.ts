@@ -149,6 +149,13 @@ const seoIndexRoutes = [
       schoolCode: school.code,
     })),
   ),
+  ...types.flatMap((type) =>
+    schools.map((school) => ({
+      path: `/exam-papers/${slugify(type.name)}-school-${slugify(school.name)}`,
+      typeCode: type.code,
+      schoolCode: school.code,
+    })),
+  ),
   ...levels.flatMap((level) =>
     subjects.flatMap((subject) =>
       schools.map((school) => ({
