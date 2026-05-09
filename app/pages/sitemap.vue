@@ -8,7 +8,7 @@ import { buildSocialMeta, siteUrl } from "~/utils/socialSeo";
 
 const sitemapSeoTitle = "SG Exam Hub Sitemap | Singapore Primary Exam Paper Directory";
 const sitemapSeoDescription =
-  "Browse the SG Exam Hub sitemap for Singapore primary school exam papers by year, level, subject, assessment type, school and latest PDF papers.";
+  "Browse Singapore primary exam papers by year, level, subject, assessment type, school, PSLE revision and 2026 revision paths.";
 
 const routeLabel = (route: PaperSeoRoute) =>
   route.title.replace(/\s+\|\s+SG Exam Hub$/, "");
@@ -60,6 +60,19 @@ const quickRevisionLinks = [
 ]
   .map(findRouteLink)
   .filter((link): link is NonNullable<typeof link> => Boolean(link));
+
+const revisionHubLinks = [
+  {
+    label: "2026 Primary Exam Papers Revision",
+    to: "/exam-papers/2026-revision",
+    description: "Latest 2025 and 2024 papers for 2026 revision",
+  },
+  {
+    label: "PSLE Revision Papers",
+    to: "/exam-papers/psle-revision",
+    description: "Primary 6 SA2 and subject papers for PSLE practice",
+  },
+];
 
 const directorySections = [
   {
@@ -162,6 +175,7 @@ const latestPaperLinks = allParsedPapers.slice(0, 80).map((paper) => ({
 }));
 
 const structuredSitemapLinks = [
+  ...revisionHubLinks,
   ...quickRevisionLinks,
   ...directorySections.flatMap((section) => section.links),
   ...latestPaperLinks,
@@ -236,6 +250,29 @@ useHead({
           >
             <span>{{ link.label }}</span>
             <small>{{ link.count.toLocaleString() }} papers</small>
+          </NuxtLink>
+        </div>
+      </div>
+    </section>
+
+    <section class="revision-hubs" aria-labelledby="revision-hubs-heading">
+      <div class="content-wrapper">
+        <div class="quick-header">
+          <p class="eyebrow">Current revision hubs</p>
+          <h2 id="revision-hubs-heading">Current Revision Hubs</h2>
+          <p>
+            Use these entry points for broad 2026 preparation and PSLE-focused
+            Primary 6 practice before narrowing by subject, school or assessment.
+          </p>
+        </div>
+        <div class="quick-links revision-links">
+          <NuxtLink
+            v-for="link in revisionHubLinks"
+            :key="link.to"
+            :to="link.to"
+          >
+            <span>{{ link.label }}</span>
+            <small>{{ link.description }}</small>
           </NuxtLink>
         </div>
       </div>
@@ -335,9 +372,14 @@ h1 {
   max-width: 760px;
 }
 
-.quick-paths {
+.quick-paths,
+.revision-hubs {
   border-bottom: 1px solid #e2e8f0;
   padding: 2rem 0;
+}
+
+.revision-hubs {
+  background: #f8fafc;
 }
 
 .quick-header {
@@ -395,6 +437,10 @@ h1 {
   font-size: 0.78rem;
   font-weight: 700;
   line-height: 1.4;
+}
+
+.revision-links {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 
 .directory-grid {

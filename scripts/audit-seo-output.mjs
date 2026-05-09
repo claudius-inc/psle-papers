@@ -296,6 +296,26 @@ const requiredSnippets = [
   ],
   [
     ".output/public/sitemap/index.html",
+    "Current Revision Hubs",
+  ],
+  [
+    ".output/public/sitemap/index.html",
+    "2026 Primary Exam Papers Revision",
+  ],
+  [
+    ".output/public/sitemap/index.html",
+    'href="/exam-papers/2026-revision"',
+  ],
+  [
+    ".output/public/sitemap/index.html",
+    "PSLE Revision Papers",
+  ],
+  [
+    ".output/public/sitemap/index.html",
+    'href="/exam-papers/psle-revision"',
+  ],
+  [
+    ".output/public/sitemap/index.html",
     "2025 P6 Maths SA2 Exam Papers",
   ],
   [
