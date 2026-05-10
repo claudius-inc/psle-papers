@@ -94,7 +94,6 @@ const ensureHomepagePriorityDirectoryLinks = (source, filePath) => {
     '      { label: "Primary 6 English Exam Papers", to: "/exam-papers/primary-6-english" },',
     [
       '      { label: "Primary 6 Chinese Exam Papers", to: "/exam-papers/primary-6-chinese" },',
-      '      { label: "Primary 6 Higher Chinese Exam Papers", to: "/exam-papers/primary-6-higher-chinese" },',
     ],
     filePath,
   );
