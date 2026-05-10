@@ -263,7 +263,7 @@ useHead({
             </NuxtLink>
           </div>
         </div>
-        <aside v-if="featuredPaper" class="feature-card" aria-label="Featured PSLE paper">
+        <aside v-if="featuredPaper" class="feature-card" aria-label="Featured PSLE paper" data-nosnippet>
           <span>Start here</span>
           <strong>
             {{ featuredPaper.yearCode }} {{ featuredPaper.levelName }}
@@ -324,7 +324,7 @@ useHead({
         </ol>
       </section>
 
-      <section class="section" aria-labelledby="latest-psle-heading">
+      <section class="section" aria-labelledby="latest-psle-heading" data-nosnippet>
         <div class="section-header">
           <span>Open or download</span>
           <h2 id="latest-psle-heading">Recent Primary 6 papers for PSLE revision</h2>
@@ -380,7 +380,7 @@ useHead({
         </div>
       </section>
 
-      <section class="section" aria-labelledby="p6-sa2-heading">
+      <section class="section" aria-labelledby="p6-sa2-heading" data-nosnippet>
         <div class="section-header">
           <span>SA2 focus</span>
           <h2 id="p6-sa2-heading">Primary 6 SA2 papers for PSLE timing</h2>

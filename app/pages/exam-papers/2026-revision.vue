@@ -242,7 +242,7 @@ useHead({
             <NuxtLink to="/exam-papers/2025">Browse 2025 papers</NuxtLink>
           </div>
         </div>
-        <aside v-if="featuredPaper" class="featured-paper" aria-label="Featured latest paper">
+        <aside v-if="featuredPaper" class="featured-paper" aria-label="Featured latest paper" data-nosnippet>
           <span>Latest available paper</span>
           <strong>
             {{ featuredPaper.yearCode }} {{ featuredPaper.levelName }}
@@ -303,7 +303,7 @@ useHead({
         </ol>
       </section>
 
-      <section class="paper-section" aria-labelledby="latest-papers-heading">
+      <section class="paper-section" aria-labelledby="latest-papers-heading" data-nosnippet>
         <div class="section-header">
           <span>Open or download</span>
           <h2 id="latest-papers-heading">Latest papers for 2026 revision</h2>
@@ -339,7 +339,7 @@ useHead({
         </div>
       </section>
 
-      <section class="paper-section" aria-labelledby="p6-sa2-heading">
+      <section class="paper-section" aria-labelledby="p6-sa2-heading" data-nosnippet>
         <div class="section-header">
           <span>PSLE-style practice</span>
           <h2 id="p6-sa2-heading">Primary 6 SA2 papers for 2026 preparation</h2>

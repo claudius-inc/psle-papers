@@ -50,6 +50,39 @@ const broadLandingPages = [
   },
 ];
 
+const revisionLandingPages = [
+  {
+    sourcePath: "app/pages/exam-papers/2026-revision.vue",
+    outputPath: ".output/public/exam-papers/2026-revision/index.html",
+    title: "2026 Primary Exam Papers Revision",
+    sourceSnippets: [
+      'class="featured-paper" aria-label="Featured latest paper" data-nosnippet',
+      'class="paper-section" aria-labelledby="latest-papers-heading" data-nosnippet',
+      'class="paper-section" aria-labelledby="p6-sa2-heading" data-nosnippet',
+    ],
+    patterns: [
+      /class="featured-paper"[^>]*data-nosnippet/s,
+      /class="paper-section"[^>]*aria-labelledby="latest-papers-heading"[^>]*data-nosnippet/s,
+      /class="paper-section"[^>]*aria-labelledby="p6-sa2-heading"[^>]*data-nosnippet/s,
+    ],
+  },
+  {
+    sourcePath: "app/pages/exam-papers/psle-revision.vue",
+    outputPath: ".output/public/exam-papers/psle-revision/index.html",
+    title: "PSLE Revision Papers",
+    sourceSnippets: [
+      'class="feature-card" aria-label="Featured PSLE paper" data-nosnippet',
+      'class="section" aria-labelledby="latest-psle-heading" data-nosnippet',
+      'class="section" aria-labelledby="p6-sa2-heading" data-nosnippet',
+    ],
+    patterns: [
+      /class="feature-card"[^>]*data-nosnippet/s,
+      /class="section"[^>]*aria-labelledby="latest-psle-heading"[^>]*data-nosnippet/s,
+      /class="section"[^>]*aria-labelledby="p6-sa2-heading"[^>]*data-nosnippet/s,
+    ],
+  },
+];
+
 const checks = [
   {
     path: "app/pages/index.vue",
@@ -148,6 +181,21 @@ const checks = [
         /class="hero-card"[^>]*data-nosnippet/s,
         /class="content-wrapper paper-section"[^>]*data-nosnippet/s,
       ],
+    },
+  ]),
+  ...revisionLandingPages.flatMap((page) => [
+    {
+      path: page.sourcePath,
+      snippets: page.sourceSnippets,
+    },
+    {
+      path: page.outputPath,
+      snippets: [
+        "data-nosnippet",
+        page.title,
+        "Download PDF",
+      ],
+      patterns: page.patterns,
     },
   ]),
 ];

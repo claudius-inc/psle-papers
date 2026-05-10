@@ -42,6 +42,27 @@ const broadLandingPages = [
   },
 ];
 
+const revisionLandingPages = [
+  {
+    path: "/exam-papers/2026-revision/",
+    title: "2026 Primary Exam Papers Revision",
+    patterns: [
+      /class="featured-paper"[^>]*data-nosnippet/s,
+      /class="paper-section"[^>]*aria-labelledby="latest-papers-heading"[^>]*data-nosnippet/s,
+      /class="paper-section"[^>]*aria-labelledby="p6-sa2-heading"[^>]*data-nosnippet/s,
+    ],
+  },
+  {
+    path: "/exam-papers/psle-revision/",
+    title: "PSLE Revision Papers",
+    patterns: [
+      /class="feature-card"[^>]*data-nosnippet/s,
+      /class="section"[^>]*aria-labelledby="latest-psle-heading"[^>]*data-nosnippet/s,
+      /class="section"[^>]*aria-labelledby="p6-sa2-heading"[^>]*data-nosnippet/s,
+    ],
+  },
+];
+
 const checks = [
   {
     path: "/",
@@ -110,6 +131,15 @@ const checks = [
       /class="hero-card"[^>]*data-nosnippet/s,
       /class="content-wrapper paper-section"[^>]*data-nosnippet/s,
     ],
+  })),
+  ...revisionLandingPages.map((page) => ({
+    path: page.path,
+    snippets: [
+      "data-nosnippet",
+      page.title,
+      "Download PDF",
+    ],
+    patterns: page.patterns,
   })),
 ];
 
