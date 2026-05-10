@@ -26,6 +26,16 @@ const pages = [
       "Anglo-Chinese School (Primary) Exam Papers",
     ],
   },
+  {
+    label: "viewer practice sequence",
+    path: "/view/6_1073_3_4_2025",
+    expected: [
+      "Raffles Girls&#39; Primary School",
+      "Methodist Girls&#39; School (Primary)",
+      "Level P6",
+      "Practice sequence",
+    ],
+  },
 ];
 
 const staleSnippets = [
@@ -33,6 +43,8 @@ const staleSnippets = [
   "Anglo Chinese School",
   "Methodist Girls&#39; School (primary)",
   "Methodist Girls' School (primary)",
+  "Methodist Girls&#39; School (Primary)P6",
+  "Methodist Girls' School (Primary)P6",
   "CHIJ St Nicholas Girls' School",
   "Chij ",
   "Chij (",
