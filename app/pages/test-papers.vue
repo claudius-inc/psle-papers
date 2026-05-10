@@ -6,7 +6,7 @@ import { buildPdfFileUrl } from "~/utils/pdfUrls";
 import { buildSocialMeta } from "~/utils/socialSeo";
 import { trackPaperDownload, trackPaperViewClick } from "~/utils/analytics";
 
-const pageTitle = "Singapore Primary Test Papers | Free PDF Download";
+const pageTitle = "Free Test Papers Singapore | Primary PDF Download";
 const visibleTitle = "Singapore Primary Test Papers";
 const pageDescription =
   "Download free Singapore primary test papers for P2-P6 Maths, Science, English and Chinese. View recent school papers online, then save useful PDFs.";

@@ -61,6 +61,7 @@ const checks = [
   {
     path: "/test-papers/",
     snippets: [
+      "Free Test Papers Singapore",
       "Singapore Primary Test Papers",
       "Download free Singapore primary test papers",
       "Start with a recent test paper",

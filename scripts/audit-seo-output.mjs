@@ -406,6 +406,10 @@ const requiredSnippets = [
   ],
   [
     ".output/public/test-papers/index.html",
+    "Free Test Papers Singapore",
+  ],
+  [
+    ".output/public/test-papers/index.html",
     "Singapore Primary Test Papers",
   ],
   [
@@ -979,6 +983,7 @@ for (const snippet of [
   }
 }
 for (const snippet of [
+  "Free Test Papers Singapore",
   "Singapore Primary Test Papers",
   "primary school test papers",
   "testPaperCollections",
