@@ -904,6 +904,7 @@ const requiredSnippets = [
   [".output/public/view/6_1073_3_4_2025/index.html", 'content="index, follow"'],
   [".output/public/view/6_1073_3_4_2025/index.html", "Download PDF"],
   [".output/public/view/6_1073_3_4_2025/index.html", "No sign-up needed"],
+  [".output/public/view/6_1073_3_4_2025/index.html", "Paper quick actions"],
   [".output/public/view/6_1073_3_4_2025/index.html", "Next paper to try"],
   [".output/public/view/6_1073_3_4_2025/index.html", "Revision checklist"],
   [".output/public/view/6_1073_3_4_2025/index.html", "Practice sequence"],
@@ -1342,6 +1343,9 @@ for (const snippet of [
   "next_paper",
   "viewer_collection_click",
   "trackViewerCollectionClick",
+  "mobile-action-bar",
+  "viewer_mobile_sticky",
+  "mobile_next_paper",
 ]) {
   if (!viewerPage.includes(snippet)) {
     fail(`Viewer page is missing analytics attribution snippet: ${snippet}.`);

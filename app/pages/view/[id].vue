@@ -833,6 +833,25 @@ useHead({
         </section>
       </aside>
     </div>
+
+    <div v-if="paper" class="mobile-action-bar" aria-label="Paper quick actions">
+      <a
+        class="mobile-download"
+        :href="pdfUrl"
+        :download="downloadName"
+        @click="trackViewerPaperDownload('viewer_mobile_sticky')"
+      >
+        Download PDF
+      </a>
+      <NuxtLink
+        v-if="nextPracticePaper"
+        class="mobile-next-paper"
+        :to="`/view/${nextPracticePaper.filename}`"
+        @click="trackViewerRelatedPaperView(nextPracticePaper, 'mobile_next_paper')"
+      >
+        Next Paper
+      </NuxtLink>
+    </div>
   </div>
 </template>
 
@@ -845,6 +864,10 @@ useHead({
   color: #1e293b;
   overflow: hidden;
   font-family: "Plus Jakarta Sans", sans-serif;
+}
+
+.mobile-action-bar {
+  display: none;
 }
 
 /* Main layout */
@@ -1489,6 +1512,51 @@ useHead({
   .viewer-nav {
     height: 85px;
     padding: 0 1rem;
+  }
+
+  .viewer-container {
+    padding-bottom: calc(74px + env(safe-area-inset-bottom, 0px));
+  }
+
+  .mobile-action-bar {
+    align-items: center;
+    background: rgba(255, 255, 255, 0.96);
+    border-top: 1px solid #dbe3ef;
+    bottom: 0;
+    box-shadow: 0 -14px 28px -24px rgba(15, 23, 42, 0.5);
+    display: grid;
+    gap: 0.65rem;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    left: 0;
+    padding: 0.75rem 1rem calc(0.75rem + env(safe-area-inset-bottom, 0px));
+    position: fixed;
+    right: 0;
+    z-index: 120;
+  }
+
+  .mobile-action-bar a {
+    align-items: center;
+    border-radius: 8px;
+    display: inline-flex;
+    font-size: 0.9rem;
+    font-weight: 800;
+    justify-content: center;
+    line-height: 1.2;
+    min-height: 44px;
+    padding: 0.65rem 0.7rem;
+    text-align: center;
+    text-decoration: none;
+  }
+
+  .mobile-download {
+    background: #4f46e5;
+    color: #ffffff;
+  }
+
+  .mobile-next-paper {
+    background: #ffffff;
+    border: 1px solid #cbd5e1;
+    color: #1e293b;
   }
 
   .practice-sequence-actions {
