@@ -83,6 +83,7 @@ assertIncludes(
 const requiredLocalAuditSnippets = [
   "node scripts/audit-domain-consistency.mjs",
   "node scripts/audit-pages-workflow.mjs",
+  "node scripts/audit-sitemap-lastmod-inputs.mjs",
   "node scripts/audit-conversion-analytics.mjs",
   "node scripts/audit-school-name-quality.mjs",
   "node scripts/audit-snippet-focused-ui.mjs",
