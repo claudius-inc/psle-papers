@@ -4,39 +4,39 @@ const checks = [
   {
     path: "app/pages/index.vue",
     snippets: [
-      '<section class="filters-bar" data-nosnippet',
-      'data-nosnippet',
+      'class="filters-bar" data-nosnippet',
+      ':class="[\'papers-container\', `papers-${viewMode}`]" data-nosnippet',
     ],
   },
   {
     path: "app/pages/exam-papers/[[slug]].vue",
     snippets: [
-      '<section class="filter-container" data-nosnippet',
-      'data-nosnippet',
+      'class="filter-container" data-nosnippet',
+      ':class="[\'papers-container\', `papers-${viewMode}`]" data-nosnippet',
     ],
   },
   {
     path: ".output/public/index.html",
     snippets: [
-      'data-nosnippet',
-      'SG Exam Hub Exam Papers',
-      'No sign-up needed',
+      "data-nosnippet",
+      "SG Exam Hub Exam Papers",
+      "No sign-up needed",
     ],
   },
   {
     path: ".output/public/exam-papers/index.html",
     snippets: [
-      'data-nosnippet',
-      'Singapore Primary Exam Papers PDF | Free Download',
-      'No sign-up needed',
+      "data-nosnippet",
+      "Singapore Primary Exam Papers PDF | Free Download",
+      "No sign-up needed",
     ],
   },
   {
     path: ".output/public/exam-papers/2025-primary-6-mathematics-sa2/index.html",
     snippets: [
-      'data-nosnippet',
-      '2025 Primary 6 Maths SA2 Exam Papers',
-      'Download PDF',
+      "data-nosnippet",
+      "2025 Primary 6 Maths SA2 Exam Papers",
+      "Download PDF",
     ],
   },
 ];
