@@ -107,6 +107,8 @@ assertIncludes(
     "trackFilterChange",
     'trackEvent("paper_show_more"',
     "trackSiteSearch",
+    '"home_url_query"',
+    'query_source: "url_query"',
     'trackEvent("empty_search_recovery_click"',
   ],
   "homepage is missing required paper discovery analytics",

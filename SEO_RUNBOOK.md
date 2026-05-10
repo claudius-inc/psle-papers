@@ -144,6 +144,7 @@ Useful report segments:
 - Event name `top_school_collection_click` isolates top-school card clicks before users enter a school collection page.
 - Event name `empty_search_recovery_click` shows whether users who hit zero search/filter results continue into a suggested collection instead of leaving.
 - Standard `search` and `view_search_results` events include `search_term` so GA4 can report on-site paper searches alongside the custom `paper_search` funnel event.
+- Source value `home_url_query` identifies searches triggered by a homepage `?q=` URL, including Google sitelinks-searchbox-style entry points.
 - Custom event parameter `page_path` shows the current page after direct landings and SPA route changes.
 - Custom event parameter `landing_path` shows the first page in the session.
 - Custom event parameter `referrer_host` shows the external host, with `is_google_referrer` set for Google referrers.

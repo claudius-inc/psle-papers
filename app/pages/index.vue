@@ -442,8 +442,10 @@ const activeFilterCount = computed(() => {
 // --- Data Fetching ---
 onMounted(async () => {
   const initialSearchQuery = route.query.q;
-  if (typeof initialSearchQuery === "string") {
-    paperSearchQuery.value = initialSearchQuery.slice(0, 120);
+  const normalizedInitialSearchQuery =
+    typeof initialSearchQuery === "string" ? initialSearchQuery.trim().slice(0, 120) : "";
+  if (normalizedInitialSearchQuery) {
+    paperSearchQuery.value = normalizedInitialSearchQuery;
   }
 
   try {
@@ -451,6 +453,13 @@ onMounted(async () => {
     rawFiles.value = await filesRes.json();
   } catch (e) {
     console.error("Failed to load data", e);
+  }
+
+  if (normalizedInitialSearchQuery) {
+    trackSiteSearch(normalizedInitialSearchQuery, "home_url_query", {
+      result_count: resultCount.value,
+      query_source: "url_query",
+    });
   }
 });
 

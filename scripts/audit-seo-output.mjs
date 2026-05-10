@@ -537,6 +537,8 @@ requireSourceSnippets("Homepage", homePage, [
   "paperSearchQuery",
   "trackPaperSearch",
   "trackSiteSearch",
+  '"home_url_query"',
+  'query_source: "url_query"',
   "No sign-up needed",
   "SearchAction",
   "buildPdfFileUrl",

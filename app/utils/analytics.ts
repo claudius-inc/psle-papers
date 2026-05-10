@@ -123,6 +123,7 @@ export const trackSiteSearch = (
   params: AnalyticsParams = {},
 ) => {
   const normalizedSearchTerm = searchTerm.trim();
+  if (!normalizedSearchTerm) return;
 
   trackEvent("paper_search", {
     source,
