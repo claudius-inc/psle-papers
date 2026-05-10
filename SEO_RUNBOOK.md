@@ -110,6 +110,16 @@ Useful report segments:
 - Custom event parameter `source` identifies CTA placement; compare `top_school_collection_grid`, `collection_hero_cta`, `viewer_mobile_sticky`, `mobile_next_paper`, `index_results`, and `home_results`.
 - Custom event parameter `school_name` shows which top-school collection users clicked from `/top-school-exam-papers`.
 
+## Top School Funnel Checks
+
+After top-school content changes deploy, confirm whether organic visitors choose a school collection and continue to paper actions:
+
+1. Segment source / medium `google / organic` with landing page `/top-school-exam-papers`.
+2. Compare `top_school_collection_click` by custom parameter `school_name` to see which school cards pull clicks.
+3. For sessions with `top_school_collection_click`, confirm follow-on `paper_view_click`, `paper_open`, and `paper_download` events.
+4. Compare `school_name` click share against GSC query impressions for matching school-name queries.
+5. Move higher-intent schools earlier on `/top-school-exam-papers` only when GSC impressions and GA4 downstream actions both support it.
+
 ## Mobile CTA Checks
 
 After a mobile CTA deploy, confirm whether organic mobile users are moving from search landing pages to paper actions:
