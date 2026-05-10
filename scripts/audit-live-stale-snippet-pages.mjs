@@ -41,8 +41,8 @@ const checks = [
   {
     path: "/exam-papers/chinese/",
     required: [
-      "Chinese Exam Papers Free PDF Download",
-      "View online or download free PDFs",
+      "Primary Chinese Exam Papers Singapore | Free PDF Download",
+      "Download 411 free Singapore primary Chinese exam papers",
       "Download PDF",
       "CollectionPage",
       "DownloadAction",
