@@ -64,6 +64,17 @@ export const trackEvent = (
   });
 };
 
+export const trackPageView = (source: string) => {
+  if (import.meta.server) return;
+
+  trackEvent("page_view", {
+    source,
+    page_location: window.location.href,
+    page_path: `${window.location.pathname}${window.location.search}`,
+    page_title: document.title,
+  });
+};
+
 export const trackPaperViewClick = (
   filename: string,
   source: string,

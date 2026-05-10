@@ -1,6 +1,6 @@
-import { onBeforeUnmount, onMounted, watch } from "vue";
+import { nextTick, onBeforeUnmount, onMounted, watch } from "vue";
 import { useRoute } from "vue-router";
-import { trackEvent } from "~/utils/analytics";
+import { trackEvent, trackPageView } from "~/utils/analytics";
 
 export const useEngagementTracking = () => {
   if (import.meta.server) return;
@@ -84,6 +84,7 @@ export const useEngagementTracking = () => {
 
   onMounted(() => {
     resetPageEngagement();
+    trackPageView("initial_load");
     window.addEventListener("scroll", handleScroll, { passive: true });
     window.addEventListener("pagehide", handlePageHide);
     document.addEventListener("visibilitychange", handleVisibilityChange);
@@ -92,6 +93,7 @@ export const useEngagementTracking = () => {
   watch(() => route.fullPath, () => {
     sendPageSummary("route_change");
     resetPageEngagement();
+    nextTick(() => trackPageView("route_change"));
   });
 
   onBeforeUnmount(() => {

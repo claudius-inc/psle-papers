@@ -20,7 +20,7 @@ useHead({
         window.dataLayer = window.dataLayer || [];
         function gtag(){dataLayer.push(arguments);}
         gtag('js', new Date());
-        gtag('config', 'G-7WKP91PV8C');
+        gtag('config', 'G-7WKP91PV8C', { send_page_view: false });
       `,
       type: "text/javascript",
     },

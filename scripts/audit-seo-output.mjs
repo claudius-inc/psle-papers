@@ -992,6 +992,9 @@ if (!robots.includes("Sitemap: https://sgexamhub.com/sitemap.xml")) {
 if (!appShell.includes("G-7WKP91PV8C") || !appShell.includes("useEngagementTracking()")) {
   fail("Global app shell is missing GA4 or engagement tracking setup.");
 }
+if (!appShell.includes("send_page_view: false")) {
+  fail("Global app shell must disable automatic GA4 page_view duplication.");
+}
 for (const snippet of [
   "FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true",
   'node-version: "24"',
@@ -1007,7 +1010,7 @@ for (const snippet of [
     fail(`Pages workflow is missing Node 24 deployment snippet: ${snippet}`);
   }
 }
-for (const eventName of ["paper_view_click", "paper_open", "paper_download"]) {
+for (const eventName of ["page_view", "paper_view_click", "paper_open", "paper_download"]) {
   if (!analytics.includes(eventName)) {
     fail(`Analytics helper is missing ${eventName}.`);
   }
@@ -1017,6 +1020,10 @@ for (const snippet of [
   "landing_path",
   "referrer_host",
   "is_google_referrer",
+  "trackPageView",
+  "page_location",
+  "page_path",
+  "page_title",
   "window.sessionStorage",
   "/(^|\\.)google\\./i",
 ]) {
@@ -1028,6 +1035,8 @@ for (const snippet of [
   "page_engaged_time",
   "page_scroll_depth",
   "page_session_summary",
+  'trackPageView("initial_load")',
+  'trackPageView("route_change")',
   "max_scroll_percent",
   "window.setTimeout(() => sendEngagedTime(10), 10000)",
   "window.setTimeout(() => sendEngagedTime(120), 120000)",
@@ -1087,6 +1096,8 @@ for (const snippet of [
   "psle revision papers",
   "psle practice papers",
   "Landing page is `/`, `/free-exam-papers`, `/past-year-exam-papers`, `/test-papers`, `/top-school-exam-papers`, or starts with `/exam-papers`.",
+  "Event name is `page_view`, `paper_view_click`, `paper_open`, `paper_download`, `page_engaged_time`, `page_scroll_depth`, or `page_session_summary`.",
+  "Custom event parameter `page_path` shows the current page after direct landings and SPA route changes.",
 ]) {
   if (!seoRunbook.includes(snippet)) {
     fail(`SEO runbook is missing expected GSC/GA4 snippet: ${snippet}`);
