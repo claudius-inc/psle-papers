@@ -49,12 +49,16 @@ assertIncludes(
     "referrer_host:",
     "is_google_referrer:",
     'transport_type: "beacon"',
+    "getResponsiveSource",
+    'source === "collection_hero_cta"',
+    '"collection_mobile_sticky"',
+    "window.matchMedia(\"(max-width: 640px)\").matches",
     'trackEvent("paper_view_click"',
     'trackEvent("paper_open"',
     'trackEvent("paper_download"',
     "is_conversion_event: true",
   ],
-  "analytics.ts is missing required SEO funnel attribution or conversion transport",
+  "analytics.ts is missing required SEO funnel attribution, mobile CTA source, or conversion transport",
 );
 
 assertIncludes(
