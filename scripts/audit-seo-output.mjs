@@ -175,6 +175,7 @@ const seoExportTemplateScript = readText("scripts/generate-seo-export-templates.
 const seoActionPackScript = readText("scripts/generate-seo-action-pack.mjs");
 const reindexStatusScript = readText("scripts/analyze-gsc-reindex-tracker.mjs");
 const snippetStatusScript = readText("scripts/analyze-google-snippet-tracker.mjs");
+const completionCheckScript = readText("scripts/check-seo-completion.mjs");
 const seoActionPack = readText("reports/seo/reindex-action-pack.md");
 const urlInspectionTracker = readText("reports/seo/gsc-url-inspection-tracker.csv");
 const googleSnippetTracker = readText("reports/seo/google-snippet-recheck-tracker.csv");
@@ -281,6 +282,7 @@ for (const snippet of [
   '"seo:action-pack": "node scripts/generate-seo-action-pack.mjs"',
   '"seo:reindex-status": "node scripts/analyze-gsc-reindex-tracker.mjs"',
   '"seo:snippet-status": "node scripts/analyze-google-snippet-tracker.mjs"',
+  '"seo:completion-check": "node scripts/check-seo-completion.mjs"',
   '"seo:export-templates": "node scripts/generate-seo-export-templates.mjs"',
   '"seo:outcomes": "node scripts/analyze-seo-outcomes.mjs"',
 ]) {
@@ -390,6 +392,19 @@ for (const snippet of [
 ]) {
   if (!snippetStatusScript.includes(snippet)) {
     fail(`Google snippet status script is missing expected snippet: ${snippet}`);
+  }
+}
+for (const snippet of [
+  "SEO Completion Check",
+  "seo:reindex-status",
+  "seo:snippet-status",
+  "seo:outcomes",
+  "reports/seo/seo-completion-check.md",
+  "reports/seo/outcome-report.md",
+  "Do not mark the SEO objective complete",
+]) {
+  if (!completionCheckScript.includes(snippet)) {
+    fail(`SEO completion check script is missing expected snippet: ${snippet}`);
   }
 }
 

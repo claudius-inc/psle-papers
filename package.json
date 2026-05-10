@@ -12,6 +12,7 @@
     "seo:action-pack": "node scripts/generate-seo-action-pack.mjs",
     "seo:reindex-status": "node scripts/analyze-gsc-reindex-tracker.mjs",
     "seo:snippet-status": "node scripts/analyze-google-snippet-tracker.mjs",
+    "seo:completion-check": "node scripts/check-seo-completion.mjs",
     "seo:export-templates": "node scripts/generate-seo-export-templates.mjs",
     "seo:outcomes": "node scripts/analyze-seo-outcomes.mjs",
     "seo:og-image": "node scripts/generate-og-image.mjs",

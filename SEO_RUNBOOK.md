@@ -22,6 +22,8 @@ Run `npm run seo:reindex-status` after updating `reports/seo/gsc-url-inspection-
 
 Run `npm run seo:snippet-status` after updating `reports/seo/google-snippet-recheck-tracker.csv` to write `reports/seo/google-snippet-recheck-status.md`. For final completion checks, use `npm run seo:snippet-status -- --fail-on-stale`; it should fail until every public Google recheck query is marked `Fresh`.
 
+Run `npm run seo:completion-check` as the final objective gate after GSC URL Inspection, public Google rechecks, and GSC/GA4 exports are available. It writes `reports/seo/seo-completion-check.md` and should fail until the whole SEO objective has real external evidence.
+
 1. Submit `https://sgexamhub.com/sitemap.xml`.
 2. Request indexing for:
    - `https://sgexamhub.com/`
