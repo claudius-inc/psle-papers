@@ -27,8 +27,8 @@ const expectedSchools = [
   ["Methodist Girls' School (Primary)", "/exam-papers/school-methodist-girls-school-primary", "methodist girls school primary exam papers"],
   ["Singapore Chinese Girls' Primary School", "/exam-papers/school-singapore-chinese-girls-primary-school", "singapore chinese girls primary school exam papers"],
   ["CHIJ St. Nicholas Girls' School", "/exam-papers/school-chij-st-nicholas-girls-school", "chij st nicholas girls school exam papers"],
-  ["Anglo Chinese School (Primary)", "/exam-papers/school-anglo-chinese-school-primary", "anglo chinese school primary exam papers"],
-  ["Anglo Chinese School (Junior)", "/exam-papers/school-anglo-chinese-school-junior", "anglo chinese school junior exam papers"],
+  ["Anglo-Chinese School (Primary)", "/exam-papers/school-anglo-chinese-school-primary", "anglo chinese school primary exam papers"],
+  ["Anglo-Chinese School (Junior)", "/exam-papers/school-anglo-chinese-school-junior", "anglo chinese school junior exam papers"],
   ["Pei Hwa Presbyterian Primary School", "/exam-papers/school-pei-hwa-presbyterian-primary-school", "pei hwa presbyterian primary school exam papers"],
   ["Red Swastika School", "/exam-papers/school-red-swastika-school", "red swastika school exam papers"],
   ["Tao Nan School", "/exam-papers/school-tao-nan-school", "tao nan school exam papers"],
@@ -45,6 +45,18 @@ for (const snippet of [
 ]) {
   if (!topSchoolPage.includes(snippet)) {
     fail(`Top school page is missing collection tracking snippet: ${snippet}`);
+  }
+}
+
+for (const staleSnippet of [
+  "Anglo Chinese School (Primary)",
+  "Anglo Chinese School (Junior)",
+]) {
+  if (topSchoolPage.includes(staleSnippet)) {
+    fail(`Top school page still contains stale school name: ${staleSnippet}`);
+  }
+  if (generatedPage.includes(staleSnippet)) {
+    fail(`Generated top school page still contains stale school name: ${staleSnippet}`);
   }
 }
 
