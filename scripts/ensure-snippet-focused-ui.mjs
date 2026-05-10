@@ -46,7 +46,7 @@ const addDataNosnippetToResults = (source, classBinding, filePath) => {
 const normalizeHomepagePaperCountCopy = (source) => {
   const next = source
     .replace(
-      /\{\{\s*totalPaperCountRounded\.toLocaleString\(\)\s*\}\}\+/g,
+      /{{\s*totalPaperCountRounded\.toLocaleString\(\)\s*}}\+/g,
       "{{ totalPaperCount.toLocaleString() }}",
     )
     .replace(
@@ -74,6 +74,83 @@ const normalizeHomepagePaperCountCopy = (source) => {
   return next;
 };
 
+const insertHomepageLinksAfter = (source, anchor, additions, filePath) => {
+  if (!source.includes(anchor)) {
+    fail(`${filePath} is missing homepage directory anchor: ${anchor}`);
+    return source;
+  }
+
+  const missingAdditions = additions.filter((addition) => !source.includes(addition));
+  if (!missingAdditions.length) return source;
+
+  return source.replace(anchor, `${anchor}\n${missingAdditions.join("\n")}`);
+};
+
+const ensureHomepagePriorityDirectoryLinks = (source, filePath) => {
+  let next = source;
+
+  next = insertHomepageLinksAfter(
+    next,
+    '      { label: "Primary 6 English Exam Papers", to: "/exam-papers/primary-6-english" },',
+    [
+      '      { label: "Primary 6 Chinese Exam Papers", to: "/exam-papers/primary-6-chinese" },',
+      '      { label: "Primary 6 Higher Chinese Exam Papers", to: "/exam-papers/primary-6-higher-chinese" },',
+    ],
+    filePath,
+  );
+
+  next = insertHomepageLinksAfter(
+    next,
+    '      { label: "Primary 5 Science Exam Papers", to: "/exam-papers/primary-5-science" },',
+    [
+      '      { label: "Primary 5 English Exam Papers", to: "/exam-papers/primary-5-english" },',
+      '      { label: "Primary 5 Chinese Exam Papers", to: "/exam-papers/primary-5-chinese" },',
+    ],
+    filePath,
+  );
+
+  next = insertHomepageLinksAfter(
+    next,
+    '      { label: "Primary 4 Maths Exam Papers", to: "/exam-papers/primary-4-mathematics" },',
+    [
+      '      { label: "Primary 4 Science Exam Papers", to: "/exam-papers/primary-4-science" },',
+      '      { label: "Primary 4 English Exam Papers", to: "/exam-papers/primary-4-english" },',
+      '      { label: "Primary 4 Chinese Exam Papers", to: "/exam-papers/primary-4-chinese" },',
+      '      { label: "Primary 3 Maths Exam Papers", to: "/exam-papers/primary-3-mathematics" },',
+      '      { label: "Primary 3 Science Exam Papers", to: "/exam-papers/primary-3-science" },',
+      '      { label: "Primary 3 English Exam Papers", to: "/exam-papers/primary-3-english" },',
+      '      { label: "Primary 3 Chinese Exam Papers", to: "/exam-papers/primary-3-chinese" },',
+      '      { label: "Primary 3 Higher Chinese Exam Papers", to: "/exam-papers/primary-3-higher-chinese" },',
+    ],
+    filePath,
+  );
+
+  next = insertHomepageLinksAfter(
+    next,
+    '      { label: "English SA2 Exam Papers", to: "/exam-papers/english-sa2" },',
+    [
+      '      { label: "Chinese SA2 Exam Papers", to: "/exam-papers/chinese-sa2" },',
+      '      { label: "Primary 6 English SA2 Exam Papers", to: "/exam-papers/primary-6-english-sa2" },',
+      '      { label: "Primary 6 Chinese SA2 Exam Papers", to: "/exam-papers/primary-6-chinese-sa2" },',
+    ],
+    filePath,
+  );
+
+  for (const requiredSnippet of [
+    'Primary 6 Chinese Exam Papers',
+    'Primary 5 English Exam Papers',
+    'Primary 4 Science Exam Papers',
+    'Primary 3 Science Exam Papers',
+    'Primary 6 Chinese SA2 Exam Papers',
+  ]) {
+    if (!next.includes(requiredSnippet)) {
+      fail(`${filePath} is missing priority homepage directory link: ${requiredSnippet}`);
+    }
+  }
+
+  return next;
+};
+
 for (const file of files) {
   let source = readFileSync(file.path, "utf8");
 
@@ -81,6 +158,7 @@ for (const file of files) {
   source = addDataNosnippetToResults(source, file.resultsClassBinding, file.path);
   if (file.path === "app/pages/index.vue") {
     source = normalizeHomepagePaperCountCopy(source);
+    source = ensureHomepagePriorityDirectoryLinks(source, file.path);
   }
 
   for (const snippet of [
