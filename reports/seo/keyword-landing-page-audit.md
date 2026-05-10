@@ -2,8 +2,8 @@
 
 Generated from `SEO_KEYWORD_MAP.md` against `.output/public`.
 
-- Query clusters checked: 93
-- Passing clusters: 93
+- Query clusters checked: 97
+- Passing clusters: 97
 - Failing clusters: 0
 
 | Query cluster | Preferred landing page | Status | In sitemap | Internally linked | Missing query terms |
@@ -42,6 +42,10 @@ Generated from `SEO_KEYWORD_MAP.md` against `.output/public`.
 | primary 4 exam papers | `/exam-papers/primary-4` | PASS | yes | yes | - |
 | primary 3 exam papers | `/exam-papers/primary-3` | PASS | yes | yes | - |
 | primary 2 exam papers | `/exam-papers/primary-2` | PASS | yes | yes | - |
+| primary maths exam papers | `/exam-papers/mathematics` | PASS | yes | yes | - |
+| primary science exam papers | `/exam-papers/science` | PASS | yes | yes | - |
+| primary english exam papers | `/exam-papers/english` | PASS | yes | yes | - |
+| primary chinese exam papers | `/exam-papers/chinese` | PASS | yes | yes | - |
 | primary 6 maths exam papers | `/exam-papers/primary-6-mathematics` | PASS | yes | yes | - |
 | primary 6 science exam papers | `/exam-papers/primary-6-science` | PASS | yes | yes | - |
 | primary 6 english exam papers | `/exam-papers/primary-6-english` | PASS | yes | yes | - |

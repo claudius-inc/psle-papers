@@ -44,6 +44,9 @@ const findRouteLink = (slug: string) => {
     : null;
 };
 
+const getRoutePaperCount = (path: string) =>
+  seoRoutes.find((route) => route.path === path)?.paperCount || 0;
+
 const quickRevisionLinks = [
   "2025-primary-6-mathematics-sa2",
   "2025-primary-6-science-sa2",
@@ -149,6 +152,26 @@ const directorySections = [
         label: "All Singapore Primary Exam Papers",
         to: "/exam-papers",
         count: allParsedPapers.length,
+      },
+      {
+        label: "Primary Maths Exam Papers",
+        to: "/exam-papers/mathematics",
+        count: getRoutePaperCount("/exam-papers/mathematics"),
+      },
+      {
+        label: "Primary Science Exam Papers",
+        to: "/exam-papers/science",
+        count: getRoutePaperCount("/exam-papers/science"),
+      },
+      {
+        label: "Primary English Exam Papers",
+        to: "/exam-papers/english",
+        count: getRoutePaperCount("/exam-papers/english"),
+      },
+      {
+        label: "Primary Chinese Exam Papers",
+        to: "/exam-papers/chinese",
+        count: getRoutePaperCount("/exam-papers/chinese"),
       },
     ],
   },

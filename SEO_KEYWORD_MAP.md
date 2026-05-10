@@ -40,6 +40,10 @@ Use this map with Google Search Console after deployment. The goal is to match e
 | primary 4 exam papers | `/exam-papers/primary-4` | Level-specific revision | CTR, paper opens |
 | primary 3 exam papers | `/exam-papers/primary-3` | Level-specific revision | CTR, paper opens |
 | primary 2 exam papers | `/exam-papers/primary-2` | Lower-primary papers | CTR, paper opens |
+| primary maths exam papers | `/exam-papers/mathematics` | Broad Maths practice | CTR, Maths paper downloads |
+| primary science exam papers | `/exam-papers/science` | Broad Science practice | CTR, Science paper downloads |
+| primary english exam papers | `/exam-papers/english` | Broad English practice | CTR, English paper opens |
+| primary chinese exam papers | `/exam-papers/chinese` | Broad Chinese practice | CTR, Chinese paper opens and downloads |
 
 ## Subject And Level Pages
 
