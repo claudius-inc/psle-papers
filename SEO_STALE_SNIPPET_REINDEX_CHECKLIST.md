@@ -4,13 +4,13 @@ Use this checklist when the live site is clean but Google still shows old SG Exa
 
 ## Current Stale Evidence
 
-Checked on 2026-05-10 after deployment run `25631615882` for commit `691e4e32696a6c57be383c4e9f8d01aa28c39ed4`. These public Google results still need to be rechecked after the newer passing deployment run `25632069702` for commit `b48bd78583ba88a6c9c31874007c5c7a78821fbd` and after GSC URL Inspection requests:
+Checked on 2026-05-10 after deployment run `25632069702` for commit `b48bd78583ba88a6c9c31874007c5c7a78821fbd`:
 
 - `site:sgexamhub.com sg exam papers` still showed old homepage copy such as `2,200+Papers`, the old homepage title, the stale `Latest exam papers` snippet list, and stale school casing.
 - `site:sgexamhub.com "2,200+Papers"` still returned the stale homepage snippet.
 - `site:sgexamhub.com "Anglo chinese"` still returned stale collection snippets.
 - `site:sgexamhub.com "primary 3 chinese exam papers"` still showed `/exam-papers/primary-3-chinese` with old casing such as `Anglo chinese School (primary)`.
-- Result crawl labels showed old crawls, such as 2-4 days before the latest deployment, so this remains an index refresh issue rather than a live-site issue.
+- Result crawl labels still showed old crawls before the latest deployment, so this remains an index refresh issue rather than a live-site issue.
 
 Fresh live reads on 2026-05-10 showed the deployed pages are already corrected:
 

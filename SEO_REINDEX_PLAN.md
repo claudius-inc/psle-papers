@@ -23,11 +23,11 @@ Earlier evidence from runs `25626208854`, `25626609288`, `25627427402`, `2562766
 
 ## Current Search Evidence
 
-Checked on 2026-05-10 after the passing deployment in run `25631615882`; those public Google results still need to be rechecked after the newer run `25632069702` and GSC URL Inspection requests.
+Checked on 2026-05-10 after the passing deployment in run `25632069702`.
 
 | Query | Evidence | Follow-up |
 | --- | --- | --- |
-| `site:sgexamhub.com sg exam papers` | Search results still showed stale homepage result text such as `2,200+Papers`, older title copy, `Anglo chinese School (junior)`, and `Methodist Girls' School (primary)`. The result was crawled before the latest deployment, while the current live homepage now shows `2,299 PDF exam papers indexed`. | Request reindex for `/` and resubmit the sitemap. Recheck until the search snippet reflects the current live page. |
+| `site:sgexamhub.com sg exam papers` | Search results still showed stale homepage result text such as `2,200+Papers`, older title copy, `Anglo chinese School (junior)`, and `Methodist Girls' School (primary)`. The result crawl label was still older than the latest deployment, while the current live homepage now shows `2,299 PDF exam papers indexed`. | Request reindex for `/` and resubmit the sitemap. Recheck until the search snippet reflects the current live page. |
 | `site:sgexamhub.com "2,200+Papers"` | Google still found the stale homepage snippet. Current live HTML does not contain `2,200+`, so this is an index refresh issue rather than a deployed-site issue. | Keep this as the fastest stale-snippet canary. Completion requires this query to stop returning stale SG Exam Hub snippets. |
 | `site:sgexamhub.com "Anglo chinese"` | Google still showed stale school-name snippets, including older lowercase/unhyphenated names. Current live pages use official casing and hyphenation. | Request reindex for the affected collection pages and recheck after crawl. |
 | `site:sgexamhub.com "primary 3 chinese exam papers"` | Search results still showed `/exam-papers/primary-3-chinese` with stale school-name casing from older crawls. Current live HTML uses `Anglo-Chinese School (Primary)`, `Methodist Girls' School (Primary)`, and `CHIJ`. | Request reindex for `/exam-papers/primary-3-chinese/`, `/exam-papers/primary-3/`, `/exam-papers/chinese/`, and priority school pages. |
