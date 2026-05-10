@@ -7,7 +7,9 @@ const checks = [
       "data-nosnippet",
       "SG Exam Hub: Free Singapore Primary Exam Papers",
       "No sign-up needed",
+      "2,299 PDF exam papers indexed",
     ],
+    forbiddenSnippets: ["2,200+Papers", "2,200+ Papers"],
   },
   {
     path: "/exam-papers/",
@@ -48,6 +50,11 @@ try {
     for (const snippet of check.snippets) {
       if (!html.includes(snippet)) {
         fail(`Live ${check.path} is missing snippet-focused UI snippet: ${snippet}`);
+      }
+    }
+    for (const snippet of check.forbiddenSnippets || []) {
+      if (html.includes(snippet)) {
+        fail(`Live ${check.path} contains stale snippet-focused UI copy: ${snippet}`);
       }
     }
   }
