@@ -9,7 +9,7 @@ import { trackPaperDownload, trackPaperViewClick } from "~/utils/analytics";
 const pageTitle = "Top School Exam Papers Singapore | Free PDF Download";
 const visibleTitle = "Top School Exam Papers Singapore";
 const pageDescription =
-  "Download free Singapore top school exam papers from Raffles, Nanyang, Henry Park, Ai Tong, Nan Hua and Rosyth. No sign-up needed. View papers, then save PDFs.";
+  "Download free Singapore top school exam papers from Raffles, Nanyang, MGS, SCGS, Henry Park, Ai Tong, Tao Nan and more. No sign-up needed. View papers, then save PDFs.";
 const pageUrl = "https://sgexamhub.com/top-school-exam-papers";
 
 const topSchoolCollections = [
@@ -32,6 +32,54 @@ const topSchoolCollections = [
     to: "/exam-papers/school-henry-park-primary-school",
   },
   {
+    title: "Methodist Girls' School (Primary) exam papers",
+    schoolName: "Methodist Girls' School (Primary)",
+    description: "MGS Primary papers for school-specific practice.",
+    to: "/exam-papers/school-methodist-girls-school-primary",
+  },
+  {
+    title: "Singapore Chinese Girls' Primary School exam papers",
+    schoolName: "Singapore Chinese Girls' Primary School",
+    description: "SCGS papers for comparing school assessment style.",
+    to: "/exam-papers/school-singapore-chinese-girls-primary-school",
+  },
+  {
+    title: "CHIJ St. Nicholas Girls' School exam papers",
+    schoolName: "CHIJ St. Nicholas Girls' School",
+    description: "St. Nicholas papers for upper-primary revision.",
+    to: "/exam-papers/school-chij-st-nicholas-girls-school",
+  },
+  {
+    title: "Anglo Chinese School (Primary) exam papers",
+    schoolName: "Anglo Chinese School (Primary)",
+    description: "ACS Primary papers grouped by year and subject.",
+    to: "/exam-papers/school-anglo-chinese-school-primary",
+  },
+  {
+    title: "Anglo Chinese School (Junior) exam papers",
+    schoolName: "Anglo Chinese School (Junior)",
+    description: "ACS Junior papers for additional school comparison.",
+    to: "/exam-papers/school-anglo-chinese-school-junior",
+  },
+  {
+    title: "Pei Hwa Presbyterian Primary School exam papers",
+    schoolName: "Pei Hwa Presbyterian Primary School",
+    description: "Pei Hwa papers across core and Higher Chinese subjects.",
+    to: "/exam-papers/school-pei-hwa-presbyterian-primary-school",
+  },
+  {
+    title: "Red Swastika School exam papers",
+    schoolName: "Red Swastika School",
+    description: "Red Swastika papers for school-specific revision.",
+    to: "/exam-papers/school-red-swastika-school",
+  },
+  {
+    title: "Tao Nan School exam papers",
+    schoolName: "Tao Nan School",
+    description: "Tao Nan papers for additional school comparison.",
+    to: "/exam-papers/school-tao-nan-school",
+  },
+  {
     title: "Ai Tong School exam papers",
     schoolName: "Ai Tong School",
     description: "Ai Tong papers grouped by year, level and subject.",
@@ -48,12 +96,6 @@ const topSchoolCollections = [
     schoolName: "Rosyth School",
     description: "Rosyth papers to compare assessment style and difficulty.",
     to: "/exam-papers/school-rosyth-school",
-  },
-  {
-    title: "Tao Nan School exam papers",
-    schoolName: "Tao Nan School",
-    description: "Tao Nan papers for additional school comparison.",
-    to: "/exam-papers/school-tao-nan-school",
   },
   {
     title: "Catholic High School exam papers",
@@ -85,7 +127,7 @@ const faqItems = [
   {
     question: "Can I compare papers from different Singapore primary schools?",
     answer:
-      "Yes. Use the school collection links to open papers from Raffles, Nanyang, Henry Park, Ai Tong, Nan Hua, Rosyth and other schools before downloading PDFs.",
+      "Yes. Use the school collection links to open papers from Raffles, Nanyang, MGS, SCGS, Henry Park, Ai Tong, Tao Nan, Rosyth and other schools before downloading PDFs.",
   },
 ];
 
@@ -156,7 +198,7 @@ useHead({
     {
       name: "keywords",
       content:
-        "top school exam papers Singapore, Raffles Girls Primary School exam papers, Nanyang Primary School exam papers, Henry Park Primary School exam papers, Ai Tong School exam papers, Nan Hua Primary School exam papers, Rosyth School exam papers, free PDF download",
+        "top school exam papers Singapore, Raffles Girls Primary School exam papers, Nanyang Primary School exam papers, Methodist Girls School exam papers, Singapore Chinese Girls Primary School exam papers, CHIJ St Nicholas exam papers, Anglo Chinese School exam papers, Pei Hwa exam papers, Red Swastika exam papers, Tao Nan exam papers, free PDF download",
     },
     ...buildSocialMeta({
       title: pageTitle,
@@ -234,9 +276,9 @@ useHead({
         <h1>{{ visibleTitle }}</h1>
         <p class="subtitle">
           Compare free Singapore primary school exam papers from Raffles,
-          Nanyang, Henry Park, Ai Tong, Nan Hua, Rosyth and more. No sign-up
-          needed: open one paper online first, then download useful PDFs for
-          timed revision.
+          Nanyang, MGS, SCGS, Henry Park, Ai Tong, Tao Nan, Rosyth and more.
+          No sign-up needed: open one paper online first, then download useful
+          PDFs for timed revision.
         </p>
         <p class="freshness">
           {{ latestTopSchoolPapers.length.toLocaleString() }} recent top school
