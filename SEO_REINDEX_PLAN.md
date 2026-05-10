@@ -6,24 +6,26 @@ Objective: after SEO fixes deploy, get Google to refresh stale snippets so searc
 
 Latest fully passing deployment evidence on 2026-05-10:
 
-- Commit `86b2b75a6fb07176b605b30d2469ec95f1a76bdd` deployed the first homepage stale-count guard.
-- GitHub Actions run `25626208854` completed successfully for build and deploy.
-- Build generated `6238` sitemap URLs and passed the generated SEO audit.
+- Commit `f57790217ef993a2ae879a4c8c7298258da77c5c` deployed the stricter live asset stale-snippet audit.
+- GitHub Actions run `25626609288` completed successfully for build and deploy.
+- Build generated `6238` sitemap URLs and passed the generated SEO audit, including the stricter `_nuxt` asset scan for stale homepage count copy.
 - Deployed site passed `npm run seo:audit:live`, including live SEO, school-name, snippet-focused UI, funnel, and sitemap priority-school checks.
 - Live sitemap audit reported `6238` URLs and `8` distinct `lastmod` dates.
+- Live snippet-focused UI audit reported `3` pages and `9` assets checked.
+- Fresh live homepage read after deployment showed `2,299 Papers` and `2,299 PDF exam papers indexed`; it no longer showed the stale `2,200+Papers` count copy.
 
-Fresh live and search checks on 2026-05-10 showed this gate was too weak: the rendered homepage text still exposed `2,200+Papers`, and Google results still showed stale snippets. Commits `410ed3fbe7c5fb018708162897f9038b534eb726`, `1426108dead1be8858d79d0d2917a610589dd753`, and `99fdf9be92193a89b3fe322b8a857d7b1c2e2e29` harden the normalizer and snippet audits to forbid `2,200+` and `totalPaperCountRounded` more broadly. Do not request reindexing until a deployment after these commits passes the stricter generated and live audits.
+Earlier evidence from run `25626208854` was too weak: a fresh live rendered read still exposed `2,200+Papers` even after that audit passed. Commits `410ed3fbe7c5fb018708162897f9038b534eb726`, `1426108dead1be8858d79d0d2917a610589dd753`, `99fdf9be92193a89b3fe322b8a857d7b1c2e2e29`, `cd1405e351c3c8e945b8e11d4ae729f138d23d2a`, and `f57790217ef993a2ae879a4c8c7298258da77c5c` hardened the normalizer and generated/live snippet audits to forbid `2,200+` and `totalPaperCountRounded` more broadly.
 
 ## Current Search Evidence
 
-Checked on 2026-05-10 after the prior passing deployment.
+Checked on 2026-05-10 after the stricter deployment in run `25626609288`.
 
 | Query | Evidence | Follow-up |
 | --- | --- | --- |
-| `site:sgexamhub.com sg exam papers` | Search results still showed stale homepage result text such as `2,200+ Papers`, `Anglo chinese School (junior)`, and `Methodist Girls' School (primary)`. A fresh live read also showed the rendered homepage still exposed `2,200+Papers`. | Deploy the stricter stale-count guard, confirm live audit fails before the fix and passes after it, then request reindex for `/` and resubmit the sitemap. |
+| `site:sgexamhub.com sg exam papers` | Google results still showed stale homepage result text such as `2,200+Papers`, older title copy, `Anglo chinese School (junior)`, and `Methodist Girls' School (primary)`. The result was crawled before the stricter deployment, while the current live homepage now shows `2,299 Papers`. | Request reindex for `/` and resubmit the sitemap. Recheck until the Google snippet reflects the current live page. |
 | `site:sgexamhub.com "Free Singapore Primary Exam Papers"` | Homepage result was present, confirming Google can discover the canonical domain. | Use as baseline evidence, not completion proof. |
 | `site:sgexamhub.com "Raffles Girls' Primary School" "SG Exam Hub"` | Indexed collection/viewer pages appear, confirming paper pages are discoverable. | Recheck after Google refreshes indexed results for current titles and official school names. |
-| `site:sgexamhub.com "Anglo-Chinese School (Primary)"` | Google has discoverable school-specific pages, but stale lowercase/unhyphenated school-name snippets may still appear from older crawls. | Request reindex for the ACS school collection URLs below after the stricter deploy passes. |
+| `site:sgexamhub.com "Anglo-Chinese School (Primary)"` | Google has discoverable school-specific pages, but stale lowercase/unhyphenated school-name snippets may still appear from older crawls. | Request reindex for the ACS school collection URLs below. |
 
 ## Priority URLs To Reindex
 
