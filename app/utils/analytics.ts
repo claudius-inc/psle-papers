@@ -117,6 +117,25 @@ export const trackPaperOpen = (
   });
 };
 
+export const trackSiteSearch = (
+  searchTerm: string,
+  source: string,
+  params: AnalyticsParams = {},
+) => {
+  const normalizedSearchTerm = searchTerm.trim();
+
+  trackEvent("paper_search", {
+    source,
+    query: normalizedSearchTerm,
+    ...params,
+  });
+  trackEvent("search", {
+    source,
+    search_term: normalizedSearchTerm,
+    ...params,
+  });
+};
+
 export const trackPaperDownload = (
   filename: string,
   source: string,

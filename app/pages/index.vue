@@ -8,6 +8,7 @@ import {
   trackEvent,
   trackPaperDownload,
   trackPaperViewClick,
+  trackSiteSearch,
 } from "~/utils/analytics";
 import { buildPdfFileUrl } from "~/utils/pdfUrls";
 import { buildSocialMeta } from "~/utils/socialSeo";
@@ -529,9 +530,7 @@ const trackFilterChange = (
 };
 const trackPaperSearch = () => {
   visibleLimit.value = 60;
-  trackEvent("paper_search", {
-    source: "home_search",
-    query: paperSearchQuery.value.trim(),
+  trackSiteSearch(paperSearchQuery.value, "home_search", {
     result_count: resultCount.value,
   });
 };

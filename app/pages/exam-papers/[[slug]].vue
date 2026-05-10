@@ -13,6 +13,7 @@ import {
   trackEvent,
   trackPaperDownload,
   trackPaperViewClick,
+  trackSiteSearch,
 } from "~/utils/analytics";
 import { buildPdfFileUrl } from "~/utils/pdfUrls";
 import { buildSocialMeta } from "~/utils/socialSeo";
@@ -139,11 +140,9 @@ const handlePaperSearchInput = () => {
 };
 const trackCollectionPaperSearch = () => {
   visibleLimit.value = 60;
-  trackEvent("paper_search", {
-    source: "index_search",
+  trackSiteSearch(paperSearchQuery.value, "index_search", {
     page_slug: slug,
     page_path: seoRoute.path,
-    query: paperSearchQuery.value.trim(),
     result_count: resultCount.value,
   });
 };

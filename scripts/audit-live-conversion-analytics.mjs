@@ -70,6 +70,8 @@ try {
       "beacon",
       "paper_view_click",
       "paper_open",
+      "paper_search",
+      "search_term",
       "empty_search_recovery_click",
       "paper_pdf_load",
       "paper_pdf_error",

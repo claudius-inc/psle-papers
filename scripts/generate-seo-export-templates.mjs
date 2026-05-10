@@ -38,6 +38,8 @@ const checklist = [
   "- page_engaged_time",
   "- page_scroll_depth",
   "- page_session_summary",
+  "- paper_search",
+  "- search",
   "- paper_view_click",
   "- paper_open",
   "- paper_pdf_load",
