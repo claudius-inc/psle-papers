@@ -40,6 +40,14 @@ const checks = [
     forbiddenSnippets: staleHomepageSnippets,
   },
   {
+    path: "public/og-image.svg",
+    snippets: [
+      `${exactPaperCountLabel} PDF papers`,
+      "Free download",
+    ],
+    forbiddenSnippets: staleHomepageSnippets,
+  },
+  {
     path: "app/pages/exam-papers/[[slug]].vue",
     snippets: [
       'class="filter-container" data-nosnippet',
