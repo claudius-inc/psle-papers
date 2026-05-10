@@ -4,7 +4,7 @@ import type { ParsedPaper } from "~/composables/usePapers";
 import { allParsedPapers } from "~/utils/paperSeo";
 import { buildPdfFileUrl } from "~/utils/pdfUrls";
 import { buildSocialMeta } from "~/utils/socialSeo";
-import { trackPaperDownload, trackPaperViewClick } from "~/utils/analytics";
+import { trackEvent, trackPaperDownload, trackPaperViewClick } from "~/utils/analytics";
 
 const pageTitle = "Top School Exam Papers Singapore | Free PDF Download";
 const visibleTitle = "Top School Exam Papers Singapore";
@@ -147,6 +147,15 @@ const buildPaperDownloadName = (paper: ParsedPaper) =>
 const analyticsContext = {
   page_path: "/top-school-exam-papers",
   page_title: visibleTitle,
+};
+
+const trackTopSchoolCollectionClick = (collection: (typeof topSchoolCollections)[number]) => {
+  trackEvent("top_school_collection_click", {
+    ...analyticsContext,
+    source: "top_school_collection_grid",
+    school_name: collection.schoolName,
+    target_path: collection.to,
+  });
 };
 
 const trackTopSchoolPaperView = (filename: string, source: string) => {
@@ -328,6 +337,7 @@ useHead({
           v-for="collection in topSchoolCollections"
           :key="collection.to"
           :to="collection.to"
+          @click="trackTopSchoolCollectionClick(collection)"
         >
           <strong>{{ collection.title }}</strong>
           <small>{{ collection.description }}</small>
@@ -572,7 +582,7 @@ useHead({
 }
 
 .collection-grid,
-.paper-grid,
+paper-grid,
 .faq-grid {
   display: grid;
   gap: 1rem;
