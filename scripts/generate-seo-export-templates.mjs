@@ -40,6 +40,7 @@ const checklist = [
   "- page_session_summary",
   "- paper_search",
   "- search",
+  "- view_search_results",
   "- paper_view_click",
   "- paper_open",
   "- paper_pdf_load",

@@ -125,6 +125,7 @@ Track whether search users move deeper into the site:
 - `paper_filters_reset`
 - `paper_search`
 - `search`
+- `view_search_results`
 - `empty_search_recovery_click`
 - `paper_show_more`
 - `page_view`
@@ -136,13 +137,13 @@ Useful report segments:
 
 - Source / medium contains `google / organic`.
 - Landing page is `/`, `/free-exam-papers`, `/past-year-exam-papers`, `/test-papers`, `/top-school-exam-papers`, or starts with `/exam-papers`.
-- Event name is `page_view`, `paper_search`, `search`, `paper_view_click`, `paper_open`, `paper_pdf_load`, `paper_pdf_error`, `paper_download`, `file_download`, `empty_search_recovery_click`, `page_engaged_time`, `page_scroll_depth`, or `page_session_summary`.
+- Event name is `page_view`, `paper_search`, `search`, `view_search_results`, `paper_view_click`, `paper_open`, `paper_pdf_load`, `paper_pdf_error`, `paper_download`, `file_download`, `empty_search_recovery_click`, `page_engaged_time`, `page_scroll_depth`, or `page_session_summary`.
 - Event name `free_exam_collection_click` isolates free-papers collection clicks before users enter year, level, subject, top-school, or PSLE pages.
 - Event name `past_year_collection_click` isolates past-year collection clicks before users enter year, level, subject, assessment, or school pages.
 - Event name `test_paper_collection_click` isolates test-paper collection clicks before users enter year, level, subject, assessment, or PSLE pages.
 - Event name `top_school_collection_click` isolates top-school card clicks before users enter a school collection page.
 - Event name `empty_search_recovery_click` shows whether users who hit zero search/filter results continue into a suggested collection instead of leaving.
-- Standard `search` events include `search_term` so GA4 can report on-site paper searches alongside the custom `paper_search` funnel event.
+- Standard `search` and `view_search_results` events include `search_term` so GA4 can report on-site paper searches alongside the custom `paper_search` funnel event.
 - Custom event parameter `page_path` shows the current page after direct landings and SPA route changes.
 - Custom event parameter `landing_path` shows the first page in the session.
 - Custom event parameter `referrer_host` shows the external host, with `is_google_referrer` set for Google referrers.

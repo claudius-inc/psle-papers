@@ -134,6 +134,11 @@ export const trackSiteSearch = (
     search_term: normalizedSearchTerm,
     ...params,
   });
+  trackEvent("view_search_results", {
+    source,
+    search_term: normalizedSearchTerm,
+    ...params,
+  });
 };
 
 export const trackPaperDownload = (

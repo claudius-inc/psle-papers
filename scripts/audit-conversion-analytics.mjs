@@ -57,6 +57,7 @@ assertIncludes(
     'trackEvent("paper_open"',
     "trackSiteSearch",
     'trackEvent("search"',
+    'trackEvent("view_search_results"',
     "search_term",
     'trackEvent("paper_download"',
     'trackEvent("file_download"',

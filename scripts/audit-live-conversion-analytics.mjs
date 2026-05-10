@@ -71,6 +71,7 @@ try {
       "paper_view_click",
       "paper_open",
       "paper_search",
+      "view_search_results",
       "search_term",
       "empty_search_recovery_click",
       "paper_pdf_load",

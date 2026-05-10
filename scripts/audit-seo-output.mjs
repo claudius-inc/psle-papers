@@ -491,6 +491,7 @@ for (const snippet of [
   "paper_view_click",
   "paper_open",
   "paper_search",
+  "view_search_results",
   "search_term",
   "paper_download",
   "file_download",
