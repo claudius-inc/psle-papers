@@ -582,7 +582,7 @@ useHead({
 }
 
 .collection-grid,
-paper-grid,
+.paper-grid,
 .faq-grid {
   display: grid;
   gap: 1rem;
