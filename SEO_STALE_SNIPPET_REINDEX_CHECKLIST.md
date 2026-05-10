@@ -4,12 +4,13 @@ Use this checklist when the live site is clean but Google still shows old SG Exa
 
 ## Current Stale Evidence
 
-Checked on 2026-05-10:
+Checked on 2026-05-10 after deployment run `25629044793` for commit `e60bb60eb76e004907e9bbe49e15246bf802f08a`:
 
 - `site:sgexamhub.com sg exam papers` still showed old homepage copy such as `2,200+Papers` and stale school casing.
 - `site:sgexamhub.com "2,200+Papers"` still returned the stale homepage snippet.
 - `site:sgexamhub.com "Anglo chinese"` still returned stale collection snippets.
-- `site:sgexamhub.com "primary-3-chinese" "Anglo chinese"` still showed `/exam-papers/primary-3-chinese` with old casing such as `Anglo chinese School (primary)`.
+- `site:sgexamhub.com "primary 3 chinese exam papers"` still showed `/exam-papers/primary-3-chinese` with old casing such as `Anglo chinese School (primary)`.
+- Result crawl labels showed old crawls, such as 2-4 days before the latest deployment, so this remains an index refresh issue.
 
 Fresh live reads on 2026-05-10 showed the deployed pages are already corrected:
 
@@ -17,6 +18,7 @@ Fresh live reads on 2026-05-10 showed the deployed pages are already corrected:
 - `https://sgexamhub.com/exam-papers/primary-3-chinese/` has `Primary 3 Chinese Exam Papers Free PDF Download`, `Download PDF`, `Anglo-Chinese School (Primary)`, `Methodist Girls' School (Primary)`, and `CHIJ Katong Primary`.
 - `https://sgexamhub.com/exam-papers/primary-3/` has `Primary 3 Exam Papers Free PDF Download`.
 - `https://sgexamhub.com/exam-papers/chinese/` has `Chinese Exam Papers Free PDF Download`.
+- `https://sgexamhub.com/og-image.png` matches the committed manifest hash and OCR reads `2,299 PDF papers`.
 
 ## Preflight Before Requesting Indexing
 
@@ -26,11 +28,13 @@ Before using Google Search Console, confirm the latest deployment has passed the
 2. `npm run seo:audit:live` passed.
 3. The live stale-snippet gate is wired into `seo:audit:live`:
    - `node scripts/audit-live-stale-snippet-pages.mjs`
-4. The live sitemap freshness gate includes the stale-snippet pages:
+4. The live social preview image freshness gate is wired into `seo:audit:live`:
+   - `node scripts/audit-live-og-image.mjs`
+5. The live sitemap freshness gate includes the stale-snippet pages:
    - `/exam-papers/chinese`
    - `/exam-papers/primary-3`
    - `/exam-papers/primary-3-chinese`
-5. `https://sgexamhub.com/robots.txt` points to `https://sgexamhub.com/sitemap.xml`.
+6. `https://sgexamhub.com/robots.txt` points to `https://sgexamhub.com/sitemap.xml`.
 
 ## URL Inspection Priority
 
@@ -57,6 +61,7 @@ site:sgexamhub.com "2,200+Papers"
 site:sgexamhub.com "2,300+"
 site:sgexamhub.com "Anglo chinese"
 site:sgexamhub.com "primary-3-chinese" "Anglo chinese"
+site:sgexamhub.com "primary 3 chinese exam papers"
 site:sgexamhub.com "Primary 3 Chinese Exam Papers Free PDF Download"
 site:sgexamhub.com "Anglo-Chinese School (Primary)" "Download PDF"
 site:sgexamhub.com "Methodist Girls' School (Primary)" "Download PDF"

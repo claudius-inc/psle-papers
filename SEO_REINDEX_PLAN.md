@@ -6,27 +6,30 @@ Objective: after SEO fixes deploy, get Google to refresh stale snippets so searc
 
 Latest fully passing deployment evidence on 2026-05-10:
 
-- Commit `6b5a41c15cce506bb149ce0e010883e74897cd55` deployed the sitemap freshness audit coverage after the homepage/snippet and school-name fixes.
-- GitHub Actions run `25627427402` (`#236`) completed successfully for build and deploy.
-- Build generated `6238` sitemap URLs and passed the generated SEO audit gate. The local audit now includes `node scripts/audit-sitemap-lastmod-inputs.mjs`, which verifies that sitemap `lastmod` freshness includes the snippet and viewer SEO normalizer scripts.
-- Deployed site passed `npm run seo:audit:live`, including live SEO, school-name, snippet-focused UI, conversion analytics, top-school funnel, free-exam funnel, broad-landing funnel, and sitemap priority-school checks.
+- Commit `e60bb60eb76e004907e9bbe49e15246bf802f08a` is deployed.
+- GitHub Actions run `25629044793` completed successfully for build and deploy.
+- Build generated `6238` sitemap URLs and passed the generated SEO audit gate.
+- Deployed site passed `npm run seo:audit:live`, including live SEO, JSON-LD, stale-snippet page, school-name, OG image, snippet-focused UI, conversion analytics, top-school funnel, free-exam funnel, broad-landing funnel, sitemap priority-school, and sitemap lastmod checks.
 - Live sitemap audit reported `6238` URLs and `8` distinct `lastmod` dates.
-- Live snippet-focused UI audit reported `3` pages and `9` assets checked.
+- Live JSON-LD audit reported `11` pages checked.
+- Live snippet-focused UI audit reported `4` pages and `9` assets checked.
 - Live conversion analytics audit reported `1` page and `7` assets checked.
-- Fresh live homepage read after deployment showed `2,299 Papers` and `2,299 PDF exam papers indexed`; it no longer showed the stale `2,200+Papers` count copy.
-- Fresh live page read for `/exam-papers/primary-3-chinese/` showed corrected school casing, including `Anglo-Chinese School (Primary)`, `Methodist Girls' School (Primary)`, and `CHIJ Katong Primary`.
+- Live OG image audit passed. Direct live hash verification showed `https://sgexamhub.com/og-image.png` matches manifest hash `d0b66da84ffab834550742fefdf57765cdbc3f4a306da35ba4096561e0d61bee`; OCR read `2,299 PDF papers`.
+- Fresh live homepage read after deployment showed `2,299 PDF exam papers indexed`; it no longer showed stale `2,200+Papers`, `2,200+`, or `2,300+` count copy.
+- Fresh live page read for `/exam-papers/primary-3-chinese/` showed corrected school casing, including `Anglo-Chinese School (Primary)`, `Methodist Girls' School (Primary)`, and `CHIJ`.
 
-Earlier evidence from runs `25626208854` and `25626609288` was useful but no longer the latest proof. The later commits hardened normalizer coverage, generated/live snippet audits, and sitemap freshness inputs so future snippet/UI SEO changes update sitemap freshness and remain covered by CI.
+Earlier evidence from runs `25626208854`, `25626609288`, `25627427402`, `25627663313`, `25628581332`, and `25628828106` was useful but no longer the latest proof. The latest commits hardened normalizer coverage, generated/live snippet audits, sitemap freshness inputs, mobile CTA source tracking, and social preview image freshness so future SEO changes remain covered by CI.
 
 ## Current Search Evidence
 
-Checked on 2026-05-10 after the passing deployment in run `25627427402`.
+Checked on 2026-05-10 after the passing deployment in run `25629044793`.
 
 | Query | Evidence | Follow-up |
 | --- | --- | --- |
-| `site:sgexamhub.com sg exam papers` | Google results still showed stale homepage result text such as `2,200+Papers`, older title copy, `Anglo chinese School (junior)`, and `Methodist Girls' School (primary)`. The Google result was crawled before the latest deployment, while the current live homepage now shows `2,299 Papers`. | Request reindex for `/` and resubmit the sitemap. Recheck until the Google snippet reflects the current live page. |
+| `site:sgexamhub.com sg exam papers` | Search results still showed stale homepage result text such as `2,200+Papers`, older title copy, `Anglo chinese School (junior)`, and `Methodist Girls' School (primary)`. The result was crawled before the latest deployment, while the current live homepage now shows `2,299 PDF exam papers indexed`. | Request reindex for `/` and resubmit the sitemap. Recheck until the search snippet reflects the current live page. |
 | `site:sgexamhub.com "2,200+Papers"` | Google still found the stale homepage snippet. Current live HTML does not contain `2,200+`, so this is an index refresh issue rather than a deployed-site issue. | Keep this as the fastest stale-snippet canary. Completion requires this query to stop returning stale SG Exam Hub snippets. |
 | `site:sgexamhub.com "Anglo chinese"` | Google still showed stale school-name snippets, including older lowercase/unhyphenated names. Current live pages use official casing and hyphenation. | Request reindex for the affected collection pages and recheck after crawl. |
+| `site:sgexamhub.com "primary 3 chinese exam papers"` | Search results still showed `/exam-papers/primary-3-chinese` with stale school-name casing from older crawls. Current live HTML uses `Anglo-Chinese School (Primary)`, `Methodist Girls' School (Primary)`, and `CHIJ`. | Request reindex for `/exam-papers/primary-3-chinese/`, `/exam-papers/primary-3/`, `/exam-papers/chinese/`, and priority school pages. |
 | `site:sgexamhub.com "Free Singapore Primary Exam Papers"` | Homepage result is present, confirming Google can discover the canonical domain. | Use as baseline evidence, not completion proof. |
 | `site:sgexamhub.com "Raffles Girls' Primary School" "SG Exam Hub"` | Indexed collection/viewer pages appear, confirming paper pages are discoverable. | Recheck after Google refreshes indexed results for current titles and official school names. |
 
@@ -52,7 +55,7 @@ Submit these in Google Search Console URL Inspection after a passing deployment 
 
 ## GSC Steps
 
-1. Confirm GitHub Pages deployment completed after the latest SEO commits. Current deployment proof is run `25627427402` for commit `6b5a41c15cce506bb149ce0e010883e74897cd55`.
+1. Confirm GitHub Pages deployment completed after the latest SEO commits. Current deployment proof is run `25629044793` for commit `e60bb60eb76e004907e9bbe49e15246bf802f08a`.
 2. Confirm `npm run seo:audit:live` passes against `https://sgexamhub.com`. Current deployment logs show the live audit passed.
 3. In Google Search Console, inspect each priority URL and choose `Request indexing`.
 4. Resubmit `https://sgexamhub.com/sitemap.xml` in Sitemaps.
