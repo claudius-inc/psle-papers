@@ -1,10 +1,14 @@
 import { existsSync, readdirSync, readFileSync, statSync } from "node:fs";
 import { join } from "node:path";
 
+const exactPaperCount = JSON.parse(readFileSync("public/json/files.json", "utf8")).length;
+const exactPaperCountLabel = exactPaperCount.toLocaleString();
+
 const staleHomepageSnippets = [
   "totalPaperCountRounded",
   "2,200+",
   "2,200 +",
+  "2,300+",
 ];
 
 const homepagePriorityDirectorySnippets = [
@@ -30,6 +34,7 @@ const checks = [
       'class="filters-bar" data-nosnippet',
       'class="hero-stats" data-nosnippet',
       ':class="[\'papers-container\', `papers-${viewMode}`]" data-nosnippet',
+      exactPaperCountLabel,
       ...homepagePriorityDirectorySnippets,
     ],
     forbiddenSnippets: staleHomepageSnippets,
@@ -47,7 +52,7 @@ const checks = [
       "data-nosnippet",
       "SG Exam Hub: Free Singapore Primary Exam Papers",
       "No sign-up needed",
-      "2,299 PDF exam papers indexed",
+      `${exactPaperCountLabel} PDF exam papers indexed`,
       ...homepagePriorityDirectorySnippets,
     ],
     forbiddenSnippets: staleHomepageSnippets,
