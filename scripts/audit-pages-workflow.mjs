@@ -32,7 +32,7 @@ const requiredWorkflowSnippets = [
   "workflow_dispatch:",
   "FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true",
   'node-version: "24"',
-  "actions/checkout@v5",
+  "actions/checkout@v6",
   "actions/setup-node@v6",
   "actions/configure-pages@v6",
   'group: "pages"',
@@ -53,8 +53,10 @@ assertIncludes(
   "Pages workflow is missing required SEO deployment gate",
 );
 
-if (workflow.includes("cancel-in-progress: false")) {
-  fail("Pages workflow must not queue stale SEO deploys with cancel-in-progress: false.");
+for (const staleSnippet of ["actions/checkout@v5", "cancel-in-progress: false"]) {
+  if (workflow.includes(staleSnippet)) {
+    fail(`Pages workflow contains stale deployment setting: ${staleSnippet}`);
+  }
 }
 
 const requiredGenerateSnippets = [
