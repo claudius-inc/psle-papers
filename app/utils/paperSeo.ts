@@ -215,14 +215,25 @@ const buildRoute = ({
   schoolCode?: string;
 }): PaperSeoRoute => {
   const levelName = formatLevelName(getOptionName("Level", levelCode));
-  const levelTitle = formatLevelTitle(getOptionName("Level", levelCode), Boolean(schoolCode));
+  const rawLevelName = getOptionName("Level", levelCode);
+  const fullLevelTitle = formatLevelTitle(rawLevelName, false);
+  const compactLevelTitle = formatLevelTitle(rawLevelName, true);
   const subjectName = formatSubjectName(getOptionName("Subject", subjectCode));
   const typeName = getOptionName("Type", typeCode);
   const typeTitle = formatTypeTitle(typeName);
   const schoolName = getOptionName("School", schoolCode);
   const schoolTitle = formatSchoolTitle(schoolName);
   const parts = [year, levelName, subjectName, typeTitle, schoolName].filter(Boolean);
-  const titleParts = [year, levelTitle, subjectName, typeTitle, schoolTitle].filter(Boolean);
+  const fullTitleParts = [year, fullLevelTitle, subjectName, typeTitle, schoolTitle].filter(Boolean);
+  const compactTitleParts = [year, compactLevelTitle, subjectName, typeTitle, schoolTitle].filter(Boolean);
+  const buildBareTitle = (candidateParts: string[]) =>
+    candidateParts.length
+      ? candidateParts.includes("Practice Papers")
+        ? candidateParts.join(" ")
+        : `${candidateParts.join(" ")} Exam Papers`
+      : "Singapore Primary Exam Papers PDF | Free Download";
+  const fullBareTitle = buildBareTitle(fullTitleParts);
+  const compactBareTitle = buildBareTitle(compactTitleParts);
   const label = parts.length
     ? parts.includes("Practice Papers")
       ? parts.join(" ")
@@ -235,16 +246,19 @@ const buildRoute = ({
     typeCode,
     schoolCode,
   });
-  const bareTitle = titleParts.length
-    ? titleParts.includes("Practice Papers")
-      ? titleParts.join(" ")
-      : `${titleParts.join(" ")} Exam Papers`
-    : "Singapore Primary Exam Papers PDF | Free Download";
-  const titleWithBrand = `${bareTitle} | SG Exam Hub`;
-  const title = titleWithBrand.length > 70 ? bareTitle : titleWithBrand;
+  const fullTitleWithBrand = `${fullBareTitle} | SG Exam Hub`;
+  const compactTitleWithBrand = `${compactBareTitle} | SG Exam Hub`;
+  const title =
+    fullTitleWithBrand.length <= 70
+      ? fullTitleWithBrand
+      : fullBareTitle.length <= 70
+        ? fullBareTitle
+        : compactTitleWithBrand.length <= 70
+          ? compactTitleWithBrand
+          : compactBareTitle;
   const description = buildCollectionDescription({
     paperCount,
-    titleParts,
+    titleParts: fullTitleParts,
     year,
     levelCode,
     typeCode,

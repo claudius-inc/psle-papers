@@ -414,7 +414,7 @@ const requiredSnippets = [
   ],
   [
     ".output/public/sitemap/index.html",
-    "P6 Maths Nanyang Primary School Exam Papers",
+    "Primary 6 Maths Nanyang Primary School Exam Papers",
   ],
   [
     ".output/public/free-exam-papers/index.html",
@@ -742,7 +742,7 @@ const requiredSnippets = [
   ],
   [
     ".output/public/exam-papers/primary-6-mathematics-school-nanyang-primary-school/index.html",
-    "P6 Maths Nanyang Primary School Exam Papers",
+    "Primary 6 Maths Nanyang Primary School Exam Papers",
   ],
   [
     ".output/public/exam-papers/primary-6-mathematics-school-nanyang-primary-school/index.html",
@@ -762,7 +762,7 @@ const requiredSnippets = [
   ],
   [
     ".output/public/exam-papers/primary-6-school-nanyang-primary-school/index.html",
-    "P6 Nanyang Primary School Exam Papers",
+    "Primary 6 Nanyang Primary School Exam Papers",
   ],
   [
     ".output/public/exam-papers/primary-6-school-nanyang-primary-school/index.html",
@@ -822,7 +822,7 @@ const requiredSnippets = [
   ],
   [
     ".output/public/exam-papers/2025-primary-6-mathematics-school-nanyang-primary-school/index.html",
-    "2025 P6 Maths Nanyang Primary School Exam Papers",
+    "2025 Primary 6 Maths Nanyang Primary School Exam Papers",
   ],
   [
     ".output/public/exam-papers/sa2/index.html",
