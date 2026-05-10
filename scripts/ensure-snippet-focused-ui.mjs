@@ -1,5 +1,8 @@
 import { readFileSync, writeFileSync } from "node:fs";
 
+const exactPaperCount = JSON.parse(readFileSync("public/json/files.json", "utf8")).length;
+const exactPaperCountLabel = exactPaperCount.toLocaleString();
+
 const files = [
   {
     path: "app/pages/index.vue",
@@ -49,6 +52,7 @@ const normalizeHomepagePaperCountCopy = (source) => {
       /{{\s*totalPaperCountRounded\.toLocaleString\(\)\s*}}\+/g,
       "{{ totalPaperCount.toLocaleString() }}",
     )
+    .replace(/2,300\+/g, exactPaperCountLabel)
     .replace(
       /const totalPaperCountRounded = computed\(\(\) => \{\n\s*const count = \(rawFileList as string\[\]\)\.length;\n\s*return Math\.floor\(count \/ 100\) \* 100;\n\}\);\n/g,
       "",
@@ -62,10 +66,14 @@ const normalizeHomepagePaperCountCopy = (source) => {
     "totalPaperCountRounded",
     "2,200+",
     "2,200 +",
+    "2,300+",
   ]) {
     if (next.includes(staleSnippet)) {
       fail(`Homepage still exposes stale paper-count snippet copy: ${staleSnippet}`);
     }
+  }
+  if (!next.includes(exactPaperCountLabel)) {
+    fail(`Homepage must expose the exact paper count in snippet copy: ${exactPaperCountLabel}`);
   }
   if (!next.includes('class="hero-stats" data-nosnippet')) {
     fail("Homepage hero stats must be excluded from Google snippets.");
