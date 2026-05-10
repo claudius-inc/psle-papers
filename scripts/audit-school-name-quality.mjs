@@ -12,7 +12,7 @@ const generatedChecks = [
   },
   {
     path: ".output/public/exam-papers/school-anglo-chinese-school-primary/index.html",
-    snippets: ["Anglo-Chinese School", "Anglo-Chinese School Primary Exam Papers"],
+    snippets: ["Anglo-Chinese School", "Anglo-Chinese School Exam Papers"],
   },
   {
     path: ".output/public/exam-papers/school-anglo-chinese-school-junior/index.html",
