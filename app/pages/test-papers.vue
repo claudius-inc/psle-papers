@@ -4,7 +4,7 @@ import type { ParsedPaper } from "~/composables/usePapers";
 import { allParsedPapers } from "~/utils/paperSeo";
 import { buildPdfFileUrl } from "~/utils/pdfUrls";
 import { buildSocialMeta } from "~/utils/socialSeo";
-import { trackPaperDownload, trackPaperViewClick } from "~/utils/analytics";
+import { trackEvent, trackPaperDownload, trackPaperViewClick } from "~/utils/analytics";
 
 const pageTitle = "Free Test Papers Singapore | Primary PDF Download";
 const visibleTitle = "Singapore Primary Test Papers";
@@ -82,6 +82,15 @@ const buildPaperDownloadName = (paper: ParsedPaper) =>
 const analyticsContext = {
   page_path: "/test-papers",
   page_title: visibleTitle,
+};
+
+const trackTestCollectionClick = (collection: (typeof testPaperCollections)[number]) => {
+  trackEvent("test_paper_collection_click", {
+    ...analyticsContext,
+    source: "test_paper_collection_grid",
+    collection_title: collection.title,
+    target_path: collection.to,
+  });
 };
 
 const trackTestPaperView = (filename: string, source: string) => {
@@ -259,6 +268,7 @@ useHead({
           v-for="collection in testPaperCollections"
           :key="collection.to"
           :to="collection.to"
+          @click="trackTestCollectionClick(collection)"
         >
           <strong>{{ collection.title }}</strong>
           <small>{{ collection.description }}</small>
