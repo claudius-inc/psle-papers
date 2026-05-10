@@ -82,6 +82,8 @@ Inputs:
 
 Expected GSC columns include query, page, clicks, impressions, CTR, and average position.
 Expected GA4 columns include event name plus event count, with optional landing page, source/medium, source, collection_title, school_name, and target_path.
+
+Collection-path click evidence must include target_path values so the report proves organic users continued into specific paper collections.
 ```
 
 ## Completion Rule

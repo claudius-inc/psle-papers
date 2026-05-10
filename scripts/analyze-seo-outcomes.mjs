@@ -29,7 +29,9 @@ Inputs:
   --out         Optional markdown report path. Defaults to stdout only.
 
 Expected GSC columns include query, page, clicks, impressions, CTR, and average position.
-Expected GA4 columns include event name plus event count, with optional landing page, source/medium, source, collection_title, school_name, and target_path.`;
+Expected GA4 columns include event name plus event count, with optional landing page, source/medium, source, collection_title, school_name, and target_path.
+
+Collection-path click evidence must include target_path values so the report proves organic users continued into specific paper collections.`;
 
 const parseArgs = () => {
   const args = process.argv.slice(2);
@@ -292,12 +294,19 @@ const analyzeGa4 = (rows) => {
   }
 
   return Object.entries(requiredGa4EventGroups).map(([group, events]) => {
+    const matchingRows = organicRows.filter((row) => events.includes(row.eventName));
     const count = events.reduce((sum, eventName) => sum + (eventCounts.get(eventName) || 0), 0);
+    const targetPathRows = matchingRows.filter((row) => row.count > 0 && row.targetPath);
+    const targetPathRequired = group === "collectionPathClick";
+    const targetPathPresent = !targetPathRequired || targetPathRows.length > 0;
     return {
       group,
       events,
       count,
-      passed: count > 0,
+      targetPathRequired,
+      targetPathRows: targetPathRows.length,
+      targetPathPresent,
+      passed: count > 0 && targetPathPresent,
     };
   });
 };
@@ -348,13 +357,18 @@ const buildReport = ({ gscResults, ga4Results }) => {
     "",
     "## GA4 Organic Engagement And Conversion Evidence",
     "",
-    "| Requirement | Accepted events | Organic event count | Status |",
-    "| --- | --- | ---: | --- |",
+    "| Requirement | Accepted events | Organic event count | Dimension evidence | Status |",
+    "| --- | --- | ---: | --- | --- |",
   );
 
   for (const result of ga4Results) {
+    const dimensionEvidence = result.targetPathRequired
+      ? result.targetPathRows > 0
+        ? `${result.targetPathRows} row(s) with target_path`
+        : "Missing target_path"
+      : "Not required";
     lines.push(
-      `| ${result.group} | ${result.events.join(", ")} | ${result.count} | ${result.passed ? "Present" : "Missing"} |`,
+      `| ${result.group} | ${result.events.join(", ")} | ${result.count} | ${dimensionEvidence} | ${result.passed ? "Present" : "Missing"} |`,
     );
   }
 

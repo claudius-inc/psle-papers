@@ -227,6 +227,10 @@ assertIncludes(
     "related_collection_click",
     "viewer_collection_click",
     "empty_search_recovery_click",
+    "targetPathRequired",
+    "targetPathRows",
+    "target_path",
+    "Missing target_path",
   ],
   "SEO outcome analyzer is missing required collection-path conversion evidence gate",
 );

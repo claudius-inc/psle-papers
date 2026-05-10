@@ -49,12 +49,15 @@ Required event names:
 - paper_download
 - file_download
 
+Required GA4 dimensions for collection-path click evidence:
+
+- Target path
+
 Useful optional GA4 dimensions for diagnosing which paths work:
 
 - Source
 - Collection title
 - School name
-- Target path
 
 Priority landing pages to keep in the GA4 export review:
 

@@ -332,6 +332,8 @@ for (const snippet of [
   "SEO Outcome Export Templates",
   "Required GSC Export Shape",
   "Required GA4 Export Shape",
+  "Required GA4 dimensions for collection-path click evidence",
+  "Target path",
   "https://sgexamhub.com/exam-papers/mathematics",
   "https://sgexamhub.com/exam-papers/science",
   "https://sgexamhub.com/exam-papers/english",
