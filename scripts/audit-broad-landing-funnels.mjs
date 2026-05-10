@@ -17,6 +17,23 @@ const runbook = readRequired("SEO_RUNBOOK.md");
 
 const pages = [
   {
+    label: "download",
+    sourcePath: "app/pages/download-exam-papers.vue",
+    generatedPath: ".output/public/download-exam-papers/index.html",
+    eventName: "download_exam_collection_click",
+    source: "download_exam_collection_grid",
+    handler: "trackDownloadCollectionClick",
+    clickSnippet: "@click=\"trackDownloadCollectionClick(collection)\"",
+    paths: [
+      "/exam-papers/2025",
+      "/exam-papers/primary-6",
+      "/exam-papers/mathematics",
+      "/exam-papers/science",
+      "/exam-papers/sa2",
+      "/exam-papers/psle-revision",
+    ],
+  },
+  {
     label: "past year",
     sourcePath: "app/pages/past-year-exam-papers.vue",
     generatedPath: ".output/public/past-year-exam-papers/index.html",
@@ -86,6 +103,7 @@ for (const page of pages) {
 
 for (const snippet of [
   "Broad Landing Funnel Checks",
+  "download_exam_collection_click",
   "free_exam_collection_click",
   "past_year_collection_click",
   "test_paper_collection_click",

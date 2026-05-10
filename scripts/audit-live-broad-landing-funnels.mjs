@@ -19,6 +19,26 @@ const fetchText = async (url) => {
 
 const checks = [
   {
+    path: "/download-exam-papers/",
+    snippets: [
+      "Download Exam Papers Singapore",
+      "Download free Singapore primary exam paper PDFs",
+      "Choose a download path",
+      "Exam paper PDF download collections",
+      "No sign-up needed",
+      "DownloadAction",
+      "raw.githubusercontent.com/airbob/PrimarySchoolExamPapers",
+    ],
+    collectionPaths: [
+      "/exam-papers/2025",
+      "/exam-papers/primary-6",
+      "/exam-papers/mathematics",
+      "/exam-papers/science",
+      "/exam-papers/sa2",
+      "/exam-papers/psle-revision",
+    ],
+  },
+  {
     path: "/past-year-exam-papers/",
     snippets: [
       "Past Year Exam Papers Singapore",

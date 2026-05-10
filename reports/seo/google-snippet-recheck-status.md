@@ -4,11 +4,11 @@ Tracker: `reports/seo/google-snippet-recheck-tracker.csv`
 
 ## Summary
 
-- Total recheck queries: 11
+- Total recheck queries: 12
 - Fresh: 0
 - Stale: 4
 - Checked without final status: 7
-- Pending: 0
+- Pending: 1
 
 ## Completion Rule
 
@@ -22,6 +22,7 @@ The SEO objective remains incomplete until every public Google recheck query is 
 | site:sgexamhub.com "2,200+Papers" | https://www.google.com/search?q=site%3Asgexamhub.com%20%222%2C200%2BPapers%22 | Stale | 2026-05-11T01:20:39+0800 | Public Google result still returns the homepage with the stale 2,200+Papers text. Live homepage source was rechecked and no longer contains the stale count. |
 | site:sgexamhub.com "2,300+" | https://www.google.com/search?q=site%3Asgexamhub.com%20%222%2C300%2B%22 | Pending | 2026-05-11T00:04:24+0800 | No result returned by search tool; needs manual SERP confirmation before marking Fresh. |
 | site:sgexamhub.com "free exam papers singapore" | https://www.google.com/search?q=site%3Asgexamhub.com%20%22free%20exam%20papers%20singapore%22 | Pending | 2026-05-11T00:04:24+0800 | No result returned by search tool; needs manual SERP confirmation before marking Fresh. |
+| site:sgexamhub.com "download exam papers singapore" | https://www.google.com/search?q=site%3Asgexamhub.com%20%22download%20exam%20papers%20singapore%22 | Pending | - | - |
 | site:sgexamhub.com "psle revision papers" | https://www.google.com/search?q=site%3Asgexamhub.com%20%22psle%20revision%20papers%22 | Pending | 2026-05-11T00:04:24+0800 | No result returned by search tool; needs manual SERP confirmation before marking Fresh. |
 | site:sgexamhub.com "Anglo chinese" | https://www.google.com/search?q=site%3Asgexamhub.com%20%22Anglo%20chinese%22 | Stale | 2026-05-11T01:20:39+0800 | Public Google result still returns stale school-name casing in homepage and Primary 3 Chinese snippets. Live homepage and Primary 3 Chinese source were rechecked and use corrected school casing. |
 | site:sgexamhub.com "primary 3 chinese exam papers" | https://www.google.com/search?q=site%3Asgexamhub.com%20%22primary%203%20chinese%20exam%20papers%22 | Stale | 2026-05-11T01:20:39+0800 | Public Google result still shows old Primary 3 Chinese content with noisy paper-list snippets and stale school casing such as Anglo chinese School (primary), Methodist Girls' School (primary), and Chij (katong) Primary. Live page source was rechecked and has corrected casing plus nosnippet-protected repeated paper lists. |

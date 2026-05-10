@@ -20,28 +20,29 @@ Track completion in `reports/seo/gsc-url-inspection-tracker.csv` so the remainin
 1. https://sgexamhub.com/
 2. https://sgexamhub.com/sitemap.xml
 3. https://sgexamhub.com/exam-papers/
-4. https://sgexamhub.com/free-exam-papers/
-5. https://sgexamhub.com/past-year-exam-papers/
-6. https://sgexamhub.com/test-papers/
-7. https://sgexamhub.com/top-school-exam-papers/
-8. https://sgexamhub.com/exam-papers/2026-revision/
-9. https://sgexamhub.com/exam-papers/psle-revision/
-10. https://sgexamhub.com/exam-papers/2025/
-11. https://sgexamhub.com/exam-papers/2024/
-12. https://sgexamhub.com/exam-papers/chinese/
-13. https://sgexamhub.com/exam-papers/primary-3/
-14. https://sgexamhub.com/exam-papers/primary-3-chinese/
-15. https://sgexamhub.com/exam-papers/primary-3-science/
-16. https://sgexamhub.com/exam-papers/primary-3-higher-chinese/
-17. https://sgexamhub.com/exam-papers/2025-primary-6-sa2/
-18. https://sgexamhub.com/exam-papers/2025-primary-6-mathematics-sa2/
-19. https://sgexamhub.com/exam-papers/2025-primary-6-science-sa2/
-20. https://sgexamhub.com/exam-papers/primary-6-mathematics-school-nanyang-primary-school/
-21. https://sgexamhub.com/exam-papers/school-anglo-chinese-school-primary/
-22. https://sgexamhub.com/exam-papers/school-anglo-chinese-school-junior/
-23. https://sgexamhub.com/exam-papers/school-methodist-girls-school-primary/
-24. https://sgexamhub.com/exam-papers/school-raffles-girls-primary-school/
-25. https://sgexamhub.com/view/6_1073_3_4_2025/
+4. https://sgexamhub.com/download-exam-papers/
+5. https://sgexamhub.com/free-exam-papers/
+6. https://sgexamhub.com/past-year-exam-papers/
+7. https://sgexamhub.com/test-papers/
+8. https://sgexamhub.com/top-school-exam-papers/
+9. https://sgexamhub.com/exam-papers/2026-revision/
+10. https://sgexamhub.com/exam-papers/psle-revision/
+11. https://sgexamhub.com/exam-papers/2025/
+12. https://sgexamhub.com/exam-papers/2024/
+13. https://sgexamhub.com/exam-papers/chinese/
+14. https://sgexamhub.com/exam-papers/primary-3/
+15. https://sgexamhub.com/exam-papers/primary-3-chinese/
+16. https://sgexamhub.com/exam-papers/primary-3-science/
+17. https://sgexamhub.com/exam-papers/primary-3-higher-chinese/
+18. https://sgexamhub.com/exam-papers/2025-primary-6-sa2/
+19. https://sgexamhub.com/exam-papers/2025-primary-6-mathematics-sa2/
+20. https://sgexamhub.com/exam-papers/2025-primary-6-science-sa2/
+21. https://sgexamhub.com/exam-papers/primary-6-mathematics-school-nanyang-primary-school/
+22. https://sgexamhub.com/exam-papers/school-anglo-chinese-school-primary/
+23. https://sgexamhub.com/exam-papers/school-anglo-chinese-school-junior/
+24. https://sgexamhub.com/exam-papers/school-methodist-girls-school-primary/
+25. https://sgexamhub.com/exam-papers/school-raffles-girls-primary-school/
+26. https://sgexamhub.com/view/6_1073_3_4_2025/
 
 After URL Inspection requests, resubmit this sitemap in the GSC Sitemaps report:
 
@@ -61,6 +62,8 @@ Track freshness in `reports/seo/google-snippet-recheck-tracker.csv` so stale pub
   https://www.google.com/search?q=site%3Asgexamhub.com%20%222%2C300%2B%22
 - site:sgexamhub.com "free exam papers singapore"
   https://www.google.com/search?q=site%3Asgexamhub.com%20%22free%20exam%20papers%20singapore%22
+- site:sgexamhub.com "download exam papers singapore"
+  https://www.google.com/search?q=site%3Asgexamhub.com%20%22download%20exam%20papers%20singapore%22
 - site:sgexamhub.com "psle revision papers"
   https://www.google.com/search?q=site%3Asgexamhub.com%20%22psle%20revision%20papers%22
 - site:sgexamhub.com "Anglo chinese"
@@ -91,6 +94,8 @@ Track these query clusters:
 - sg exam papers
 - singapore primary school exam papers
 - free exam papers singapore
+- download exam papers singapore
+- primary exam papers pdf download
 - past year exam papers singapore
 - primary 3 chinese exam papers
 - chinese exam papers

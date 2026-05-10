@@ -3,7 +3,7 @@
 Checks deployable source and generated output for exact stale snippets that are still visible in public Google results.
 
 - Roots checked: `app`, `public`, `.output/public`
-- Files checked: 12540
+- Files checked: 12545
 - Stale snippets checked: 11
 - Failures: 0
 

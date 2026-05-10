@@ -25,6 +25,10 @@ const homepagePriorityDirectorySnippets = [
 
 const broadLandingPages = [
   {
+    path: "/download-exam-papers/",
+    title: "Download Exam Papers Singapore",
+  },
+  {
     path: "/free-exam-papers/",
     title: "Free Exam Papers Singapore",
   },

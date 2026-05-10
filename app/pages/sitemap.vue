@@ -79,6 +79,11 @@ const priorityTopSchoolLinks = [
 
 const revisionHubLinks = [
   {
+    label: "Download Exam Papers Singapore",
+    to: "/download-exam-papers",
+    description: "High-intent PDF download paths for Singapore primary papers",
+  },
+  {
     label: "Free Exam Papers Singapore",
     to: "/free-exam-papers",
     description: "Free P2-P6 exam paper PDFs by subject, level and school",
@@ -115,6 +120,11 @@ const directorySections = [
     title: "Core Pages",
     links: [
       { label: "Free Singapore Primary Exam Papers", to: "/", count: allParsedPapers.length },
+      {
+        label: "Download Exam Papers Singapore",
+        to: "/download-exam-papers",
+        count: allParsedPapers.length,
+      },
       {
         label: "Free Exam Papers Singapore",
         to: "/free-exam-papers",

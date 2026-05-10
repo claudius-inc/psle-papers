@@ -6,6 +6,10 @@ const checks = [
     snippets: ["SearchAction", "SiteNavigationElement", "DownloadAction"],
   },
   {
+    path: "/download-exam-papers/",
+    snippets: ["FAQPage", "DownloadAction"],
+  },
+  {
     path: "/free-exam-papers/",
     snippets: ["FAQPage", "DownloadAction"],
   },

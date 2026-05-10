@@ -186,6 +186,7 @@ const keywordCoverageMd = readText("reports/seo/keyword-landing-page-audit.md");
 const deployableStaleCopyReport = readText("reports/seo/deployable-stale-seo-copy-audit.md");
 const outcomeExportChecklist = readText("reports/seo/outcome-export-checklist.md");
 const homePage = readText("app/pages/index.vue");
+const downloadExamPapersPage = readText("app/pages/download-exam-papers.vue");
 const freeExamPapersPage = readText("app/pages/free-exam-papers.vue");
 const pastYearPage = readText("app/pages/past-year-exam-papers.vue");
 const testPaperPage = readText("app/pages/test-papers.vue");
@@ -212,6 +213,8 @@ for (const [file, snippet] of [
   [".output/public/index.html", "raw.githubusercontent.com/airbob/PrimarySchoolExamPapers"],
   [".output/public/index.html", '<link rel="preconnect" href="https://raw.githubusercontent.com">'],
   [".output/public/index.html", '<link rel="dns-prefetch" href="https://raw.githubusercontent.com">'],
+  [".output/public/download-exam-papers/index.html", "Download Exam Papers Singapore"],
+  [".output/public/download-exam-papers/index.html", "primary exam paper PDFs"],
   [".output/public/exam-papers/index.html", "Singapore Primary Exam Papers PDF | Free Download"],
   [".output/public/exam-papers/2026-revision/index.html", "2026 Primary Exam Papers Revision"],
   [".output/public/exam-papers/psle-revision/index.html", "PSLE Revision Papers"],
@@ -530,6 +533,7 @@ const requireSourceSnippets = (label, source, snippets) => {
 
 requireSourceSnippets("Homepage", homePage, [
   "2026 Primary Exam Papers Revision",
+  "Download Exam Papers Singapore",
   "Free Exam Papers Singapore",
   "Past Year Exam Papers Singapore",
   "Singapore Primary Test Papers",
@@ -541,6 +545,17 @@ requireSourceSnippets("Homepage", homePage, [
   'query_source: "url_query"',
   "No sign-up needed",
   "SearchAction",
+  "buildPdfFileUrl",
+]);
+requireSourceSnippets("Download exam papers page", downloadExamPapersPage, [
+  "Download Exam Papers Singapore",
+  "downloadCollections",
+  "trackDownloadPaperView",
+  "trackDownloadPaperDownload",
+  "download_exam_collection_click",
+  "download_exam_collection_grid",
+  "FAQPage",
+  "DownloadAction",
   "buildPdfFileUrl",
 ]);
 requireSourceSnippets("Free exam papers page", freeExamPapersPage, [

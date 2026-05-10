@@ -16,6 +16,7 @@ const files = [
   "scripts/audit-live-sitemap-priority-schools.mjs",
   "app/utils/socialSeo.ts",
   "app/pages/index.vue",
+  "app/pages/download-exam-papers.vue",
   "app/pages/free-exam-papers.vue",
   "app/pages/past-year-exam-papers.vue",
   "app/pages/test-papers.vue",

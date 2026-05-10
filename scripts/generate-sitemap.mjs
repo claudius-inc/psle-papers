@@ -21,6 +21,7 @@ const sitemapFreshnessInputs = [
 const staticFreshnessInputs = [
   "app/app.vue",
   "app/pages/index.vue",
+  "app/pages/download-exam-papers.vue",
   "app/pages/free-exam-papers.vue",
   "app/pages/past-year-exam-papers.vue",
   "app/pages/test-papers.vue",
@@ -158,6 +159,12 @@ const paperViewRoutes = files
 const routeEntries = [
   { path: "/", priority: "1.0", lastmod: staticLastModified },
   { path: "/sitemap", priority: "0.7", lastmod: staticLastModified },
+  {
+    path: "/download-exam-papers",
+    priority: "0.9",
+    changefreq: "weekly",
+    lastmod: staticLastModified,
+  },
   {
     path: "/free-exam-papers",
     priority: "0.9",

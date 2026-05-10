@@ -2,8 +2,8 @@
 
 Generated from `SEO_KEYWORD_MAP.md` against `.output/public`.
 
-- Query clusters checked: 85
-- Passing clusters: 85
+- Query clusters checked: 89
+- Passing clusters: 89
 - Failing clusters: 0
 
 | Query cluster | Preferred landing page | Status | In sitemap | Internally linked | Missing query terms |
@@ -21,6 +21,10 @@ Generated from `SEO_KEYWORD_MAP.md` against `.output/public`.
 | primary school test papers | `/test-papers` | PASS | yes | yes | - |
 | free test papers singapore | `/test-papers` | PASS | yes | yes | - |
 | singapore primary test papers | `/test-papers` | PASS | yes | yes | - |
+| download exam papers singapore | `/download-exam-papers` | PASS | yes | yes | - |
+| primary exam papers pdf download | `/download-exam-papers` | PASS | yes | yes | - |
+| download primary school exam papers | `/download-exam-papers` | PASS | yes | yes | - |
+| singapore primary exam papers download | `/download-exam-papers` | PASS | yes | yes | - |
 | top school exam papers singapore | `/top-school-exam-papers` | PASS | yes | yes | - |
 | singapore top school exam papers | `/top-school-exam-papers` | PASS | yes | yes | - |
 | 2026 primary exam papers | `/exam-papers/2026-revision` | PASS | yes | yes | - |

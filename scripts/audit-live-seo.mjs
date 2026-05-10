@@ -50,6 +50,22 @@ const checks = [
     ],
   },
   {
+    path: "/download-exam-papers/",
+    snippets: [
+      "Download Exam Papers Singapore",
+      "Download free Singapore primary exam paper PDFs",
+      "No sign-up needed",
+      "Start with a PDF paper",
+      "Exam paper PDF download collections",
+      "Latest downloadable exam papers",
+      "Can I download Singapore primary exam papers as PDFs?",
+      "FAQPage",
+      "DownloadAction",
+      "raw.githubusercontent.com/airbob/PrimarySchoolExamPapers",
+      'property="og:image" content="https://sgexamhub.com/og-image.png"',
+    ],
+  },
+  {
     path: "/free-exam-papers/",
     snippets: [
       "Free Exam Papers Singapore",

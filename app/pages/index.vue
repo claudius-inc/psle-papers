@@ -116,6 +116,7 @@ const examPaperDirectorySections = [
     title: "Popular subject collections",
     links: [
       { label: "Free Exam Papers Singapore", to: "/free-exam-papers" },
+      { label: "Download Exam Papers Singapore", to: "/download-exam-papers" },
       { label: "Past Year Exam Papers Singapore", to: "/past-year-exam-papers" },
       { label: "Singapore Primary Test Papers", to: "/test-papers" },
       { label: "Top School Exam Papers Singapore", to: "/top-school-exam-papers" },
@@ -895,6 +896,9 @@ const resetFilters = () => {
             </NuxtLink>
             <NuxtLink to="/test-papers" class="chip">
               <span class="chip-dot" aria-hidden="true"></span>Test Papers
+            </NuxtLink>
+            <NuxtLink to="/download-exam-papers" class="chip">
+              <span class="chip-dot" aria-hidden="true"></span>PDF Downloads
             </NuxtLink>
             <NuxtLink to="/past-year-exam-papers" class="chip">
               <span class="chip-dot" aria-hidden="true"></span>Past Year

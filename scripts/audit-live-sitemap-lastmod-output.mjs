@@ -7,6 +7,7 @@ const today = new Date().toISOString().slice(0, 10);
 const staticFreshnessInputs = [
   "app/app.vue",
   "app/pages/index.vue",
+  "app/pages/download-exam-papers.vue",
   "app/pages/free-exam-papers.vue",
   "app/pages/past-year-exam-papers.vue",
   "app/pages/test-papers.vue",
@@ -25,6 +26,7 @@ const staticFreshnessInputs = [
 const priorityCollectionUrls = [
   `${siteUrl}/`,
   `${siteUrl}/exam-papers`,
+  `${siteUrl}/download-exam-papers`,
   `${siteUrl}/free-exam-papers`,
   `${siteUrl}/past-year-exam-papers`,
   `${siteUrl}/test-papers`,
