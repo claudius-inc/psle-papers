@@ -611,6 +611,10 @@ const requiredSnippets = [
   ],
   [
     ".output/public/exam-papers/index.html",
+    "No sign-up needed",
+  ],
+  [
+    ".output/public/exam-papers/index.html",
     "Latest available in this collection: 2025 · 2,299 PDF papers",
   ],
   [
@@ -628,6 +632,10 @@ const requiredSnippets = [
   [
     ".output/public/exam-papers/2025/index.html",
     "Latest available for 2026 revision. View online or download free PDFs.",
+  ],
+  [
+    ".output/public/exam-papers/2025/index.html",
+    "No sign-up needed",
   ],
   [
     ".output/public/exam-papers/2025/index.html",
@@ -652,6 +660,10 @@ const requiredSnippets = [
   [
     ".output/public/exam-papers/2025-primary-6-mathematics/index.html",
     "View online or download free PDFs for PSLE revision.",
+  ],
+  [
+    ".output/public/exam-papers/2025-primary-6-mathematics/index.html",
+    "No sign-up needed",
   ],
   [
     ".output/public/exam-papers/2025-primary-6-mathematics/index.html",
@@ -881,7 +893,7 @@ const requiredSnippets = [
   [".output/public/view/6_1073_3_4_2025/index.html", "Free PDF Download"],
   [
     ".output/public/view/6_1073_3_4_2025/index.html",
-    "Free 2025 Raffles Girls' Primary School P6 Maths SA2 exam paper PDF",
+    "Free 2025 Raffles Girls' Primary School P6 Maths SA2 exam paper PDF. No sign-up needed.",
   ],
   [".output/public/view/6_1073_3_4_2025/index.html", "isAccessibleForFree"],
   [".output/public/view/6_1073_3_4_2025/index.html", "DownloadAction"],
@@ -891,6 +903,7 @@ const requiredSnippets = [
   ],
   [".output/public/view/6_1073_3_4_2025/index.html", 'content="index, follow"'],
   [".output/public/view/6_1073_3_4_2025/index.html", "Download PDF"],
+  [".output/public/view/6_1073_3_4_2025/index.html", "No sign-up needed"],
   [".output/public/view/6_1073_3_4_2025/index.html", "Next paper to try"],
   [".output/public/view/6_1073_3_4_2025/index.html", "Revision checklist"],
   [".output/public/view/6_1073_3_4_2025/index.html", "Practice sequence"],

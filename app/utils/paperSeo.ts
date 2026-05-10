@@ -156,7 +156,7 @@ const buildCollectionDescription = ({
   const hasSinglePaper = paperCount === 1;
 
   if (!titleParts.length) {
-    return `Download ${count} free Singapore primary exam papers PDF files for P2-P6 Maths, Science, English and Chinese. View online for 2026 revision.`;
+    return `Download ${count} free Singapore primary exam papers PDF files for P2-P6 Maths, Science, English and Chinese. No sign-up needed. View online for 2026 revision.`;
   }
 
   const descriptionTitleParts = hasSinglePaper
@@ -189,11 +189,11 @@ const buildCollectionDescription = ({
           ? "View online or download free PDFs for Singapore primary timed practice."
           : "View online or download free PDFs for Singapore primary revision.";
   const descriptions = [
-    `${count} free ${fullPaperLabel}. ${action}`,
-    `${count} free ${shortPaperLabel}. ${action}`,
+    `${count} free ${fullPaperLabel}. No sign-up needed. ${action}`,
+    `${count} free ${shortPaperLabel}. No sign-up needed. ${action}`,
     hasSinglePaper
-      ? `${count} free exam paper PDF in this collection. ${action}`
-      : `${count} free exam paper PDFs in this collection. ${action}`,
+      ? `${count} free exam paper PDF in this collection. No sign-up needed. ${action}`
+      : `${count} free exam paper PDFs in this collection. No sign-up needed. ${action}`,
   ];
 
   return descriptions.find((description) => description.length <= 170) || descriptions[2];

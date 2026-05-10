@@ -94,9 +94,9 @@ const seoDescription = computed(() => {
   const revisionGoal =
     paper.value.levelCode === "6" ? "PSLE revision practice" : "Singapore primary revision";
   const descriptions = [
-    `Free ${paperLabel} exam paper PDF. View online, then download for ${revisionGoal}.`,
-    `Download this free ${paperLabel} exam paper PDF. View online for ${revisionGoal}.`,
-    `Free PDF download for this ${paper.value.yearCode} ${titleLevel.value} ${readableSubject.value} ${paper.value.typeName} exam paper. View online, then download it for Singapore primary revision.`,
+    `Free ${paperLabel} exam paper PDF. No sign-up needed. View online, then download for ${revisionGoal}.`,
+    `Download this free ${paperLabel} exam paper PDF. No sign-up needed. View online for ${revisionGoal}.`,
+    `Free PDF download for this ${paper.value.yearCode} ${titleLevel.value} ${readableSubject.value} ${paper.value.typeName} exam paper. No sign-up needed. View online, then download it.`,
   ];
 
   return descriptions.find((description) => description.length <= 160) || descriptions[2];
@@ -618,6 +618,9 @@ useHead({
         <section class="panel-card panel-primary">
           <p class="panel-eyebrow">Current paper</p>
           <h1>{{ pageTitle }}</h1>
+          <p class="paper-trust-note">
+            No sign-up needed. View online, then download the PDF for revision.
+          </p>
           <dl class="paper-details">
             <div>
               <dt>Level</dt>
@@ -1075,6 +1078,14 @@ useHead({
   font-size: 1.15rem;
   line-height: 1.25;
   margin: 0 0 1rem;
+}
+
+.paper-trust-note {
+  color: #475569;
+  font-size: 0.82rem;
+  font-weight: 600;
+  line-height: 1.45;
+  margin: -0.35rem 0 1rem;
 }
 
 .panel-card h2 {
