@@ -125,6 +125,9 @@ const longDescriptions = rows.filter((row) => row.descriptionLength > 170);
 const shortDescriptions = rows.filter(
   (row) => row.description && row.descriptionLength < 80,
 );
+const weakSchoolNameRows = rows.filter((row) =>
+  /\b(?:Anglo chinese|Chij)\b/.test(`${row.title} ${row.description}`),
+);
 
 const sitemap = existsSync(sitemapPath) ? readFileSync(sitemapPath, "utf8") : "";
 const robots = existsSync(robotsPath) ? readFileSync(robotsPath, "utf8") : "";
@@ -898,6 +901,12 @@ if (longDescriptions.length) {
 }
 if (shortDescriptions.length) {
   fail(`Descriptions under 80 decoded chars: ${shortDescriptions.length}`);
+}
+if (weakSchoolNameRows.length) {
+  fail(`Weak school-name casing in generated snippets: ${weakSchoolNameRows.length}`);
+  for (const row of weakSchoolNameRows.slice(0, 20)) {
+    console.error(`${row.url}: ${row.title} / ${row.description}`);
+  }
 }
 if (jsonLdFailures.length) {
   fail(`Invalid JSON-LD scripts: ${jsonLdFailures.length}`);
