@@ -8,7 +8,11 @@ const checks = [
       'class="hero-stats" data-nosnippet',
       ':class="[\'papers-container\', `papers-${viewMode}`]" data-nosnippet',
     ],
-    forbiddenSnippets: ["totalPaperCountRounded.toLocaleString() }}+"],
+    forbiddenSnippets: [
+      "totalPaperCountRounded",
+      "2,200+",
+      "2,200 +",
+    ],
   },
   {
     path: "app/pages/exam-papers/[[slug]].vue",
@@ -25,7 +29,11 @@ const checks = [
       "No sign-up needed",
       "2,299 PDF exam papers indexed",
     ],
-    forbiddenSnippets: ["2,200+Papers", "2,200+ Papers"],
+    forbiddenSnippets: [
+      "totalPaperCountRounded",
+      "2,200+",
+      "2,200 +",
+    ],
   },
   {
     path: ".output/public/exam-papers/index.html",
@@ -50,6 +58,12 @@ const fail = (message) => {
   process.exitCode = 1;
 };
 
+const normalizeForSnippetChecks = (content) =>
+  content
+    .replace(/<[^>]*>/g, "")
+    .replace(/\s+/g, "")
+    .replace(/&nbsp;/g, "");
+
 for (const check of checks) {
   if (!existsSync(check.path)) {
     fail(`Missing snippet-focused UI audit target: ${check.path}`);
@@ -57,13 +71,16 @@ for (const check of checks) {
   }
 
   const content = readFileSync(check.path, "utf8");
+  const compactContent = normalizeForSnippetChecks(content);
+
   for (const snippet of check.snippets) {
     if (!content.includes(snippet)) {
       fail(`${check.path} is missing snippet-focused UI snippet: ${snippet}`);
     }
   }
   for (const snippet of check.forbiddenSnippets || []) {
-    if (content.includes(snippet)) {
+    const compactSnippet = normalizeForSnippetChecks(snippet);
+    if (content.includes(snippet) || compactContent.includes(compactSnippet)) {
       fail(`${check.path} contains stale snippet-focused UI copy: ${snippet}`);
     }
   }
