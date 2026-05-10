@@ -49,6 +49,8 @@ Use this checklist after each content or SEO deploy.
    - `https://sgexamhub.com/exam-papers/school-red-swastika-school`
    - `https://sgexamhub.com/exam-papers/school-tao-nan-school`
 3. In Performance, track queries containing:
+   - `sg exam papers`
+   - `singapore exam papers`
    - `singapore primary school exam papers`
    - `singapore primary exam papers pdf`
    - `free exam papers`
@@ -103,7 +105,8 @@ Useful report segments:
 
 - Source / medium contains `google / organic`.
 - Landing page is `/`, `/free-exam-papers`, `/past-year-exam-papers`, `/test-papers`, `/top-school-exam-papers`, or starts with `/exam-papers`.
-- Event name is `page_view`, `paper_view_click`, `paper_open`, `paper_download`, `top_school_collection_click`, `page_engaged_time`, `page_scroll_depth`, or `page_session_summary`.
+- Event name is `page_view`, `paper_view_click`, `paper_open`, `paper_download`, `page_engaged_time`, `page_scroll_depth`, or `page_session_summary`.
+- Event name `top_school_collection_click` isolates top-school card clicks before users enter a school collection page.
 - Custom event parameter `page_path` shows the current page after direct landings and SPA route changes.
 - Custom event parameter `landing_path` shows the first page in the session.
 - Custom event parameter `referrer_host` shows the external host, with `is_google_referrer` set for Google referrers.
