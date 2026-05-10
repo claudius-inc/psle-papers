@@ -403,6 +403,21 @@ try {
     fail(`Live sitemap has only ${sitemapCount} URLs; expected at least 3000.`);
   }
 
+  const today = new Date().toISOString().slice(0, 10);
+  const sitemapLastmods = [...sitemap.matchAll(/<lastmod>([^<]+)<\/lastmod>/g)].map(
+    (match) => match[1],
+  );
+  const uniqueSitemapLastmods = new Set(sitemapLastmods);
+  if (sitemapLastmods.length !== sitemapCount) {
+    fail(`Live sitemap lastmod count ${sitemapLastmods.length} does not match URL count ${sitemapCount}.`);
+  }
+  if ([...uniqueSitemapLastmods].some((date) => !/^\d{4}-\d{2}-\d{2}$/.test(date))) {
+    fail("Live sitemap contains a malformed lastmod date.");
+  }
+  if (uniqueSitemapLastmods.size === 1 && uniqueSitemapLastmods.has(today)) {
+    fail("Live sitemap lastmod dates all use the current build date.");
+  }
+
   const socialImage = await fetch(`${siteUrl}/og-image.png`, {
     headers: {
       "user-agent": "SGExamHubLiveSeoAudit/1.0",
@@ -466,6 +481,7 @@ try {
 
   console.log(`Live SEO audit checked ${checks.length} pages.`);
   console.log(`Live sitemap URLs: ${sitemapCount}.`);
+  console.log(`Live sitemap lastmod dates: ${uniqueSitemapLastmods.size}.`);
   if (process.exitCode) process.exit();
   console.log("Live SEO audit passed.");
 } catch (error) {
