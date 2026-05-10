@@ -742,7 +742,7 @@ const requiredSnippets = [
   ],
   [
     ".output/public/exam-papers/sa2/index.html",
-    "View online or download free PDFs for timed practice.",
+    "View online or download free PDFs for Singapore primary timed practice.",
   ],
   [
     ".output/public/exam-papers/sa2/index.html",

@@ -215,7 +215,7 @@ const checks = [
     path: "/exam-papers/sa2/",
     snippets: [
       "SA2 Exam Papers",
-      "View online or download free PDFs for timed practice.",
+      "View online or download free PDFs for Singapore primary timed practice.",
       "Showing <strong",
       "Show more papers",
       "Download PDF",

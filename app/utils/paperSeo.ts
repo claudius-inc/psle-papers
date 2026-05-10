@@ -157,10 +157,12 @@ const buildCollectionDescription = ({
     return `Download ${count} free Singapore primary exam papers PDF files for P2-P6 Maths, Science, English and Chinese. View online for 2026 revision.`;
   }
 
-  const focus = titleParts.join(" ");
+  const focus = titleParts
+    .map((part) => part.replace(/^P([1-6])$/, "Primary $1"))
+    .join(" ");
   const fullPaperLabel = titleParts.includes("Practice Papers")
     ? `${focus} PDFs`
-    : `${focus} exam paper PDFs`;
+    : `${focus} exam papers`;
   const shortPaperLabel = titleParts.includes("Practice Papers")
     ? `${focus} PDFs`
     : `${focus} papers`;
@@ -171,7 +173,7 @@ const buildCollectionDescription = ({
       : year === latestYear
         ? "Latest available for 2026 revision. View online or download free PDFs."
         : typeCode
-          ? "View online or download free PDFs for timed practice."
+          ? "View online or download free PDFs for Singapore primary timed practice."
           : "View online or download free PDFs for Singapore primary revision.";
   const descriptions = [
     `${count} free ${fullPaperLabel}. ${action}`,
