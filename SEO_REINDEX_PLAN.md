@@ -4,17 +4,19 @@ Objective: after SEO fixes deploy, get Google to refresh stale snippets so searc
 
 ## Current Deployment Evidence
 
-Latest fully passing deployment evidence on 2026-05-10:
+Latest fully passing deployment evidence on 2026-05-11:
 
-- Commit `824a4340f143806443e5bbe4c3e3f0d17b051411` is deployed.
-- GitHub Actions run `25632890221` completed successfully for build and deploy.
+- Commit `143c4b1` is deployed.
+- GitHub Actions run `25633398565` completed successfully for build and deploy.
 - Build generated `6238` sitemap URLs and passed the generated SEO audit gate.
 - Deployed site passed `npm run seo:audit:live`, including live SEO, JSON-LD, stale-snippet page, school-name, OG image, snippet-focused UI, conversion analytics, top-school funnel, free-exam funnel, broad-landing funnel, sitemap priority-school, and sitemap lastmod checks.
 - Live sitemap audit reported `6238` URLs and `8` distinct `lastmod` dates.
 - Live JSON-LD audit reported `11` pages checked.
 - Live snippet-focused UI audit reported `10` pages and `15` assets checked, including `data-nosnippet` on repeated homepage, collection, broad landing, 2026 revision, and PSLE revision paper CTA/list blocks.
+- Generated keyword landing page audit reported `85` query clusters checked.
 - Generated SEO audit wrote `reports/seo/gsc-url-inspection-tracker.csv` for dated URL Inspection tracking.
 - Generated SEO audit wrote `reports/seo/google-snippet-recheck-tracker.csv` for dated public Google snippet freshness tracking.
+- The action-pack generator now preserves existing URL Inspection and public Google snippet tracker evidence when regenerating source-driven priority rows.
 - `npm run seo:reindex-status -- --fail-on-pending` currently fails by design until the priority URL Inspection rows are marked complete.
 - `npm run seo:snippet-status -- --fail-on-stale` currently fails by design until the public Google recheck rows are marked fresh.
 - `npm run seo:completion-check` currently fails by design until URL Inspection, public snippet freshness, and GSC/GA4 outcome evidence all pass.
@@ -28,7 +30,7 @@ Earlier evidence from runs `25626208854`, `25626609288`, `25627427402`, `2562766
 
 ## Current Search Evidence
 
-Checked on 2026-05-10 after the passing deployment in run `25632069702`. Newer runs through `25632890221` did not change live snippet content; they added the GSC URL Inspection tracker, public Google snippet tracker, and final completion check reports, then passed generated/live SEO gates.
+Checked on 2026-05-11 after the passing deployment in run `25633398565`. The live site is clean, but public Google results are still serving stale indexed snippets for key canaries. `reports/seo/google-snippet-recheck-status.md` currently reports `0/11` fresh, `4` stale, `7` checked without final fresh status, and `0` pending.
 
 | Query | Evidence | Follow-up |
 | --- | --- | --- |
@@ -36,8 +38,9 @@ Checked on 2026-05-10 after the passing deployment in run `25632069702`. Newer r
 | `site:sgexamhub.com "2,200+Papers"` | Google still found the stale homepage snippet. Current live HTML does not contain `2,200+`, so this is an index refresh issue rather than a deployed-site issue. | Keep this as the fastest stale-snippet canary. Completion requires this query to stop returning stale SG Exam Hub snippets. |
 | `site:sgexamhub.com "Anglo chinese"` | Google still showed stale school-name snippets, including older lowercase/unhyphenated names. Current live pages use official casing and hyphenation. | Request reindex for the affected collection pages and recheck after crawl. |
 | `site:sgexamhub.com "primary 3 chinese exam papers"` | Search results still showed `/exam-papers/primary-3-chinese` with stale school-name casing from older crawls. Current live HTML uses `Anglo-Chinese School (Primary)`, `Methodist Girls' School (Primary)`, and `CHIJ`. | Request reindex for `/exam-papers/primary-3-chinese/`, `/exam-papers/primary-3/`, `/exam-papers/chinese/`, and priority school pages. |
-| `site:sgexamhub.com "Free Singapore Primary Exam Papers"` | Homepage result is present, confirming Google can discover the canonical domain. | Use as baseline evidence, not completion proof. |
-| `site:sgexamhub.com "Raffles Girls' Primary School" "SG Exam Hub"` | Indexed collection/viewer pages appear, confirming paper pages are discoverable. | Recheck after Google refreshes indexed results for current titles and official school names. |
+| `site:sgexamhub.com "2,300+"` | Search tool returned no result on 2026-05-11, so it cannot be counted as fresh without manual SERP confirmation. | Keep in `reports/seo/google-snippet-recheck-tracker.csv` as checked without final status. |
+| `site:sgexamhub.com "free exam papers singapore"` and `site:sgexamhub.com "psle revision papers"` | Search tool returned no result on 2026-05-11. | Manually recheck before marking `Fresh`; absence of a tool result is not completion proof. |
+| Exact fresh-title/download canaries for Primary 3 Chinese, Anglo-Chinese, Methodist Girls', and Raffles Girls' | Search tool returned no result on 2026-05-11. | Manually recheck before marking `Fresh`; keep them unresolved until confirmed. |
 
 ## Priority URLs To Reindex
 
@@ -79,7 +82,7 @@ See `reports/seo/reindex-action-pack.md` and track dated manual progress in `rep
 
 ## GSC Steps
 
-1. Confirm GitHub Pages deployment completed after the latest SEO commits. Current deployment proof is run `25632890221` for commit `824a4340f143806443e5bbe4c3e3f0d17b051411`.
+1. Confirm GitHub Pages deployment completed after the latest SEO commits. Current deployment proof is run `25633398565` for commit `143c4b1`.
 2. Confirm `npm run seo:audit:live` passes against `https://sgexamhub.com`. Current deployment logs show the live audit passed.
 3. In Google Search Console, inspect each priority URL and choose `Request indexing`.
 4. Resubmit `https://sgexamhub.com/sitemap.xml` in Sitemaps.

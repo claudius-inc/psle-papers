@@ -4,20 +4,21 @@ Use this checklist when the live site is clean but Google still shows old SG Exa
 
 ## Current Stale Evidence
 
-Checked on 2026-05-10 after deployment run `25632069702` for commit `b48bd78583ba88a6c9c31874007c5c7a78821fbd`. Newer deployment runs through `25632890221` added `reports/seo/gsc-url-inspection-tracker.csv`, `reports/seo/gsc-url-inspection-status.md`, `reports/seo/google-snippet-recheck-tracker.csv`, `reports/seo/google-snippet-recheck-status.md`, `reports/seo/seo-completion-check.md`, `npm run seo:reindex-status`, `npm run seo:snippet-status`, and `npm run seo:completion-check`, then passed generated/live SEO gates, but did not change live snippet content:
+Checked again on 2026-05-11 after deployment run `25633398565` for commit `143c4b1`. The latest run passed generated and live SEO gates, and `reports/seo/google-snippet-recheck-status.md` now records `0/11` fresh, `4` stale, `7` checked without final fresh status, and `0` pending:
 
 - `site:sgexamhub.com sg exam papers` still showed old homepage copy such as `2,200+Papers`, the old homepage title, the stale `Latest exam papers` snippet list, and stale school casing.
 - `site:sgexamhub.com "2,200+Papers"` still returned the stale homepage snippet.
 - `site:sgexamhub.com "Anglo chinese"` still returned stale collection snippets.
 - `site:sgexamhub.com "primary 3 chinese exam papers"` still showed `/exam-papers/primary-3-chinese` with old casing such as `Anglo chinese School (primary)`.
-- Result crawl labels still showed old crawls before the latest deployment, so this remains an index refresh issue rather than a live-site issue.
+- `site:sgexamhub.com "2,300+"`, `site:sgexamhub.com "free exam papers singapore"`, `site:sgexamhub.com "psle revision papers"`, and exact fresh-title/download canaries returned no result through the search tool, so they remain unresolved rather than fresh.
+- Result crawl labels and stale snippet text still indicate this remains an index refresh issue rather than a live-site issue.
 
 Fresh live reads on 2026-05-10 showed the deployed pages are already corrected:
 
 - `https://sgexamhub.com/` has `2,299 PDF exam papers indexed` and no `2,200+` or `2,300+` paper-count copy.
 - `https://sgexamhub.com/` has `data-nosnippet` on the homepage `Latest exam papers` list, so Google should stop using that noisy list after recrawl.
-- Indexable pages now emit `index, follow, max-snippet:160, max-image-preview:large` robots directives, verified by run `25632890221`.
-- Broad landing and revision pages now exclude repeated featured/latest paper lists from snippets with `data-nosnippet`, verified by the live snippet-focused UI audit in run `25632890221`, which checked `10` pages and `15` assets.
+- Indexable pages now emit `index, follow, max-snippet:160, max-image-preview:large` robots directives, verified by run `25633398565`.
+- Broad landing and revision pages now exclude repeated featured/latest paper lists from snippets with `data-nosnippet`, verified by the live snippet-focused UI audit in run `25633398565`, which checked `10` pages and `15` assets.
 - `https://sgexamhub.com/exam-papers/primary-3-chinese/` has `Primary 3 Chinese Exam Papers Free PDF Download`, `Download PDF`, `Anglo-Chinese School (Primary)`, `Methodist Girls' School (Primary)`, and `CHIJ Katong Primary`.
 - `https://sgexamhub.com/exam-papers/primary-3/` has `Primary 3 Exam Papers Free PDF Download`.
 - `https://sgexamhub.com/exam-papers/chinese/` has `Chinese Exam Papers Free PDF Download`.
@@ -65,6 +66,8 @@ Run `npm run seo:reindex-status` after updating the tracker. `npm run seo:reinde
 Record dated freshness checks in `reports/seo/google-snippet-recheck-tracker.csv`. Run `npm run seo:snippet-status` after updating it. `npm run seo:snippet-status -- --fail-on-stale` should not pass until every public Google recheck query is marked `Fresh`.
 
 Run `npm run seo:completion-check` only after URL Inspection, public Google rechecks, and GSC/GA4 outcome exports are available. It should not pass until all external evidence exists.
+
+`npm run seo:action-pack` preserves existing URL Inspection and Google snippet tracker evidence when regenerating source-driven priority rows, so it can be rerun without erasing dated manual recheck status.
 
 ## Search Recheck Queries
 
