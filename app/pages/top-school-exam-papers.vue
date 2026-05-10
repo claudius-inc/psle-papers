@@ -50,14 +50,14 @@ const topSchoolCollections = [
     to: "/exam-papers/school-chij-st-nicholas-girls-school",
   },
   {
-    title: "Anglo Chinese School (Primary) exam papers",
-    schoolName: "Anglo Chinese School (Primary)",
+    title: "Anglo-Chinese School (Primary) exam papers",
+    schoolName: "Anglo-Chinese School (Primary)",
     description: "ACS Primary papers grouped by year and subject.",
     to: "/exam-papers/school-anglo-chinese-school-primary",
   },
   {
-    title: "Anglo Chinese School (Junior) exam papers",
-    schoolName: "Anglo Chinese School (Junior)",
+    title: "Anglo-Chinese School (Junior) exam papers",
+    schoolName: "Anglo-Chinese School (Junior)",
     description: "ACS Junior papers for additional school comparison.",
     to: "/exam-papers/school-anglo-chinese-school-junior",
   },
@@ -207,7 +207,7 @@ useHead({
     {
       name: "keywords",
       content:
-        "top school exam papers Singapore, Raffles Girls Primary School exam papers, Nanyang Primary School exam papers, Methodist Girls School exam papers, Singapore Chinese Girls Primary School exam papers, CHIJ St Nicholas exam papers, Anglo Chinese School exam papers, Pei Hwa exam papers, Red Swastika exam papers, Tao Nan exam papers, free PDF download",
+        "top school exam papers Singapore, Raffles Girls Primary School exam papers, Nanyang Primary School exam papers, Methodist Girls School exam papers, Singapore Chinese Girls Primary School exam papers, CHIJ St Nicholas exam papers, Anglo-Chinese School exam papers, Anglo Chinese School exam papers, Pei Hwa exam papers, Red Swastika exam papers, Tao Nan exam papers, free PDF download",
     },
     ...buildSocialMeta({
       title: pageTitle,
@@ -533,7 +533,7 @@ useHead({
 }
 
 .hero-actions a:first-child,
-.paper-actions a:first-child {
+paper-actions a:first-child {
   background: #0f766e;
   color: #ffffff;
 }
