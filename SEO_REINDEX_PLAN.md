@@ -6,23 +6,24 @@ Objective: after SEO fixes deploy, get Google to refresh stale snippets so searc
 
 Latest fully passing deployment evidence on 2026-05-10:
 
-- Commit `e60bb60eb76e004907e9bbe49e15246bf802f08a` is deployed.
-- GitHub Actions run `25629044793` completed successfully for build and deploy.
+- Commit `913739b3be6c1fa80c80411099de33928a1b038d` is deployed.
+- GitHub Actions run `25631162771` completed successfully for build and deploy.
 - Build generated `6238` sitemap URLs and passed the generated SEO audit gate.
 - Deployed site passed `npm run seo:audit:live`, including live SEO, JSON-LD, stale-snippet page, school-name, OG image, snippet-focused UI, conversion analytics, top-school funnel, free-exam funnel, broad-landing funnel, sitemap priority-school, and sitemap lastmod checks.
 - Live sitemap audit reported `6238` URLs and `8` distinct `lastmod` dates.
 - Live JSON-LD audit reported `11` pages checked.
-- Live snippet-focused UI audit reported `4` pages and `9` assets checked.
+- Live snippet-focused UI audit reported `4` pages and `9` assets checked, including `data-nosnippet` on repeated homepage and collection paper CTA blocks.
 - Live conversion analytics audit reported `1` page and `7` assets checked.
 - Live OG image audit passed. Direct live hash verification showed `https://sgexamhub.com/og-image.png` matches manifest hash `d0b66da84ffab834550742fefdf57765cdbc3f4a306da35ba4096561e0d61bee`; OCR read `2,299 PDF papers`.
 - Fresh live homepage read after deployment showed `2,299 PDF exam papers indexed`; it no longer showed stale `2,200+Papers`, `2,200+`, or `2,300+` count copy.
+- Indexable pages emit `index, follow, max-snippet:160, max-image-preview:large` robots directives.
 - Fresh live page read for `/exam-papers/primary-3-chinese/` showed corrected school casing, including `Anglo-Chinese School (Primary)`, `Methodist Girls' School (Primary)`, and `CHIJ`.
 
-Earlier evidence from runs `25626208854`, `25626609288`, `25627427402`, `25627663313`, `25628581332`, and `25628828106` was useful but no longer the latest proof. The latest commits hardened normalizer coverage, generated/live snippet audits, sitemap freshness inputs, mobile CTA source tracking, and social preview image freshness so future SEO changes remain covered by CI.
+Earlier evidence from runs `25626208854`, `25626609288`, `25627427402`, `25627663313`, `25628581332`, `25628828106`, `25629044793`, `25630256022`, and `25630822616` was useful but no longer the latest proof. The latest commits hardened normalizer coverage, generated/live snippet audits, sitemap freshness inputs, mobile CTA source tracking, robots snippet directives, repeated CTA `data-nosnippet` markers, and social preview image freshness so future SEO changes remain covered by CI.
 
 ## Current Search Evidence
 
-Checked on 2026-05-10 after the passing deployment in run `25629044793`.
+Checked on 2026-05-10 after the passing deployment in run `25631162771`.
 
 | Query | Evidence | Follow-up |
 | --- | --- | --- |
@@ -46,16 +47,34 @@ Submit these in Google Search Console URL Inspection after a passing deployment 
 7. `https://sgexamhub.com/top-school-exam-papers/`
 8. `https://sgexamhub.com/exam-papers/2026-revision/`
 9. `https://sgexamhub.com/exam-papers/psle-revision/`
-10. `https://sgexamhub.com/exam-papers/2025-primary-6-mathematics-sa2/`
-11. `https://sgexamhub.com/exam-papers/primary-6-mathematics-school-nanyang-primary-school/`
-12. `https://sgexamhub.com/exam-papers/school-anglo-chinese-school-primary/`
-13. `https://sgexamhub.com/exam-papers/school-anglo-chinese-school-junior/`
+10. `https://sgexamhub.com/exam-papers/2025/`
+11. `https://sgexamhub.com/exam-papers/2024/`
+12. `https://sgexamhub.com/exam-papers/chinese/`
+13. `https://sgexamhub.com/exam-papers/primary-3/`
 14. `https://sgexamhub.com/exam-papers/primary-3-chinese/`
-15. `https://sgexamhub.com/view/6_1073_3_4_2025/`
+15. `https://sgexamhub.com/exam-papers/primary-3-science/`
+16. `https://sgexamhub.com/exam-papers/primary-3-higher-chinese/`
+17. `https://sgexamhub.com/exam-papers/2025-primary-6-sa2/`
+18. `https://sgexamhub.com/exam-papers/2025-primary-6-mathematics-sa2/`
+19. `https://sgexamhub.com/exam-papers/2025-primary-6-science-sa2/`
+20. `https://sgexamhub.com/exam-papers/primary-6-mathematics-school-nanyang-primary-school/`
+21. `https://sgexamhub.com/exam-papers/school-anglo-chinese-school-primary/`
+22. `https://sgexamhub.com/exam-papers/school-anglo-chinese-school-junior/`
+23. `https://sgexamhub.com/exam-papers/school-methodist-girls-school-primary/`
+24. `https://sgexamhub.com/exam-papers/school-raffles-girls-primary-school/`
+25. `https://sgexamhub.com/view/6_1073_3_4_2025/`
+
+The same list is generated for handoff by:
+
+```sh
+npm run seo:action-pack
+```
+
+See `reports/seo/reindex-action-pack.md`.
 
 ## GSC Steps
 
-1. Confirm GitHub Pages deployment completed after the latest SEO commits. Current deployment proof is run `25629044793` for commit `e60bb60eb76e004907e9bbe49e15246bf802f08a`.
+1. Confirm GitHub Pages deployment completed after the latest SEO commits. Current deployment proof is run `25631162771` for commit `913739b3be6c1fa80c80411099de33928a1b038d`.
 2. Confirm `npm run seo:audit:live` passes against `https://sgexamhub.com`. Current deployment logs show the live audit passed.
 3. In Google Search Console, inspect each priority URL and choose `Request indexing`.
 4. Resubmit `https://sgexamhub.com/sitemap.xml` in Sitemaps.

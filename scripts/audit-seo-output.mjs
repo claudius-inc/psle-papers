@@ -170,6 +170,9 @@ const analytics = readText("app/utils/analytics.ts");
 const engagement = readText("app/composables/useEngagementTracking.ts");
 const keywordMap = readText("SEO_KEYWORD_MAP.md");
 const seoRunbook = readText("SEO_RUNBOOK.md");
+const packageJson = readText("package.json");
+const seoActionPackScript = readText("scripts/generate-seo-action-pack.mjs");
+const seoActionPack = readText("reports/seo/reindex-action-pack.md");
 const homePage = readText("app/pages/index.vue");
 const freeExamPapersPage = readText("app/pages/free-exam-papers.vue");
 const pastYearPage = readText("app/pages/past-year-exam-papers.vue");
@@ -265,6 +268,39 @@ for (const snippet of [
 }
 if (pagesWorkflow.includes("actions/checkout@v5")) {
   fail("Pages workflow still references actions/checkout@v5.");
+}
+
+for (const snippet of [
+  '"seo:audit": "node scripts/generate-seo-action-pack.mjs &&',
+  '"seo:action-pack": "node scripts/generate-seo-action-pack.mjs"',
+  '"seo:outcomes": "node scripts/analyze-seo-outcomes.mjs"',
+]) {
+  if (!packageJson.includes(snippet)) {
+    fail(`package.json is missing SEO workflow script: ${snippet}`);
+  }
+}
+for (const snippet of [
+  "reports/seo/reindex-action-pack.md",
+  "urlInspectionPriority",
+  "searchRecheckQueries",
+  "gscQueryClusters",
+  "ga4Events",
+]) {
+  if (!seoActionPackScript.includes(snippet)) {
+    fail(`SEO action-pack generator is missing expected snippet: ${snippet}`);
+  }
+}
+for (const snippet of [
+  "SEO Reindex And Outcome Action Pack",
+  "Google Search Console URL Inspection",
+  "Public Google Recheck Queries",
+  "GSC Outcome Export",
+  "GA4 Organic Outcome Export",
+  "npm run seo:outcomes",
+]) {
+  if (!seoActionPack.includes(snippet) || !seoRunbook.includes("seo:action-pack")) {
+    fail(`SEO action-pack handoff is missing expected snippet: ${snippet}`);
+  }
 }
 
 if (!appShell.includes("G-7WKP91PV8C") || !appShell.includes("useEngagementTracking()")) {
