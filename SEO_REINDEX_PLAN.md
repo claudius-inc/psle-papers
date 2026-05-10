@@ -6,24 +6,24 @@ Objective: after SEO fixes deploy, get Google to refresh stale snippets so searc
 
 Latest fully passing deployment evidence on 2026-05-10:
 
-- Commit `691e4e32696a6c57be383c4e9f8d01aa28c39ed4` is deployed.
-- GitHub Actions run `25631615882` completed successfully for build and deploy.
+- Commit `b48bd78583ba88a6c9c31874007c5c7a78821fbd` is deployed.
+- GitHub Actions run `25632069702` completed successfully for build and deploy.
 - Build generated `6238` sitemap URLs and passed the generated SEO audit gate.
 - Deployed site passed `npm run seo:audit:live`, including live SEO, JSON-LD, stale-snippet page, school-name, OG image, snippet-focused UI, conversion analytics, top-school funnel, free-exam funnel, broad-landing funnel, sitemap priority-school, and sitemap lastmod checks.
 - Live sitemap audit reported `6238` URLs and `8` distinct `lastmod` dates.
 - Live JSON-LD audit reported `11` pages checked.
-- Live snippet-focused UI audit reported `8` pages and `13` assets checked, including `data-nosnippet` on repeated homepage, collection, and broad landing paper CTA/list blocks.
+- Live snippet-focused UI audit reported `10` pages and `15` assets checked, including `data-nosnippet` on repeated homepage, collection, broad landing, 2026 revision, and PSLE revision paper CTA/list blocks.
 - Live conversion analytics audit reported `1` page and `7` assets checked.
 - Live OG image audit passed. Direct live hash verification showed `https://sgexamhub.com/og-image.png` matches manifest hash `d0b66da84ffab834550742fefdf57765cdbc3f4a306da35ba4096561e0d61bee`; OCR read `2,299 PDF papers`.
 - Fresh live homepage read after deployment showed `2,299 PDF exam papers indexed`; it no longer showed stale `2,200+Papers`, `2,200+`, or `2,300+` count copy.
 - Indexable pages emit `index, follow, max-snippet:160, max-image-preview:large` robots directives.
 - Fresh live page read for `/exam-papers/primary-3-chinese/` showed corrected school casing, including `Anglo-Chinese School (Primary)`, `Methodist Girls' School (Primary)`, and `CHIJ`.
 
-Earlier evidence from runs `25626208854`, `25626609288`, `25627427402`, `25627663313`, `25628581332`, `25628828106`, `25629044793`, `25630256022`, `25630822616`, `25631162771`, and `25631382415` was useful but no longer the latest proof. The latest commits hardened normalizer coverage, generated/live snippet audits, sitemap freshness inputs, mobile CTA source tracking, robots snippet directives, repeated CTA `data-nosnippet` markers, broad landing page snippet controls, reindex action packs, and social preview image freshness so future SEO changes remain covered by CI.
+Earlier evidence from runs `25626208854`, `25626609288`, `25627427402`, `25627663313`, `25628581332`, `25628828106`, `25629044793`, `25630256022`, `25630822616`, `25631162771`, `25631382415`, and `25631615882` was useful but no longer the latest proof. The latest commits hardened normalizer coverage, generated/live snippet audits, sitemap freshness inputs, mobile CTA source tracking, robots snippet directives, repeated CTA `data-nosnippet` markers, broad landing and revision page snippet controls, reindex action packs, outcome export templates, and social preview image freshness so future SEO changes remain covered by CI.
 
 ## Current Search Evidence
 
-Checked on 2026-05-10 after the passing deployment in run `25631615882`.
+Checked on 2026-05-10 after the passing deployment in run `25631615882`; those public Google results still need to be rechecked after the newer run `25632069702` and GSC URL Inspection requests.
 
 | Query | Evidence | Follow-up |
 | --- | --- | --- |
@@ -74,7 +74,7 @@ See `reports/seo/reindex-action-pack.md`.
 
 ## GSC Steps
 
-1. Confirm GitHub Pages deployment completed after the latest SEO commits. Current deployment proof is run `25631615882` for commit `691e4e32696a6c57be383c4e9f8d01aa28c39ed4`.
+1. Confirm GitHub Pages deployment completed after the latest SEO commits. Current deployment proof is run `25632069702` for commit `b48bd78583ba88a6c9c31874007c5c7a78821fbd`.
 2. Confirm `npm run seo:audit:live` passes against `https://sgexamhub.com`. Current deployment logs show the live audit passed.
 3. In Google Search Console, inspect each priority URL and choose `Request indexing`.
 4. Resubmit `https://sgexamhub.com/sitemap.xml` in Sitemaps.

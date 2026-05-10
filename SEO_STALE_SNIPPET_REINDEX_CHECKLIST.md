@@ -4,7 +4,7 @@ Use this checklist when the live site is clean but Google still shows old SG Exa
 
 ## Current Stale Evidence
 
-Checked on 2026-05-10 after deployment run `25631615882` for commit `691e4e32696a6c57be383c4e9f8d01aa28c39ed4`:
+Checked on 2026-05-10 after deployment run `25631615882` for commit `691e4e32696a6c57be383c4e9f8d01aa28c39ed4`. These public Google results still need to be rechecked after the newer passing deployment run `25632069702` for commit `b48bd78583ba88a6c9c31874007c5c7a78821fbd` and after GSC URL Inspection requests:
 
 - `site:sgexamhub.com sg exam papers` still showed old homepage copy such as `2,200+Papers`, the old homepage title, the stale `Latest exam papers` snippet list, and stale school casing.
 - `site:sgexamhub.com "2,200+Papers"` still returned the stale homepage snippet.
@@ -16,8 +16,8 @@ Fresh live reads on 2026-05-10 showed the deployed pages are already corrected:
 
 - `https://sgexamhub.com/` has `2,299 PDF exam papers indexed` and no `2,200+` or `2,300+` paper-count copy.
 - `https://sgexamhub.com/` has `data-nosnippet` on the homepage `Latest exam papers` list, so Google should stop using that noisy list after recrawl.
-- Indexable pages now emit `index, follow, max-snippet:160, max-image-preview:large` robots directives, verified by run `25631615882`.
-- Broad landing pages now exclude repeated featured/latest paper lists from snippets with `data-nosnippet`, verified by the live snippet-focused UI audit in run `25631615882`.
+- Indexable pages now emit `index, follow, max-snippet:160, max-image-preview:large` robots directives, verified by run `25632069702`.
+- Broad landing and revision pages now exclude repeated featured/latest paper lists from snippets with `data-nosnippet`, verified by the live snippet-focused UI audit in run `25632069702`, which checked `10` pages and `15` assets.
 - `https://sgexamhub.com/exam-papers/primary-3-chinese/` has `Primary 3 Chinese Exam Papers Free PDF Download`, `Download PDF`, `Anglo-Chinese School (Primary)`, `Methodist Girls' School (Primary)`, and `CHIJ Katong Primary`.
 - `https://sgexamhub.com/exam-papers/primary-3/` has `Primary 3 Exam Papers Free PDF Download`.
 - `https://sgexamhub.com/exam-papers/chinese/` has `Chinese Exam Papers Free PDF Download`.
@@ -52,7 +52,9 @@ In Google Search Console, inspect each URL and click `Request indexing` when the
 7. `https://sgexamhub.com/exam-papers/school-methodist-girls-school-primary/`
 8. `https://sgexamhub.com/exam-papers/primary-3-science/`
 9. `https://sgexamhub.com/exam-papers/primary-3-higher-chinese/`
-10. `https://sgexamhub.com/sitemap.xml`
+10. `https://sgexamhub.com/exam-papers/2026-revision/`
+11. `https://sgexamhub.com/exam-papers/psle-revision/`
+12. `https://sgexamhub.com/sitemap.xml`
 
 After URL inspection requests, resubmit `https://sgexamhub.com/sitemap.xml` in the GSC Sitemaps report.
 
