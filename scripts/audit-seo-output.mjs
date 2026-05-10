@@ -173,6 +173,7 @@ const seoRunbook = readText("SEO_RUNBOOK.md");
 const packageJson = readText("package.json");
 const seoExportTemplateScript = readText("scripts/generate-seo-export-templates.mjs");
 const seoActionPackScript = readText("scripts/generate-seo-action-pack.mjs");
+const reindexStatusScript = readText("scripts/analyze-gsc-reindex-tracker.mjs");
 const seoActionPack = readText("reports/seo/reindex-action-pack.md");
 const urlInspectionTracker = readText("reports/seo/gsc-url-inspection-tracker.csv");
 const outcomeExportChecklist = readText("reports/seo/outcome-export-checklist.md");
@@ -276,6 +277,7 @@ if (pagesWorkflow.includes("actions/checkout@v5")) {
 for (const snippet of [
   '"seo:audit": "node scripts/generate-seo-export-templates.mjs && node scripts/generate-seo-action-pack.mjs &&',
   '"seo:action-pack": "node scripts/generate-seo-action-pack.mjs"',
+  '"seo:reindex-status": "node scripts/analyze-gsc-reindex-tracker.mjs"',
   '"seo:export-templates": "node scripts/generate-seo-export-templates.mjs"',
   '"seo:outcomes": "node scripts/analyze-seo-outcomes.mjs"',
 ]) {
@@ -350,6 +352,17 @@ for (const snippet of [
 ]) {
   if (!urlInspectionTracker.includes(snippet)) {
     fail(`GSC URL Inspection tracker is missing expected snippet: ${snippet}`);
+  }
+}
+for (const snippet of [
+  "GSC URL Inspection Status",
+  "reports/seo/gsc-url-inspection-tracker.csv",
+  "reports/seo/gsc-url-inspection-status.md",
+  "--fail-on-pending",
+  "The SEO objective remains incomplete",
+]) {
+  if (!reindexStatusScript.includes(snippet)) {
+    fail(`GSC URL Inspection status script is missing expected snippet: ${snippet}`);
   }
 }
 
