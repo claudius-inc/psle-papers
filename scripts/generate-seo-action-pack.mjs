@@ -66,6 +66,7 @@ const ga4Events = [
   "paper_view_click",
   "paper_open",
   "paper_download",
+  "file_download",
 ];
 
 const googleSearchUrl = (query) =>

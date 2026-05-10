@@ -491,6 +491,10 @@ for (const snippet of [
   "paper_view_click",
   "paper_open",
   "paper_download",
+  "file_download",
+  "file_name",
+  "file_extension",
+  "link_url",
   "sg_exam_hub_attribution",
   "landing_path",
   "referrer_host",
@@ -636,6 +640,7 @@ requireSourceSnippets("SEO runbook", seoRunbook, [
   "top school exam papers singapore",
   "page_view",
   "paper_download",
+  "file_download",
   "page_engaged_time",
 ]);
 

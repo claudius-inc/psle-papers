@@ -4,6 +4,8 @@ type GtagWindow = Window & {
 
 type AnalyticsParams = Record<string, string | number | boolean | undefined>;
 
+const pdfRepositoryBaseUrl =
+  "https://raw.githubusercontent.com/airbob/PrimarySchoolExamPapers/main/public/files";
 const attributionStorageKey = "sg_exam_hub_attribution";
 
 const getReferrerHost = () => {
@@ -122,6 +124,15 @@ export const trackPaperDownload = (
 ) => {
   trackEvent("paper_download", {
     paper_id: filename,
+    source,
+    is_conversion_event: true,
+    ...params,
+  });
+  trackEvent("file_download", {
+    paper_id: filename,
+    file_name: `${filename}.pdf`,
+    file_extension: "pdf",
+    link_url: `${pdfRepositoryBaseUrl}/${encodeURIComponent(filename)}.pdf`,
     source,
     is_conversion_event: true,
     ...params,

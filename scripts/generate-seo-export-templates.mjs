@@ -41,6 +41,7 @@ const checklist = [
   "- paper_view_click",
   "- paper_open",
   "- paper_download",
+  "- file_download",
   "",
   "## Analyzer Command",
   "",

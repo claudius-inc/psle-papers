@@ -33,6 +33,7 @@ Required event names:
 - paper_view_click
 - paper_open
 - paper_download
+- file_download
 
 ## Analyzer Command
 

@@ -3,7 +3,7 @@ import { existsSync, readFileSync, writeFileSync } from "node:fs";
 const requiredGa4EventGroups = {
   engagement: ["page_engaged_time", "page_scroll_depth", "page_session_summary"],
   paperOpen: ["paper_view_click", "paper_open"],
-  download: ["paper_download"],
+  download: ["paper_download", "file_download"],
 };
 
 const usage = `Usage:
