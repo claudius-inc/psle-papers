@@ -14,6 +14,7 @@ Latest fully passing deployment evidence on 2026-05-11:
 - Live JSON-LD audit reported `11` pages checked.
 - Live snippet-focused UI audit reported `10` pages and `15` assets checked, including `data-nosnippet` on repeated homepage, collection, broad landing, 2026 revision, and PSLE revision paper CTA/list blocks.
 - Generated keyword landing page audit reported `85` query clusters checked.
+- Deployable stale-copy audit reported `12540` deployable source/generated text files checked and `0` failures for exact stale SERP phrases such as `2,200+Papers`, `Anglo chinese School`, and `Methodist Girls' School (Primary)P6`.
 - Generated SEO audit wrote `reports/seo/gsc-url-inspection-tracker.csv` for dated URL Inspection tracking.
 - Generated SEO audit wrote `reports/seo/google-snippet-recheck-tracker.csv` for dated public Google snippet freshness tracking.
 - The action-pack generator now preserves existing URL Inspection and public Google snippet tracker evidence when regenerating source-driven priority rows.
@@ -35,7 +36,7 @@ Checked on 2026-05-11 after the passing deployment in run `25633398565`. The liv
 | Query | Evidence | Follow-up |
 | --- | --- | --- |
 | `site:sgexamhub.com sg exam papers` | Search results still showed stale homepage result text such as `2,200+Papers`, older title copy, `Anglo chinese School (junior)`, and `Methodist Girls' School (primary)`. The result crawl label was still older than the latest deployment, while the current live homepage now shows `2,299 PDF exam papers indexed`. | Request reindex for `/` and resubmit the sitemap. Recheck until the search snippet reflects the current live page. |
-| `site:sgexamhub.com "2,200+Papers"` | Google still found the stale homepage snippet. Current live HTML does not contain `2,200+`, so this is an index refresh issue rather than a deployed-site issue. | Keep this as the fastest stale-snippet canary. Completion requires this query to stop returning stale SG Exam Hub snippets. |
+| `site:sgexamhub.com "2,200+Papers"` | Google still found the stale homepage snippet. Current live HTML and deployable generated output do not contain `2,200+Papers`, so this is an index refresh issue rather than a deployed-site issue. | Keep this as the fastest stale-snippet canary. Completion requires this query to stop returning stale SG Exam Hub snippets. |
 | `site:sgexamhub.com "Anglo chinese"` | Google still showed stale school-name snippets, including older lowercase/unhyphenated names. Current live pages use official casing and hyphenation. | Request reindex for the affected collection pages and recheck after crawl. |
 | `site:sgexamhub.com "primary 3 chinese exam papers"` | Search results still showed `/exam-papers/primary-3-chinese` with stale school-name casing from older crawls. Current live HTML uses `Anglo-Chinese School (Primary)`, `Methodist Girls' School (Primary)`, and `CHIJ`. | Request reindex for `/exam-papers/primary-3-chinese/`, `/exam-papers/primary-3/`, `/exam-papers/chinese/`, and priority school pages. |
 | `site:sgexamhub.com "2,300+"` | Search tool returned no result on 2026-05-11, so it cannot be counted as fresh without manual SERP confirmation. | Keep in `reports/seo/google-snippet-recheck-tracker.csv` as checked without final status. |

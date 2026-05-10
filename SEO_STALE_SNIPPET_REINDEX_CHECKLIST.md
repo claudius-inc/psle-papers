@@ -23,6 +23,7 @@ Fresh live reads on 2026-05-10 showed the deployed pages are already corrected:
 - `https://sgexamhub.com/exam-papers/primary-3/` has `Primary 3 Exam Papers Free PDF Download`.
 - `https://sgexamhub.com/exam-papers/chinese/` has `Chinese Exam Papers Free PDF Download`.
 - `https://sgexamhub.com/og-image.png` matches the committed manifest hash and OCR reads `2,299 PDF papers`.
+- `reports/seo/deployable-stale-seo-copy-audit.md` checks deployable source and generated output for exact stale SERP phrases, and currently reports `12540` files checked with `0` failures.
 
 ## Preflight Before Requesting Indexing
 
@@ -39,6 +40,7 @@ Before using Google Search Console, confirm the latest deployment has passed the
    - `/exam-papers/primary-3`
    - `/exam-papers/primary-3-chinese`
 6. `https://sgexamhub.com/robots.txt` points to `https://sgexamhub.com/sitemap.xml`.
+7. `npm run seo:stale-copy` passes, proving deployable source/generated files do not contain the exact stale phrases being tracked.
 
 ## URL Inspection Priority
 
