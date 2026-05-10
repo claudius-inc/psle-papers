@@ -8,7 +8,6 @@ const staleHomepageSnippets = [
 
 const homepagePriorityDirectorySnippets = [
   "Primary 6 Chinese Exam Papers",
-  "Primary 6 Higher Chinese Exam Papers",
   "Primary 5 English Exam Papers",
   "Primary 5 Chinese Exam Papers",
   "Primary 4 Science Exam Papers",
