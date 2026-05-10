@@ -19,7 +19,7 @@ const checks = [
     path: ".output/public/index.html",
     snippets: [
       "data-nosnippet",
-      "SG Exam Hub Exam Papers",
+      "SG Exam Hub: Free Singapore Primary Exam Papers",
       "No sign-up needed",
     ],
   },
