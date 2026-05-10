@@ -71,6 +71,34 @@ const ga4Events = [
 const googleSearchUrl = (query) =>
   `https://www.google.com/search?q=${encodeURIComponent(query)}`;
 
+const csvEscape = (value) => {
+  const stringValue = String(value);
+  return /[",\n]/.test(stringValue)
+    ? `"${stringValue.replace(/"/g, '""')}"`
+    : stringValue;
+};
+
+const trackerRows = [
+  [
+    "Priority",
+    "URL",
+    "GSC live test result",
+    "Indexing requested at",
+    "Google result rechecked at",
+    "Status",
+    "Notes",
+  ],
+  ...urlInspectionPriority.map((path, index) => [
+    index + 1,
+    `${siteUrl}${path}`,
+    "",
+    "",
+    "",
+    "Pending",
+    "",
+  ]),
+];
+
 const lines = [
   "# SEO Reindex And Outcome Action Pack",
   "",
@@ -88,6 +116,8 @@ const lines = [
   "## Google Search Console URL Inspection",
   "",
   "Inspect each URL below in Google Search Console. When the live test shows the current page, click `Request indexing`.",
+  "",
+  "Track completion in `reports/seo/gsc-url-inspection-tracker.csv` so the remaining manual indexing work has dated evidence.",
   "",
   ...urlInspectionPriority.map((path, index) => `${index + 1}. ${siteUrl}${path}`),
   "",
@@ -174,4 +204,9 @@ const lines = [
 
 mkdirSync("reports/seo", { recursive: true });
 writeFileSync("reports/seo/reindex-action-pack.md", `${lines.join("\n")}\n`);
+writeFileSync(
+  "reports/seo/gsc-url-inspection-tracker.csv",
+  `${trackerRows.map((row) => row.map(csvEscape).join(",")).join("\n")}\n`,
+);
 console.log("Wrote reports/seo/reindex-action-pack.md");
+console.log("Wrote reports/seo/gsc-url-inspection-tracker.csv");

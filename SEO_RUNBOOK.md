@@ -16,7 +16,7 @@ Use this checklist after each content or SEO deploy.
 
 ## Google Search Console
 
-Use `SEO_REINDEX_PLAN.md` after each passing deployment when Google results still show stale titles, old homepage copy, or stale school-name casing. Use `SEO_STALE_SNIPPET_REINDEX_CHECKLIST.md` for the current stale homepage and Primary 3 Chinese snippet cluster. Run `npm run seo:action-pack` to generate `reports/seo/reindex-action-pack.md`, the operational URL Inspection, query recheck, GSC export, and GA4 export checklist.
+Use `SEO_REINDEX_PLAN.md` after each passing deployment when Google results still show stale titles, old homepage copy, or stale school-name casing. Use `SEO_STALE_SNIPPET_REINDEX_CHECKLIST.md` for the current stale homepage and Primary 3 Chinese snippet cluster. Run `npm run seo:action-pack` to generate `reports/seo/reindex-action-pack.md` and `reports/seo/gsc-url-inspection-tracker.csv`, the operational URL Inspection, query recheck, GSC export, and GA4 export checklist.
 
 1. Submit `https://sgexamhub.com/sitemap.xml`.
 2. Request indexing for:

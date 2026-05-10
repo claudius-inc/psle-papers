@@ -174,6 +174,7 @@ const packageJson = readText("package.json");
 const seoExportTemplateScript = readText("scripts/generate-seo-export-templates.mjs");
 const seoActionPackScript = readText("scripts/generate-seo-action-pack.mjs");
 const seoActionPack = readText("reports/seo/reindex-action-pack.md");
+const urlInspectionTracker = readText("reports/seo/gsc-url-inspection-tracker.csv");
 const outcomeExportChecklist = readText("reports/seo/outcome-export-checklist.md");
 const homePage = readText("app/pages/index.vue");
 const freeExamPapersPage = readText("app/pages/free-exam-papers.vue");
@@ -316,6 +317,7 @@ if (!seoRunbook.includes("npm run seo:export-templates")) {
 }
 for (const snippet of [
   "reports/seo/reindex-action-pack.md",
+  "reports/seo/gsc-url-inspection-tracker.csv",
   "urlInspectionPriority",
   "searchRecheckQueries",
   "gscQueryClusters",
@@ -328,6 +330,7 @@ for (const snippet of [
 for (const snippet of [
   "SEO Reindex And Outcome Action Pack",
   "Google Search Console URL Inspection",
+  "reports/seo/gsc-url-inspection-tracker.csv",
   "Public Google Recheck Queries",
   "GSC Outcome Export",
   "GA4 Organic Outcome Export",
@@ -336,6 +339,17 @@ for (const snippet of [
 ]) {
   if (!seoActionPack.includes(snippet) || !seoRunbook.includes("seo:action-pack")) {
     fail(`SEO action-pack handoff is missing expected snippet: ${snippet}`);
+  }
+}
+for (const snippet of [
+  "Priority,URL,GSC live test result,Indexing requested at,Google result rechecked at,Status,Notes",
+  "https://sgexamhub.com/",
+  "https://sgexamhub.com/exam-papers/2026-revision/",
+  "https://sgexamhub.com/exam-papers/psle-revision/",
+  "https://sgexamhub.com/view/6_1073_3_4_2025/",
+]) {
+  if (!urlInspectionTracker.includes(snippet)) {
+    fail(`GSC URL Inspection tracker is missing expected snippet: ${snippet}`);
   }
 }
 

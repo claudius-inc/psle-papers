@@ -15,6 +15,8 @@ Use this file as the operational handoff after the live site passes SEO audits. 
 
 Inspect each URL below in Google Search Console. When the live test shows the current page, click `Request indexing`.
 
+Track completion in `reports/seo/gsc-url-inspection-tracker.csv` so the remaining manual indexing work has dated evidence.
+
 1. https://sgexamhub.com/
 2. https://sgexamhub.com/sitemap.xml
 3. https://sgexamhub.com/exam-papers/
