@@ -1,4 +1,11 @@
-import { existsSync, readFileSync } from "node:fs";
+import { existsSync, readdirSync, readFileSync, statSync } from "node:fs";
+import { join } from "node:path";
+
+const staleHomepageSnippets = [
+  "totalPaperCountRounded",
+  "2,200+",
+  "2,200 +",
+];
 
 const checks = [
   {
@@ -8,11 +15,7 @@ const checks = [
       'class="hero-stats" data-nosnippet',
       ':class="[\'papers-container\', `papers-${viewMode}`]" data-nosnippet',
     ],
-    forbiddenSnippets: [
-      "totalPaperCountRounded",
-      "2,200+",
-      "2,200 +",
-    ],
+    forbiddenSnippets: staleHomepageSnippets,
   },
   {
     path: "app/pages/exam-papers/[[slug]].vue",
@@ -29,11 +32,7 @@ const checks = [
       "No sign-up needed",
       "2,299 PDF exam papers indexed",
     ],
-    forbiddenSnippets: [
-      "totalPaperCountRounded",
-      "2,200+",
-      "2,200 +",
-    ],
+    forbiddenSnippets: staleHomepageSnippets,
   },
   {
     path: ".output/public/exam-papers/index.html",
@@ -60,9 +59,27 @@ const fail = (message) => {
 
 const normalizeForSnippetChecks = (content) =>
   content
+    .replace(/&nbsp;/g, "")
     .replace(/<[^>]*>/g, "")
-    .replace(/\s+/g, "")
-    .replace(/&nbsp;/g, "");
+    .replace(/\s+/g, "");
+
+const assertNoForbiddenSnippets = (content, forbiddenSnippets, label) => {
+  const compactContent = normalizeForSnippetChecks(content);
+  for (const snippet of forbiddenSnippets || []) {
+    const compactSnippet = normalizeForSnippetChecks(snippet);
+    if (content.includes(snippet) || compactContent.includes(compactSnippet)) {
+      fail(`${label} contains stale snippet-focused UI copy: ${snippet}`);
+    }
+  }
+};
+
+const walkFiles = (directory) => {
+  if (!existsSync(directory)) return [];
+  return readdirSync(directory).flatMap((entry) => {
+    const path = join(directory, entry);
+    return statSync(path).isDirectory() ? walkFiles(path) : [path];
+  });
+};
 
 for (const check of checks) {
   if (!existsSync(check.path)) {
@@ -71,19 +88,23 @@ for (const check of checks) {
   }
 
   const content = readFileSync(check.path, "utf8");
-  const compactContent = normalizeForSnippetChecks(content);
 
   for (const snippet of check.snippets) {
     if (!content.includes(snippet)) {
       fail(`${check.path} is missing snippet-focused UI snippet: ${snippet}`);
     }
   }
-  for (const snippet of check.forbiddenSnippets || []) {
-    const compactSnippet = normalizeForSnippetChecks(snippet);
-    if (content.includes(snippet) || compactContent.includes(compactSnippet)) {
-      fail(`${check.path} contains stale snippet-focused UI copy: ${snippet}`);
-    }
-  }
+  assertNoForbiddenSnippets(content, check.forbiddenSnippets, check.path);
+}
+
+for (const assetPath of walkFiles(".output/public/_nuxt").filter((path) =>
+  /\.(?:js|mjs|json|html)$/.test(path),
+)) {
+  assertNoForbiddenSnippets(
+    readFileSync(assetPath, "utf8"),
+    staleHomepageSnippets,
+    assetPath,
+  );
 }
 
 if (process.exitCode) process.exit();
