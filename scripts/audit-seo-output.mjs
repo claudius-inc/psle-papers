@@ -59,6 +59,7 @@ const missingCanonicalRows = [];
 const mismatchedCanonicalRows = [];
 const mismatchedOgUrlRows = [];
 const missingTwitterCardRows = [];
+const weakSchoolNameHtmlRows = [];
 const checkedLinks = new Set();
 
 const pageExists = (href) => {
@@ -99,6 +100,9 @@ for (const file of htmlFiles) {
 
   if (html.includes('href="/files/') || html.includes("https://sgexamhub.com/files/")) {
     selfHostedPdfLinks.push(file);
+  }
+  if (/\b(?:Anglo chinese|Chij)\b|\((?:primary|junior)\)/.test(html)) {
+    weakSchoolNameHtmlRows.push(url);
   }
 
   rows.push({
@@ -935,6 +939,12 @@ if (weakSchoolNameRows.length) {
   fail(`Weak school-name casing in generated snippets: ${weakSchoolNameRows.length}`);
   for (const row of weakSchoolNameRows.slice(0, 20)) {
     console.error(`${row.url}: ${row.title} / ${row.description}`);
+  }
+}
+if (weakSchoolNameHtmlRows.length) {
+  fail(`Weak school-name casing in generated HTML: ${weakSchoolNameHtmlRows.length}`);
+  for (const url of weakSchoolNameHtmlRows.slice(0, 20)) {
+    console.error(url);
   }
 }
 if (onePaperPluralDescriptionRows.length) {
