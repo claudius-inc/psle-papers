@@ -4,7 +4,7 @@ import type { ParsedPaper } from "~/composables/usePapers";
 import { allParsedPapers } from "~/utils/paperSeo";
 import { buildPdfFileUrl } from "~/utils/pdfUrls";
 import { buildSocialMeta } from "~/utils/socialSeo";
-import { trackPaperDownload, trackPaperViewClick } from "~/utils/analytics";
+import { trackEvent, trackPaperDownload, trackPaperViewClick } from "~/utils/analytics";
 
 const pageTitle = "Past Year Exam Papers Singapore | Primary PDF Download";
 const visibleTitle = "Past Year Exam Papers Singapore";
@@ -85,6 +85,15 @@ const buildPaperDownloadName = (paper: ParsedPaper) =>
     .replace(/[^\w.-]+/g, "-")
     .replace(/-+/g, "-")
     .replace(/^-|-$/g, "")}.pdf`;
+
+const trackPastYearCollectionClick = (collection: (typeof pastYearCollections)[number]) => {
+  trackEvent("past_year_collection_click", {
+    ...analyticsContext,
+    source: "past_year_collection_grid",
+    collection_title: collection.title,
+    target_path: collection.to,
+  });
+};
 
 const trackPastYearPaperView = (filename: string, source: string) => {
   trackPaperViewClick(filename, source, analyticsContext);
@@ -262,6 +271,7 @@ useHead({
           v-for="collection in pastYearCollections"
           :key="collection.to"
           :to="collection.to"
+          @click="trackPastYearCollectionClick(collection)"
         >
           <strong>{{ collection.title }}</strong>
           <small>{{ collection.description }}</small>
