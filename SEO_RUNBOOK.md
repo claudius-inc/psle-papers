@@ -16,6 +16,8 @@ Use this checklist after each content or SEO deploy.
 
 ## Google Search Console
 
+Use `SEO_REINDEX_PLAN.md` after each passing deployment when Google results still show stale titles, old homepage copy, or stale school-name casing.
+
 1. Submit `https://sgexamhub.com/sitemap.xml`.
 2. Request indexing for:
    - `https://sgexamhub.com/`
