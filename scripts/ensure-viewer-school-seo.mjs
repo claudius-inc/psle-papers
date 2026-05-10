@@ -12,6 +12,12 @@ const staleTitleSchoolBlock = `const titleSchool = computed(() =>
 const officialTitleSchoolBlock = `const titleSchool = computed(() => paper.value?.schoolName || "");`;
 const compactPracticeMeta = `<small>{{ item.levelName }} {{ item.subjectName }} {{ item.typeName }}</small>`;
 const readablePracticeMeta = `<small>Level {{ item.levelName }} · {{ item.subjectName }} · {{ item.typeName }}</small>`;
+const splitReadablePracticeTitle = `<strong>{{ item.yearCode }} {{ item.schoolName }}</strong>
+                ${readablePracticeMeta}`;
+const splitCompactPracticeTitle = `<strong>{{ item.yearCode }} {{ item.schoolName }}</strong>
+                ${compactPracticeMeta}`;
+const combinedPracticeTitle = `<strong>{{ item.yearCode }} {{ item.schoolName }} {{ item.levelName }} {{ item.subjectName }} {{ item.typeName }}</strong>
+                <small>Open next related paper</small>`;
 
 let nextSource = source;
 
@@ -24,11 +30,17 @@ if (nextSource.includes(staleTitleSchoolBlock)) {
   process.exit(1);
 }
 
-if (nextSource.includes(compactPracticeMeta)) {
+if (nextSource.includes(splitReadablePracticeTitle)) {
+  nextSource = nextSource.replace(splitReadablePracticeTitle, combinedPracticeTitle);
+} else if (nextSource.includes(splitCompactPracticeTitle)) {
+  nextSource = nextSource.replace(splitCompactPracticeTitle, combinedPracticeTitle);
+} else if (nextSource.includes(compactPracticeMeta)) {
   nextSource = nextSource.replace(compactPracticeMeta, readablePracticeMeta);
-} else if (!nextSource.includes(readablePracticeMeta)) {
+}
+
+if (!nextSource.includes(combinedPracticeTitle)) {
   console.error(
-    `${viewerPath} is missing the expected viewer practice-sequence metadata block.`,
+    `${viewerPath} is missing the expected viewer practice-sequence title block.`,
   );
   process.exit(1);
 }
@@ -36,16 +48,14 @@ if (nextSource.includes(compactPracticeMeta)) {
 for (const staleSnippet of [
   "replace(/\\s+\\(primary\\)$/i",
   "replace(/\\s+\\(junior\\)$/i",
+  "<strong>{{ item.yearCode }} {{ item.schoolName }}</strong>",
+  "{{ item.schoolName }}</strong>\n                <small>{{ item.levelName }}",
+  "{{ item.schoolName }}</strong>\n                <small>Level {{ item.levelName }}",
 ]) {
   if (nextSource.includes(staleSnippet)) {
-    console.error(`${viewerPath} still strips official school qualifiers: ${staleSnippet}`);
+    console.error(`${viewerPath} contains stale viewer SEO snippet: ${staleSnippet}`);
     process.exit(1);
   }
-}
-
-if (nextSource.includes("{{ item.schoolName }}</strong>\n                <small>{{ item.levelName }}")) {
-  console.error(`${viewerPath} can concatenate school names and levels in rendered snippets.`);
-  process.exit(1);
 }
 
 if (nextSource !== source) {
