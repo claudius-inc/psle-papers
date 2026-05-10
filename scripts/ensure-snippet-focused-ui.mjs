@@ -46,16 +46,26 @@ const addDataNosnippetToResults = (source, classBinding, filePath) => {
 const normalizeHomepagePaperCountCopy = (source) => {
   const next = source
     .replace(
-      /\{\{ totalPaperCountRounded\.toLocaleString\(\) \}\}\+/g,
+      /\{\{\s*totalPaperCountRounded\.toLocaleString\(\)\s*\}\}\+/g,
       "{{ totalPaperCount.toLocaleString() }}",
+    )
+    .replace(
+      /const totalPaperCountRounded = computed\(\(\) => \{\n\s*const count = \(rawFileList as string\[\]\)\.length;\n\s*return Math\.floor\(count \/ 100\) \* 100;\n\}\);\n/g,
+      "",
     )
     .replace(
       /(<div\s+class="hero-stats"(?![^>]*\bdata-nosnippet\b))/,
       "$1 data-nosnippet",
     );
 
-  if (next.includes("totalPaperCountRounded.toLocaleString() }}+")) {
-    fail("Homepage still uses rounded 2,200+ paper-count snippet copy.");
+  for (const staleSnippet of [
+    "totalPaperCountRounded",
+    "2,200+",
+    "2,200 +",
+  ]) {
+    if (next.includes(staleSnippet)) {
+      fail(`Homepage still exposes stale paper-count snippet copy: ${staleSnippet}`);
+    }
   }
   if (!next.includes('class="hero-stats" data-nosnippet')) {
     fail("Homepage hero stats must be excluded from Google snippets.");
