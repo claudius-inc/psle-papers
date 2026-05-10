@@ -198,6 +198,18 @@ const buildCollectionDescription = ({
   return descriptions.find((description) => description.length <= 170) || descriptions[2];
 };
 
+const trimToTitleLimit = (candidate: string) => {
+  if (candidate.length <= 70) return candidate;
+
+  const shortened = candidate
+    .replace(/\s+\|\s+SG Exam Hub$/, "")
+    .replace(/\s+Free PDF Download$/, "");
+
+  if (shortened.length <= 70) return shortened;
+
+  return shortened.slice(0, 70).replace(/\s+\S*$/, "").trim();
+};
+
 const buildRoute = ({
   slug,
   year,
@@ -262,8 +274,9 @@ const buildRoute = ({
     typeCode,
     schoolCode,
   });
-  const title =
-    titleCandidates.find((candidate) => candidate.length <= 70) || compactBareTitle;
+  const title = trimToTitleLimit(
+    titleCandidates.find((candidate) => candidate.length <= 70) || compactBareTitle,
+  );
   const description = buildCollectionDescription({
     paperCount,
     titleParts: fullTitleParts,
