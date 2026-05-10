@@ -30,7 +30,14 @@ const extractNuxtAssetUrls = (html) => {
 };
 
 try {
-  const html = await fetchText(`${siteUrl}/`);
+  const pages = ["/", "/view/6_1073_3_4_2025"];
+  const pageHtml = await Promise.all(
+    pages.map(async (path) => ({
+      path,
+      html: await fetchText(`${siteUrl}${path}`),
+    })),
+  );
+  const html = pageHtml.find((page) => page.path === "/")?.html || "";
   assertIncludes(
     html,
     [
@@ -41,7 +48,9 @@ try {
     "Live homepage",
   );
 
-  const assetUrls = extractNuxtAssetUrls(html);
+  const assetUrls = [
+    ...new Set(pageHtml.flatMap((page) => extractNuxtAssetUrls(page.html))),
+  ];
   const assetContents = await Promise.all(
     assetUrls.map(async (assetUrl) => ({
       assetUrl,
@@ -82,7 +91,7 @@ try {
     "Live Nuxt assets",
   );
 
-  console.log(`Live conversion analytics audit checked 1 page and ${assetUrls.length} assets.`);
+  console.log(`Live conversion analytics audit checked ${pages.length} pages and ${assetUrls.length} assets.`);
   if (process.exitCode) process.exit();
   console.log("Live conversion analytics audit passed.");
 } catch (error) {
