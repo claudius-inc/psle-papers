@@ -113,6 +113,8 @@ Track whether search users move deeper into the site:
 
 - `paper_view_click`
 - `paper_open`
+- `paper_pdf_load`
+- `paper_pdf_error`
 - `paper_download`
 - `file_download`
 - `free_exam_collection_click`
@@ -131,7 +133,7 @@ Useful report segments:
 
 - Source / medium contains `google / organic`.
 - Landing page is `/`, `/free-exam-papers`, `/past-year-exam-papers`, `/test-papers`, `/top-school-exam-papers`, or starts with `/exam-papers`.
-- Event name is `page_view`, `paper_view_click`, `paper_open`, `paper_download`, `file_download`, `page_engaged_time`, `page_scroll_depth`, or `page_session_summary`.
+- Event name is `page_view`, `paper_view_click`, `paper_open`, `paper_pdf_load`, `paper_pdf_error`, `paper_download`, `file_download`, `page_engaged_time`, `page_scroll_depth`, or `page_session_summary`.
 - Event name `free_exam_collection_click` isolates free-papers collection clicks before users enter year, level, subject, top-school, or PSLE pages.
 - Event name `past_year_collection_click` isolates past-year collection clicks before users enter year, level, subject, assessment, or school pages.
 - Event name `test_paper_collection_click` isolates test-paper collection clicks before users enter year, level, subject, assessment, or PSLE pages.
@@ -140,6 +142,7 @@ Useful report segments:
 - Custom event parameter `landing_path` shows the first page in the session.
 - Custom event parameter `referrer_host` shows the external host, with `is_google_referrer` set for Google referrers.
 - Custom event parameter `source` identifies CTA placement; compare `top_school_collection_grid`, `collection_hero_cta`, `collection_mobile_sticky`, `viewer_mobile_sticky`, `mobile_next_paper`, `index_results`, and `home_results`.
+- Custom event parameter `pdf_load_ms` on `paper_pdf_load` and `paper_pdf_error` shows whether opened viewer pages actually loaded the PDF preview quickly enough to keep users engaged.
 - Custom event parameter `is_conversion_event` is set on `paper_download` and the paired GA4 standard `file_download`; use it to isolate download conversions from exploratory paper views.
 - Standard `file_download` events include `file_name`, `file_extension`, and `link_url` for PDF download reporting.
 - Download events use GA beacon transport so raw PDF navigations are less likely to drop the event before it is sent.

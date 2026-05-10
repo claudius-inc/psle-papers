@@ -371,6 +371,23 @@ const trackViewerPaperDownload = (source: string) => {
 const trackViewerPaperOpen = (source: string) => {
   trackPaperOpen(filename, source, viewerAnalyticsContext.value);
 };
+const trackViewerPdfLoad = (durationMs: number) => {
+  trackEvent("paper_pdf_load", {
+    paper_id: filename,
+    source: "viewer_pdf_frame",
+    pdf_load_ms: Math.round(durationMs),
+    ...viewerAnalyticsContext.value,
+  });
+};
+const trackViewerPdfError = (durationMs: number, status: string) => {
+  trackEvent("paper_pdf_error", {
+    paper_id: filename,
+    source: "viewer_pdf_frame",
+    pdf_load_ms: Math.round(durationMs),
+    pdf_status: status,
+    ...viewerAnalyticsContext.value,
+  });
+};
 const trackViewerRelatedPaperView = (item: ParsedPaper, section: string) => {
   trackPaperViewClick(
     item.filename,
@@ -398,14 +415,28 @@ const trackViewerCollectionClick = (link: { kind: string; to: string }) => {
 onMounted(async () => {
   if (paper.value) trackViewerPaperOpen("viewer_page");
 
+  const loadStartedAt = performance.now();
+  let pdfErrorTracked = false;
   try {
     const response = await fetch(pdfUrl.value);
-    if (!response.ok) throw new Error(`PDF request failed: ${response.status}`);
+    if (!response.ok) {
+      trackViewerPdfError(performance.now() - loadStartedAt, String(response.status));
+      pdfErrorTracked = true;
+      throw new Error(`PDF request failed: ${response.status}`);
+    }
     const blob = await response.blob();
     pdfObjectUrl.value = URL.createObjectURL(
       new Blob([blob], { type: "application/pdf" }),
     );
-  } catch {
+    trackViewerPdfLoad(performance.now() - loadStartedAt);
+  } catch (error) {
+    if (pdfObjectUrl.value) return;
+    if (!pdfErrorTracked) {
+      trackViewerPdfError(
+        performance.now() - loadStartedAt,
+        error instanceof Error ? error.name : "unknown",
+      );
+    }
     pdfObjectUrl.value = "";
   } finally {
     pdfLoading.value = false;
