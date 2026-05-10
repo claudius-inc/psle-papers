@@ -23,6 +23,8 @@ const expectedCollectionPaths = [
   "/exam-papers/primary-6",
   "/exam-papers/mathematics",
   "/exam-papers/science",
+  "/exam-papers/english",
+  "/exam-papers/chinese",
   "/top-school-exam-papers",
   "/exam-papers/psle-revision",
 ];

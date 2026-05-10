@@ -37,6 +37,16 @@ const downloadCollections = [
     to: "/exam-papers/science",
   },
   {
+    title: "Download English exam papers",
+    description: "English PDFs for comprehension, grammar and writing practice.",
+    to: "/exam-papers/english",
+  },
+  {
+    title: "Download Chinese exam papers",
+    description: "Chinese PDFs for vocabulary, comprehension and sentence practice.",
+    to: "/exam-papers/chinese",
+  },
+  {
     title: "Download SA2 exam papers",
     description: "Final assessment papers for timed revision.",
     to: "/exam-papers/sa2",

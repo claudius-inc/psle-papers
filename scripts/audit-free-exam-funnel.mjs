@@ -28,6 +28,8 @@ const expectedCollections = [
   ["Primary 6 free exam papers", "/exam-papers/primary-6"],
   ["Free Maths exam papers", "/exam-papers/mathematics"],
   ["Free Science exam papers", "/exam-papers/science"],
+  ["Free English exam papers", "/exam-papers/english"],
+  ["Free Chinese exam papers", "/exam-papers/chinese"],
   ["Top school exam papers", "/top-school-exam-papers"],
   ["PSLE revision papers", "/exam-papers/psle-revision"],
 ];

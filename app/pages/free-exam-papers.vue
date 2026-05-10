@@ -37,6 +37,16 @@ const freePaperCollections = [
     to: "/exam-papers/science",
   },
   {
+    title: "Free English exam papers",
+    description: "English papers for comprehension, grammar and writing practice.",
+    to: "/exam-papers/english",
+  },
+  {
+    title: "Free Chinese exam papers",
+    description: "Chinese papers for vocabulary, comprehension and sentence practice.",
+    to: "/exam-papers/chinese",
+  },
+  {
     title: "Top school exam papers",
     description: "Raffles, Nanyang, Henry Park, Ai Tong and more.",
     to: "/top-school-exam-papers",

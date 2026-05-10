@@ -29,6 +29,8 @@ const pages = [
       "/exam-papers/primary-6",
       "/exam-papers/mathematics",
       "/exam-papers/science",
+      "/exam-papers/english",
+      "/exam-papers/chinese",
       "/exam-papers/sa2",
       "/exam-papers/psle-revision",
     ],
