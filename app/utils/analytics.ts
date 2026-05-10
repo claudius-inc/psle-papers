@@ -48,6 +48,18 @@ const getSessionAttribution = (): AnalyticsParams => {
   return attribution;
 };
 
+const getResponsiveSource = (source: AnalyticsParams["source"]) => {
+  if (
+    source === "collection_hero_cta" &&
+    typeof window.matchMedia === "function" &&
+    window.matchMedia("(max-width: 640px)").matches
+  ) {
+    return "collection_mobile_sticky";
+  }
+
+  return source;
+};
+
 export const trackEvent = (
   name: string,
   params: AnalyticsParams = {},
@@ -57,11 +69,14 @@ export const trackEvent = (
   const gtag = (window as GtagWindow).gtag;
   if (!gtag) return;
 
+  const responsiveSource = getResponsiveSource(params.source);
+
   gtag("event", name, {
     event_category: "exam_papers",
     transport_type: "beacon",
     ...getSessionAttribution(),
     ...params,
+    ...(responsiveSource ? { source: responsiveSource } : {}),
   });
 };
 
