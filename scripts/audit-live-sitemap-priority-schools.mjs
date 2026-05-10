@@ -1,4 +1,4 @@
-const siteUrl = "https://primaryschoolpapers.sg";
+const siteUrl = "https://sgexamhub.com";
 
 const prioritySchoolPaths = [
   "/exam-papers/school-raffles-girls-primary-school",
@@ -17,7 +17,7 @@ const prioritySchoolPaths = [
 async function fetchText(url) {
   const response = await fetch(url, {
     headers: {
-      "user-agent": "PrimarySchoolExamPapers live sitemap priority audit",
+      "user-agent": "SGExamHubLiveSitemapPriorityAudit/1.0",
     },
   });
 
