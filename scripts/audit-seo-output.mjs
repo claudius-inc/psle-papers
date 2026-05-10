@@ -2,6 +2,7 @@ import { existsSync, readdirSync, readFileSync } from "node:fs";
 import { join, relative } from "node:path";
 
 const root = ".output/public";
+const siteUrl = "https://sgexamhub.com";
 const sitemapPath = "public/sitemap.xml";
 const robotsPath = "public/robots.txt";
 const appPath = "app/app.vue";
@@ -54,6 +55,10 @@ let jsonLdScripts = 0;
 const jsonLdFailures = [];
 const missingLinks = [];
 const selfHostedPdfLinks = [];
+const missingCanonicalRows = [];
+const mismatchedCanonicalRows = [];
+const mismatchedOgUrlRows = [];
+const missingTwitterCardRows = [];
 const checkedLinks = new Set();
 
 const pageExists = (href) => {
@@ -65,12 +70,33 @@ const pageExists = (href) => {
 
 for (const file of htmlFiles) {
   const html = readFileSync(file, "utf8");
-  const pagePath = `/${relative(root, file).replace(/\/index\.html$/, "")}`;
-  const url = pagePath === "/" ? "/" : pagePath;
+  const relativePath = relative(root, file);
+  const routePath =
+    relativePath === "index.html"
+      ? "/"
+      : `/${relativePath.replace(/\/index\.html$/, "")}`;
+  const url = routePath;
+  const expectedCanonical = `${siteUrl}${url === "/" ? "/" : url}`;
   const title = decodeHtml(html.match(/<title>([^<]*)<\/title>/)?.[1] || "");
   const description = decodeHtml(
     html.match(/<meta name="description" content="([^"]*)"/)?.[1] || "",
   );
+  const canonical = html.match(/<link rel="canonical" href="([^"]+)"/)?.[1] || "";
+  const ogUrl = html.match(/<meta property="og:url" content="([^"]+)"/)?.[1] || "";
+  const hasTwitterCard = html.includes('name="twitter:card" content="summary_large_image"');
+
+  if (!canonical) {
+    missingCanonicalRows.push(url);
+  } else if (canonical !== expectedCanonical) {
+    mismatchedCanonicalRows.push(`${url}: expected ${expectedCanonical}, got ${canonical}`);
+  }
+  if (ogUrl && ogUrl !== expectedCanonical) {
+    mismatchedOgUrlRows.push(`${url}: expected ${expectedCanonical}, got ${ogUrl}`);
+  }
+  if (!hasTwitterCard) {
+    missingTwitterCardRows.push(url);
+  }
+
   if (html.includes('href="/files/') || html.includes("https://sgexamhub.com/files/")) {
     selfHostedPdfLinks.push(file);
   }
@@ -916,6 +942,22 @@ if (onePaperPluralDescriptionRows.length) {
   for (const row of onePaperPluralDescriptionRows.slice(0, 20)) {
     console.error(`${row.url}: ${row.description}`);
   }
+}
+if (missingCanonicalRows.length) {
+  fail(`Missing canonical links: ${missingCanonicalRows.length}`);
+  for (const row of missingCanonicalRows.slice(0, 20)) console.error(row);
+}
+if (mismatchedCanonicalRows.length) {
+  fail(`Canonical URLs do not match generated routes: ${mismatchedCanonicalRows.length}`);
+  for (const row of mismatchedCanonicalRows.slice(0, 20)) console.error(row);
+}
+if (mismatchedOgUrlRows.length) {
+  fail(`Open Graph URLs do not match generated routes: ${mismatchedOgUrlRows.length}`);
+  for (const row of mismatchedOgUrlRows.slice(0, 20)) console.error(row);
+}
+if (missingTwitterCardRows.length) {
+  fail(`Missing large Twitter card metadata: ${missingTwitterCardRows.length}`);
+  for (const row of missingTwitterCardRows.slice(0, 20)) console.error(row);
 }
 if (jsonLdFailures.length) {
   fail(`Invalid JSON-LD scripts: ${jsonLdFailures.length}`);
