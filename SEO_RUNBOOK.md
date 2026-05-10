@@ -92,6 +92,7 @@ Track whether search users move deeper into the site:
 - `paper_view_click`
 - `paper_open`
 - `paper_download`
+- `free_exam_collection_click`
 - `top_school_collection_click`
 - `paper_filter_change`
 - `paper_filters_reset`
@@ -106,12 +107,24 @@ Useful report segments:
 - Source / medium contains `google / organic`.
 - Landing page is `/`, `/free-exam-papers`, `/past-year-exam-papers`, `/test-papers`, `/top-school-exam-papers`, or starts with `/exam-papers`.
 - Event name is `page_view`, `paper_view_click`, `paper_open`, `paper_download`, `page_engaged_time`, `page_scroll_depth`, or `page_session_summary`.
+- Event name `free_exam_collection_click` isolates free-papers collection clicks before users enter year, level, subject, top-school, or PSLE pages.
 - Event name `top_school_collection_click` isolates top-school card clicks before users enter a school collection page.
 - Custom event parameter `page_path` shows the current page after direct landings and SPA route changes.
 - Custom event parameter `landing_path` shows the first page in the session.
 - Custom event parameter `referrer_host` shows the external host, with `is_google_referrer` set for Google referrers.
-- Custom event parameter `source` identifies CTA placement; compare `top_school_collection_grid`, `collection_hero_cta`, `viewer_mobile_sticky`, `mobile_next_paper`, `index_results`, and `home_results`.
+- Custom event parameter `source` identifies CTA placement; compare `free_exam_collection_grid`, `top_school_collection_grid`, `collection_hero_cta`, `viewer_mobile_sticky`, `mobile_next_paper`, `index_results`, and `home_results`.
 - Custom event parameter `school_name` shows which top-school collection users clicked from `/top-school-exam-papers`.
+- Custom event parameter `collection_title` shows which free-papers collection users clicked from `/free-exam-papers`.
+
+## Free Exam Funnel Checks
+
+After free-papers content changes deploy, confirm whether organic visitors choose a collection and continue to paper actions:
+
+1. Segment source / medium `google / organic` with landing page `/free-exam-papers`.
+2. Compare `free_exam_collection_click` by custom parameter `collection_title` to see which free-papers paths pull clicks.
+3. For sessions with `free_exam_collection_click`, confirm follow-on `paper_view_click`, `paper_open`, and `paper_download` events.
+4. Compare `collection_title` click share against GSC impressions for `free exam papers`, `free exam papers singapore`, and related query variants.
+5. If free-papers collection clicks rise but paper opens do not, move the highest-intent collection earlier or change the collection card copy.
 
 ## Top School Funnel Checks
 
