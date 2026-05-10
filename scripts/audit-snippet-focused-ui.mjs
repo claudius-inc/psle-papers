@@ -32,6 +32,7 @@ const checks = [
     path: "app/pages/index.vue",
     snippets: [
       'class="filters-bar" data-nosnippet',
+      'class="hero-paper-cta" data-nosnippet',
       'class="hero-stats" data-nosnippet',
       ':class="[\'papers-container\', `papers-${viewMode}`]" data-nosnippet',
       'class="content-wrapper seo-links" aria-labelledby="latest-papers" data-nosnippet',
@@ -52,34 +53,55 @@ const checks = [
     path: "app/pages/exam-papers/[[slug]].vue",
     snippets: [
       'class="filter-container" data-nosnippet',
+      'class="collection-action-strip" data-nosnippet',
+      'class="mobile-collection-action-bar" data-nosnippet',
       ':class="[\'papers-container\', `papers-${viewMode}`]" data-nosnippet',
     ],
+    patterns: [/class="starter-section"[^>]*data-nosnippet/s],
   },
   {
     path: ".output/public/index.html",
     snippets: [
       "data-nosnippet",
+      "hero-paper-cta",
       "SG Exam Hub: Free Singapore Primary Exam Papers",
       "No sign-up needed",
       `${exactPaperCountLabel} PDF exam papers indexed`,
       ...homepagePriorityDirectorySnippets,
     ],
+    patterns: [/class="hero-paper-cta"[^>]*data-nosnippet/s],
     forbiddenSnippets: staleHomepageSnippets,
   },
   {
     path: ".output/public/exam-papers/index.html",
     snippets: [
       "data-nosnippet",
+      "collection-action-strip",
+      "starter-section",
+      "mobile-collection-action-bar",
       "Singapore Primary Exam Papers PDF | Free Download",
       "No sign-up needed",
+    ],
+    patterns: [
+      /class="collection-action-strip"[^>]*data-nosnippet/s,
+      /class="starter-section"[^>]*data-nosnippet/s,
+      /class="mobile-collection-action-bar"[^>]*data-nosnippet/s,
     ],
   },
   {
     path: ".output/public/exam-papers/2025-primary-6-mathematics-sa2/index.html",
     snippets: [
       "data-nosnippet",
+      "collection-action-strip",
+      "starter-section",
+      "mobile-collection-action-bar",
       "2025 Primary 6 Maths SA2 Exam Papers",
       "Download PDF",
+    ],
+    patterns: [
+      /class="collection-action-strip"[^>]*data-nosnippet/s,
+      /class="starter-section"[^>]*data-nosnippet/s,
+      /class="mobile-collection-action-bar"[^>]*data-nosnippet/s,
     ],
   },
 ];
@@ -124,6 +146,11 @@ for (const check of checks) {
   for (const snippet of check.snippets) {
     if (!content.includes(snippet)) {
       fail(`${check.path} is missing snippet-focused UI snippet: ${snippet}`);
+    }
+  }
+  for (const pattern of check.patterns || []) {
+    if (!pattern.test(content)) {
+      fail(`${check.path} is missing snippet-focused UI pattern: ${pattern}`);
     }
   }
   assertNoForbiddenSnippets(content, check.forbiddenSnippets, check.path);

@@ -8,11 +8,17 @@ const files = [
     path: "app/pages/index.vue",
     filterClass: "filters-bar",
     resultsClassBinding: ':class="[\'papers-container\', `papers-${viewMode}`]"',
+    extraSnippetClasses: ["hero-paper-cta"],
   },
   {
     path: "app/pages/exam-papers/[[slug]].vue",
     filterClass: "filter-container",
     resultsClassBinding: ':class="[\'papers-container\', `papers-${viewMode}`]"',
+    extraSnippetClasses: [
+      "collection-action-strip",
+      "starter-section",
+      "mobile-collection-action-bar",
+    ],
   },
 ];
 
@@ -22,6 +28,12 @@ const fail = (message) => {
 };
 
 const addDataNosnippetToClass = (source, className, filePath) => {
+  const classWithMarkerPattern = new RegExp(
+    `<(?:div|section)[^>]*class="${className}"[^>]*\\bdata-nosnippet\\b`,
+    "s",
+  );
+  if (classWithMarkerPattern.test(source)) return source;
+
   const classPattern = new RegExp(
     `(<(?:div|section)\\s+class="${className}"(?![^>]*\\bdata-nosnippet\\b))`,
   );
@@ -33,6 +45,12 @@ const addDataNosnippetToClass = (source, className, filePath) => {
 
   return source.replace(classPattern, "$1 data-nosnippet");
 };
+
+const hasDataNosnippetClass = (source, className) =>
+  new RegExp(
+    `<(?:div|section)[^>]*class="${className}"[^>]*\\bdata-nosnippet\\b`,
+    "s",
+  ).test(source);
 
 const addDataNosnippetToResults = (source, classBinding, filePath) => {
   const withMarker = `${classBinding} data-nosnippet`;
@@ -162,6 +180,9 @@ for (const file of files) {
   let source = readFileSync(file.path, "utf8");
 
   source = addDataNosnippetToClass(source, file.filterClass, file.path);
+  for (const className of file.extraSnippetClasses || []) {
+    source = addDataNosnippetToClass(source, className, file.path);
+  }
   source = addDataNosnippetToResults(source, file.resultsClassBinding, file.path);
   if (file.path === "app/pages/index.vue") {
     source = normalizeHomepagePaperCountCopy(source);
@@ -174,6 +195,12 @@ for (const file of files) {
   ]) {
     if (!source.includes(snippet)) {
       fail(`${file.path} is missing expected snippet-focused UI marker: ${snippet}`);
+    }
+  }
+
+  for (const className of file.extraSnippetClasses || []) {
+    if (!hasDataNosnippetClass(source, className)) {
+      fail(`${file.path} is missing expected snippet-focused UI marker for class: ${className}`);
     }
   }
 

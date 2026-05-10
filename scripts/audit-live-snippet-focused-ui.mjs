@@ -29,11 +29,13 @@ const checks = [
     snippets: [
       "data-nosnippet",
       'class="content-wrapper seo-links" aria-labelledby="latest-papers" data-nosnippet',
+      "hero-paper-cta",
       "SG Exam Hub: Free Singapore Primary Exam Papers",
       "No sign-up needed",
       "2,299 PDF exam papers indexed",
       ...homepagePriorityDirectorySnippets,
     ],
+    patterns: [/class="hero-paper-cta"[^>]*data-nosnippet/s],
     forbiddenSnippets: staleHomepageSnippets,
   },
   {
@@ -48,16 +50,32 @@ const checks = [
     path: "/exam-papers/",
     snippets: [
       "data-nosnippet",
+      "collection-action-strip",
+      "starter-section",
+      "mobile-collection-action-bar",
       "Singapore Primary Exam Papers PDF | Free Download",
       "No sign-up needed",
+    ],
+    patterns: [
+      /class="collection-action-strip"[^>]*data-nosnippet/s,
+      /class="starter-section"[^>]*data-nosnippet/s,
+      /class="mobile-collection-action-bar"[^>]*data-nosnippet/s,
     ],
   },
   {
     path: "/exam-papers/2025-primary-6-mathematics-sa2/",
     snippets: [
       "data-nosnippet",
+      "collection-action-strip",
+      "starter-section",
+      "mobile-collection-action-bar",
       "2025 Primary 6 Maths SA2 Exam Papers",
       "Download PDF",
+    ],
+    patterns: [
+      /class="collection-action-strip"[^>]*data-nosnippet/s,
+      /class="starter-section"[^>]*data-nosnippet/s,
+      /class="mobile-collection-action-bar"[^>]*data-nosnippet/s,
     ],
   },
 ];
@@ -107,6 +125,11 @@ try {
     for (const snippet of check.snippets) {
       if (!html.includes(snippet)) {
         fail(`Live ${check.path} is missing snippet-focused UI snippet: ${snippet}`);
+      }
+    }
+    for (const pattern of check.patterns || []) {
+      if (!pattern.test(html)) {
+        fail(`Live ${check.path} is missing snippet-focused UI pattern: ${pattern}`);
       }
     }
     assertNoForbiddenSnippets(html, check.forbiddenSnippets, `Live ${check.path}`);

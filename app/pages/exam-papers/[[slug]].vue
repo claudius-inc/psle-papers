@@ -1060,7 +1060,7 @@ useHead({
         <h1>{{ pageTitle }}</h1>
         <p>{{ seoRoute.description }}</p>
         <p class="collection-freshness">{{ collectionFreshnessLabel }}</p>
-        <div v-if="primaryCollectionPaper" class="collection-action-strip">
+        <div v-if="primaryCollectionPaper" class="collection-action-strip" data-nosnippet>
           <div>
             <span class="action-eyebrow">Best first step</span>
             <strong>Open the newest paper, then download PDFs for timed revision.</strong>
@@ -1351,6 +1351,7 @@ useHead({
       <section
         v-if="starterPapers.length"
         class="starter-section"
+        data-nosnippet
         aria-labelledby="starter-papers-heading"
       >
         <div class="starter-section-header">
@@ -1540,7 +1541,7 @@ useHead({
         </div>
       </div>
     </main>
-    <div v-if="primaryCollectionPaper" class="mobile-collection-action-bar">
+    <div v-if="primaryCollectionPaper" class="mobile-collection-action-bar" data-nosnippet>
       <NuxtLink
         class="mobile-collection-open"
         :to="`/view/${primaryCollectionPaper.filename}`"

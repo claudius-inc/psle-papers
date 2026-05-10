@@ -640,7 +640,7 @@ const resetFilters = () => {
           Latest available papers: {{ latestAvailableYear }} ·
           {{ totalPaperCount.toLocaleString() }} PDF exam papers indexed
         </p>
-        <div v-if="heroPaper" class="hero-paper-cta">
+        <div v-if="heroPaper" class="hero-paper-cta" data-nosnippet>
           <div class="hero-paper-copy">
             <span>Start with a latest paper</span>
             <strong>
