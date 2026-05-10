@@ -16,7 +16,7 @@ Use this checklist after each content or SEO deploy.
 
 ## Google Search Console
 
-Use `SEO_REINDEX_PLAN.md` after each passing deployment when Google results still show stale titles, old homepage copy, or stale school-name casing.
+Use `SEO_REINDEX_PLAN.md` after each passing deployment when Google results still show stale titles, old homepage copy, or stale school-name casing. Use `SEO_STALE_SNIPPET_REINDEX_CHECKLIST.md` for the current stale homepage and Primary 3 Chinese snippet cluster.
 
 1. Submit `https://sgexamhub.com/sitemap.xml`.
 2. Request indexing for:
@@ -31,6 +31,9 @@ Use `SEO_REINDEX_PLAN.md` after each passing deployment when Google results stil
    - `https://sgexamhub.com/exam-papers/2025`
    - `https://sgexamhub.com/exam-papers/2024`
    - `https://sgexamhub.com/exam-papers/sa2`
+   - `https://sgexamhub.com/exam-papers/chinese`
+   - `https://sgexamhub.com/exam-papers/primary-3`
+   - `https://sgexamhub.com/exam-papers/primary-3-chinese`
    - `https://sgexamhub.com/exam-papers/2025-primary-6-mathematics`
    - `https://sgexamhub.com/exam-papers/2025-primary-6-science`
    - `https://sgexamhub.com/exam-papers/2025-primary-6-sa2`
@@ -69,6 +72,9 @@ Use `SEO_REINDEX_PLAN.md` after each passing deployment when Google results stil
    - `psle practice papers`
    - `2025 primary exam papers`
    - `2024 primary exam papers`
+   - `primary 3 exam papers`
+   - `primary 3 chinese exam papers`
+   - `chinese exam papers`
    - `2025 primary 6 maths exam papers`
    - `2025 primary 6 SA2 exam papers`
    - `2025 primary 6 maths SA2 exam papers`
@@ -124,7 +130,7 @@ Useful report segments:
 - Custom event parameter `page_path` shows the current page after direct landings and SPA route changes.
 - Custom event parameter `landing_path` shows the first page in the session.
 - Custom event parameter `referrer_host` shows the external host, with `is_google_referrer` set for Google referrers.
-- Custom event parameter `source` identifies CTA placement; compare `top_school_collection_grid`, `collection_hero_cta`, `viewer_mobile_sticky`, `mobile_next_paper`, `index_results`, and `home_results`.
+- Custom event parameter `source` identifies CTA placement; compare `top_school_collection_grid`, `collection_hero_cta`, `collection_mobile_sticky`, `viewer_mobile_sticky`, `mobile_next_paper`, `index_results`, and `home_results`.
 - Custom event parameter `is_conversion_event` is set on `paper_download`; use it to isolate download conversions from exploratory paper views.
 - Download events use GA beacon transport so raw PDF navigations are less likely to drop the event before it is sent.
 - Source value `free_exam_collection_grid` identifies collection clicks from `/free-exam-papers`.
@@ -168,8 +174,8 @@ After top-school content changes deploy, confirm whether organic visitors choose
 After a mobile CTA deploy, confirm whether organic mobile users are moving from search landing pages to paper actions:
 
 1. Segment traffic by device category `mobile` and source / medium `google / organic`.
-2. For landing pages beginning with `/exam-papers`, compare mobile `paper_view_click` and `paper_download` where `source = collection_hero_cta` against desktop `collection_hero_cta`.
-3. Compare `paper_download` where `source = collection_hero_cta`, `viewer_mobile_sticky`, `index_results`, and `viewer_panel`.
+2. For landing pages beginning with `/exam-papers`, compare mobile `paper_view_click` and `paper_download` where `source = collection_mobile_sticky` against desktop `collection_hero_cta`.
+3. Compare `paper_download` where `source = collection_mobile_sticky`, `collection_hero_cta`, `viewer_mobile_sticky`, `index_results`, and `viewer_panel`.
 4. Check whether mobile collection CTA sessions also emit `paper_open`, `page_engaged_time`, or `page_session_summary`.
 5. If mobile sticky downloads rise while `paper_open` falls, test changing the primary mobile action order or label.
 
