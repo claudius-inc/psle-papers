@@ -243,7 +243,7 @@ const checks = [
   {
     path: "/exam-papers/primary-6-mathematics-school-nanyang-primary-school/",
     snippets: [
-      "P6 Maths Nanyang Primary School Exam Papers",
+      "Primary 6 Maths Nanyang Primary School Exam Papers",
       "Compare school papers online, then download free PDFs for revision.",
       'rel="canonical"',
       "CollectionPage",
@@ -257,7 +257,7 @@ const checks = [
   {
     path: "/exam-papers/primary-6-school-nanyang-primary-school/",
     snippets: [
-      "P6 Nanyang Primary School Exam Papers",
+      "Primary 6 Nanyang Primary School Exam Papers",
       'rel="canonical"',
       "CollectionPage",
       "School paper paths",
@@ -357,7 +357,7 @@ const checks = [
       "PSLE Revision Papers",
       'href="/exam-papers/psle-revision"',
       "2025 Primary 6 Maths SA2 Exam Papers",
-      "P6 Maths Nanyang Primary School Exam Papers",
+      "Primary 6 Maths Nanyang Primary School Exam Papers",
       'property="og:image" content="https://sgexamhub.com/og-image.png"',
     ],
   },
