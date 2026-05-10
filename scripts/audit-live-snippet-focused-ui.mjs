@@ -1,5 +1,11 @@
 const siteUrl = "https://sgexamhub.com";
 
+const staleHomepageSnippets = [
+  "totalPaperCountRounded",
+  "2,200+",
+  "2,200 +",
+];
+
 const checks = [
   {
     path: "/",
@@ -9,11 +15,7 @@ const checks = [
       "No sign-up needed",
       "2,299 PDF exam papers indexed",
     ],
-    forbiddenSnippets: [
-      "totalPaperCountRounded",
-      "2,200+",
-      "2,200 +",
-    ],
+    forbiddenSnippets: staleHomepageSnippets,
   },
   {
     path: "/exam-papers/",
@@ -50,29 +52,49 @@ const fetchText = async (url) => {
 
 const normalizeForSnippetChecks = (content) =>
   content
+    .replace(/&nbsp;/g, "")
     .replace(/<[^>]*>/g, "")
-    .replace(/\s+/g, "")
-    .replace(/&nbsp;/g, "");
+    .replace(/\s+/g, "");
+
+const assertNoForbiddenSnippets = (content, forbiddenSnippets, label) => {
+  const compactContent = normalizeForSnippetChecks(content);
+  for (const snippet of forbiddenSnippets || []) {
+    const compactSnippet = normalizeForSnippetChecks(snippet);
+    if (content.includes(snippet) || compactContent.includes(compactSnippet)) {
+      fail(`${label} contains stale snippet-focused UI copy: ${snippet}`);
+    }
+  }
+};
+
+const extractNuxtAssetUrls = (html) => {
+  const matches = html.matchAll(/(?:src|href)="(\/_nuxt\/[^"?#]+\.(?:js|mjs|json))"/g);
+  return [...new Set([...matches].map((match) => `${siteUrl}${match[1]}`))];
+};
 
 try {
+  const assetUrls = new Set();
+
   for (const check of checks) {
     const html = await fetchText(`${siteUrl}${check.path}`);
-    const compactHtml = normalizeForSnippetChecks(html);
 
     for (const snippet of check.snippets) {
       if (!html.includes(snippet)) {
         fail(`Live ${check.path} is missing snippet-focused UI snippet: ${snippet}`);
       }
     }
-    for (const snippet of check.forbiddenSnippets || []) {
-      const compactSnippet = normalizeForSnippetChecks(snippet);
-      if (html.includes(snippet) || compactHtml.includes(compactSnippet)) {
-        fail(`Live ${check.path} contains stale snippet-focused UI copy: ${snippet}`);
-      }
-    }
+    assertNoForbiddenSnippets(html, check.forbiddenSnippets, `Live ${check.path}`);
+    for (const assetUrl of extractNuxtAssetUrls(html)) assetUrls.add(assetUrl);
   }
 
-  console.log(`Live snippet-focused UI audit checked ${checks.length} pages.`);
+  for (const assetUrl of assetUrls) {
+    assertNoForbiddenSnippets(
+      await fetchText(assetUrl),
+      staleHomepageSnippets,
+      `Live asset ${assetUrl}`,
+    );
+  }
+
+  console.log(`Live snippet-focused UI audit checked ${checks.length} pages and ${assetUrls.size} assets.`);
   if (process.exitCode) process.exit();
   console.log("Live snippet-focused UI audit passed.");
 } catch (error) {
