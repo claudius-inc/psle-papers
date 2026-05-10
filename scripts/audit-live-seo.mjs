@@ -108,8 +108,9 @@ const checks = [
   {
     path: "/exam-papers/psle-revision/",
     snippets: [
+      "PSLE Practice Papers | Primary 6 Revision PDFs",
       "PSLE Revision Papers",
-      "Use free Primary 6 exam papers for PSLE revision",
+      "Use free PSLE revision papers and PSLE practice papers from Primary 6",
       "Choose a Primary 6 practice set",
       'href="/exam-papers/2025-primary-6-sa2"',
       "Recent Primary 6 papers for PSLE revision",

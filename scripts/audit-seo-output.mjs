@@ -262,11 +262,15 @@ const requiredSnippets = [
   ],
   [
     ".output/public/exam-papers/psle-revision/index.html",
+    "PSLE Practice Papers | Primary 6 Revision PDFs",
+  ],
+  [
+    ".output/public/exam-papers/psle-revision/index.html",
     "PSLE Revision Papers",
   ],
   [
     ".output/public/exam-papers/psle-revision/index.html",
-    "Use free Primary 6 exam papers for PSLE revision",
+    "Use free PSLE revision papers and PSLE practice papers from Primary 6",
   ],
   [
     ".output/public/exam-papers/psle-revision/index.html",
@@ -1050,8 +1054,9 @@ for (const snippet of [
   }
 }
 for (const snippet of [
+  "PSLE Practice Papers | Primary 6 Revision PDFs",
   "PSLE Revision Papers",
-  "Primary 6 exam papers for PSLE revision",
+  "PSLE practice papers from Primary 6",
   "psleCollections",
   "trackPslePaperView",
   "trackPslePaperDownload",

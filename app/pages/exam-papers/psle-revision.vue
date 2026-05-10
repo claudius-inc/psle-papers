@@ -6,10 +6,10 @@ import { buildPdfFileUrl } from "~/utils/pdfUrls";
 import { buildSocialMeta } from "~/utils/socialSeo";
 import { trackPaperDownload, trackPaperViewClick } from "~/utils/analytics";
 
-const pageTitle = "PSLE Revision Papers | Primary 6 Exam Papers";
+const pageTitle = "PSLE Practice Papers | Primary 6 Revision PDFs";
 const visibleTitle = "PSLE Revision Papers";
 const pageDescription =
-  "Use free Primary 6 exam papers for PSLE revision. Open recent P6 SA2, Maths, Science, English and Chinese papers online, then download useful PDFs for timed practice.";
+  "Use free PSLE revision papers and PSLE practice papers from Primary 6. Open recent P6 SA2, Maths, Science, English and Chinese papers, then download useful PDFs.";
 const pageUrl = "https://sgexamhub.com/exam-papers/psle-revision";
 
 const latestPslePapers = allParsedPapers
