@@ -2,6 +2,7 @@ import { existsSync, readFileSync } from "node:fs";
 
 const sourcePath = "public/json/dropdownOptions.json";
 const routeSourcePath = "app/utils/paperSeo.ts";
+const viewerSourcePath = "app/pages/view/[id].vue";
 const generatedChecks = [
   {
     path: ".output/public/index.html",
@@ -19,6 +20,10 @@ const generatedChecks = [
     path: ".output/public/exam-papers/school-anglo-chinese-school-junior/index.html",
     snippets: ["Anglo-Chinese School (Junior) Exam Papers"],
   },
+  {
+    path: ".output/public/view/6_1073_3_4_2025/index.html",
+    snippets: ["Raffles Girls&#39; Primary School"],
+  },
 ];
 
 const weakSchoolNamePattern = /Anglo Chinese School/g;
@@ -30,6 +35,7 @@ const fail = (message) => {
 
 const source = readFileSync(sourcePath, "utf8");
 const routeSource = readFileSync(routeSourcePath, "utf8");
+const viewerSource = readFileSync(viewerSourcePath, "utf8");
 
 for (const snippet of [
   '"name": "Anglo-Chinese School (Junior)"',
@@ -52,6 +58,19 @@ for (const snippet of [
 ]) {
   if (!routeSource.includes(snippet)) {
     fail(`${routeSourcePath} is missing source guard snippet: ${snippet}`);
+  }
+}
+
+if (!viewerSource.includes('const titleSchool = computed(() => paper.value?.schoolName || "");')) {
+  fail(`${viewerSourcePath} must preserve official school names in viewer SEO titles.`);
+}
+
+for (const staleSnippet of [
+  "replace(/\\s+\\(primary\\)$/i",
+  "replace(/\\s+\\(junior\\)$/i",
+]) {
+  if (viewerSource.includes(staleSnippet)) {
+    fail(`${viewerSourcePath} contains stale viewer school-name SEO snippet: ${staleSnippet}`);
   }
 }
 
