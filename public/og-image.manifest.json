@@ -1,0 +1,9 @@
+{
+  "source": "public/og-image.svg",
+  "output": "public/og-image.png",
+  "width": 1200,
+  "height": 630,
+  "renderer": "sips",
+  "svgSha256": "dc607362219c2bbed2683b6ff59c90dbb9a3536c2a8fc56870c607bc5b719033",
+  "pngSha256": "d0b66da84ffab834550742fefdf57765cdbc3f4a306da35ba4096561e0d61bee"
+}
