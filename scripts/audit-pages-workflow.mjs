@@ -35,6 +35,8 @@ const requiredWorkflowSnippets = [
   "actions/checkout@v5",
   "actions/setup-node@v6",
   "actions/configure-pages@v6",
+  'group: "pages"',
+  "cancel-in-progress: true",
   "npm run generate",
   "npm run seo:audit",
   "Remove PDFs from Pages artifact",
@@ -50,6 +52,10 @@ assertIncludes(
   requiredWorkflowSnippets,
   "Pages workflow is missing required SEO deployment gate",
 );
+
+if (workflow.includes("cancel-in-progress: false")) {
+  fail("Pages workflow must not queue stale SEO deploys with cancel-in-progress: false.");
+}
 
 const requiredGenerateSnippets = [
   "node scripts/ensure-viewer-school-seo.mjs",
