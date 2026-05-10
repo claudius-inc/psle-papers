@@ -92,6 +92,20 @@ const checks = [
     ],
   },
   {
+    path: "/exam-papers/",
+    snippets: [
+      "Singapore Primary Exam Papers PDF | Free Download",
+      "Download 2,299 free Singapore primary exam papers PDF files",
+      "Latest available in this collection: 2025 · 2,299 PDF papers",
+      "Open the newest paper, then download PDFs for timed revision.",
+      "Download PDF",
+      "CollectionPage",
+      "DownloadAction",
+      "raw.githubusercontent.com/airbob/PrimarySchoolExamPapers",
+      'property="og:image" content="https://sgexamhub.com/og-image.png"',
+    ],
+  },
+  {
     path: "/exam-papers/psle-revision/",
     snippets: [
       "PSLE Revision Papers",

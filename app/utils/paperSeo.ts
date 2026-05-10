@@ -154,7 +154,7 @@ const buildCollectionDescription = ({
   const count = paperCount.toLocaleString();
 
   if (!titleParts.length) {
-    return `Download ${count} free Singapore primary school exam paper PDFs for P2-P6 Maths, Science, English and Chinese. View online for 2026 revision.`;
+    return `Download ${count} free Singapore primary exam papers PDF files for P2-P6 Maths, Science, English and Chinese. View online for 2026 revision.`;
   }
 
   const focus = titleParts.join(" ");
@@ -222,7 +222,7 @@ const buildRoute = ({
     ? titleParts.includes("Practice Papers")
       ? titleParts.join(" ")
       : `${titleParts.join(" ")} Exam Papers`
-    : "Free Singapore Primary Exam Papers";
+    : "Singapore Primary Exam Papers PDF | Free Download";
   const titleWithBrand = `${bareTitle} | SG Exam Hub`;
   const title = titleWithBrand.length > 70 ? bareTitle : titleWithBrand;
   const description = buildCollectionDescription({

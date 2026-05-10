@@ -489,6 +489,26 @@ const requiredSnippets = [
     "raw.githubusercontent.com/airbob/PrimarySchoolExamPapers",
   ],
   [
+    ".output/public/exam-papers/index.html",
+    "Singapore Primary Exam Papers PDF | Free Download",
+  ],
+  [
+    ".output/public/exam-papers/index.html",
+    "Download 2,299 free Singapore primary exam papers PDF files",
+  ],
+  [
+    ".output/public/exam-papers/index.html",
+    "Latest available in this collection: 2025 · 2,299 PDF papers",
+  ],
+  [
+    ".output/public/exam-papers/index.html",
+    "Open the newest paper, then download PDFs for timed revision.",
+  ],
+  [
+    ".output/public/exam-papers/index.html",
+    "Download PDF",
+  ],
+  [
     ".output/public/exam-papers/2025/index.html",
     "2025 Exam Papers",
   ],
