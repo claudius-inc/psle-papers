@@ -66,6 +66,10 @@ try {
       "page_engaged_time",
       "page_scroll_depth",
       "page_session_summary",
+      "collection_hero_cta",
+      "collection_mobile_sticky",
+      "matchMedia",
+      "max-width: 640px",
     ],
     "Live Nuxt assets",
   );
