@@ -8,15 +8,15 @@ const generatedChecks = [
   },
   {
     path: ".output/public/sitemap/index.html",
-    snippets: ["Anglo-Chinese School", "Anglo-Chinese School Junior"],
+    snippets: ["Anglo-Chinese School (Primary)", "Anglo-Chinese School (Junior)"],
   },
   {
     path: ".output/public/exam-papers/school-anglo-chinese-school-primary/index.html",
-    snippets: ["Anglo-Chinese School", "Anglo-Chinese School Exam Papers"],
+    snippets: ["Anglo-Chinese School (Primary)", "Anglo-Chinese School (Primary) Exam Papers"],
   },
   {
     path: ".output/public/exam-papers/school-anglo-chinese-school-junior/index.html",
-    snippets: ["Anglo-Chinese School Junior Exam Papers"],
+    snippets: ["Anglo-Chinese School (Junior) Exam Papers"],
   },
 ];
 
