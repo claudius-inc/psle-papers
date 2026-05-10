@@ -60,11 +60,7 @@ const readableSubject = computed(() =>
   paper.value?.subjectName === "Mathematics" ? "Maths" : paper.value?.subjectName || "",
 );
 const titleLevel = computed(() => paper.value?.levelName || "");
-const titleSchool = computed(() =>
-  paper.value?.schoolName
-    .replace(/\s+\(primary\)$/i, "")
-    .replace(/\s+\(junior\)$/i, " Junior") || "",
-);
+const titleSchool = computed(() => paper.value?.schoolName || "");
 
 const pageTitle = computed(() => {
   if (!paper.value) return "Loading Paper...";
@@ -697,8 +693,8 @@ useHead({
             >
               <div>
                 <span>Step {{ index + 1 }}</span>
-                <strong>{{ item.yearCode }} {{ item.schoolName }}</strong>
-                <small>{{ item.levelName }} {{ item.subjectName }} {{ item.typeName }}</small>
+                <strong>{{ item.yearCode }} {{ item.schoolName }} {{ item.levelName }} {{ item.subjectName }} {{ item.typeName }}</strong>
+                <small>Open next related paper</small>
               </div>
               <div class="practice-sequence-actions">
                 <NuxtLink

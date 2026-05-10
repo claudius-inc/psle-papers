@@ -182,6 +182,8 @@ const checks = [
       "Latest available in this collection: 2025 · 12 PDF papers",
       "Best first step",
       "Open the newest paper, then download PDFs for timed revision.",
+      "mobile-collection-action-bar",
+      "Open Newest",
       "Start with recent papers",
       "Open one paper from this collection first",
       "Related exam paper collections",

@@ -389,6 +389,12 @@ const trackCollectionHeroPaperView = (filename: string) => {
 const trackCollectionHeroPaperDownload = (filename: string) => {
   trackPaperDownload(filename, "collection_hero_cta", collectionAnalyticsContext.value);
 };
+const trackCollectionMobilePaperView = (filename: string) => {
+  trackPaperViewClick(filename, "collection_mobile_sticky", collectionAnalyticsContext.value);
+};
+const trackCollectionMobilePaperDownload = (filename: string) => {
+  trackPaperDownload(filename, "collection_mobile_sticky", collectionAnalyticsContext.value);
+};
 const buildPaperDownloadName = (paper: {
   yearCode: string;
   levelName: string;
@@ -1084,7 +1090,7 @@ useHead({
     </header>
 
     <!-- Filter bar (locked fields hidden) -->
-    <div class="filter-container">
+    <div class="filter-container" data-nosnippet>
       <div class="content-wrapper filter-grid">
         <div class="filter-group search-filter">
           <label for="collection-paper-search">Search papers</label>
@@ -1484,7 +1490,7 @@ useHead({
         <button class="primary-btn" @click="resetFilters">Clear Filters</button>
       </div>
 
-      <div v-else :class="['papers-container', `papers-${viewMode}`]">
+      <div v-else :class="['papers-container', `papers-${viewMode}`]" data-nosnippet>
         <div
           v-for="paper in visiblePapers"
           :key="paper.filename"
@@ -1534,6 +1540,23 @@ useHead({
         </div>
       </div>
     </main>
+    <div v-if="primaryCollectionPaper" class="mobile-collection-action-bar">
+      <NuxtLink
+        class="mobile-collection-open"
+        :to="`/view/${primaryCollectionPaper.filename}`"
+        @click="trackCollectionMobilePaperView(primaryCollectionPaper.filename)"
+      >
+        Open Newest
+      </NuxtLink>
+      <a
+        class="mobile-collection-download"
+        :href="buildPdfFileUrl(primaryCollectionPaper.filename)"
+        :download="buildPaperDownloadName(primaryCollectionPaper)"
+        @click="trackCollectionMobilePaperDownload(primaryCollectionPaper.filename)"
+      >
+        Download PDF
+      </a>
+    </div>
     <footer class="index-footer">
       <div class="footer-inner">
         <NuxtLink to="/">SG Exam Hub</NuxtLink>
@@ -2623,6 +2646,10 @@ useHead({
   font-family: inherit;
 }
 
+.mobile-collection-action-bar {
+  display: none;
+}
+
 /* Starter papers */
 .starter-section {
   border-bottom: 1px solid #e2e8f0;
@@ -2853,6 +2880,9 @@ useHead({
 }
 
 @media (max-width: 640px) {
+  .index-page {
+    padding-bottom: calc(76px + env(safe-area-inset-bottom, 0px));
+  }
   .index-hero h1 {
     font-size: 1.875rem;
   }
@@ -2917,6 +2947,43 @@ useHead({
   .papers-list .view-btn,
   .papers-list .download-btn {
     width: 100%;
+  }
+  .mobile-collection-action-bar {
+    align-items: center;
+    background: rgba(255, 255, 255, 0.96);
+    border-top: 1px solid #dbe3ef;
+    bottom: 0;
+    box-shadow: 0 -14px 28px -24px rgba(15, 23, 42, 0.5);
+    display: grid;
+    gap: 0.65rem;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    left: 0;
+    padding: 0.75rem 1rem calc(0.75rem + env(safe-area-inset-bottom, 0px));
+    position: fixed;
+    right: 0;
+    z-index: 120;
+  }
+  .mobile-collection-action-bar a {
+    align-items: center;
+    border-radius: 8px;
+    display: inline-flex;
+    font-size: 0.9rem;
+    font-weight: 800;
+    justify-content: center;
+    line-height: 1.2;
+    min-height: 44px;
+    padding: 0.65rem 0.7rem;
+    text-align: center;
+    text-decoration: none;
+  }
+  .mobile-collection-open {
+    background: #4f46e5;
+    color: #ffffff;
+  }
+  .mobile-collection-download {
+    background: #ffffff;
+    border: 1px solid #cbd5e1;
+    color: #1e293b;
   }
 }
 </style>

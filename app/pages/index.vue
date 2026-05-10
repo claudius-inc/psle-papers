@@ -123,9 +123,20 @@ const examPaperDirectorySections = [
       { label: "Primary 6 Maths Exam Papers", to: "/exam-papers/primary-6-mathematics" },
       { label: "Primary 6 Science Exam Papers", to: "/exam-papers/primary-6-science" },
       { label: "Primary 6 English Exam Papers", to: "/exam-papers/primary-6-english" },
+      { label: "Primary 6 Chinese Exam Papers", to: "/exam-papers/primary-6-chinese" },
       { label: "Primary 5 Maths Exam Papers", to: "/exam-papers/primary-5-mathematics" },
       { label: "Primary 5 Science Exam Papers", to: "/exam-papers/primary-5-science" },
+      { label: "Primary 5 English Exam Papers", to: "/exam-papers/primary-5-english" },
+      { label: "Primary 5 Chinese Exam Papers", to: "/exam-papers/primary-5-chinese" },
       { label: "Primary 4 Maths Exam Papers", to: "/exam-papers/primary-4-mathematics" },
+      { label: "Primary 4 Science Exam Papers", to: "/exam-papers/primary-4-science" },
+      { label: "Primary 4 English Exam Papers", to: "/exam-papers/primary-4-english" },
+      { label: "Primary 4 Chinese Exam Papers", to: "/exam-papers/primary-4-chinese" },
+      { label: "Primary 3 Maths Exam Papers", to: "/exam-papers/primary-3-mathematics" },
+      { label: "Primary 3 Science Exam Papers", to: "/exam-papers/primary-3-science" },
+      { label: "Primary 3 English Exam Papers", to: "/exam-papers/primary-3-english" },
+      { label: "Primary 3 Chinese Exam Papers", to: "/exam-papers/primary-3-chinese" },
+      { label: "Primary 3 Higher Chinese Exam Papers", to: "/exam-papers/primary-3-higher-chinese" },
       { label: "Higher Chinese Exam Papers", to: "/exam-papers/higher-chinese" },
       { label: "2025 Primary Exam Papers", to: "/exam-papers/2025" },
       { label: "2025 Primary 6 Exam Papers", to: "/exam-papers/2025-primary-6" },
@@ -165,6 +176,9 @@ const examPaperDirectorySections = [
       { label: "Maths SA2 Exam Papers", to: "/exam-papers/mathematics-sa2" },
       { label: "Science SA2 Exam Papers", to: "/exam-papers/science-sa2" },
       { label: "English SA2 Exam Papers", to: "/exam-papers/english-sa2" },
+      { label: "Chinese SA2 Exam Papers", to: "/exam-papers/chinese-sa2" },
+      { label: "Primary 6 English SA2 Exam Papers", to: "/exam-papers/primary-6-english-sa2" },
+      { label: "Primary 6 Chinese SA2 Exam Papers", to: "/exam-papers/primary-6-chinese-sa2" },
     ],
   },
   {
@@ -318,11 +332,11 @@ const siteNavigationItems = examPaperDirectorySections
 const homepageSeoTitle =
   "SG Exam Hub: Free Singapore Primary Exam Papers | 2026";
 const homepageSeoDescription =
-  "Free Singapore primary school exam papers. No sign-up needed. Download 2,300+ latest 2025 and 2024 SG exam paper PDFs for Maths, Science, English and Chinese.";
+  "Free Singapore primary school exam papers. No sign-up needed. Download 2,299 latest 2025 and 2024 SG exam paper PDFs for Maths, Science, English and Chinese.";
 const homepageSocialTitle =
   "SG Exam Hub: Free Singapore Primary School Exam Papers";
 const homepageSocialDescription =
-  "Access 2,300+ latest 2025 and 2024 SG exam paper PDFs from top Singapore schools for P2-P6 revision.";
+  "Access 2,299 latest 2025 and 2024 SG exam paper PDFs from top Singapore schools for P2-P6 revision.";
 
 // --- SEO Configuration ---
 useHead({
@@ -578,10 +592,6 @@ const setViewMode = (mode: "grid" | "list") => {
     mode,
   });
 };
-const totalPaperCountRounded = computed(() => {
-  const count = (rawFileList as string[]).length;
-  return Math.floor(count / 100) * 100;
-});
 const totalPaperCount = computed(() => (rawFileList as string[]).length);
 const latestAvailableYear = computed(() =>
   Math.max(
@@ -655,10 +665,10 @@ const resetFilters = () => {
             </a>
           </div>
         </div>
-        <div class="hero-stats">
+        <div class="hero-stats" data-nosnippet>
           <div class="stat-item">
             <span class="stat-value"
-              >{{ totalPaperCountRounded.toLocaleString() }}+</span
+              >{{ totalPaperCount.toLocaleString() }}</span
             >
             <span class="stat-label">Papers</span>
           </div>
@@ -677,7 +687,7 @@ const resetFilters = () => {
     </header>
 
     <!-- Filters Bar -->
-    <div class="filters-bar" :class="{ 'is-expanded': showFiltersMobile }">
+    <div class="filters-bar" data-nosnippet :class="{ 'is-expanded': showFiltersMobile }">
       <!-- Mobile Toggle Button -->
       <button class="mobile-filter-toggle" @click="toggleFilters">
         <div class="toggle-content">
@@ -924,7 +934,7 @@ const resetFilters = () => {
           </button>
         </div>
 
-        <div v-else :class="['papers-container', `papers-${viewMode}`]">
+        <div v-else :class="['papers-container', `papers-${viewMode}`]" data-nosnippet>
           <div
             v-for="paper in visiblePapers"
             :key="paper.filename"
