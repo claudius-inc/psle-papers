@@ -41,7 +41,6 @@ Use this map with Google Search Console after deployment. The goal is to match e
 | primary 6 science exam papers | `/exam-papers/primary-6-science` | P6 Science practice | CTR, Science paper downloads |
 | primary 6 english exam papers | `/exam-papers/primary-6-english` | P6 English practice | CTR, English paper opens |
 | primary 6 chinese exam papers | `/exam-papers/primary-6-chinese` | P6 Chinese practice | CTR, Chinese paper opens and downloads |
-| primary 6 higher chinese exam papers | `/exam-papers/primary-6-higher-chinese` | P6 Higher Chinese practice | CTR, Higher Chinese paper opens |
 | primary 5 maths exam papers | `/exam-papers/primary-5-mathematics` | P5 Maths practice | CTR, downloads |
 | primary 5 science exam papers | `/exam-papers/primary-5-science` | P5 Science practice | CTR, downloads |
 | primary 5 english exam papers | `/exam-papers/primary-5-english` | P5 English practice | CTR, English paper opens |
