@@ -139,6 +139,26 @@ Useful report segments:
 - Custom event parameter `school_name` shows which top-school collection users clicked from `/top-school-exam-papers`.
 - Custom event parameter `collection_title` shows which broad landing-page collection users clicked.
 
+## Outcome Evidence Report
+
+After Google has had time to recrawl and GA4 has collected organic sessions, export:
+
+1. GSC Performance for the baseline period before the SEO deploy.
+2. GSC Performance for the matching period after the SEO deploy.
+3. GA4 events filtered to Organic Search, or exported with source / medium columns.
+
+Then run:
+
+```sh
+npm run seo:outcomes -- \
+  --gsc-before reports/seo/gsc-before.csv \
+  --gsc-after reports/seo/gsc-after.csv \
+  --ga4 reports/seo/ga4-organic-events.csv \
+  --out reports/seo/outcome-report.md
+```
+
+The report maps GSC rows to `SEO_KEYWORD_MAP.md` and checks whether the supplied exports prove improved clicks, CTR, or average position plus organic GA4 engagement, paper-open, and PDF-download events. Treat an `INCOMPLETE` report as a sign that the SEO goal remains open.
+
 ## Broad Landing Funnel Checks
 
 After free, past-year, or test-paper landing page changes deploy, confirm whether organic visitors choose a collection and continue to paper actions:
