@@ -85,6 +85,10 @@ Use this checklist after each content or SEO deploy.
    - `red swastika school exam papers`
    - `tao nan school exam papers`
 
+## School Name Quality Checks
+
+Official school names affect search snippet trust and school-specific query matching. After deployment, `npm run seo:audit:live` checks representative live pages for stale casing such as `Anglo chinese School`, `Methodist Girls' School (primary)`, and `Chij`. If this check fails, wait for the GitHub Pages deploy to finish, rerun `npm run seo:audit:live`, and only request indexing after the live pages show official names such as `Anglo-Chinese School (Primary)`, `Methodist Girls' School (Primary)`, and `CHIJ St. Nicholas Girls' School`.
+
 ## GA4 Checks
 
 Track whether search users move deeper into the site:
