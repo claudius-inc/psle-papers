@@ -75,6 +75,14 @@ Use this map with Google Search Console after deployment. The goal is to match e
 | henry park primary school exam papers | `/exam-papers/school-henry-park-primary-school` | School-specific papers | CTR, downloads |
 | 2025 henry park primary school SA2 exam papers | `/exam-papers/2025-sa2-school-henry-park-primary-school` | Latest school-specific final assessment papers | CTR, paper opens, downloads |
 | henry park primary p6 maths exam papers | `/exam-papers/primary-6-mathematics-school-henry-park-primary-school` | School and subject-specific practice | CTR, paper downloads |
+| methodist girls school primary exam papers | `/exam-papers/school-methodist-girls-school-primary` | School-specific papers | CTR, school page clicks, downloads |
+| singapore chinese girls primary school exam papers | `/exam-papers/school-singapore-chinese-girls-primary-school` | School-specific papers | CTR, school page clicks, downloads |
+| chij st nicholas girls school exam papers | `/exam-papers/school-chij-st-nicholas-girls-school` | School-specific papers | CTR, school page clicks, downloads |
+| anglo chinese school primary exam papers | `/exam-papers/school-anglo-chinese-school-primary` | School-specific papers | CTR, school page clicks, downloads |
+| anglo chinese school junior exam papers | `/exam-papers/school-anglo-chinese-school-junior` | School-specific papers | CTR, school page clicks, downloads |
+| pei hwa presbyterian primary school exam papers | `/exam-papers/school-pei-hwa-presbyterian-primary-school` | School-specific papers | CTR, school page clicks, downloads |
+| red swastika school exam papers | `/exam-papers/school-red-swastika-school` | School-specific papers | CTR, school page clicks, downloads |
+| tao nan school exam papers | `/exam-papers/school-tao-nan-school` | School-specific papers | CTR, school page clicks, downloads |
 | ai tong school exam papers | `/exam-papers/school-ai-tong-school` | School-specific papers | CTR, downloads |
 | nan hua primary school exam papers | `/exam-papers/school-nan-hua-primary-school` | School-specific papers | CTR, downloads |
 | nan hua primary p6 science exam papers | `/exam-papers/primary-6-science-school-nan-hua-primary-school` | School and subject-specific practice | CTR, paper downloads |
