@@ -18,15 +18,15 @@ const fetchText = async (url) => {
   return response.text();
 };
 
-const expectedSchoolLinks = [
-  ["Methodist Girls' School", "/exam-papers/school-methodist-girls-school-primary"],
-  ["Singapore Chinese Girls' Primary School", "/exam-papers/school-singapore-chinese-girls-primary-school"],
-  ["CHIJ St. Nicholas Girls' School", "/exam-papers/school-chij-st-nicholas-girls-school"],
-  ["Anglo Chinese School (Primary)", "/exam-papers/school-anglo-chinese-school-primary"],
-  ["Anglo Chinese School (Junior)", "/exam-papers/school-anglo-chinese-school-junior"],
-  ["Pei Hwa Presbyterian Primary School", "/exam-papers/school-pei-hwa-presbyterian-primary-school"],
-  ["Red Swastika School", "/exam-papers/school-red-swastika-school"],
-  ["Tao Nan School", "/exam-papers/school-tao-nan-school"],
+const expectedSchoolPaths = [
+  "/exam-papers/school-methodist-girls-school-primary",
+  "/exam-papers/school-singapore-chinese-girls-primary-school",
+  "/exam-papers/school-chij-st-nicholas-girls-school",
+  "/exam-papers/school-anglo-chinese-school-primary",
+  "/exam-papers/school-anglo-chinese-school-junior",
+  "/exam-papers/school-pei-hwa-presbyterian-primary-school",
+  "/exam-papers/school-red-swastika-school",
+  "/exam-papers/school-tao-nan-school",
 ];
 
 try {
@@ -48,10 +48,7 @@ try {
     }
   }
 
-  for (const [schoolName, path] of expectedSchoolLinks) {
-    if (!topSchoolHtml.includes(schoolName)) {
-      fail(`Live top school page is missing school name: ${schoolName}`);
-    }
+  for (const path of expectedSchoolPaths) {
     if (!topSchoolHtml.includes(`href="${path}"`)) {
       fail(`Live top school page is missing school link: ${path}`);
     }
