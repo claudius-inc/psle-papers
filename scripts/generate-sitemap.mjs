@@ -89,6 +89,8 @@ const staticLastModified =
     .sort()
     .at(-1) || today;
 
+const collectionTemplateLastModified = staticLastModified;
+
 const slugify = (value) =>
   value
     .toLowerCase()
@@ -132,10 +134,9 @@ const getRouteLastModified = (route) => {
   if (route.lastmod) return route.lastmod;
   const matchingDates = files
     .filter((filename) => paperMatchesRoute(filename, route))
-    .map((filename) => paperLastModified.get(filename) || staticLastModified)
-    .sort();
+    .map((filename) => paperLastModified.get(filename) || collectionTemplateLastModified);
 
-  return matchingDates.at(-1) || staticLastModified;
+  return [collectionTemplateLastModified, ...matchingDates].sort().at(-1) || collectionTemplateLastModified;
 };
 
 const paperViewRoutes = files
