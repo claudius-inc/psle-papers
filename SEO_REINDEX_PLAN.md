@@ -125,4 +125,4 @@ Do not count this SEO reindexing work as complete until all are true:
 2. A fresh live homepage/rendered read is clean with no stale `2,200+Papers` or `2,200+` copy.
 3. Google snippets have refreshed with no stale `2,200+Papers` or stale school casing for the priority queries above.
 4. GSC Performance shows improved organic clicks, CTR, impressions, or average position for target query clusters in `SEO_KEYWORD_MAP.md`.
-5. GA4 organic traffic shows engagement, paper opens, and PDF downloads from search users.
+5. GA4 organic traffic shows collection-path clicks, engagement, paper opens, PDF previews, and PDF downloads from search users.

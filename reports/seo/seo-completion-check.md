@@ -11,7 +11,7 @@ Improve website visibility, SEO, keywords, search ranking, Google click-through,
 - GSC URL Inspection requests are complete for priority pages.
 - Public Google snippets are fresh and no longer show stale counts, casing, or noisy paper-list snippets.
 - GSC exports show improved organic clicks, CTR, impressions, or ranking for target keyword clusters.
-- GA4 organic exports show engagement, paper opens, and PDF downloads.
+- GA4 organic exports show collection-path clicks, engagement, paper opens, PDF previews, and PDF downloads.
 
 ## Checks
 
