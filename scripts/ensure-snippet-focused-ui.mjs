@@ -43,11 +43,35 @@ const addDataNosnippetToResults = (source, classBinding, filePath) => {
   return source.replace(classBinding, withMarker);
 };
 
+const normalizeHomepagePaperCountCopy = (source) => {
+  const next = source
+    .replace(
+      /\{\{ totalPaperCountRounded\.toLocaleString\(\) \}\}\+/g,
+      "{{ totalPaperCount.toLocaleString() }}",
+    )
+    .replace(
+      /(<div\s+class="hero-stats"(?![^>]*\bdata-nosnippet\b))/,
+      "$1 data-nosnippet",
+    );
+
+  if (next.includes("totalPaperCountRounded.toLocaleString() }}+")) {
+    fail("Homepage still uses rounded 2,200+ paper-count snippet copy.");
+  }
+  if (!next.includes('class="hero-stats" data-nosnippet')) {
+    fail("Homepage hero stats must be excluded from Google snippets.");
+  }
+
+  return next;
+};
+
 for (const file of files) {
   let source = readFileSync(file.path, "utf8");
 
   source = addDataNosnippetToClass(source, file.filterClass, file.path);
   source = addDataNosnippetToResults(source, file.resultsClassBinding, file.path);
+  if (file.path === "app/pages/index.vue") {
+    source = normalizeHomepagePaperCountCopy(source);
+  }
 
   for (const snippet of [
     `class="${file.filterClass}" data-nosnippet`,
