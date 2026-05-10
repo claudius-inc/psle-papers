@@ -40,9 +40,21 @@ Use this map with Google Search Console after deployment. The goal is to match e
 | primary 6 maths exam papers | `/exam-papers/primary-6-mathematics` | P6 Maths practice | CTR, Maths paper downloads |
 | primary 6 science exam papers | `/exam-papers/primary-6-science` | P6 Science practice | CTR, Science paper downloads |
 | primary 6 english exam papers | `/exam-papers/primary-6-english` | P6 English practice | CTR, English paper opens |
+| primary 6 chinese exam papers | `/exam-papers/primary-6-chinese` | P6 Chinese practice | CTR, Chinese paper opens and downloads |
+| primary 6 higher chinese exam papers | `/exam-papers/primary-6-higher-chinese` | P6 Higher Chinese practice | CTR, Higher Chinese paper opens |
 | primary 5 maths exam papers | `/exam-papers/primary-5-mathematics` | P5 Maths practice | CTR, downloads |
 | primary 5 science exam papers | `/exam-papers/primary-5-science` | P5 Science practice | CTR, downloads |
+| primary 5 english exam papers | `/exam-papers/primary-5-english` | P5 English practice | CTR, English paper opens |
+| primary 5 chinese exam papers | `/exam-papers/primary-5-chinese` | P5 Chinese practice | CTR, Chinese paper opens and downloads |
 | primary 4 maths exam papers | `/exam-papers/primary-4-mathematics` | P4 Maths practice | CTR, downloads |
+| primary 4 science exam papers | `/exam-papers/primary-4-science` | P4 Science practice | CTR, Science paper opens and downloads |
+| primary 4 english exam papers | `/exam-papers/primary-4-english` | P4 English practice | CTR, English paper opens |
+| primary 4 chinese exam papers | `/exam-papers/primary-4-chinese` | P4 Chinese practice | CTR, Chinese paper opens and downloads |
+| primary 3 maths exam papers | `/exam-papers/primary-3-mathematics` | P3 Maths practice | CTR, Maths paper opens and downloads |
+| primary 3 science exam papers | `/exam-papers/primary-3-science` | P3 Science practice | CTR, Science paper opens and downloads |
+| primary 3 english exam papers | `/exam-papers/primary-3-english` | P3 English practice | CTR, English paper opens |
+| primary 3 chinese exam papers | `/exam-papers/primary-3-chinese` | P3 Chinese practice | CTR, Chinese paper opens and downloads |
+| primary 3 higher chinese exam papers | `/exam-papers/primary-3-higher-chinese` | P3 Higher Chinese practice | CTR, Higher Chinese paper opens |
 | higher chinese exam papers | `/exam-papers/higher-chinese` | Higher Chinese papers | CTR, paper opens |
 
 ## Year, Level, And Exam Type Pages
@@ -51,11 +63,17 @@ Use this map with Google Search Console after deployment. The goal is to match e
 | --- | --- | --- | --- |
 | 2025 primary 6 maths exam papers | `/exam-papers/2025-primary-6-mathematics` | Latest P6 Maths papers | CTR, paper downloads |
 | 2025 primary 6 science exam papers | `/exam-papers/2025-primary-6-science` | Latest P6 Science papers | CTR, paper downloads |
+| 2025 primary 6 English exam papers | `/exam-papers/2025-primary-6-english` | Latest P6 English papers | CTR, paper opens and downloads |
+| 2025 primary 6 Chinese exam papers | `/exam-papers/2025-primary-6-chinese` | Latest P6 Chinese papers | CTR, paper opens and downloads |
 | 2025 primary 6 SA2 exam papers | `/exam-papers/2025-primary-6-sa2` | Latest P6 SA2 papers | CTR, paper opens |
 | 2025 primary 6 maths SA2 exam papers | `/exam-papers/2025-primary-6-mathematics-sa2` | Latest P6 Maths final assessment papers | CTR, paper downloads |
 | 2025 primary 6 science SA2 exam papers | `/exam-papers/2025-primary-6-science-sa2` | Latest P6 Science final assessment papers | CTR, paper downloads |
+| 2025 primary 6 English SA2 exam papers | `/exam-papers/2025-primary-6-english-sa2` | Latest P6 English final assessment papers | CTR, paper opens and downloads |
+| 2025 primary 6 Chinese SA2 exam papers | `/exam-papers/2025-primary-6-chinese-sa2` | Latest P6 Chinese final assessment papers | CTR, paper opens and downloads |
 | primary 6 maths SA2 exam papers | `/exam-papers/primary-6-mathematics-sa2` | P6 Maths SA2 practice | CTR, paper downloads |
 | primary 6 science SA2 exam papers | `/exam-papers/primary-6-science-sa2` | P6 Science SA2 practice | CTR, paper downloads |
+| primary 6 English SA2 exam papers | `/exam-papers/primary-6-english-sa2` | P6 English SA2 practice | CTR, paper opens and downloads |
+| primary 6 Chinese SA2 exam papers | `/exam-papers/primary-6-chinese-sa2` | P6 Chinese SA2 practice | CTR, paper opens and downloads |
 | primary 6 SA2 exam papers | `/exam-papers/primary-6-sa2` | P6 final assessment practice | CTR, downloads |
 | primary 6 SA1 exam papers | `/exam-papers/primary-6-sa1` | P6 mid-year practice | CTR, downloads |
 | SA2 exam papers | `/exam-papers/sa2` | Broad SA2 practice | CTR, paper opens |
