@@ -7,6 +7,23 @@ const staleHomepageSnippets = [
   "2,200 +",
 ];
 
+const homepagePriorityDirectorySnippets = [
+  "Primary 6 Chinese Exam Papers",
+  "Primary 6 Higher Chinese Exam Papers",
+  "Primary 5 English Exam Papers",
+  "Primary 5 Chinese Exam Papers",
+  "Primary 4 Science Exam Papers",
+  "Primary 4 English Exam Papers",
+  "Primary 4 Chinese Exam Papers",
+  "Primary 3 Maths Exam Papers",
+  "Primary 3 Science Exam Papers",
+  "Primary 3 English Exam Papers",
+  "Primary 3 Chinese Exam Papers",
+  "Primary 3 Higher Chinese Exam Papers",
+  "Primary 6 English SA2 Exam Papers",
+  "Primary 6 Chinese SA2 Exam Papers",
+];
+
 const checks = [
   {
     path: "app/pages/index.vue",
@@ -14,6 +31,7 @@ const checks = [
       'class="filters-bar" data-nosnippet',
       'class="hero-stats" data-nosnippet',
       ':class="[\'papers-container\', `papers-${viewMode}`]" data-nosnippet',
+      ...homepagePriorityDirectorySnippets,
     ],
     forbiddenSnippets: staleHomepageSnippets,
   },
@@ -31,6 +49,7 @@ const checks = [
       "SG Exam Hub: Free Singapore Primary Exam Papers",
       "No sign-up needed",
       "2,299 PDF exam papers indexed",
+      ...homepagePriorityDirectorySnippets,
     ],
     forbiddenSnippets: staleHomepageSnippets,
   },
