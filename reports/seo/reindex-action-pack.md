@@ -66,6 +66,8 @@ Track freshness in `reports/seo/google-snippet-recheck-tracker.csv` so stale pub
   https://www.google.com/search?q=site%3Asgexamhub.com%20%22download%20exam%20papers%20singapore%22
 - site:sgexamhub.com "psle revision papers"
   https://www.google.com/search?q=site%3Asgexamhub.com%20%22psle%20revision%20papers%22
+- site:sgexamhub.com "psle maths papers"
+  https://www.google.com/search?q=site%3Asgexamhub.com%20%22psle%20maths%20papers%22
 - site:sgexamhub.com "Anglo chinese"
   https://www.google.com/search?q=site%3Asgexamhub.com%20%22Anglo%20chinese%22
 - site:sgexamhub.com "primary 3 chinese exam papers"
@@ -100,6 +102,10 @@ Track these query clusters:
 - primary 3 chinese exam papers
 - chinese exam papers
 - psle revision papers
+- psle maths papers
+- psle science papers
+- psle english papers
+- psle chinese papers
 - 2025 primary 6 maths sa2 exam papers
 - anglo chinese school primary exam papers
 - methodist girls school primary exam papers

@@ -50,7 +50,7 @@ Stdout:
 > node scripts/analyze-google-snippet-tracker.mjs --fail-on-stale
 
 Wrote reports/seo/google-snippet-recheck-status.md
-Google snippet recheck status: 0/12 fresh, 12 incomplete.
+Google snippet recheck status: 0/13 fresh, 13 incomplete.
 ```
 
 Stderr: _(none)_

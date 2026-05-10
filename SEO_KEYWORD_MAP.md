@@ -29,6 +29,10 @@ Use this map with Google Search Console after deployment. The goal is to match e
 | primary exam papers 2026 revision | `/exam-papers/2026-revision` | 2026 revision planning | CTR, collection clicks, downloads |
 | psle revision papers | `/exam-papers/psle-revision` | Primary 6 PSLE preparation | CTR, paper opens, downloads |
 | psle practice papers | `/exam-papers/psle-revision` | PSLE-style timed practice | CTR, P6 paper downloads |
+| psle maths papers | `/exam-papers/psle-revision` | PSLE Maths practice path | CTR, collection clicks, Maths downloads |
+| psle science papers | `/exam-papers/psle-revision` | PSLE Science practice path | CTR, collection clicks, Science downloads |
+| psle english papers | `/exam-papers/psle-revision` | PSLE English practice path | CTR, collection clicks, English downloads |
+| psle chinese papers | `/exam-papers/psle-revision` | PSLE Chinese practice path | CTR, collection clicks, Chinese downloads |
 | 2025 primary exam papers | `/exam-papers/2025` | Latest paper search | CTR, paper opens |
 | 2024 primary exam papers | `/exam-papers/2024` | Recent past-year papers | CTR, downloads |
 | primary 6 exam papers | `/exam-papers/primary-6` | Level-specific revision | CTR, paper opens |

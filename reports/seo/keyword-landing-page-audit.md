@@ -2,8 +2,8 @@
 
 Generated from `SEO_KEYWORD_MAP.md` against `.output/public`.
 
-- Query clusters checked: 89
-- Passing clusters: 89
+- Query clusters checked: 93
+- Passing clusters: 93
 - Failing clusters: 0
 
 | Query cluster | Preferred landing page | Status | In sitemap | Internally linked | Missing query terms |
@@ -31,6 +31,10 @@ Generated from `SEO_KEYWORD_MAP.md` against `.output/public`.
 | primary exam papers 2026 revision | `/exam-papers/2026-revision` | PASS | yes | yes | - |
 | psle revision papers | `/exam-papers/psle-revision` | PASS | yes | yes | - |
 | psle practice papers | `/exam-papers/psle-revision` | PASS | yes | yes | - |
+| psle maths papers | `/exam-papers/psle-revision` | PASS | yes | yes | - |
+| psle science papers | `/exam-papers/psle-revision` | PASS | yes | yes | - |
+| psle english papers | `/exam-papers/psle-revision` | PASS | yes | yes | - |
+| psle chinese papers | `/exam-papers/psle-revision` | PASS | yes | yes | - |
 | 2025 primary exam papers | `/exam-papers/2025` | PASS | yes | yes | - |
 | 2024 primary exam papers | `/exam-papers/2024` | PASS | yes | yes | - |
 | primary 6 exam papers | `/exam-papers/primary-6` | PASS | yes | yes | - |

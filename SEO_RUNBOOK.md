@@ -118,6 +118,7 @@ Track whether search users move deeper into the site:
 - `paper_download`
 - `file_download`
 - `download_exam_collection_click`
+- `psle_collection_click`
 - `free_exam_collection_click`
 - `past_year_collection_click`
 - `test_paper_collection_click`
@@ -140,6 +141,7 @@ Useful report segments:
 - Landing page is `/`, `/download-exam-papers`, `/free-exam-papers`, `/past-year-exam-papers`, `/test-papers`, `/top-school-exam-papers`, or starts with `/exam-papers`.
 - Event name is `page_view`, `paper_search`, `search`, `view_search_results`, `paper_view_click`, `paper_open`, `paper_pdf_load`, `paper_pdf_error`, `paper_download`, `file_download`, `empty_search_recovery_click`, `page_engaged_time`, `page_scroll_depth`, or `page_session_summary`.
 - Event name `download_exam_collection_click` isolates download-intent collection clicks before users enter year, level, subject, assessment, or PSLE pages.
+- Event name `psle_collection_click` isolates PSLE subject and school path clicks before users enter P6 Maths, Science, English, Chinese or school-specific pages.
 - Event name `free_exam_collection_click` isolates free-papers collection clicks before users enter year, level, subject, top-school, or PSLE pages.
 - Event name `past_year_collection_click` isolates past-year collection clicks before users enter year, level, subject, assessment, or school pages.
 - Event name `test_paper_collection_click` isolates test-paper collection clicks before users enter year, level, subject, assessment, or PSLE pages.
@@ -156,6 +158,7 @@ Useful report segments:
 - Standard `file_download` events include `file_name`, `file_extension`, and `link_url` for PDF download reporting.
 - Download events use GA beacon transport so raw PDF navigations are less likely to drop the event before it is sent.
 - Source value `download_exam_collection_grid` identifies collection clicks from `/download-exam-papers`.
+- Source values `psle_collection_grid` and `psle_school_grid` identify PSLE subject and school path clicks from `/exam-papers/psle-revision`.
 - Source value `free_exam_collection_grid` identifies collection clicks from `/free-exam-papers`.
 - Source value `past_year_collection_grid` identifies collection clicks from `/past-year-exam-papers`.
 - Source value `test_paper_collection_grid` identifies collection clicks from `/test-papers`.

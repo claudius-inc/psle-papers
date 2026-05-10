@@ -4,12 +4,12 @@ import type { ParsedPaper } from "~/composables/usePapers";
 import { allParsedPapers } from "~/utils/paperSeo";
 import { buildPdfFileUrl } from "~/utils/pdfUrls";
 import { buildSocialMeta } from "~/utils/socialSeo";
-import { trackPaperDownload, trackPaperViewClick } from "~/utils/analytics";
+import { trackEvent, trackPaperDownload, trackPaperViewClick } from "~/utils/analytics";
 
 const pageTitle = "PSLE Practice Papers | Primary 6 Revision PDFs";
 const visibleTitle = "PSLE Revision Papers";
 const pageDescription =
-  "Use free PSLE revision papers and Primary 6 practice papers. No sign-up needed. Open recent P6 SA2, Maths, Science, English and Chinese papers, then download PDFs.";
+  "Use free PSLE revision papers and Primary 6 practice papers. No sign-up needed. Open PSLE Maths, Science, English and Chinese papers, then download PDFs.";
 const pageUrl = "https://sgexamhub.com/exam-papers/psle-revision";
 
 const latestPslePapers = allParsedPapers
@@ -29,19 +29,24 @@ const psleCollections = [
     to: "/exam-papers/2025-primary-6-sa2",
   },
   {
-    title: "Primary 6 Maths SA2 papers",
-    description: "Maths papers for multi-step questions and speed practice.",
+    title: "PSLE Maths papers",
+    description: "Primary 6 Maths SA2 papers for multi-step questions and speed practice.",
     to: "/exam-papers/primary-6-mathematics-sa2",
   },
   {
-    title: "Primary 6 Science SA2 papers",
-    description: "Science papers for concepts, keywords and explanation practice.",
+    title: "PSLE Science papers",
+    description: "Primary 6 Science SA2 papers for concepts, keywords and explanations.",
     to: "/exam-papers/primary-6-science-sa2",
   },
   {
-    title: "Primary 6 English SA2 papers",
-    description: "English papers for comprehension, grammar and exam stamina.",
+    title: "PSLE English papers",
+    description: "Primary 6 English SA2 papers for comprehension, grammar and exam stamina.",
     to: "/exam-papers/primary-6-english-sa2",
+  },
+  {
+    title: "PSLE Chinese papers",
+    description: "Primary 6 Chinese SA2 papers for comprehension and writing practice.",
+    to: "/exam-papers/primary-6-chinese-sa2",
   },
   {
     title: "2025 Primary 6 Maths papers",
@@ -116,6 +121,18 @@ const trackPslePaperView = (filename: string, source: string) => {
 
 const trackPslePaperDownload = (filename: string, source: string) => {
   trackPaperDownload(filename, source, analyticsContext);
+};
+
+const trackPsleCollectionClick = (
+  collection: { title: string; to: string },
+  source: string,
+) => {
+  trackEvent("psle_collection_click", {
+    ...analyticsContext,
+    source,
+    collection_title: collection.title,
+    target_path: collection.to,
+  });
 };
 
 const itemListElements = computed(() =>
@@ -252,7 +269,7 @@ useHead({
           <p class="subtitle">
             Build a PSLE practice routine with free Primary 6 school exam papers.
             No sign-up needed: open a recent SA2 paper first, then download
-            useful Maths, Science, English or Chinese PDFs for timed revision.
+            useful PSLE Maths, Science, English or Chinese PDFs for timed revision.
           </p>
           <div class="hero-actions">
             <NuxtLink to="/exam-papers/2025-primary-6-sa2">
@@ -305,6 +322,7 @@ useHead({
             :key="collection.to"
             class="collection-card"
             :to="collection.to"
+            @click="trackPsleCollectionClick(collection, 'psle_collection_grid')"
           >
             <strong>{{ collection.title }}</strong>
             <span>{{ collection.description }}</span>
@@ -374,6 +392,7 @@ useHead({
             v-for="collection in schoolCollections"
             :key="collection.to"
             :to="collection.to"
+            @click="trackPsleCollectionClick(collection, 'psle_school_grid')"
           >
             {{ collection.title }}
           </NuxtLink>
