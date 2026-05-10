@@ -22,7 +22,7 @@ const generatedChecks = [
   },
   {
     path: ".output/public/view/6_1073_3_4_2025/index.html",
-    snippets: ["Raffles Girls&#39; Primary School"],
+    snippets: ["Raffles Girls&#39; Primary School", "Level P6"],
   },
 ];
 
@@ -65,12 +65,17 @@ if (!viewerSource.includes('const titleSchool = computed(() => paper.value?.scho
   fail(`${viewerSourcePath} must preserve official school names in viewer SEO titles.`);
 }
 
+if (!viewerSource.includes("Level {{ item.levelName }}")) {
+  fail(`${viewerSourcePath} must label practice-sequence levels to avoid concatenated snippets.`);
+}
+
 for (const staleSnippet of [
   "replace(/\\s+\\(primary\\)$/i",
   "replace(/\\s+\\(junior\\)$/i",
+  "{{ item.schoolName }}</strong>\n                <small>{{ item.levelName }}",
 ]) {
   if (viewerSource.includes(staleSnippet)) {
-    fail(`${viewerSourcePath} contains stale viewer school-name SEO snippet: ${staleSnippet}`);
+    fail(`${viewerSourcePath} contains stale viewer SEO snippet: ${staleSnippet}`);
   }
 }
 
