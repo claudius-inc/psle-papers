@@ -15,8 +15,8 @@ This goal is complete only when live search and analytics evidence show improvem
 | Organic users stay engaged | GA4 shows organic sessions emitting engagement events | `app/composables/useEngagementTracking.ts`, `SEO_RUNBOOK.md` GA4 checks | Instrumented; missing outcome evidence |
 | Organic users open exam papers | GA4 organic segment shows `paper_view_click` and `paper_open` after landing pages | `app/utils/analytics.ts`, homepage/collection/viewer event sources, runbook checks | Instrumented; missing outcome evidence |
 | Organic users download PDFs | GA4 organic segment shows `paper_download`, with useful `source` values such as `collection_hero_cta`, `index_results`, `viewer_panel`, and `viewer_mobile_sticky` | `app/utils/analytics.ts`, viewer and landing page CTAs, runbook checks | Instrumented; missing outcome evidence |
-| Deploy pipeline protects SEO regressions | GitHub Pages build runs generate, local SEO audit, deploy, then live SEO audit | `.github/workflows/nuxtjs.yml`, `scripts/audit-pages-workflow.mjs`, `SEO_RUNBOOK.md` | Guarded; current connector commits still need a Pages run |
-| Live viewer pages remain readable | Viewer pages separate school names and level labels, avoiding concatenated snippets like `Methodist Girls' School (Primary)P6` | `scripts/ensure-viewer-school-seo.mjs`, `scripts/audit-school-name-quality.mjs`, `scripts/audit-live-school-name-quality.mjs` | Source/live audit guarded; live deployment still required |
+| Deploy pipeline protects SEO regressions | GitHub Pages build runs generate, local SEO audit, deploy, then live SEO audit | `.github/workflows/nuxtjs.yml`, `scripts/audit-pages-workflow.mjs`, `SEO_RUNBOOK.md` | Guarded; current connector commits still need a passing Pages run |
+| Live viewer pages remain readable | Viewer pages separate school names and level labels, avoiding concatenated snippets like `Methodist Girls' School (Primary)P6` | `scripts/ensure-viewer-school-seo.mjs`, `scripts/audit-school-name-quality.mjs`, `scripts/audit-live-school-name-quality.mjs` | Live page still showed `Methodist Girls' School (Primary)P6` on 2026-05-10; redeploy and live audit required |
 
 ## Prompt-to-Artifact Checklist
 
@@ -31,10 +31,11 @@ This goal is complete only when live search and analytics evidence show improvem
 
 ## Current Gaps
 
-1. Latest GitHub connector commits show no attached GitHub Actions workflow run. Run `Deploy Nuxt site to Pages` manually from Actions on `main` if no run appears.
-2. Local shell execution is currently unavailable, so local `npm run generate`, `npm run seo:audit`, and git verification have not run in this environment.
-3. Live pages must be rechecked after deployment, especially `/view/6_1073_3_4_2025` for official school names and `Level P6` readability.
-4. The objective remains incomplete until GSC and GA4 show improved organic acquisition and downstream paper/download behavior.
+1. GitHub Pages needs a passing deployment after the latest SEO commits; run `Deploy Nuxt site to Pages` manually from Actions on `main` if no run appears.
+2. Live `/view/6_1073_3_4_2025/` still rendered `Methodist Girls' School (Primary)P6` on 2026-05-10, so `npm run seo:audit:live` must fail until the corrected viewer output is deployed.
+3. Local shell execution is currently unavailable, so local `npm run generate`, `npm run seo:audit`, and git verification have not run in this environment.
+4. Live pages must be rechecked after deployment, especially `/view/6_1073_3_4_2025` for official school names and `Level P6` readability.
+5. The objective remains incomplete until GSC and GA4 show improved organic acquisition and downstream paper/download behavior.
 
 ## Completion Rule
 
