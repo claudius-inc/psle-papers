@@ -22,7 +22,15 @@ const generatedChecks = [
   },
   {
     path: ".output/public/view/6_1073_3_4_2025/index.html",
-    snippets: ["Raffles Girls&#39; Primary School", "Level P6"],
+    snippets: [
+      "Raffles Girls&#39; Primary School",
+      "Methodist Girls&#39; School (Primary) P6 Mathematics SA2",
+      "Open next related paper",
+    ],
+    staleSnippets: [
+      "Methodist Girls&#39; School (Primary)P6",
+      "Methodist Girls' School (Primary)P6",
+    ],
   },
 ];
 
@@ -65,14 +73,20 @@ if (!viewerSource.includes('const titleSchool = computed(() => paper.value?.scho
   fail(`${viewerSourcePath} must preserve official school names in viewer SEO titles.`);
 }
 
-if (!viewerSource.includes("Level {{ item.levelName }}")) {
-  fail(`${viewerSourcePath} must label practice-sequence levels to avoid concatenated snippets.`);
+if (
+  !viewerSource.includes(
+    "{{ item.yearCode }} {{ item.schoolName }} {{ item.levelName }} {{ item.subjectName }} {{ item.typeName }}",
+  )
+) {
+  fail(`${viewerSourcePath} must keep practice-sequence title text in one readable string.`);
 }
 
 for (const staleSnippet of [
   "replace(/\\s+\\(primary\\)$/i",
   "replace(/\\s+\\(junior\\)$/i",
+  "<strong>{{ item.yearCode }} {{ item.schoolName }}</strong>",
   "{{ item.schoolName }}</strong>\n                <small>{{ item.levelName }}",
+  "{{ item.schoolName }}</strong>\n                <small>Level {{ item.levelName }}",
 ]) {
   if (viewerSource.includes(staleSnippet)) {
     fail(`${viewerSourcePath} contains stale viewer SEO snippet: ${staleSnippet}`);
@@ -103,6 +117,12 @@ for (const check of generatedChecks) {
   for (const snippet of check.snippets) {
     if (!html.includes(snippet)) {
       fail(`${check.path} is missing official school-name snippet: ${snippet}`);
+    }
+  }
+
+  for (const staleSnippet of check.staleSnippets || []) {
+    if (html.includes(staleSnippet)) {
+      fail(`${check.path} contains stale school-name snippet: ${staleSnippet}`);
     }
   }
 }
