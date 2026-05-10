@@ -751,7 +751,7 @@ const requiredSnippets = [
   ],
   [
     ".output/public/exam-papers/2025-primary-6-mathematics-sa2/index.html",
-    "Are these 2025 Primary 6 Maths SA2 Exam Papers useful for PSLE revision?",
+    "Are these 2025 Primary 6 Maths SA2 Exam Papers Free PDF Download useful for PSLE revision?",
   ],
   [
     ".output/public/exam-papers/2025-primary-6-mathematics-sa2/index.html",
@@ -855,7 +855,7 @@ const requiredSnippets = [
   ],
   [
     ".output/public/exam-papers/2025-primary-6-mathematics-school-nanyang-primary-school/index.html",
-    "2025 Primary 6 Maths Nanyang Primary School Exam Papers",
+    "2025 P6 Maths Nanyang Primary School Exam Papers Free PDF Download",
   ],
   [
     ".output/public/exam-papers/sa2/index.html",

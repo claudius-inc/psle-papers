@@ -234,6 +234,23 @@ const buildRoute = ({
       : "Singapore Primary Exam Papers PDF | Free Download";
   const fullBareTitle = buildBareTitle(fullTitleParts);
   const compactBareTitle = buildBareTitle(compactTitleParts);
+  const titleCandidates = /(?:PDF|Download)/i.test(fullBareTitle)
+    ? [
+        `${fullBareTitle} | SG Exam Hub`,
+        fullBareTitle,
+        `${compactBareTitle} | SG Exam Hub`,
+        compactBareTitle,
+      ]
+    : [
+        `${fullBareTitle} Free PDF Download | SG Exam Hub`,
+        `${fullBareTitle} Free PDF Download`,
+        `${compactBareTitle} Free PDF Download | SG Exam Hub`,
+        `${compactBareTitle} Free PDF Download`,
+        `${fullBareTitle} | SG Exam Hub`,
+        fullBareTitle,
+        `${compactBareTitle} | SG Exam Hub`,
+        compactBareTitle,
+      ];
   const label = parts.length
     ? parts.includes("Practice Papers")
       ? parts.join(" ")
@@ -246,16 +263,8 @@ const buildRoute = ({
     typeCode,
     schoolCode,
   });
-  const fullTitleWithBrand = `${fullBareTitle} | SG Exam Hub`;
-  const compactTitleWithBrand = `${compactBareTitle} | SG Exam Hub`;
   const title =
-    fullTitleWithBrand.length <= 70
-      ? fullTitleWithBrand
-      : fullBareTitle.length <= 70
-        ? fullBareTitle
-        : compactTitleWithBrand.length <= 70
-          ? compactTitleWithBrand
-          : compactBareTitle;
+    titleCandidates.find((candidate) => candidate.length <= 70) || compactBareTitle;
   const description = buildCollectionDescription({
     paperCount,
     titleParts: fullTitleParts,
