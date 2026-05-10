@@ -11,6 +11,8 @@ Use this checklist after each content or SEO deploy.
 5. Run `npm run seo:audit:live`.
 6. Open `https://sgexamhub.com/sitemap.xml` and confirm it loads.
 7. Open `https://sgexamhub.com/robots.txt` and confirm it points to the sitemap.
+8. If a commit lands on `main` but no GitHub Actions run appears, open Actions, choose `Deploy Nuxt site to Pages`, and run the `workflow_dispatch` workflow manually on `main`.
+9. After deployment, open a representative viewer page such as `https://sgexamhub.com/view/6_1073_3_4_2025` and confirm related-paper text separates school names from level labels, for example `Methodist Girls' School (Primary)` and `Level P6` should not render as one combined token.
 
 ## Google Search Console
 
@@ -87,7 +89,7 @@ Use this checklist after each content or SEO deploy.
 
 ## School Name Quality Checks
 
-Official school names affect search snippet trust and school-specific query matching. After deployment, `npm run seo:audit:live` checks representative live pages for stale casing such as `Anglo chinese School`, `Methodist Girls' School (primary)`, and `Chij`. If this check fails, wait for the GitHub Pages deploy to finish, rerun `npm run seo:audit:live`, and only request indexing after the live pages show official names such as `Anglo-Chinese School (Primary)`, `Methodist Girls' School (Primary)`, and `CHIJ St. Nicholas Girls' School`.
+Official school names affect search snippet trust and school-specific query matching. After deployment, `npm run seo:audit:live` checks representative live pages for stale casing such as `Anglo chinese School`, `Methodist Girls' School (primary)`, and `Chij`. It also checks viewer pages for stale concatenated text such as `Methodist Girls' School (Primary)P6`. If this check fails, wait for the GitHub Pages deploy to finish, rerun `npm run seo:audit:live`, and only request indexing after the live pages show official names such as `Anglo-Chinese School (Primary)`, `Methodist Girls' School (Primary)`, and `CHIJ St. Nicholas Girls' School` with readable level labels.
 
 ## GA4 Checks
 
