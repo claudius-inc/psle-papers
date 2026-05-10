@@ -2,6 +2,17 @@
 
 Objective: after SEO fixes deploy, get Google to refresh stale snippets so searchers see the current titles, school names, and download-focused copy.
 
+## Current Deployment Evidence
+
+Latest passing deployment evidence on 2026-05-10:
+
+- Commit `af00c084c3cfc325a7c77e1d4f841586760426ff` fixed paper sitemap `lastmod` dates to use stable filename-year fallback dates.
+- GitHub Actions run `25625804377` completed successfully for build and deploy.
+- Build generated `6238` sitemap URLs and passed the generated SEO audit.
+- Deployed site passed `npm run seo:audit:live`, including live SEO, school-name, snippet-focused UI, funnel, and sitemap priority-school checks.
+
+This confirms the live site is ready for Search Console reindexing. It does not prove Google snippets or organic behavior have improved yet.
+
 ## Current Search Evidence
 
 Checked on 2026-05-10.
