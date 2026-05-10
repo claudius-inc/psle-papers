@@ -65,6 +65,7 @@ const staticLastModified = [
   "app/app.vue",
   "app/pages/index.vue",
   "app/pages/free-exam-papers.vue",
+  "app/pages/past-year-exam-papers.vue",
   "app/pages/test-papers.vue",
   "app/pages/top-school-exam-papers.vue",
   "app/pages/exam-papers/[[slug]].vue",
@@ -149,6 +150,12 @@ const routeEntries = [
   { path: "/sitemap", priority: "0.7", lastmod: staticLastModified },
   {
     path: "/free-exam-papers",
+    priority: "0.9",
+    changefreq: "weekly",
+    lastmod: staticLastModified,
+  },
+  {
+    path: "/past-year-exam-papers",
     priority: "0.9",
     changefreq: "weekly",
     lastmod: staticLastModified,

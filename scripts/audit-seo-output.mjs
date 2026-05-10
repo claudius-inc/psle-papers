@@ -10,6 +10,7 @@ const engagementPath = "app/composables/useEngagementTracking.ts";
 const keywordMapPath = "SEO_KEYWORD_MAP.md";
 const homePagePath = "app/pages/index.vue";
 const freeExamPapersPagePath = "app/pages/free-exam-papers.vue";
+const pastYearPagePath = "app/pages/past-year-exam-papers.vue";
 const testPaperPagePath = "app/pages/test-papers.vue";
 const topSchoolPagePath = "app/pages/top-school-exam-papers.vue";
 const collectionPagePath = "app/pages/exam-papers/[[slug]].vue";
@@ -138,6 +139,9 @@ const homePage = existsSync(homePagePath) ? readFileSync(homePagePath, "utf8") :
 const freeExamPapersPage = existsSync(freeExamPapersPagePath)
   ? readFileSync(freeExamPapersPagePath, "utf8")
   : "";
+const pastYearPage = existsSync(pastYearPagePath)
+  ? readFileSync(pastYearPagePath, "utf8")
+  : "";
 const testPaperPage = existsSync(testPaperPagePath)
   ? readFileSync(testPaperPagePath, "utf8")
   : "";
@@ -183,6 +187,8 @@ const requiredSnippets = [
   [".output/public/index.html", 'href="/exam-papers/2026-revision"'],
   [".output/public/index.html", "Free Exam Papers Singapore"],
   [".output/public/index.html", 'href="/free-exam-papers"'],
+  [".output/public/index.html", "Past Year Exam Papers Singapore"],
+  [".output/public/index.html", 'href="/past-year-exam-papers"'],
   [".output/public/index.html", "Singapore Primary Test Papers"],
   [".output/public/index.html", 'href="/test-papers"'],
   [".output/public/index.html", "Top School Exam Papers Singapore"],
@@ -330,6 +336,14 @@ const requiredSnippets = [
   ],
   [
     ".output/public/sitemap/index.html",
+    "Past Year Exam Papers Singapore",
+  ],
+  [
+    ".output/public/sitemap/index.html",
+    'href="/past-year-exam-papers"',
+  ],
+  [
+    ".output/public/sitemap/index.html",
     "Singapore Primary Test Papers",
   ],
   [
@@ -406,6 +420,46 @@ const requiredSnippets = [
   ],
   [
     ".output/public/free-exam-papers/index.html",
+    'property="og:image" content="https://sgexamhub.com/og-image.png"',
+  ],
+  [
+    ".output/public/past-year-exam-papers/index.html",
+    "Past Year Exam Papers Singapore",
+  ],
+  [
+    ".output/public/past-year-exam-papers/index.html",
+    "Download Singapore primary past year exam papers",
+  ],
+  [
+    ".output/public/past-year-exam-papers/index.html",
+    "Start with a recent past year paper",
+  ],
+  [
+    ".output/public/past-year-exam-papers/index.html",
+    "Past year exam paper collections",
+  ],
+  [
+    ".output/public/past-year-exam-papers/index.html",
+    "Recent past year exam papers",
+  ],
+  [
+    ".output/public/past-year-exam-papers/index.html",
+    "Are these past year exam papers free?",
+  ],
+  [
+    ".output/public/past-year-exam-papers/index.html",
+    "FAQPage",
+  ],
+  [
+    ".output/public/past-year-exam-papers/index.html",
+    "DownloadAction",
+  ],
+  [
+    ".output/public/past-year-exam-papers/index.html",
+    "raw.githubusercontent.com/airbob/PrimarySchoolExamPapers",
+  ],
+  [
+    ".output/public/past-year-exam-papers/index.html",
     'property="og:image" content="https://sgexamhub.com/og-image.png"',
   ],
   [
@@ -876,6 +930,9 @@ if (!sitemap.includes("https://sgexamhub.com/sitemap")) {
 if (!sitemap.includes("https://sgexamhub.com/free-exam-papers")) {
   fail("Sitemap is missing the free exam papers landing page.");
 }
+if (!sitemap.includes("https://sgexamhub.com/past-year-exam-papers")) {
+  fail("Sitemap is missing the past year exam papers landing page.");
+}
 if (!sitemap.includes("https://sgexamhub.com/test-papers")) {
   fail("Sitemap is missing the primary test papers landing page.");
 }
@@ -967,6 +1024,8 @@ for (const snippet of [
   "PSLE Revision Papers",
   "Free Exam Papers Singapore",
   "/free-exam-papers",
+  "Past Year Exam Papers Singapore",
+  "/past-year-exam-papers",
   "Singapore Primary Test Papers",
   "/test-papers",
   "Top School Exam Papers Singapore",
@@ -1004,6 +1063,21 @@ for (const snippet of [
 ]) {
   if (!freeExamPapersPage.includes(snippet)) {
     fail(`Free exam papers page is missing expected source snippet: ${snippet}.`);
+  }
+}
+for (const snippet of [
+  "Past Year Exam Papers Singapore",
+  "past year exam papers",
+  "pastYearCollections",
+  "trackPastYearPaperView",
+  "trackPastYearPaperDownload",
+  "past_year_hero",
+  "FAQPage",
+  "DownloadAction",
+  "buildPdfFileUrl",
+]) {
+  if (!pastYearPage.includes(snippet)) {
+    fail(`Past year exam papers page is missing expected source snippet: ${snippet}.`);
   }
 }
 for (const snippet of [

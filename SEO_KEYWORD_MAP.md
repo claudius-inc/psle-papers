@@ -11,6 +11,8 @@ Use this map with Google Search Console after deployment. The goal is to match e
 | sg exam papers | `/` | Broad Singapore exam paper discovery | CTR, paper opens, downloads |
 | singapore primary school exam papers | `/` | Broad discovery | CTR, homepage average position, paper clicks |
 | free exam papers singapore | `/free-exam-papers` | Broad discovery and download | CTR, paper downloads |
+| past year exam papers singapore | `/past-year-exam-papers` | Broad past-year paper discovery and download | CTR, paper opens, downloads |
+| singapore primary past year exam papers | `/past-year-exam-papers` | Primary past-year PDF search | CTR, paper opens, downloads |
 | singapore primary exam papers pdf | `/exam-papers` | Browse all PDFs | CTR, paper opens, downloads |
 | primary school test papers | `/test-papers` | General test paper search | CTR, paper opens, downloads |
 | free test papers singapore | `/test-papers` | Free PDF test paper search | CTR, paper opens, downloads |

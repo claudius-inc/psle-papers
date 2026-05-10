@@ -64,6 +64,7 @@ const seoIndexRoutes = [
   "/",
   "/sitemap",
   "/free-exam-papers",
+  "/past-year-exam-papers",
   "/test-papers",
   "/top-school-exam-papers",
   "/exam-papers",

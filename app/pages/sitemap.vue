@@ -68,6 +68,11 @@ const revisionHubLinks = [
     description: "Free P2-P6 exam paper PDFs by subject, level and school",
   },
   {
+    label: "Past Year Exam Papers Singapore",
+    to: "/past-year-exam-papers",
+    description: "Recent Singapore primary past year papers with PDF downloads",
+  },
+  {
     label: "Singapore Primary Test Papers",
     to: "/test-papers",
     description: "Free P2-P6 test papers with PDF downloads",
@@ -97,6 +102,11 @@ const directorySections = [
       {
         label: "Free Exam Papers Singapore",
         to: "/free-exam-papers",
+        count: allParsedPapers.length,
+      },
+      {
+        label: "Past Year Exam Papers Singapore",
+        to: "/past-year-exam-papers",
         count: allParsedPapers.length,
       },
       {
