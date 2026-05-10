@@ -1,6 +1,7 @@
 import { existsSync, readFileSync } from "node:fs";
 
 const sourcePath = "public/json/dropdownOptions.json";
+const routeSourcePath = "app/utils/paperSeo.ts";
 const generatedChecks = [
   {
     path: ".output/public/index.html",
@@ -28,6 +29,7 @@ const fail = (message) => {
 };
 
 const source = readFileSync(sourcePath, "utf8");
+const routeSource = readFileSync(routeSourcePath, "utf8");
 
 for (const snippet of [
   '"name": "Anglo-Chinese School (Junior)"',
@@ -40,6 +42,24 @@ for (const snippet of [
 
 if (weakSchoolNamePattern.test(source)) {
   fail(`${sourcePath} still contains unhyphenated Anglo Chinese School.`);
+}
+
+for (const snippet of [
+  "const formatSchoolTitle = (name: string) => name;",
+  "schoolOptions.map((school) =>",
+]) {
+  if (!routeSource.includes(snippet)) {
+    fail(`${routeSourcePath} is missing source guard snippet: ${snippet}`);
+  }
+}
+
+for (const staleSnippet of [
+  "replace(/\\s+\\(primary\\)$/i",
+  "schools.map((school) =>",
+]) {
+  if (routeSource.includes(staleSnippet)) {
+    fail(`${routeSourcePath} contains stale school-name route snippet: ${staleSnippet}`);
+  }
 }
 
 for (const check of generatedChecks) {
