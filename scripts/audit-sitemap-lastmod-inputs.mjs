@@ -30,6 +30,8 @@ for (const snippet of [
   "const staticFreshnessInputs = [",
   "...sitemapFreshnessInputs",
   "staticFreshnessInputs",
+  "const collectionTemplateLastModified = staticLastModified;",
+  "return [collectionTemplateLastModified, ...matchingDates].sort().at(-1)",
 ]) {
   if (!source.includes(snippet)) {
     fail(`Sitemap lastmod implementation is missing expected snippet: ${snippet}`);
