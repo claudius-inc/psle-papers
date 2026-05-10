@@ -2,6 +2,18 @@ import { existsSync, readFileSync, writeFileSync } from "node:fs";
 
 const requiredGa4EventGroups = {
   engagement: ["page_engaged_time", "page_scroll_depth", "page_session_summary"],
+  collectionPathClick: [
+    "download_exam_collection_click",
+    "free_exam_collection_click",
+    "past_year_collection_click",
+    "test_paper_collection_click",
+    "top_school_collection_click",
+    "revision_collection_click",
+    "psle_collection_click",
+    "related_collection_click",
+    "viewer_collection_click",
+    "empty_search_recovery_click",
+  ],
   paperOpen: ["paper_view_click", "paper_open"],
   pdfPreview: ["paper_pdf_load"],
   download: ["paper_download", "file_download"],
@@ -17,7 +29,7 @@ Inputs:
   --out         Optional markdown report path. Defaults to stdout only.
 
 Expected GSC columns include query, page, clicks, impressions, CTR, and average position.
-Expected GA4 columns include event name plus event count, with optional landing page and source/medium.`;
+Expected GA4 columns include event name plus event count, with optional landing page, source/medium, source, collection_title, school_name, and target_path.`;
 
 const parseArgs = () => {
   const args = process.argv.slice(2);
@@ -247,6 +259,10 @@ const parseGa4Rows = (path) =>
           "page path and screen class",
         ])),
         sourceMedium,
+        source: getField(record, ["source", "event source"]),
+        collectionTitle: getField(record, ["collection title", "collection_title"]),
+        schoolName: getField(record, ["school name", "school_name"]),
+        targetPath: normalizePath(getField(record, ["target path", "target_path"])),
         count: parseNumber(getField(record, [
           "event count",
           "eventcount",
@@ -347,8 +363,8 @@ const buildReport = ({ gscResults, ga4Results }) => {
     "## Completion Interpretation",
     "",
     complete
-      ? "The supplied exports show both improved GSC acquisition and GA4 organic engagement/paper-download behavior."
-      : "The supplied exports do not yet prove the SEO goal. Keep the goal open until GSC shows improved clicks, CTR, or average position and GA4 shows organic engagement, paper opens, and downloads.",
+      ? "The supplied exports show improved GSC acquisition plus GA4 organic collection-path clicks, engagement, paper-open behavior, PDF previews, and downloads."
+      : "The supplied exports do not yet prove the SEO goal. Keep the goal open until GSC shows improved clicks, CTR, or average position and GA4 shows organic collection-path clicks, engagement, paper opens, PDF previews, and downloads.",
   );
 
   return {

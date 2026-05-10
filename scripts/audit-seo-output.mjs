@@ -319,7 +319,10 @@ for (const snippet of [
 for (const [path, expected] of [
   ["reports/seo/gsc-before-template.csv", "Query,Page,Clicks,Impressions,CTR,Position"],
   ["reports/seo/gsc-after-template.csv", "Query,Page,Clicks,Impressions,CTR,Position"],
-  ["reports/seo/ga4-organic-events-template.csv", "Event name,Landing page,Session source / medium,Event count"],
+  [
+    "reports/seo/ga4-organic-events-template.csv",
+    "Event name,Landing page,Session source / medium,Source,Collection title,School name,Target path,Event count",
+  ],
 ]) {
   if (!readText(path).includes(expected)) {
     fail(`${path} is missing expected export-template header: ${expected}`);

@@ -123,6 +123,9 @@ Track whether search users move deeper into the site:
 - `past_year_collection_click`
 - `test_paper_collection_click`
 - `top_school_collection_click`
+- `revision_collection_click`
+- `related_collection_click`
+- `viewer_collection_click`
 - `paper_filter_change`
 - `paper_filters_reset`
 - `paper_search`
@@ -139,13 +142,15 @@ Useful report segments:
 
 - Source / medium contains `google / organic`.
 - Landing page is `/`, `/download-exam-papers`, `/free-exam-papers`, `/past-year-exam-papers`, `/test-papers`, `/top-school-exam-papers`, or starts with `/exam-papers`.
-- Event name is `page_view`, `paper_search`, `search`, `view_search_results`, `paper_view_click`, `paper_open`, `paper_pdf_load`, `paper_pdf_error`, `paper_download`, `file_download`, `revision_collection_click`, `empty_search_recovery_click`, `page_engaged_time`, `page_scroll_depth`, or `page_session_summary`.
+- Event name is `page_view`, `paper_search`, `search`, `view_search_results`, `paper_view_click`, `paper_open`, `paper_pdf_load`, `paper_pdf_error`, `paper_download`, `file_download`, `download_exam_collection_click`, `free_exam_collection_click`, `past_year_collection_click`, `test_paper_collection_click`, `top_school_collection_click`, `revision_collection_click`, `psle_collection_click`, `related_collection_click`, `viewer_collection_click`, `empty_search_recovery_click`, `page_engaged_time`, `page_scroll_depth`, or `page_session_summary`.
 - Event name `download_exam_collection_click` isolates download-intent collection clicks before users enter year, level, subject, assessment, or PSLE pages.
 - Event name `psle_collection_click` isolates PSLE subject and school path clicks before users enter P6 Maths, Science, English, Chinese or school-specific pages.
 - Event name `free_exam_collection_click` isolates free-papers collection clicks before users enter year, level, subject, top-school, or PSLE pages.
 - Event name `past_year_collection_click` isolates past-year collection clicks before users enter year, level, subject, assessment, or school pages.
 - Event name `test_paper_collection_click` isolates test-paper collection clicks before users enter year, level, subject, assessment, or PSLE pages.
 - Event name `top_school_collection_click` isolates top-school card clicks before users enter a school collection page.
+- Event name `revision_collection_click` isolates 2026 revision path clicks before users enter 2025 P6 subject or SA2 pages.
+- Event names `related_collection_click` and `viewer_collection_click` show whether users continue from collection and viewer pages into another relevant collection instead of stopping after one paper.
 - Event name `empty_search_recovery_click` shows whether users who hit zero search/filter results continue into a suggested collection instead of leaving.
 - Standard `search` and `view_search_results` events include `search_term` so GA4 can report on-site paper searches alongside the custom `paper_search` funnel event.
 - Source value `home_url_query` identifies searches triggered by a homepage `?q=` URL, including Google sitelinks-searchbox-style entry points.
@@ -159,6 +164,7 @@ Useful report segments:
 - Download events use GA beacon transport so raw PDF navigations are less likely to drop the event before it is sent.
 - Source value `download_exam_collection_grid` identifies collection clicks from `/download-exam-papers`.
 - Source values `psle_collection_grid` and `psle_school_grid` identify PSLE subject and school path clicks from `/exam-papers/psle-revision`.
+- Source value `revision_collection_grid` identifies 2026 revision path clicks from `/exam-papers/2026-revision`.
 - Source value `free_exam_collection_grid` identifies collection clicks from `/free-exam-papers`.
 - Source value `past_year_collection_grid` identifies collection clicks from `/past-year-exam-papers`.
 - Source value `test_paper_collection_grid` identifies collection clicks from `/test-papers`.
@@ -185,7 +191,17 @@ npm run seo:outcomes -- \
   --out reports/seo/outcome-report.md
 ```
 
-The report maps GSC rows to `SEO_KEYWORD_MAP.md` and checks whether the supplied exports prove improved clicks, CTR, or average position plus organic GA4 engagement, paper-open, and PDF-download events. Treat an `INCOMPLETE` report as a sign that the SEO goal remains open.
+The report maps GSC rows to `SEO_KEYWORD_MAP.md` and checks whether the supplied exports prove improved clicks, CTR, or average position plus organic GA4 collection-path clicks, engagement, paper-open, PDF-preview, and PDF-download events. Treat an `INCOMPLETE` report as a sign that the SEO goal remains open.
+
+## 2026 Revision Funnel Checks
+
+After 2026 revision content changes deploy, confirm whether organic visitors choose a subject path and continue to paper actions:
+
+1. Segment source / medium `google / organic` with landing page `/exam-papers/2026-revision`.
+2. Compare `revision_collection_click` by custom parameter `collection_title` to see whether users choose P6 Maths, Science, English, Chinese, or SA2 paths.
+3. For sessions with `revision_collection_click`, confirm follow-on `paper_view_click`, `paper_open`, and `paper_download` events.
+4. Compare `collection_title` click share against GSC impressions for `2026 primary exam papers`, `2025 primary 6 exam papers`, and subject-specific P6 revision queries.
+5. If revision collection clicks rise but paper opens do not, move the highest-intent subject collection earlier or change the collection card copy.
 
 ## Broad Landing Funnel Checks
 

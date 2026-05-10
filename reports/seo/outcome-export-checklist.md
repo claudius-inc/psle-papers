@@ -33,11 +33,28 @@ Required event names:
 - paper_search
 - search
 - view_search_results
+- download_exam_collection_click
+- free_exam_collection_click
+- past_year_collection_click
+- test_paper_collection_click
+- top_school_collection_click
+- revision_collection_click
+- psle_collection_click
+- related_collection_click
+- viewer_collection_click
+- empty_search_recovery_click
 - paper_view_click
 - paper_open
 - paper_pdf_load
 - paper_download
 - file_download
+
+Useful optional GA4 dimensions for diagnosing which paths work:
+
+- Source
+- Collection title
+- School name
+- Target path
 
 Priority landing pages to keep in the GA4 export review:
 

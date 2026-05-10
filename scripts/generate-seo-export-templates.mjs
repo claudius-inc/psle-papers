@@ -3,7 +3,8 @@ import { mkdirSync, writeFileSync } from "node:fs";
 const outputDirectory = "reports/seo";
 
 const gscHeader = "Query,Page,Clicks,Impressions,CTR,Position\n";
-const ga4Header = "Event name,Landing page,Session source / medium,Event count\n";
+const ga4Header =
+  "Event name,Landing page,Session source / medium,Source,Collection title,School name,Target path,Event count\n";
 
 const checklist = [
   "# SEO Outcome Export Templates",
@@ -41,11 +42,28 @@ const checklist = [
   "- paper_search",
   "- search",
   "- view_search_results",
+  "- download_exam_collection_click",
+  "- free_exam_collection_click",
+  "- past_year_collection_click",
+  "- test_paper_collection_click",
+  "- top_school_collection_click",
+  "- revision_collection_click",
+  "- psle_collection_click",
+  "- related_collection_click",
+  "- viewer_collection_click",
+  "- empty_search_recovery_click",
   "- paper_view_click",
   "- paper_open",
   "- paper_pdf_load",
   "- paper_download",
   "- file_download",
+  "",
+  "Useful optional GA4 dimensions for diagnosing which paths work:",
+  "",
+  "- Source",
+  "- Collection title",
+  "- School name",
+  "- Target path",
   "",
   "Priority landing pages to keep in the GA4 export review:",
   "",

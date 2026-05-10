@@ -81,7 +81,7 @@ Inputs:
   --out         Optional markdown report path. Defaults to stdout only.
 
 Expected GSC columns include query, page, clicks, impressions, CTR, and average position.
-Expected GA4 columns include event name plus event count, with optional landing page and source/medium.
+Expected GA4 columns include event name plus event count, with optional landing page, source/medium, source, collection_title, school_name, and target_path.
 ```
 
 ## Completion Rule
