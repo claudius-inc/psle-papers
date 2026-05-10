@@ -9,7 +9,11 @@ const checks = [
       "No sign-up needed",
       "2,299 PDF exam papers indexed",
     ],
-    forbiddenSnippets: ["2,200+Papers", "2,200+ Papers"],
+    forbiddenSnippets: [
+      "totalPaperCountRounded",
+      "2,200+",
+      "2,200 +",
+    ],
   },
   {
     path: "/exam-papers/",
@@ -44,16 +48,25 @@ const fetchText = async (url) => {
   return response.text();
 };
 
+const normalizeForSnippetChecks = (content) =>
+  content
+    .replace(/<[^>]*>/g, "")
+    .replace(/\s+/g, "")
+    .replace(/&nbsp;/g, "");
+
 try {
   for (const check of checks) {
     const html = await fetchText(`${siteUrl}${check.path}`);
+    const compactHtml = normalizeForSnippetChecks(html);
+
     for (const snippet of check.snippets) {
       if (!html.includes(snippet)) {
         fail(`Live ${check.path} is missing snippet-focused UI snippet: ${snippet}`);
       }
     }
     for (const snippet of check.forbiddenSnippets || []) {
-      if (html.includes(snippet)) {
+      const compactSnippet = normalizeForSnippetChecks(snippet);
+      if (html.includes(snippet) || compactHtml.includes(compactSnippet)) {
         fail(`Live ${check.path} contains stale snippet-focused UI copy: ${snippet}`);
       }
     }
