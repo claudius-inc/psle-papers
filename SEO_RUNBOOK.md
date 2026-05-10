@@ -90,16 +90,16 @@ Useful report segments:
 - Custom event parameter `landing_path` shows the first page in the session.
 - Custom event parameter `page_path` shows the current page after direct landings and SPA route changes.
 - Custom event parameter `referrer_host` shows the external host, with `is_google_referrer` set for Google referrers.
-- Custom event parameter `source` identifies CTA placement; compare `collection_hero_cta`, `collection_mobile_sticky`, `viewer_mobile_sticky`, `mobile_next_paper`, `index_results`, and `home_results`.
+- Custom event parameter `source` identifies CTA placement; compare `collection_hero_cta`, `viewer_mobile_sticky`, `mobile_next_paper`, `index_results`, and `home_results`.
 
 ## Mobile CTA Checks
 
 After a mobile CTA deploy, confirm whether organic mobile users are moving from search landing pages to paper actions:
 
 1. Segment traffic by device category `mobile` and source / medium `google / organic`.
-2. For landing pages beginning with `/exam-papers`, compare `paper_view_click` where `source = collection_mobile_sticky` against `source = collection_hero_cta`.
-3. Compare `paper_download` where `source = collection_mobile_sticky`, `viewer_mobile_sticky`, `index_results`, and `viewer_panel`.
-4. Check whether sessions with `collection_mobile_sticky` also emit `paper_open`, `page_engaged_time`, or `page_session_summary`.
+2. For landing pages beginning with `/exam-papers`, compare mobile `paper_view_click` and `paper_download` where `source = collection_hero_cta` against desktop `collection_hero_cta`.
+3. Compare `paper_download` where `source = collection_hero_cta`, `viewer_mobile_sticky`, `index_results`, and `viewer_panel`.
+4. Check whether mobile collection CTA sessions also emit `paper_open`, `page_engaged_time`, or `page_session_summary`.
 5. If mobile sticky downloads rise while `paper_open` falls, test changing the primary mobile action order or label.
 
 ## Monthly Improvements
@@ -110,4 +110,4 @@ After a mobile CTA deploy, confirm whether organic mobile users are moving from 
 4. Add new collection links for query patterns that appear repeatedly.
 5. Keep old paper viewer URLs in the sitemap so long-tail school/year/subject searches can land directly on a paper.
 6. Compare organic users, paper opens, and downloads month over month.
-7. Compare mobile sticky CTA sources against desktop and non-sticky sources before deciding the next layout change.
+7. Compare mobile CTA sources against desktop and non-sticky sources before deciding the next layout change.
