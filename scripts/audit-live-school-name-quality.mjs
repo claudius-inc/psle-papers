@@ -10,6 +10,15 @@ const pages = [
     ],
   },
   {
+    label: "all exam papers collection",
+    path: "/exam-papers/",
+    expected: [
+      "Anglo-Chinese School (Junior)",
+      "Anglo-Chinese School (Primary)",
+      "Methodist Girls' School (Primary)",
+    ],
+  },
+  {
     label: "P3 Chinese collection",
     path: "/exam-papers/primary-3-chinese",
     expected: [
