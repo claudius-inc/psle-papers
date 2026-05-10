@@ -533,7 +533,7 @@ useHead({
 }
 
 .hero-actions a:first-child,
-paper-actions a:first-child {
+.paper-actions a:first-child {
   background: #0f766e;
   color: #ffffff;
 }
