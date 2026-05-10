@@ -8,6 +8,7 @@ const appPath = "app/app.vue";
 const analyticsPath = "app/utils/analytics.ts";
 const engagementPath = "app/composables/useEngagementTracking.ts";
 const keywordMapPath = "SEO_KEYWORD_MAP.md";
+const seoRunbookPath = "SEO_RUNBOOK.md";
 const homePagePath = "app/pages/index.vue";
 const freeExamPapersPagePath = "app/pages/free-exam-papers.vue";
 const pastYearPagePath = "app/pages/past-year-exam-papers.vue";
@@ -135,6 +136,7 @@ const engagement = existsSync(engagementPath)
 const keywordMap = existsSync(keywordMapPath)
   ? readFileSync(keywordMapPath, "utf8")
   : "";
+const seoRunbook = existsSync(seoRunbookPath) ? readFileSync(seoRunbookPath, "utf8") : "";
 const homePage = existsSync(homePagePath) ? readFileSync(homePagePath, "utf8") : "";
 const freeExamPapersPage = existsSync(freeExamPapersPagePath)
   ? readFileSync(freeExamPapersPagePath, "utf8")
@@ -1048,6 +1050,28 @@ for (const snippet of [
 ]) {
   if (!homePage.includes(snippet)) {
     fail(`Homepage is missing expected source snippet: ${snippet}.`);
+  }
+}
+for (const snippet of [
+  "https://sgexamhub.com/free-exam-papers",
+  "https://sgexamhub.com/past-year-exam-papers",
+  "https://sgexamhub.com/test-papers",
+  "https://sgexamhub.com/top-school-exam-papers",
+  "https://sgexamhub.com/exam-papers/2026-revision",
+  "https://sgexamhub.com/exam-papers/psle-revision",
+  "https://sgexamhub.com/exam-papers/2025-primary-6-mathematics-sa2",
+  "https://sgexamhub.com/exam-papers/2025-primary-6-science-sa2",
+  "past year exam papers singapore",
+  "singapore primary past year exam papers",
+  "free test papers singapore",
+  "top school exam papers singapore",
+  "2026 primary exam papers",
+  "psle revision papers",
+  "psle practice papers",
+  "Landing page is `/`, `/free-exam-papers`, `/past-year-exam-papers`, `/test-papers`, `/top-school-exam-papers`, or starts with `/exam-papers`.",
+]) {
+  if (!seoRunbook.includes(snippet)) {
+    fail(`SEO runbook is missing expected GSC/GA4 snippet: ${snippet}`);
   }
 }
 for (const snippet of [

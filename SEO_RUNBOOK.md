@@ -18,21 +18,54 @@ Use this checklist after each content or SEO deploy.
 2. Request indexing for:
    - `https://sgexamhub.com/`
    - `https://sgexamhub.com/exam-papers`
+   - `https://sgexamhub.com/free-exam-papers`
+   - `https://sgexamhub.com/past-year-exam-papers`
+   - `https://sgexamhub.com/test-papers`
+   - `https://sgexamhub.com/top-school-exam-papers`
+   - `https://sgexamhub.com/exam-papers/2026-revision`
+   - `https://sgexamhub.com/exam-papers/psle-revision`
+   - `https://sgexamhub.com/exam-papers/2025`
+   - `https://sgexamhub.com/exam-papers/2024`
    - `https://sgexamhub.com/exam-papers/sa2`
    - `https://sgexamhub.com/exam-papers/2025-primary-6-mathematics`
    - `https://sgexamhub.com/exam-papers/2025-primary-6-science`
    - `https://sgexamhub.com/exam-papers/2025-primary-6-sa2`
+   - `https://sgexamhub.com/exam-papers/2025-primary-6-mathematics-sa2`
+   - `https://sgexamhub.com/exam-papers/2025-primary-6-science-sa2`
+   - `https://sgexamhub.com/exam-papers/primary-6`
    - `https://sgexamhub.com/exam-papers/primary-6-sa1`
+   - `https://sgexamhub.com/exam-papers/primary-6-sa2`
+   - `https://sgexamhub.com/exam-papers/primary-6-mathematics`
+   - `https://sgexamhub.com/exam-papers/primary-6-science`
    - `https://sgexamhub.com/exam-papers/school-raffles-girls-primary-school`
+   - `https://sgexamhub.com/exam-papers/school-nanyang-primary-school`
+   - `https://sgexamhub.com/exam-papers/school-henry-park-primary-school`
 3. In Performance, track queries containing:
    - `singapore primary school exam papers`
+   - `singapore primary exam papers pdf`
    - `free exam papers`
+   - `free exam papers singapore`
+   - `past year exam papers singapore`
+   - `singapore primary past year exam papers`
+   - `primary school test papers`
+   - `free test papers singapore`
+   - `top school exam papers singapore`
+   - `2026 primary exam papers`
+   - `psle revision papers`
+   - `psle practice papers`
+   - `2025 primary exam papers`
+   - `2024 primary exam papers`
    - `2025 primary 6 maths exam papers`
    - `2025 primary 6 SA2 exam papers`
+   - `2025 primary 6 maths SA2 exam papers`
+   - `2025 primary 6 science SA2 exam papers`
    - `primary 6 SA1 exam papers`
+   - `primary 6 SA2 exam papers`
+   - `primary 6 maths exam papers`
    - `primary 6 science exam papers`
    - `raffles girls primary school exam papers`
    - `nanyang primary school exam papers`
+   - `henry park primary school exam papers`
 
 ## GA4 Checks
 
@@ -51,7 +84,7 @@ Track whether search users move deeper into the site:
 Useful report segments:
 
 - Source / medium contains `google / organic`.
-- Landing page starts with `/exam-papers`.
+- Landing page is `/`, `/free-exam-papers`, `/past-year-exam-papers`, `/test-papers`, `/top-school-exam-papers`, or starts with `/exam-papers`.
 - Event name is `paper_view_click`, `paper_open`, `paper_download`, `page_engaged_time`, `page_scroll_depth`, or `page_session_summary`.
 - Custom event parameter `landing_path` shows the first page in the session.
 - Custom event parameter `referrer_host` shows the external host, with `is_google_referrer` set for Google referrers.
