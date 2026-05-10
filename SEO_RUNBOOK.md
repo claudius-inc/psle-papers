@@ -24,6 +24,8 @@ Run `npm run seo:snippet-status` after updating `reports/seo/google-snippet-rech
 
 Run `npm run seo:completion-check` as the final objective gate after GSC URL Inspection, public Google rechecks, and GSC/GA4 exports are available. It writes `reports/seo/seo-completion-check.md` and should fail until the whole SEO objective has real external evidence.
 
+Run `npm run seo:keyword-coverage` after `npm run generate` when changing the keyword map, sitemap, or landing-page links. It writes `reports/seo/keyword-landing-page-audit.csv` and `reports/seo/keyword-landing-page-audit.md`, checking that every mapped query cluster has a generated preferred page, sitemap URL, internal link, canonical URL, and matching page copy.
+
 1. Submit `https://sgexamhub.com/sitemap.xml`.
 2. Request indexing for:
    - `https://sgexamhub.com/`

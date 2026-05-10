@@ -176,9 +176,12 @@ const seoActionPackScript = readText("scripts/generate-seo-action-pack.mjs");
 const reindexStatusScript = readText("scripts/analyze-gsc-reindex-tracker.mjs");
 const snippetStatusScript = readText("scripts/analyze-google-snippet-tracker.mjs");
 const completionCheckScript = readText("scripts/check-seo-completion.mjs");
+const keywordCoverageScript = readText("scripts/audit-keyword-coverage.mjs");
 const seoActionPack = readText("reports/seo/reindex-action-pack.md");
 const urlInspectionTracker = readText("reports/seo/gsc-url-inspection-tracker.csv");
 const googleSnippetTracker = readText("reports/seo/google-snippet-recheck-tracker.csv");
+const keywordCoverageCsv = readText("reports/seo/keyword-landing-page-audit.csv");
+const keywordCoverageMd = readText("reports/seo/keyword-landing-page-audit.md");
 const outcomeExportChecklist = readText("reports/seo/outcome-export-checklist.md");
 const homePage = readText("app/pages/index.vue");
 const freeExamPapersPage = readText("app/pages/free-exam-papers.vue");
@@ -283,6 +286,7 @@ for (const snippet of [
   '"seo:reindex-status": "node scripts/analyze-gsc-reindex-tracker.mjs"',
   '"seo:snippet-status": "node scripts/analyze-google-snippet-tracker.mjs"',
   '"seo:completion-check": "node scripts/check-seo-completion.mjs"',
+  '"seo:keyword-coverage": "node scripts/audit-keyword-coverage.mjs"',
   '"seo:export-templates": "node scripts/generate-seo-export-templates.mjs"',
   '"seo:outcomes": "node scripts/analyze-seo-outcomes.mjs"',
 ]) {
@@ -405,6 +409,37 @@ for (const snippet of [
 ]) {
   if (!completionCheckScript.includes(snippet)) {
     fail(`SEO completion check script is missing expected snippet: ${snippet}`);
+  }
+}
+for (const snippet of [
+  "Keyword Landing Page Audit",
+  "SEO_KEYWORD_MAP.md",
+  "reports/seo/keyword-landing-page-audit.csv",
+  "reports/seo/keyword-landing-page-audit.md",
+  "missing query terms",
+]) {
+  if (!keywordCoverageScript.includes(snippet)) {
+    fail(`Keyword coverage audit script is missing expected snippet: ${snippet}`);
+  }
+}
+for (const snippet of [
+  "Query cluster,Preferred landing page,Status,Title,Description,In sitemap,Internally linked,Missing query terms",
+  "sg exam papers",
+  "/exam-papers/primary-6-mathematics",
+  "PASS",
+]) {
+  if (!keywordCoverageCsv.includes(snippet)) {
+    fail(`Keyword landing page audit CSV is missing expected snippet: ${snippet}`);
+  }
+}
+for (const snippet of [
+  "Keyword Landing Page Audit",
+  "Query clusters checked",
+  "sg exam papers",
+  "`/exam-papers/primary-6-mathematics`",
+]) {
+  if (!keywordCoverageMd.includes(snippet)) {
+    fail(`Keyword landing page audit report is missing expected snippet: ${snippet}`);
   }
 }
 
