@@ -40,11 +40,22 @@ try {
     "Download free Singapore top school exam papers",
     "Choose a school collection",
     "No sign-up needed",
+    "Anglo-Chinese School (Primary) exam papers",
+    "Anglo-Chinese School (Junior) exam papers",
     "DownloadAction",
     "raw.githubusercontent.com/airbob/PrimarySchoolExamPapers",
   ]) {
     if (!topSchoolHtml.includes(snippet)) {
       fail(`Live top school page is missing expected snippet: ${snippet}`);
+    }
+  }
+
+  for (const staleSnippet of [
+    "Anglo Chinese School (Primary)",
+    "Anglo Chinese School (Junior)",
+  ]) {
+    if (topSchoolHtml.includes(staleSnippet)) {
+      fail(`Live top school page still contains stale school name: ${staleSnippet}`);
     }
   }
 
