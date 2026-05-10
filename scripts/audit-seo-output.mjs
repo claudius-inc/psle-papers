@@ -174,8 +174,10 @@ const packageJson = readText("package.json");
 const seoExportTemplateScript = readText("scripts/generate-seo-export-templates.mjs");
 const seoActionPackScript = readText("scripts/generate-seo-action-pack.mjs");
 const reindexStatusScript = readText("scripts/analyze-gsc-reindex-tracker.mjs");
+const snippetStatusScript = readText("scripts/analyze-google-snippet-tracker.mjs");
 const seoActionPack = readText("reports/seo/reindex-action-pack.md");
 const urlInspectionTracker = readText("reports/seo/gsc-url-inspection-tracker.csv");
+const googleSnippetTracker = readText("reports/seo/google-snippet-recheck-tracker.csv");
 const outcomeExportChecklist = readText("reports/seo/outcome-export-checklist.md");
 const homePage = readText("app/pages/index.vue");
 const freeExamPapersPage = readText("app/pages/free-exam-papers.vue");
@@ -278,6 +280,7 @@ for (const snippet of [
   '"seo:audit": "node scripts/generate-seo-export-templates.mjs && node scripts/generate-seo-action-pack.mjs &&',
   '"seo:action-pack": "node scripts/generate-seo-action-pack.mjs"',
   '"seo:reindex-status": "node scripts/analyze-gsc-reindex-tracker.mjs"',
+  '"seo:snippet-status": "node scripts/analyze-google-snippet-tracker.mjs"',
   '"seo:export-templates": "node scripts/generate-seo-export-templates.mjs"',
   '"seo:outcomes": "node scripts/analyze-seo-outcomes.mjs"',
 ]) {
@@ -320,6 +323,7 @@ if (!seoRunbook.includes("npm run seo:export-templates")) {
 for (const snippet of [
   "reports/seo/reindex-action-pack.md",
   "reports/seo/gsc-url-inspection-tracker.csv",
+  "reports/seo/google-snippet-recheck-tracker.csv",
   "urlInspectionPriority",
   "searchRecheckQueries",
   "gscQueryClusters",
@@ -333,6 +337,7 @@ for (const snippet of [
   "SEO Reindex And Outcome Action Pack",
   "Google Search Console URL Inspection",
   "reports/seo/gsc-url-inspection-tracker.csv",
+  "reports/seo/google-snippet-recheck-tracker.csv",
   "Public Google Recheck Queries",
   "GSC Outcome Export",
   "GA4 Organic Outcome Export",
@@ -363,6 +368,28 @@ for (const snippet of [
 ]) {
   if (!reindexStatusScript.includes(snippet)) {
     fail(`GSC URL Inspection status script is missing expected snippet: ${snippet}`);
+  }
+}
+for (const snippet of [
+  "Query,Google search URL,Checked at,Stale snippet found,Status,Notes",
+  "site:sgexamhub.com sg exam papers",
+  "2,200+Papers",
+  "Anglo chinese",
+  "https://www.google.com/search?q=",
+]) {
+  if (!googleSnippetTracker.includes(snippet)) {
+    fail(`Google snippet recheck tracker is missing expected snippet: ${snippet}`);
+  }
+}
+for (const snippet of [
+  "Google Snippet Recheck Status",
+  "reports/seo/google-snippet-recheck-tracker.csv",
+  "reports/seo/google-snippet-recheck-status.md",
+  "--fail-on-stale",
+  "The SEO objective remains incomplete",
+]) {
+  if (!snippetStatusScript.includes(snippet)) {
+    fail(`Google snippet status script is missing expected snippet: ${snippet}`);
   }
 }
 

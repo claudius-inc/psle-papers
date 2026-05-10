@@ -11,6 +11,7 @@
     "seo:audit:live": "node scripts/audit-live-seo.mjs && node scripts/audit-live-jsonld.mjs && node scripts/audit-live-stale-snippet-pages.mjs && node scripts/audit-live-school-name-quality.mjs && node scripts/audit-live-og-image.mjs && node scripts/audit-live-snippet-focused-ui.mjs && node scripts/audit-live-conversion-analytics.mjs && node scripts/audit-live-top-school-funnel.mjs && node scripts/audit-live-free-exam-funnel.mjs && node scripts/audit-live-broad-landing-funnels.mjs && node scripts/audit-live-sitemap-priority-schools.mjs && node scripts/audit-live-sitemap-lastmod-output.mjs",
     "seo:action-pack": "node scripts/generate-seo-action-pack.mjs",
     "seo:reindex-status": "node scripts/analyze-gsc-reindex-tracker.mjs",
+    "seo:snippet-status": "node scripts/analyze-google-snippet-tracker.mjs",
     "seo:export-templates": "node scripts/generate-seo-export-templates.mjs",
     "seo:outcomes": "node scripts/analyze-seo-outcomes.mjs",
     "seo:og-image": "node scripts/generate-og-image.mjs",

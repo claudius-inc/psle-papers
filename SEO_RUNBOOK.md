@@ -20,6 +20,8 @@ Use `SEO_REINDEX_PLAN.md` after each passing deployment when Google results stil
 
 Run `npm run seo:reindex-status` after updating `reports/seo/gsc-url-inspection-tracker.csv` to write `reports/seo/gsc-url-inspection-status.md`. For final completion checks, use `npm run seo:reindex-status -- --fail-on-pending`; it should fail until every priority URL is marked `Complete`.
 
+Run `npm run seo:snippet-status` after updating `reports/seo/google-snippet-recheck-tracker.csv` to write `reports/seo/google-snippet-recheck-status.md`. For final completion checks, use `npm run seo:snippet-status -- --fail-on-stale`; it should fail until every public Google recheck query is marked `Fresh`.
+
 1. Submit `https://sgexamhub.com/sitemap.xml`.
 2. Request indexing for:
    - `https://sgexamhub.com/`

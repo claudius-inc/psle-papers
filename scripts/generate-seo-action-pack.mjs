@@ -99,6 +99,25 @@ const trackerRows = [
   ]),
 ];
 
+const snippetTrackerRows = [
+  [
+    "Query",
+    "Google search URL",
+    "Checked at",
+    "Stale snippet found",
+    "Status",
+    "Notes",
+  ],
+  ...searchRecheckQueries.map((query) => [
+    query,
+    googleSearchUrl(query),
+    "",
+    "",
+    "Pending",
+    "",
+  ]),
+];
+
 const lines = [
   "# SEO Reindex And Outcome Action Pack",
   "",
@@ -128,6 +147,8 @@ const lines = [
   "## Public Google Recheck Queries",
   "",
   "Run these checks 24-72 hours after URL Inspection requests, then again after 7 days.",
+  "",
+  "Track freshness in `reports/seo/google-snippet-recheck-tracker.csv` so stale public search results do not get mistaken for completion.",
   "",
   ...searchRecheckQueries.map(
     (query) => `- ${query}\n  ${googleSearchUrl(query)}`,
@@ -208,5 +229,10 @@ writeFileSync(
   "reports/seo/gsc-url-inspection-tracker.csv",
   `${trackerRows.map((row) => row.map(csvEscape).join(",")).join("\n")}\n`,
 );
+writeFileSync(
+  "reports/seo/google-snippet-recheck-tracker.csv",
+  `${snippetTrackerRows.map((row) => row.map(csvEscape).join(",")).join("\n")}\n`,
+);
 console.log("Wrote reports/seo/reindex-action-pack.md");
 console.log("Wrote reports/seo/gsc-url-inspection-tracker.csv");
+console.log("Wrote reports/seo/google-snippet-recheck-tracker.csv");

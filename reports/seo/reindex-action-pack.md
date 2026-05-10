@@ -51,6 +51,8 @@ https://sgexamhub.com/sitemap.xml
 
 Run these checks 24-72 hours after URL Inspection requests, then again after 7 days.
 
+Track freshness in `reports/seo/google-snippet-recheck-tracker.csv` so stale public search results do not get mistaken for completion.
+
 - site:sgexamhub.com sg exam papers
   https://www.google.com/search?q=site%3Asgexamhub.com%20sg%20exam%20papers
 - site:sgexamhub.com "2,200+Papers"
