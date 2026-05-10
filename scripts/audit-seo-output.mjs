@@ -615,6 +615,8 @@ requireSourceSnippets("Collection page", collectionPage, [
   "HowTo",
   "paperSearchQuery",
   "trackCollectionPaperSearch",
+  "empty_search_recovery_click",
+  "empty-fallback-links",
   "buildSocialMeta",
   "buildPdfFileUrl",
 ]);
@@ -641,6 +643,7 @@ requireSourceSnippets("SEO runbook", seoRunbook, [
   "free test papers singapore",
   "top school exam papers singapore",
   "page_view",
+  "empty_search_recovery_click",
   "paper_pdf_load",
   "paper_download",
   "file_download",

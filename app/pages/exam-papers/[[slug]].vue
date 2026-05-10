@@ -147,6 +147,35 @@ const trackCollectionPaperSearch = () => {
     result_count: resultCount.value,
   });
 };
+const emptyFallbackLinks = computed(() => [
+  {
+    label: pageTitle.value,
+    to: seoRoute.path,
+  },
+  {
+    label: "Primary 6 SA2 papers",
+    to: "/exam-papers/primary-6-sa2",
+  },
+  {
+    label: "2026 revision papers",
+    to: "/exam-papers/2026-revision",
+  },
+  {
+    label: "Top school papers",
+    to: "/top-school-exam-papers",
+  },
+]);
+const trackEmptyFallbackClick = (link: { label: string; to: string }) => {
+  trackEvent("empty_search_recovery_click", {
+    source: "index_empty_state",
+    page_slug: slug,
+    page_path: seoRoute.path,
+    target_label: link.label,
+    target_path: link.to,
+    result_count: resultCount.value,
+    search_query: paperSearchQuery.value.trim() || undefined,
+  });
+};
 
 // View mode (grid vs list) — shared with homepage via localStorage.
 const viewMode = ref<"grid" | "list">("grid");
@@ -1488,6 +1517,16 @@ useHead({
         <span class="emoji">🔍</span>
         <h3>No papers found</h3>
         <p>Try adjusting your filters to find what you're looking for.</p>
+        <div class="empty-fallback-links" aria-label="Popular exam paper paths">
+          <NuxtLink
+            v-for="link in emptyFallbackLinks"
+            :key="link.to"
+            :to="link.to"
+            @click="trackEmptyFallbackClick(link)"
+          >
+            {{ link.label }}
+          </NuxtLink>
+        </div>
         <button class="primary-btn" @click="resetFilters">Clear Filters</button>
       </div>
 
@@ -2634,6 +2673,30 @@ useHead({
 .empty-state p {
   color: #64748b;
   margin: 0 0 1.25rem;
+}
+
+.empty-fallback-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  justify-content: center;
+  margin-bottom: 1.25rem;
+}
+
+.empty-fallback-links a {
+  background: #eef2ff;
+  border: 1px solid #c7d2fe;
+  border-radius: 999px;
+  color: #3730a3;
+  font-size: 0.9rem;
+  font-weight: 700;
+  padding: 0.55rem 0.85rem;
+  text-decoration: none;
+}
+
+.empty-fallback-links a:hover {
+  background: #e0e7ff;
+  border-color: #818cf8;
 }
 
 .primary-btn {
