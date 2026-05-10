@@ -3,37 +3,13 @@ import { readFileSync, writeFileSync } from "node:fs";
 const files = [
   {
     path: "app/pages/index.vue",
-    replacements: [
-      [
-        '<section class="filters-bar"',
-        '<section class="filters-bar" data-nosnippet',
-      ],
-      [
-        ':class="viewMode === \'grid\' ? \'papers-grid\' : \'papers-list\'"',
-        ':class="viewMode === \'grid\' ? \'papers-grid\' : \'papers-list\'" data-nosnippet',
-      ],
-    ],
-    expectedSnippets: [
-      '<section class="filters-bar" data-nosnippet',
-      "data-nosnippet",
-    ],
+    filterClass: "filters-bar",
+    resultsClassBinding: ':class="[\'papers-container\', `papers-${viewMode}`]"',
   },
   {
     path: "app/pages/exam-papers/[[slug]].vue",
-    replacements: [
-      [
-        '<section class="filter-container"',
-        '<section class="filter-container" data-nosnippet',
-      ],
-      [
-        ':class="viewMode === \'grid\' ? \'papers-grid\' : \'papers-list\'"',
-        ':class="viewMode === \'grid\' ? \'papers-grid\' : \'papers-list\'" data-nosnippet',
-      ],
-    ],
-    expectedSnippets: [
-      '<section class="filter-container" data-nosnippet',
-      "data-nosnippet",
-    ],
+    filterClass: "filter-container",
+    resultsClassBinding: ':class="[\'papers-container\', `papers-${viewMode}`]"',
   },
 ];
 
@@ -42,19 +18,41 @@ const fail = (message) => {
   process.exitCode = 1;
 };
 
+const addDataNosnippetToClass = (source, className, filePath) => {
+  const classPattern = new RegExp(
+    `(<(?:div|section)\\s+class="${className}"(?![^>]*\\bdata-nosnippet\\b))`,
+  );
+
+  if (!source.includes(`class="${className}"`)) {
+    fail(`${filePath} is missing snippet-focused UI class: ${className}`);
+    return source;
+  }
+
+  return source.replace(classPattern, "$1 data-nosnippet");
+};
+
+const addDataNosnippetToResults = (source, classBinding, filePath) => {
+  const withMarker = `${classBinding} data-nosnippet`;
+
+  if (source.includes(withMarker)) return source;
+  if (!source.includes(classBinding)) {
+    fail(`${filePath} is missing snippet-focused results binding: ${classBinding}`);
+    return source;
+  }
+
+  return source.replace(classBinding, withMarker);
+};
+
 for (const file of files) {
   let source = readFileSync(file.path, "utf8");
 
-  for (const [before, after] of file.replacements) {
-    if (source.includes(after)) continue;
-    if (!source.includes(before)) {
-      fail(`${file.path} is missing snippet target: ${before}`);
-      continue;
-    }
-    source = source.replace(before, after);
-  }
+  source = addDataNosnippetToClass(source, file.filterClass, file.path);
+  source = addDataNosnippetToResults(source, file.resultsClassBinding, file.path);
 
-  for (const snippet of file.expectedSnippets) {
+  for (const snippet of [
+    `class="${file.filterClass}" data-nosnippet`,
+    `${file.resultsClassBinding} data-nosnippet`,
+  ]) {
     if (!source.includes(snippet)) {
       fail(`${file.path} is missing expected snippet-focused UI marker: ${snippet}`);
     }
