@@ -47,6 +47,8 @@ if (weakSchoolNamePattern.test(source)) {
 for (const snippet of [
   "const formatSchoolTitle = (name: string) => name;",
   "schoolOptions.map((school) =>",
+  "const trimToTitleLimit = (candidate: string) =>",
+  "titleCandidates.find((candidate) => candidate.length <= 70) || compactBareTitle",
 ]) {
   if (!routeSource.includes(snippet)) {
     fail(`${routeSourcePath} is missing source guard snippet: ${snippet}`);
@@ -56,6 +58,7 @@ for (const snippet of [
 for (const staleSnippet of [
   "replace(/\\s+\\(primary\\)$/i",
   "schools.map((school) =>",
+  "const title =\n    titleCandidates.find((candidate) => candidate.length <= 70) || compactBareTitle;",
 ]) {
   if (routeSource.includes(staleSnippet)) {
     fail(`${routeSourcePath} contains stale school-name route snippet: ${staleSnippet}`);
