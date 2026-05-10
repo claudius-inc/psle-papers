@@ -40,6 +40,14 @@ Use this checklist after each content or SEO deploy.
    - `https://sgexamhub.com/exam-papers/school-raffles-girls-primary-school`
    - `https://sgexamhub.com/exam-papers/school-nanyang-primary-school`
    - `https://sgexamhub.com/exam-papers/school-henry-park-primary-school`
+   - `https://sgexamhub.com/exam-papers/school-methodist-girls-school-primary`
+   - `https://sgexamhub.com/exam-papers/school-singapore-chinese-girls-primary-school`
+   - `https://sgexamhub.com/exam-papers/school-chij-st-nicholas-girls-school`
+   - `https://sgexamhub.com/exam-papers/school-anglo-chinese-school-primary`
+   - `https://sgexamhub.com/exam-papers/school-anglo-chinese-school-junior`
+   - `https://sgexamhub.com/exam-papers/school-pei-hwa-presbyterian-primary-school`
+   - `https://sgexamhub.com/exam-papers/school-red-swastika-school`
+   - `https://sgexamhub.com/exam-papers/school-tao-nan-school`
 3. In Performance, track queries containing:
    - `singapore primary school exam papers`
    - `singapore primary exam papers pdf`
@@ -66,6 +74,14 @@ Use this checklist after each content or SEO deploy.
    - `raffles girls primary school exam papers`
    - `nanyang primary school exam papers`
    - `henry park primary school exam papers`
+   - `methodist girls school primary exam papers`
+   - `singapore chinese girls primary school exam papers`
+   - `chij st nicholas girls school exam papers`
+   - `anglo chinese school primary exam papers`
+   - `anglo chinese school junior exam papers`
+   - `pei hwa presbyterian primary school exam papers`
+   - `red swastika school exam papers`
+   - `tao nan school exam papers`
 
 ## GA4 Checks
 
