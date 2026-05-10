@@ -141,6 +141,7 @@ const buildCollectionDescription = ({
   titleParts,
   year,
   levelCode,
+  subjectCode,
   typeCode,
   schoolCode,
 }: {
@@ -148,11 +149,13 @@ const buildCollectionDescription = ({
   titleParts: string[];
   year?: string;
   levelCode?: string;
+  subjectCode?: string;
   typeCode?: string;
   schoolCode?: string;
 }) => {
   const count = paperCount.toLocaleString();
   const hasSinglePaper = paperCount === 1;
+  const isSubjectOnly = Boolean(subjectCode && !year && !levelCode && !typeCode && !schoolCode);
 
   if (!titleParts.length) {
     return `Download ${count} free Singapore primary exam papers PDF files for P2-P6 Maths, Science, English and Chinese. No sign-up needed. View online for 2026 revision.`;
@@ -164,6 +167,10 @@ const buildCollectionDescription = ({
   const focus = descriptionTitleParts
     .map((part) => part.replace(/^P([1-6])$/, "Primary $1"))
     .join(" ");
+  if (isSubjectOnly) {
+    return `Download ${count} free Singapore primary ${focus} exam papers. No sign-up needed. View online or download PDFs for P2-P6 revision.`;
+  }
+
   const fullPaperLabel = titleParts.includes("Practice Papers")
     ? hasSinglePaper
       ? `${focus} PDF`
@@ -237,6 +244,7 @@ const buildRoute = ({
   const parts = [year, levelName, subjectName, typeTitle, schoolName].filter(Boolean);
   const fullTitleParts = [year, fullLevelTitle, subjectName, typeTitle, schoolTitle].filter(Boolean);
   const compactTitleParts = [year, compactLevelTitle, subjectName, typeTitle, schoolTitle].filter(Boolean);
+  const isSubjectOnly = Boolean(subjectCode && !year && !levelCode && !typeCode && !schoolCode);
   const buildBareTitle = (candidateParts: string[]) =>
     candidateParts.length
       ? candidateParts.includes("Practice Papers")
@@ -245,7 +253,14 @@ const buildRoute = ({
       : "Singapore Primary Exam Papers PDF | Free Download";
   const fullBareTitle = buildBareTitle(fullTitleParts);
   const compactBareTitle = buildBareTitle(compactTitleParts);
-  const titleCandidates = /(?:PDF|Download)/i.test(fullBareTitle)
+  const titleCandidates = isSubjectOnly
+    ? [
+        `Primary ${subjectName} Exam Papers Singapore | Free PDF Download`,
+        `Primary ${subjectName} Exam Papers Singapore`,
+        `${subjectName} Exam Papers Singapore | SG Exam Hub`,
+        `${subjectName} Exam Papers Free PDF Download`,
+      ]
+    : /(?:PDF|Download)/i.test(fullBareTitle)
     ? [
         `${fullBareTitle} | SG Exam Hub`,
         fullBareTitle,
@@ -282,6 +297,7 @@ const buildRoute = ({
     titleParts: fullTitleParts,
     year,
     levelCode,
+    subjectCode,
     typeCode,
     schoolCode,
   });

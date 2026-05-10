@@ -34,7 +34,7 @@ Stdout:
 > node scripts/analyze-gsc-reindex-tracker.mjs --fail-on-pending
 
 Wrote reports/seo/gsc-url-inspection-status.md
-GSC URL Inspection status: 0/26 complete, 26 incomplete.
+GSC URL Inspection status: 0/29 complete, 29 incomplete.
 ```
 
 Stderr: _(none)_
@@ -50,7 +50,7 @@ Stdout:
 > node scripts/analyze-google-snippet-tracker.mjs --fail-on-stale
 
 Wrote reports/seo/google-snippet-recheck-status.md
-Google snippet recheck status: 0/14 fresh, 14 incomplete.
+Google snippet recheck status: 0/18 fresh, 18 incomplete.
 ```
 
 Stderr: _(none)_

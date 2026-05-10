@@ -41,9 +41,17 @@ Use this map with Google Search Console after deployment. The goal is to match e
 | primary 3 exam papers | `/exam-papers/primary-3` | Level-specific revision | CTR, paper opens |
 | primary 2 exam papers | `/exam-papers/primary-2` | Lower-primary papers | CTR, paper opens |
 | primary maths exam papers | `/exam-papers/mathematics` | Broad Maths practice | CTR, Maths paper downloads |
+| primary school maths exam papers | `/exam-papers/mathematics` | Broad Maths practice | CTR, Maths paper downloads |
+| maths exam papers singapore | `/exam-papers/mathematics` | Singapore Maths paper discovery | CTR, Maths paper downloads |
 | primary science exam papers | `/exam-papers/science` | Broad Science practice | CTR, Science paper downloads |
+| primary school science exam papers | `/exam-papers/science` | Broad Science practice | CTR, Science paper downloads |
+| science exam papers singapore | `/exam-papers/science` | Singapore Science paper discovery | CTR, Science paper downloads |
 | primary english exam papers | `/exam-papers/english` | Broad English practice | CTR, English paper opens |
+| primary school english exam papers | `/exam-papers/english` | Broad English practice | CTR, English paper opens |
+| english exam papers singapore | `/exam-papers/english` | Singapore English paper discovery | CTR, English paper opens |
 | primary chinese exam papers | `/exam-papers/chinese` | Broad Chinese practice | CTR, Chinese paper opens and downloads |
+| primary school chinese exam papers | `/exam-papers/chinese` | Broad Chinese practice | CTR, Chinese paper opens and downloads |
+| chinese exam papers singapore | `/exam-papers/chinese` | Singapore Chinese paper discovery | CTR, Chinese paper opens and downloads |
 
 ## Subject And Level Pages
 
