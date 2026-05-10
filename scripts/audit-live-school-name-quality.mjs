@@ -6,7 +6,7 @@ const pages = [
     path: "/",
     expected: [
       "Anglo-Chinese School (Junior)",
-      "Methodist Girls&#39; School (Primary)",
+      "Methodist Girls' School (Primary)",
     ],
   },
   {
@@ -14,7 +14,7 @@ const pages = [
     path: "/exam-papers/primary-3-chinese",
     expected: [
       "Anglo-Chinese School (Primary)",
-      "Methodist Girls&#39; School (Primary)",
+      "Methodist Girls' School (Primary)",
       "CHIJ Katong Primary",
     ],
   },
@@ -30,9 +30,9 @@ const pages = [
     label: "viewer practice sequence",
     path: "/view/6_1073_3_4_2025",
     expected: [
-      "Raffles Girls&#39; Primary School",
-      "Methodist Girls&#39; School (Primary)",
-      "Level P6",
+      "Raffles Girls' Primary School",
+      "Methodist Girls' School (Primary) P6 Mathematics SA2",
+      "Open next related paper",
       "Practice sequence",
     ],
   },
@@ -41,9 +41,7 @@ const pages = [
 const staleSnippets = [
   "Anglo chinese School",
   "Anglo Chinese School",
-  "Methodist Girls&#39; School (primary)",
   "Methodist Girls' School (primary)",
-  "Methodist Girls&#39; School (Primary)P6",
   "Methodist Girls' School (Primary)P6",
   "CHIJ St Nicholas Girls' School",
   "Chij ",
@@ -54,6 +52,22 @@ const fail = (message) => {
   console.error(message);
   process.exitCode = 1;
 };
+
+const decodeHtmlEntities = (value) =>
+  value
+    .replace(/&#39;/g, "'")
+    .replace(/&apos;/g, "'")
+    .replace(/&quot;/g, '"')
+    .replace(/&amp;/g, "&")
+    .replace(/&nbsp;/g, " ");
+
+const normalizeVisibleText = (html) =>
+  decodeHtmlEntities(html)
+    .replace(/<script\b[^>]*>[\s\S]*?<\/script>/gi, " ")
+    .replace(/<style\b[^>]*>[\s\S]*?<\/style>/gi, " ")
+    .replace(/<[^>]+>/g, "")
+    .replace(/\s+/g, " ")
+    .trim();
 
 const fetchText = async (url) => {
   const response = await fetch(url, {
@@ -71,21 +85,25 @@ const fetchText = async (url) => {
 
 try {
   const pageResults = await Promise.all(
-    pages.map(async (page) => ({
-      ...page,
-      html: await fetchText(`${siteUrl}${page.path}`),
-    })),
+    pages.map(async (page) => {
+      const html = await fetchText(`${siteUrl}${page.path}`);
+      return {
+        ...page,
+        html,
+        text: normalizeVisibleText(html),
+      };
+    }),
   );
 
   for (const page of pageResults) {
     for (const snippet of page.expected) {
-      if (!page.html.includes(snippet)) {
+      if (!page.text.includes(snippet) && !page.html.includes(snippet)) {
         fail(`Live ${page.label} is missing official school-name snippet: ${snippet}`);
       }
     }
 
     for (const staleSnippet of staleSnippets) {
-      if (page.html.includes(staleSnippet)) {
+      if (page.text.includes(staleSnippet) || page.html.includes(staleSnippet)) {
         fail(`Live ${page.label} contains stale school-name snippet: ${staleSnippet}`);
       }
     }
