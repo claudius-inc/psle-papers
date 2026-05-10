@@ -4,6 +4,7 @@ const staleHomepageSnippets = [
   "totalPaperCountRounded",
   "2,200+",
   "2,200 +",
+  "2,300+",
 ];
 
 const homepagePriorityDirectorySnippets = [
@@ -31,6 +32,14 @@ const checks = [
       "No sign-up needed",
       "2,299 PDF exam papers indexed",
       ...homepagePriorityDirectorySnippets,
+    ],
+    forbiddenSnippets: staleHomepageSnippets,
+  },
+  {
+    path: "/og-image.svg",
+    snippets: [
+      "2,299 PDF papers",
+      "Free download",
     ],
     forbiddenSnippets: staleHomepageSnippets,
   },
