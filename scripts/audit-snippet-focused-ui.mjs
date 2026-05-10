@@ -5,8 +5,10 @@ const checks = [
     path: "app/pages/index.vue",
     snippets: [
       'class="filters-bar" data-nosnippet',
+      'class="hero-stats" data-nosnippet',
       ':class="[\'papers-container\', `papers-${viewMode}`]" data-nosnippet',
     ],
+    forbiddenSnippets: ["totalPaperCountRounded.toLocaleString() }}+"],
   },
   {
     path: "app/pages/exam-papers/[[slug]].vue",
@@ -21,7 +23,9 @@ const checks = [
       "data-nosnippet",
       "SG Exam Hub: Free Singapore Primary Exam Papers",
       "No sign-up needed",
+      "2,299 PDF exam papers indexed",
     ],
+    forbiddenSnippets: ["2,200+Papers", "2,200+ Papers"],
   },
   {
     path: ".output/public/exam-papers/index.html",
@@ -56,6 +60,11 @@ for (const check of checks) {
   for (const snippet of check.snippets) {
     if (!content.includes(snippet)) {
       fail(`${check.path} is missing snippet-focused UI snippet: ${snippet}`);
+    }
+  }
+  for (const snippet of check.forbiddenSnippets || []) {
+    if (content.includes(snippet)) {
+      fail(`${check.path} contains stale snippet-focused UI copy: ${snippet}`);
     }
   }
 }
