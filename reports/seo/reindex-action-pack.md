@@ -169,6 +169,9 @@ Priority landing pages:
 - https://sgexamhub.com/top-school-exam-papers
 - https://sgexamhub.com/exam-papers/2026-revision
 - https://sgexamhub.com/exam-papers/psle-revision
+- https://sgexamhub.com/exam-papers/mathematics
+- https://sgexamhub.com/exam-papers/science
+- https://sgexamhub.com/exam-papers/english
 - https://sgexamhub.com/exam-papers/primary-3-chinese
 - https://sgexamhub.com/exam-papers/chinese
 

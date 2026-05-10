@@ -325,6 +325,10 @@ for (const snippet of [
   "SEO Outcome Export Templates",
   "Required GSC Export Shape",
   "Required GA4 Export Shape",
+  "https://sgexamhub.com/exam-papers/mathematics",
+  "https://sgexamhub.com/exam-papers/science",
+  "https://sgexamhub.com/exam-papers/english",
+  "https://sgexamhub.com/exam-papers/chinese",
   "npm run seo:outcomes",
 ]) {
   if (!outcomeExportChecklist.includes(snippet)) {
@@ -357,6 +361,10 @@ for (const snippet of [
   "Public Google Recheck Queries",
   "GSC Outcome Export",
   "GA4 Organic Outcome Export",
+  "https://sgexamhub.com/exam-papers/mathematics",
+  "https://sgexamhub.com/exam-papers/science",
+  "https://sgexamhub.com/exam-papers/english",
+  "https://sgexamhub.com/exam-papers/chinese",
   "npm run seo:export-templates",
   "npm run seo:outcomes",
 ]) {
