@@ -204,7 +204,7 @@ const checks = [
       "Start with recent papers",
       "PSLE practice focus",
       "Use these Primary 6 papers before PSLE revision",
-      "Are these 2025 Primary 6 Maths SA2 Exam Papers useful for PSLE revision?",
+      "Are these 2025 Primary 6 Maths SA2 Exam Papers Free PDF Download useful for PSLE revision?",
       'href="/exam-papers/primary-6-mathematics-sa2"',
       "Download PDF",
       'property="og:image" content="https://sgexamhub.com/og-image.png"',
