@@ -1052,7 +1052,7 @@ const resetFilters = () => {
       </div>
     </section>
 
-    <section class="content-wrapper seo-links" aria-labelledby="latest-papers">
+    <section class="content-wrapper seo-links" aria-labelledby="latest-papers" data-nosnippet>
       <div class="seo-links-header">
         <h2 id="latest-papers">Latest exam papers</h2>
         <NuxtLink to="/exam-papers">Browse all indexed exam paper pages</NuxtLink>

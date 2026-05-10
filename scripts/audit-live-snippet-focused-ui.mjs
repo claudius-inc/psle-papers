@@ -28,6 +28,7 @@ const checks = [
     path: "/",
     snippets: [
       "data-nosnippet",
+      'class="content-wrapper seo-links" aria-labelledby="latest-papers" data-nosnippet',
       "SG Exam Hub: Free Singapore Primary Exam Papers",
       "No sign-up needed",
       "2,299 PDF exam papers indexed",

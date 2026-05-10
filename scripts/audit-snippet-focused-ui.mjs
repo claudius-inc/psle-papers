@@ -34,6 +34,7 @@ const checks = [
       'class="filters-bar" data-nosnippet',
       'class="hero-stats" data-nosnippet',
       ':class="[\'papers-container\', `papers-${viewMode}`]" data-nosnippet',
+      'class="content-wrapper seo-links" aria-labelledby="latest-papers" data-nosnippet',
       exactPaperCountLabel,
       ...homepagePriorityDirectorySnippets,
     ],
