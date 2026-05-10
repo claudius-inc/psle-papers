@@ -61,6 +61,22 @@ const quickRevisionLinks = [
   .map(findRouteLink)
   .filter((link): link is NonNullable<typeof link> => Boolean(link));
 
+const priorityTopSchoolLinks = [
+  "school-raffles-girls-primary-school",
+  "school-nanyang-primary-school",
+  "school-henry-park-primary-school",
+  "school-methodist-girls-school-primary",
+  "school-singapore-chinese-girls-primary-school",
+  "school-chij-st-nicholas-girls-school",
+  "school-anglo-chinese-school-primary",
+  "school-anglo-chinese-school-junior",
+  "school-pei-hwa-presbyterian-primary-school",
+  "school-red-swastika-school",
+  "school-tao-nan-school",
+]
+  .map(findRouteLink)
+  .filter((link): link is NonNullable<typeof link> => Boolean(link));
+
 const revisionHubLinks = [
   {
     label: "Free Exam Papers Singapore",
@@ -80,7 +96,7 @@ const revisionHubLinks = [
   {
     label: "Top School Exam Papers Singapore",
     to: "/top-school-exam-papers",
-    description: "Raffles, Nanyang, Henry Park, Ai Tong and more",
+    description: "Raffles, Nanyang, MGS, SCGS, Tao Nan, ACS and more",
   },
   {
     label: "2026 Primary Exam Papers Revision",
@@ -217,9 +233,10 @@ const latestPaperLinks = allParsedPapers.slice(0, 80).map((paper) => ({
 const structuredSitemapLinks = [
   ...revisionHubLinks,
   ...quickRevisionLinks,
+  ...priorityTopSchoolLinks,
   ...directorySections.flatMap((section) => section.links),
   ...latestPaperLinks,
-].slice(0, 120);
+].slice(0, 140);
 
 useHead({
   title: sitemapSeoTitle,
@@ -313,6 +330,29 @@ useHead({
           >
             <span>{{ link.label }}</span>
             <small>{{ link.description }}</small>
+          </NuxtLink>
+        </div>
+      </div>
+    </section>
+
+    <section class="priority-schools" aria-labelledby="priority-schools-heading">
+      <div class="content-wrapper">
+        <div class="quick-header">
+          <p class="eyebrow">Priority school collections</p>
+          <h2 id="priority-schools-heading">Top School Exam Paper Paths</h2>
+          <p>
+            Direct links for high-intent school-name searches, including MGS,
+            SCGS, CHIJ St. Nicholas, ACS, Pei Hwa, Red Swastika and Tao Nan.
+          </p>
+        </div>
+        <div class="quick-links priority-school-links">
+          <NuxtLink
+            v-for="link in priorityTopSchoolLinks"
+            :key="link.to"
+            :to="link.to"
+          >
+            <span>{{ link.label }}</span>
+            <small>{{ link.count.toLocaleString() }} papers</small>
           </NuxtLink>
         </div>
       </div>
@@ -413,13 +453,18 @@ h1 {
 }
 
 .quick-paths,
-.revision-hubs {
+.revision-hubs,
+.priority-schools {
   border-bottom: 1px solid #e2e8f0;
   padding: 2rem 0;
 }
 
 .revision-hubs {
   background: #f8fafc;
+}
+
+.priority-schools {
+  background: #ffffff;
 }
 
 .quick-header {
@@ -479,7 +524,8 @@ h1 {
   line-height: 1.4;
 }
 
-.revision-links {
+.revision-links,
+.priority-school-links {
   grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 
