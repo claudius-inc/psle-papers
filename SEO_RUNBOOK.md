@@ -139,7 +139,7 @@ Useful report segments:
 
 - Source / medium contains `google / organic`.
 - Landing page is `/`, `/download-exam-papers`, `/free-exam-papers`, `/past-year-exam-papers`, `/test-papers`, `/top-school-exam-papers`, or starts with `/exam-papers`.
-- Event name is `page_view`, `paper_search`, `search`, `view_search_results`, `paper_view_click`, `paper_open`, `paper_pdf_load`, `paper_pdf_error`, `paper_download`, `file_download`, `empty_search_recovery_click`, `page_engaged_time`, `page_scroll_depth`, or `page_session_summary`.
+- Event name is `page_view`, `paper_search`, `search`, `view_search_results`, `paper_view_click`, `paper_open`, `paper_pdf_load`, `paper_pdf_error`, `paper_download`, `file_download`, `revision_collection_click`, `empty_search_recovery_click`, `page_engaged_time`, `page_scroll_depth`, or `page_session_summary`.
 - Event name `download_exam_collection_click` isolates download-intent collection clicks before users enter year, level, subject, assessment, or PSLE pages.
 - Event name `psle_collection_click` isolates PSLE subject and school path clicks before users enter P6 Maths, Science, English, Chinese or school-specific pages.
 - Event name `free_exam_collection_click` isolates free-papers collection clicks before users enter year, level, subject, top-school, or PSLE pages.

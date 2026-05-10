@@ -4,7 +4,7 @@ import type { ParsedPaper } from "~/composables/usePapers";
 import { allParsedPapers } from "~/utils/paperSeo";
 import { buildPdfFileUrl } from "~/utils/pdfUrls";
 import { buildSocialMeta } from "~/utils/socialSeo";
-import { trackPaperDownload, trackPaperViewClick } from "~/utils/analytics";
+import { trackEvent, trackPaperDownload, trackPaperViewClick } from "~/utils/analytics";
 
 const pageTitle = "2026 Primary Exam Papers Revision | SG Exam Hub";
 const visibleTitle = "2026 Primary Exam Papers Revision";
@@ -39,9 +39,29 @@ const revisionCollections = [
     to: "/exam-papers/2025-primary-6-science",
   },
   {
+    title: "2025 Primary 6 English exam papers",
+    description: "Use recent English papers for comprehension, grammar and composition practice.",
+    to: "/exam-papers/2025-primary-6-english",
+  },
+  {
+    title: "2025 Primary 6 Chinese exam papers",
+    description: "Use recent Chinese papers for language, comprehension and writing practice.",
+    to: "/exam-papers/2025-primary-6-chinese",
+  },
+  {
     title: "2025 Primary 6 Maths SA2 papers",
     description: "Open final assessment Maths papers before downloading timed sets.",
     to: "/exam-papers/2025-primary-6-mathematics-sa2",
+  },
+  {
+    title: "2025 Primary 6 English SA2 papers",
+    description: "Practise final assessment English papers before the next timed session.",
+    to: "/exam-papers/2025-primary-6-english-sa2",
+  },
+  {
+    title: "2025 Primary 6 Chinese SA2 papers",
+    description: "Practise final assessment Chinese papers for PSLE-style preparation.",
+    to: "/exam-papers/2025-primary-6-chinese-sa2",
   },
   {
     title: "2024 Primary 6 exam papers",
@@ -97,6 +117,15 @@ const trackRevisionPaperView = (filename: string, source: string) => {
 
 const trackRevisionPaperDownload = (filename: string, source: string) => {
   trackPaperDownload(filename, source, analyticsContext);
+};
+
+const trackRevisionCollectionClick = (collection: (typeof revisionCollections)[number]) => {
+  trackEvent("revision_collection_click", {
+    ...analyticsContext,
+    source: "revision_collection_grid",
+    collection_title: collection.title,
+    target_path: collection.to,
+  });
 };
 
 const itemListElements = computed(() =>
@@ -284,6 +313,7 @@ useHead({
             :key="collection.to"
             class="collection-card"
             :to="collection.to"
+            @click="trackRevisionCollectionClick(collection)"
           >
             <strong>{{ collection.title }}</strong>
             <span>{{ collection.description }}</span>
