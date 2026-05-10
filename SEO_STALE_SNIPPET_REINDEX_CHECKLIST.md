@@ -4,17 +4,19 @@ Use this checklist when the live site is clean but Google still shows old SG Exa
 
 ## Current Stale Evidence
 
-Checked on 2026-05-10 after deployment run `25629044793` for commit `e60bb60eb76e004907e9bbe49e15246bf802f08a`:
+Checked on 2026-05-10 after deployment run `25630256022` for commit `8132dc9546e39e2006eaace12a77d4473a5d3b77`:
 
 - `site:sgexamhub.com sg exam papers` still showed old homepage copy such as `2,200+Papers` and stale school casing.
 - `site:sgexamhub.com "2,200+Papers"` still returned the stale homepage snippet.
 - `site:sgexamhub.com "Anglo chinese"` still returned stale collection snippets.
 - `site:sgexamhub.com "primary 3 chinese exam papers"` still showed `/exam-papers/primary-3-chinese` with old casing such as `Anglo chinese School (primary)`.
+- `site:sgexamhub.com sg exam papers` still showed the old homepage title and the stale `Latest exam papers` snippet list from before the latest `data-nosnippet` fix.
 - Result crawl labels showed old crawls, such as 2-4 days before the latest deployment, so this remains an index refresh issue.
 
 Fresh live reads on 2026-05-10 showed the deployed pages are already corrected:
 
 - `https://sgexamhub.com/` has `2,299 PDF exam papers indexed` and no `2,200+` or `2,300+` paper-count copy.
+- `https://sgexamhub.com/` has `data-nosnippet` on the homepage `Latest exam papers` list, so Google should stop using that noisy list after recrawl.
 - `https://sgexamhub.com/exam-papers/primary-3-chinese/` has `Primary 3 Chinese Exam Papers Free PDF Download`, `Download PDF`, `Anglo-Chinese School (Primary)`, `Methodist Girls' School (Primary)`, and `CHIJ Katong Primary`.
 - `https://sgexamhub.com/exam-papers/primary-3/` has `Primary 3 Exam Papers Free PDF Download`.
 - `https://sgexamhub.com/exam-papers/chinese/` has `Chinese Exam Papers Free PDF Download`.
@@ -92,5 +94,15 @@ GA4, segment by Organic Search or `is_google_referrer = true`:
 - Engagement events: `page_engaged_time`, `page_scroll_depth`, `page_session_summary`.
 - Paper actions: `paper_view_click`, `paper_open`, `paper_download`.
 - CTA source values: `collection_hero_cta`, `collection_mobile_sticky`, `index_results`, `viewer_panel`, `viewer_mobile_sticky`.
+
+Run the exported outcome evidence through:
+
+```sh
+npm run seo:outcomes -- \
+  --gsc-before reports/seo/gsc-before.csv \
+  --gsc-after reports/seo/gsc-after.csv \
+  --ga4 reports/seo/ga4-organic-events.csv \
+  --out reports/seo/outcome-report.md
+```
 
 Do not mark the SEO goal complete until GSC shows refreshed snippets and improved organic search performance, and GA4 shows organic users opening papers and downloading PDFs.
