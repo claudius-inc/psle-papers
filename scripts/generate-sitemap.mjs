@@ -47,17 +47,25 @@ const getGitLastModifiedDates = () => {
 
 const gitLastModifiedDates = getGitLastModifiedDates();
 
-const getPathLastModified = (path) => {
+const getPaperFallbackLastModified = (filename) => {
+  const year = filename.split("_").at(-1);
+  return /^\d{4}$/.test(year) ? `${year}-12-31` : today;
+};
+
+const getPathLastModified = (path, fallbackDate = today) => {
   const gitDate = gitLastModifiedDates.get(path);
   if (gitDate) return gitDate;
   if (existsSync(path)) return toIsoDate(statSync(path).mtime);
-  return today;
+  return fallbackDate;
 };
 
 const paperLastModified = new Map(
   files.map((filename) => [
     filename,
-    getPathLastModified(`public/files/${filename}.pdf`),
+    getPathLastModified(
+      `public/files/${filename}.pdf`,
+      getPaperFallbackLastModified(filename),
+    ),
   ]),
 );
 
