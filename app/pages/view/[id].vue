@@ -422,7 +422,14 @@ useHead({
   title: seoTitle,
   meta: [
     { name: "description", content: seoDescription },
-    { name: "robots", content: computed(() => (paper.value ? "index, follow" : "noindex, follow")) },
+    {
+      name: "robots",
+      content: computed(() =>
+        paper.value
+          ? "index, follow, max-snippet:160, max-image-preview:large"
+          : "noindex, follow",
+      ),
+    },
     ...buildSocialMeta({
       title: seoTitle,
       description: seoDescription,

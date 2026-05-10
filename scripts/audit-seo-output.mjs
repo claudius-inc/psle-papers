@@ -78,9 +78,20 @@ for (const file of htmlFiles) {
   );
   const canonical = html.match(/<link rel="canonical" href="([^"]+)"/)?.[1] || "";
   const ogUrl = html.match(/<meta property="og:url" content="([^"]+)"/)?.[1] || "";
+  const robotsMeta = html.match(/<meta name="robots" content="([^"]+)"/)?.[1] || "";
 
   if (!title) fail(`Missing title: ${routePath}`);
   if (!description) fail(`Missing description: ${routePath}`);
+  if (!robotsMeta) {
+    fail(`Missing robots meta: ${routePath}`);
+  } else if (
+    !robotsMeta.includes("noindex") &&
+    (!robotsMeta.includes("index, follow") ||
+      !robotsMeta.includes("max-snippet:160") ||
+      !robotsMeta.includes("max-image-preview:large"))
+  ) {
+    fail(`Indexable page is missing snippet-focused robots directives: ${routePath}`);
+  }
   if (title.length > 70) fail(`Title over 70 decoded chars: ${routePath}`);
   if (description.length > 170) fail(`Description over 170 decoded chars: ${routePath}`);
   if (description && description.length < 80) fail(`Description under 80 decoded chars: ${routePath}`);
@@ -258,6 +269,9 @@ if (pagesWorkflow.includes("actions/checkout@v5")) {
 
 if (!appShell.includes("G-7WKP91PV8C") || !appShell.includes("useEngagementTracking()")) {
   fail("Global app shell is missing GA4 or engagement tracking setup.");
+}
+if (!appShell.includes("max-snippet:160") || !appShell.includes("max-image-preview:large")) {
+  fail("Global app shell is missing snippet-focused robots directives.");
 }
 if (!appShell.includes("send_page_view: false")) {
   fail("Global app shell must disable automatic GA4 page_view duplication.");

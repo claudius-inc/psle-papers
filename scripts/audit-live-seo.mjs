@@ -10,6 +10,7 @@ const checks = [
       "No sign-up needed",
       "Latest available papers: 2025",
       "2,299 PDF exam papers indexed",
+      'name="robots" content="index, follow, max-snippet:160, max-image-preview:large"',
       "Start with a latest paper",
       "2025 P6 English SA2",
       "2026 Primary Exam Papers Revision",

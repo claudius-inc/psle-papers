@@ -247,7 +247,7 @@ useHead({
     },
     {
       name: "robots",
-      content: "index, follow",
+      content: "index, follow, max-snippet:160, max-image-preview:large",
     },
     ...buildSocialMeta({
       title: sitemapSeoTitle,

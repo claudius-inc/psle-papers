@@ -2,6 +2,12 @@
 useEngagementTracking();
 
 useHead({
+  meta: [
+    {
+      name: "robots",
+      content: "index, follow, max-snippet:160, max-image-preview:large",
+    },
+  ],
   link: [
     { rel: "preconnect", href: "https://fonts.googleapis.com" },
     { rel: "preconnect", href: "https://fonts.gstatic.com", crossorigin: "" },
