@@ -8,36 +8,34 @@ This goal is complete only when live search and analytics evidence show improvem
 
 | Requirement | Evidence required | Current artifact or check | Status |
 | --- | --- | --- | --- |
-| Google can discover canonical pages | Live `https://sgexamhub.com/sitemap.xml` loads, `robots.txt` points to it, sitemap contains homepage, collection pages, school pages, and viewer pages | `public/robots.txt`, `public/sitemap.xml`, `scripts/generate-sitemap.mjs`, `scripts/audit-seo-output.mjs`, `scripts/audit-live-seo.mjs` | Source guarded; live verification required after deploy |
-| Search snippets use trustworthy titles and descriptions | Generated and live pages have canonical titles, descriptions under audit limits, official school names, no stale casing, and `data-nosnippet` on high-noise filter/result UI | `scripts/audit-seo-output.mjs`, `scripts/audit-school-name-quality.mjs`, `scripts/audit-snippet-focused-ui.mjs`, `scripts/audit-live-school-name-quality.mjs`, `scripts/audit-live-snippet-focused-ui.mjs` | Source guarded; live verification required after deploy |
+| Google can discover canonical pages | Live `https://sgexamhub.com/sitemap.xml` loads, `robots.txt` points to it, sitemap contains homepage, collection pages, school pages, and viewer pages | `public/robots.txt`, `public/sitemap.xml`, `scripts/generate-sitemap.mjs`, `scripts/audit-seo-output.mjs`, `scripts/audit-live-seo.mjs` | Live verified in run `25626208854`; sitemap has `6238` URLs and `8` distinct `lastmod` dates |
+| Search snippets use trustworthy titles and descriptions | Generated and live pages have canonical titles, descriptions under audit limits, official school names, no stale casing, no stale `2,200+` homepage count copy, and `data-nosnippet` on high-noise UI | `scripts/audit-seo-output.mjs`, `scripts/audit-school-name-quality.mjs`, `scripts/audit-snippet-focused-ui.mjs`, `scripts/audit-live-school-name-quality.mjs`, `scripts/audit-live-snippet-focused-ui.mjs` | Source, generated output, and live output guarded; Google index refresh still required |
 | Keyword clusters map to preferred landing pages | GSC query clusters have one intended page and page copy/internal links support the query intent | `SEO_KEYWORD_MAP.md`, homepage directory links, broad landing pages, collection pages | Implemented; must compare against GSC page/query data |
-| Search index refreshes stale snippets | Google results stop showing stale copy and school names such as `Anglo chinese School (primary)` or `Methodist Girls' School (primary)` | `SEO_REINDEX_PLAN.md`, GSC URL Inspection, sitemap resubmission, follow-up `site:` checks | Plan added; missing post-deploy GSC action and refreshed results |
+| Search index refreshes stale snippets | Google results stop showing stale copy and school names such as `2,200+ Papers`, `Anglo chinese School (primary)`, or `Methodist Girls' School (primary)` | `SEO_REINDEX_PLAN.md`, GSC URL Inspection, sitemap resubmission, follow-up `site:` checks | Missing post-deploy GSC action and refreshed results |
 | Search users click through from Google | GSC shows higher organic clicks and/or CTR for target query clusters | GSC Performance export, `SEO_KEYWORD_MAP.md` review workflow | Missing outcome evidence |
 | Organic users stay engaged | GA4 shows organic sessions emitting engagement events | `app/composables/useEngagementTracking.ts`, `SEO_RUNBOOK.md` GA4 checks | Instrumented; missing outcome evidence |
 | Organic users open exam papers | GA4 organic segment shows `paper_view_click` and `paper_open` after landing pages | `app/utils/analytics.ts`, homepage/collection/viewer event sources, runbook checks | Instrumented; missing outcome evidence |
 | Organic users download PDFs | GA4 organic segment shows `paper_download`, with useful `source` values such as `collection_hero_cta`, `index_results`, `viewer_panel`, and `viewer_mobile_sticky` | `app/utils/analytics.ts`, viewer and landing page CTAs, runbook checks | Instrumented; missing outcome evidence |
-| Deploy pipeline protects SEO regressions | GitHub Pages build runs generate, local SEO audit, deploy, then live SEO audit | `.github/workflows/nuxtjs.yml`, `scripts/audit-pages-workflow.mjs`, `SEO_RUNBOOK.md` | Guarded; current connector commits still need a passing Pages run |
-| Live viewer pages remain readable | Viewer pages separate school names and level labels, avoiding concatenated snippets like `Methodist Girls' School (Primary)P6` | `scripts/ensure-viewer-school-seo.mjs`, `scripts/audit-school-name-quality.mjs`, `scripts/audit-live-school-name-quality.mjs` | Live page still showed `Methodist Girls' School (Primary)P6` on 2026-05-10; redeploy and live audit required |
+| Deploy pipeline protects SEO regressions | GitHub Pages build runs generate, local SEO audit, deploy, then live SEO audit | `.github/workflows/nuxtjs.yml`, `scripts/audit-pages-workflow.mjs`, `SEO_RUNBOOK.md` | Live verified in run `25626208854` |
+| Live viewer pages remain readable | Viewer pages separate school names and level labels, avoiding concatenated snippets like `Methodist Girls' School (Primary)P6` | `scripts/ensure-viewer-school-seo.mjs`, `scripts/audit-school-name-quality.mjs`, `scripts/audit-live-school-name-quality.mjs` | Live verified in run `25626208854`; Google snippets still need refresh |
 
 ## Prompt-to-Artifact Checklist
 
 | User requirement | Concrete artifact | Verification command or evidence |
 | --- | --- | --- |
-| Improve website visibility | Sitemap, robots, canonical metadata, indexable landing and viewer pages | `npm run generate`, `npm run seo:audit`, `npm run seo:audit:live`, GSC indexed pages |
-| Improve SEO and keywords | Keyword map and targeted landing pages for broad, year, level, subject, school, PSLE, free, past-year, and test-paper queries | `SEO_KEYWORD_MAP.md`, generated page titles/descriptions, GSC query/page export |
-| Improve search ranking and click-through | Page titles/descriptions aligned with target query clusters, high-noise UI excluded from snippets, and refreshed in Google index | GSC comparison of clicks, CTR, impressions, and average position before/after deploy; `SEO_REINDEX_PLAN.md` checks; `audit-snippet-focused-ui.mjs` |
-| Keep users engaged inside the website | Engagement tracking and internal paths from landing pages to collections and viewer pages | GA4 `page_engaged_time`, `page_scroll_depth`, `page_session_summary`, collection click events |
-| Make users open exam papers | Visible paper cards, hero CTAs, viewer links, and `paper_open`/`paper_view_click` events | GA4 organic segment: `paper_view_click`, `paper_open` by landing page and source |
-| Make users click download | Download buttons on home, collections, broad landing pages, and viewer pages with source attribution | GA4 organic segment: `paper_download` by source and landing page |
+| Improve website visibility | Sitemap, robots, canonical metadata, indexable landing and viewer pages | GitHub Actions run `25626208854`; `npm run seo:audit:live`; GSC indexed pages still pending |
+| Improve SEO and keywords | Keyword map and targeted landing pages for broad, year, level, subject, school, PSLE, free, past-year, and test-paper queries | `SEO_KEYWORD_MAP.md`, generated page titles/descriptions, GSC query/page export pending |
+| Improve search ranking and click-through | Page titles/descriptions aligned with target query clusters, high-noise UI excluded from snippets, stale count copy guarded, and refreshed in Google index | `SEO_REINDEX_PLAN.md`, snippet audits, GSC comparison pending |
+| Keep users engaged inside the website | Engagement tracking and internal paths from landing pages to collections and viewer pages | GA4 `page_engaged_time`, `page_scroll_depth`, `page_session_summary`, collection click events pending outcome evidence |
+| Make users open exam papers | Visible paper cards, hero CTAs, viewer links, and `paper_open`/`paper_view_click` events | GA4 organic segment pending: `paper_view_click`, `paper_open` by landing page and source |
+| Make users click download | Download buttons on home, collections, broad landing pages, and viewer pages with source attribution | GA4 organic segment pending: `paper_download` by source and landing page |
 
 ## Current Gaps
 
-1. GitHub Pages needs a passing deployment after the latest SEO commits; run `Deploy Nuxt site to Pages` manually from Actions on `main` if no run appears.
-2. Live `/view/6_1073_3_4_2025/` still rendered `Methodist Girls' School (Primary)P6` on 2026-05-10, so `npm run seo:audit:live` must fail until the corrected viewer output is deployed.
-3. Search results checked on 2026-05-10 still showed stale snippets for `site:sgexamhub.com sg exam papers`, including old homepage copy and stale school casing. Follow `SEO_REINDEX_PLAN.md` after deployment.
-4. Local shell execution is currently unavailable, so local `npm run generate`, `npm run seo:audit`, and git verification have not run in this environment.
-5. Live pages must be rechecked after deployment, especially `/view/6_1073_3_4_2025` for official school names and `Level P6` readability.
-6. The objective remains incomplete until GSC and GA4 show improved organic acquisition and downstream paper/download behavior.
+1. Search results checked on 2026-05-10 still showed stale snippets for `site:sgexamhub.com sg exam papers`, including old homepage count copy and stale school casing.
+2. Follow `SEO_REINDEX_PLAN.md`: request indexing for priority URLs and resubmit `https://sgexamhub.com/sitemap.xml` in Google Search Console.
+3. Local shell execution is currently unavailable in this environment, so verification for the latest changes was done through GitHub Actions and live audits rather than local commands.
+4. The objective remains incomplete until GSC and GA4 show improved organic acquisition and downstream paper-open/download behavior.
 
 ## Completion Rule
 
