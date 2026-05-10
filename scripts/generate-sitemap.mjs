@@ -59,14 +59,13 @@ const getPathLastModified = (path, fallbackDate = today) => {
   return fallbackDate;
 };
 
+const getPaperLastModified = (filename) => {
+  const path = `public/files/${filename}.pdf`;
+  return gitLastModifiedDates.get(path) || getPaperFallbackLastModified(filename);
+};
+
 const paperLastModified = new Map(
-  files.map((filename) => [
-    filename,
-    getPathLastModified(
-      `public/files/${filename}.pdf`,
-      getPaperFallbackLastModified(filename),
-    ),
-  ]),
+  files.map((filename) => [filename, getPaperLastModified(filename)]),
 );
 
 const staticLastModified = [
