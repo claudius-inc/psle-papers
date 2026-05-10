@@ -103,6 +103,7 @@ const requiredLiveAuditSnippets = [
   "node scripts/audit-live-seo.mjs",
   "node scripts/audit-live-school-name-quality.mjs",
   "node scripts/audit-live-snippet-focused-ui.mjs",
+  "node scripts/audit-live-conversion-analytics.mjs",
   "node scripts/audit-live-top-school-funnel.mjs",
   "node scripts/audit-live-free-exam-funnel.mjs",
   "node scripts/audit-live-broad-landing-funnels.mjs",
