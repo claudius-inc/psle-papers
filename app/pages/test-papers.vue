@@ -226,7 +226,7 @@ useHead({
         <p class="freshness">
           {{ allParsedPapers.length.toLocaleString() }} PDF test papers indexed
         </p>
-        <div v-if="featuredPaper" class="hero-card">
+        <div v-if="featuredPaper" class="hero-card" data-nosnippet>
           <div>
             <span>Start with a recent test paper</span>
             <strong>
@@ -276,7 +276,7 @@ useHead({
       </div>
     </section>
 
-    <section class="content-wrapper paper-section" aria-labelledby="latest-heading">
+    <section class="content-wrapper paper-section" aria-labelledby="latest-heading" data-nosnippet>
       <div class="section-heading">
         <span>Open or download</span>
         <h2 id="latest-heading">Latest primary test papers</h2>

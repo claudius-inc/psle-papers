@@ -27,6 +27,29 @@ const homepagePriorityDirectorySnippets = [
   "Primary 6 Chinese SA2 Exam Papers",
 ];
 
+const broadLandingPages = [
+  {
+    sourcePath: "app/pages/free-exam-papers.vue",
+    outputPath: ".output/public/free-exam-papers/index.html",
+    title: "Free Exam Papers Singapore",
+  },
+  {
+    sourcePath: "app/pages/past-year-exam-papers.vue",
+    outputPath: ".output/public/past-year-exam-papers/index.html",
+    title: "Past Year Exam Papers Singapore",
+  },
+  {
+    sourcePath: "app/pages/test-papers.vue",
+    outputPath: ".output/public/test-papers/index.html",
+    title: "Singapore Primary Test Papers",
+  },
+  {
+    sourcePath: "app/pages/top-school-exam-papers.vue",
+    outputPath: ".output/public/top-school-exam-papers/index.html",
+    title: "Top School Exam Papers Singapore",
+  },
+];
+
 const checks = [
   {
     path: "app/pages/index.vue",
@@ -104,6 +127,29 @@ const checks = [
       /class="mobile-collection-action-bar"[^>]*data-nosnippet/s,
     ],
   },
+  ...broadLandingPages.flatMap((page) => [
+    {
+      path: page.sourcePath,
+      snippets: [
+        'class="hero-card" data-nosnippet',
+        'class="content-wrapper paper-section" aria-labelledby="latest-heading" data-nosnippet',
+      ],
+    },
+    {
+      path: page.outputPath,
+      snippets: [
+        "data-nosnippet",
+        "hero-card",
+        "paper-section",
+        page.title,
+        "Download PDF",
+      ],
+      patterns: [
+        /class="hero-card"[^>]*data-nosnippet/s,
+        /class="content-wrapper paper-section"[^>]*data-nosnippet/s,
+      ],
+    },
+  ]),
 ];
 
 const fail = (message) => {

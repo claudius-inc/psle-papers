@@ -294,7 +294,7 @@ useHead({
           papers highlighted from {{ allParsedPapers.length.toLocaleString() }}
           total PDFs
         </p>
-        <div v-if="featuredPaper" class="hero-card">
+        <div v-if="featuredPaper" class="hero-card" data-nosnippet>
           <div>
             <span>Start with a recent top school paper</span>
             <strong>
@@ -345,7 +345,7 @@ useHead({
       </div>
     </section>
 
-    <section class="content-wrapper paper-section" aria-labelledby="latest-heading">
+    <section class="content-wrapper paper-section" aria-labelledby="latest-heading" data-nosnippet>
       <div class="section-heading">
         <span>Open or download</span>
         <h2 id="latest-heading">Latest top school exam papers</h2>

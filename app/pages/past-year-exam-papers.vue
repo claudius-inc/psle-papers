@@ -229,7 +229,7 @@ useHead({
         <p class="freshness">
           {{ allParsedPapers.length.toLocaleString() }} past year PDF papers indexed
         </p>
-        <div v-if="featuredPaper" class="hero-card">
+        <div v-if="featuredPaper" class="hero-card" data-nosnippet>
           <div>
             <span>Start with a recent past year paper</span>
             <strong>
@@ -279,7 +279,7 @@ useHead({
       </div>
     </section>
 
-    <section class="content-wrapper paper-section" aria-labelledby="latest-heading">
+    <section class="content-wrapper paper-section" aria-labelledby="latest-heading" data-nosnippet>
       <div class="section-header">
         <span>Open or download</span>
         <h2 id="latest-heading">Recent past year exam papers</h2>

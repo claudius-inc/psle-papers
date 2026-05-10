@@ -23,6 +23,25 @@ const homepagePriorityDirectorySnippets = [
   "Primary 6 Chinese SA2 Exam Papers",
 ];
 
+const broadLandingPages = [
+  {
+    path: "/free-exam-papers/",
+    title: "Free Exam Papers Singapore",
+  },
+  {
+    path: "/past-year-exam-papers/",
+    title: "Past Year Exam Papers Singapore",
+  },
+  {
+    path: "/test-papers/",
+    title: "Singapore Primary Test Papers",
+  },
+  {
+    path: "/top-school-exam-papers/",
+    title: "Top School Exam Papers Singapore",
+  },
+];
+
 const checks = [
   {
     path: "/",
@@ -78,6 +97,20 @@ const checks = [
       /class="mobile-collection-action-bar"[^>]*data-nosnippet/s,
     ],
   },
+  ...broadLandingPages.map((page) => ({
+    path: page.path,
+    snippets: [
+      "data-nosnippet",
+      "hero-card",
+      "paper-section",
+      page.title,
+      "Download PDF",
+    ],
+    patterns: [
+      /class="hero-card"[^>]*data-nosnippet/s,
+      /class="content-wrapper paper-section"[^>]*data-nosnippet/s,
+    ],
+  })),
 ];
 
 const fail = (message) => {

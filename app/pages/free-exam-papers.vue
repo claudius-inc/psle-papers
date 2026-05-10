@@ -226,7 +226,7 @@ useHead({
         <p class="freshness">
           {{ allParsedPapers.length.toLocaleString() }} free PDF exam papers indexed
         </p>
-        <div v-if="featuredPaper" class="hero-card">
+        <div v-if="featuredPaper" class="hero-card" data-nosnippet>
           <div>
             <span>Start with a free paper</span>
             <strong>
@@ -276,7 +276,7 @@ useHead({
       </div>
     </section>
 
-    <section class="content-wrapper paper-section" aria-labelledby="latest-heading">
+    <section class="content-wrapper paper-section" aria-labelledby="latest-heading" data-nosnippet>
       <div class="section-header">
         <span>Open or download</span>
         <h2 id="latest-heading">Latest free exam papers</h2>
