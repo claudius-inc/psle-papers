@@ -4,7 +4,7 @@ type MetaContent = string | ComputedRef<string>;
 
 export const siteName = "SG Exam Hub";
 export const siteUrl = "https://sgexamhub.com";
-export const socialImageUrl = `${siteUrl}/og-image.png`;
+export const socialImageUrl = `${siteUrl}/og-image.svg`;
 export const socialImageAlt =
   "SG Exam Hub free Singapore primary school exam papers";
 
