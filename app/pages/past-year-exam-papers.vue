@@ -44,6 +44,16 @@ const pastYearCollections = [
     to: "/exam-papers/primary-6-science-sa2",
   },
   {
+    title: "English past year exam papers",
+    description: "English PDFs for composition, comprehension and language practice.",
+    to: "/exam-papers/english",
+  },
+  {
+    title: "Chinese past year exam papers",
+    description: "Chinese PDFs for paper practice, vocabulary and comprehension.",
+    to: "/exam-papers/chinese",
+  },
+  {
     title: "Top school past year papers",
     description: "Browse Nanyang, Raffles Girls, Henry Park and more.",
     to: "/top-school-exam-papers",

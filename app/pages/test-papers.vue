@@ -37,6 +37,16 @@ const testPaperCollections = [
     to: "/exam-papers/primary-6-science",
   },
   {
+    title: "English test papers",
+    description: "English papers for grammar, vocabulary and comprehension revision.",
+    to: "/exam-papers/english",
+  },
+  {
+    title: "Chinese test papers",
+    description: "Chinese papers for language practice and exam confidence.",
+    to: "/exam-papers/chinese",
+  },
+  {
     title: "SA2 test papers",
     description: "Final assessment papers for timed exam practice.",
     to: "/exam-papers/sa2",
