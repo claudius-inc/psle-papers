@@ -217,6 +217,7 @@ const requiredSnippets = [
   [".output/public/index.html", "SG Exam Hub: Free Singapore Primary Exam Papers | 2026"],
   [".output/public/index.html", "SG exam papers"],
   [".output/public/index.html", "SG Exam Papers"],
+  [".output/public/index.html", "No sign-up needed"],
   [".output/public/index.html", "Latest available papers: 2025"],
   [".output/public/index.html", "2,299 PDF exam papers indexed"],
   [".output/public/index.html", "Start with a latest paper"],
@@ -430,6 +431,10 @@ const requiredSnippets = [
   ],
   [
     ".output/public/free-exam-papers/index.html",
+    "No sign-up needed",
+  ],
+  [
+    ".output/public/free-exam-papers/index.html",
     "Start with a free paper",
   ],
   [
@@ -467,6 +472,10 @@ const requiredSnippets = [
   [
     ".output/public/past-year-exam-papers/index.html",
     "Download Singapore primary past year exam papers",
+  ],
+  [
+    ".output/public/past-year-exam-papers/index.html",
+    "No sign-up needed",
   ],
   [
     ".output/public/past-year-exam-papers/index.html",
@@ -511,6 +520,10 @@ const requiredSnippets = [
   [
     ".output/public/test-papers/index.html",
     "Download free Singapore primary test papers",
+  ],
+  [
+    ".output/public/test-papers/index.html",
+    "No sign-up needed",
   ],
   [
     ".output/public/test-papers/index.html",
@@ -1122,6 +1135,7 @@ for (const snippet of [
   "trackHeroPaperDownload",
   "home_hero_cta",
   "search_query",
+  "No sign-up needed",
   "buildSocialMeta",
   "SearchAction",
   "search_term_string",
@@ -1162,6 +1176,7 @@ for (const snippet of [
   "trackFreePaperView",
   "trackFreePaperDownload",
   "free_exam_papers_hero",
+  "No sign-up needed",
   "FAQPage",
   "DownloadAction",
   "buildPdfFileUrl",
@@ -1177,6 +1192,7 @@ for (const snippet of [
   "trackPastYearPaperView",
   "trackPastYearPaperDownload",
   "past_year_hero",
+  "No sign-up needed",
   "FAQPage",
   "DownloadAction",
   "buildPdfFileUrl",
@@ -1193,6 +1209,7 @@ for (const snippet of [
   "trackTestPaperView",
   "trackTestPaperDownload",
   "test_papers_hero",
+  "No sign-up needed",
   "FAQPage",
   "DownloadAction",
   "buildPdfFileUrl",

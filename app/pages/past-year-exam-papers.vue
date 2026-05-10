@@ -9,7 +9,7 @@ import { trackPaperDownload, trackPaperViewClick } from "~/utils/analytics";
 const pageTitle = "Past Year Exam Papers Singapore | Primary PDF Download";
 const visibleTitle = "Past Year Exam Papers Singapore";
 const pageDescription =
-  "Download Singapore primary past year exam papers for P2-P6 Maths, Science, English and Chinese. Open recent school papers online, then save PDFs.";
+  "Download Singapore primary past year exam papers for P2-P6 Maths, Science, English and Chinese. No sign-up needed. Open recent school papers, then save PDFs.";
 const pageUrl = "https://sgexamhub.com/past-year-exam-papers";
 
 const pastYearPapers = allParsedPapers
@@ -213,8 +213,9 @@ useHead({
         <h1>{{ visibleTitle }}</h1>
         <p class="subtitle">
           Find Singapore primary school past year exam papers for P2 to P6
-          revision. Open a recent school paper online, compare the subject and
-          assessment type, then download useful PDF practice sets.
+          revision. No sign-up needed: open a recent school paper online,
+          compare the subject and assessment type, then download useful PDF
+          practice sets.
         </p>
         <p class="freshness">
           {{ allParsedPapers.length.toLocaleString() }} past year PDF papers indexed

@@ -318,7 +318,7 @@ const siteNavigationItems = examPaperDirectorySections
 const homepageSeoTitle =
   "SG Exam Hub: Free Singapore Primary Exam Papers | 2026";
 const homepageSeoDescription =
-  "Use SG Exam Hub for free Singapore primary school exam papers. Download 2,300+ latest 2025 and 2024 SG exam paper PDFs for Maths, Science, English and Chinese.";
+  "Free Singapore primary school exam papers. No sign-up needed. Download 2,300+ latest 2025 and 2024 SG exam paper PDFs for Maths, Science, English and Chinese.";
 const homepageSocialTitle =
   "SG Exam Hub: Free Singapore Primary School Exam Papers";
 const homepageSocialDescription =
@@ -624,7 +624,7 @@ const resetFilters = () => {
         </h1>
         <p class="subtitle">
           Prepare for 2026 with thousands of free SG exam papers from top
-          Singapore primary schools. View online or download PDFs for practice.
+          Singapore primary schools. No sign-up needed: view online or download PDFs for practice.
         </p>
         <p class="hero-freshness">
           Latest available papers: {{ latestAvailableYear }} ·

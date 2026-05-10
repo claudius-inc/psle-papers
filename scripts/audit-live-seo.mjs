@@ -7,6 +7,7 @@ const checks = [
       "SG Exam Hub: Free Singapore Primary Exam Papers | 2026",
       "SG exam papers",
       "SG Exam Papers",
+      "No sign-up needed",
       "Latest available papers: 2025",
       "2,299 PDF exam papers indexed",
       "Start with a latest paper",
@@ -50,6 +51,7 @@ const checks = [
     snippets: [
       "Free Exam Papers Singapore",
       "Download free Singapore primary exam papers",
+      "No sign-up needed",
       "Start with a free paper",
       "Free exam paper collections",
       "Latest free exam papers",
@@ -65,6 +67,7 @@ const checks = [
     snippets: [
       "Past Year Exam Papers Singapore",
       "Download Singapore primary past year exam papers",
+      "No sign-up needed",
       "Start with a recent past year paper",
       "Past year exam paper collections",
       "Recent past year exam papers",
@@ -81,6 +84,7 @@ const checks = [
       "Free Test Papers Singapore",
       "Singapore Primary Test Papers",
       "Download free Singapore primary test papers",
+      "No sign-up needed",
       "Start with a recent test paper",
       "Choose a test paper path",
       "Latest primary test papers",

@@ -9,7 +9,7 @@ import { trackPaperDownload, trackPaperViewClick } from "~/utils/analytics";
 const pageTitle = "Free Exam Papers Singapore | Primary PDF Download";
 const visibleTitle = "Free Exam Papers Singapore";
 const pageDescription =
-  "Download free Singapore primary exam papers for P2-P6 Maths, Science, English and Chinese. View recent papers online, then save PDF practice sets.";
+  "Download free Singapore primary exam papers for P2-P6 Maths, Science, English and Chinese. No sign-up needed. View recent papers online, then save PDFs.";
 const pageUrl = "https://sgexamhub.com/free-exam-papers";
 
 const latestFreePapers = allParsedPapers.slice(0, 12);
@@ -211,8 +211,8 @@ useHead({
         <h1>{{ visibleTitle }}</h1>
         <p class="subtitle">
           Download free Singapore primary school exam papers for P2 to P6
-          revision. Open a recent paper online, check the subject and school,
-          then save useful PDF practice sets.
+          revision. No sign-up needed: open a recent paper online, check the
+          subject and school, then save useful PDF practice sets.
         </p>
         <p class="freshness">
           {{ allParsedPapers.length.toLocaleString() }} free PDF exam papers indexed
