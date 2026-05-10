@@ -59,6 +59,7 @@ export const trackEvent = (
 
   gtag("event", name, {
     event_category: "exam_papers",
+    transport_type: "beacon",
     ...getSessionAttribution(),
     ...params,
   });
@@ -107,6 +108,7 @@ export const trackPaperDownload = (
   trackEvent("paper_download", {
     paper_id: filename,
     source,
+    is_conversion_event: true,
     ...params,
   });
 };
