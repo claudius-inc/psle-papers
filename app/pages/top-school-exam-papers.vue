@@ -9,7 +9,7 @@ import { trackPaperDownload, trackPaperViewClick } from "~/utils/analytics";
 const pageTitle = "Top School Exam Papers Singapore | Free PDF Download";
 const visibleTitle = "Top School Exam Papers Singapore";
 const pageDescription =
-  "Download free Singapore top school exam papers from Raffles, Nanyang, Henry Park, Ai Tong, Nan Hua, Rosyth and more. View papers online, then save PDFs.";
+  "Download free Singapore top school exam papers from Raffles, Nanyang, Henry Park, Ai Tong, Nan Hua and Rosyth. No sign-up needed. View papers, then save PDFs.";
 const pageUrl = "https://sgexamhub.com/top-school-exam-papers";
 
 const topSchoolCollections = [
@@ -234,8 +234,9 @@ useHead({
         <h1>{{ visibleTitle }}</h1>
         <p class="subtitle">
           Compare free Singapore primary school exam papers from Raffles,
-          Nanyang, Henry Park, Ai Tong, Nan Hua, Rosyth and more. Open one
-          paper online first, then download useful PDFs for timed revision.
+          Nanyang, Henry Park, Ai Tong, Nan Hua, Rosyth and more. No sign-up
+          needed: open one paper online first, then download useful PDFs for
+          timed revision.
         </p>
         <p class="freshness">
           {{ latestTopSchoolPapers.length.toLocaleString() }} recent top school

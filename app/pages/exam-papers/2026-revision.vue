@@ -9,7 +9,7 @@ import { trackPaperDownload, trackPaperViewClick } from "~/utils/analytics";
 const pageTitle = "2026 Primary Exam Papers Revision | SG Exam Hub";
 const visibleTitle = "2026 Primary Exam Papers Revision";
 const pageDescription =
-  "Prepare for 2026 with free Singapore primary school exam papers. Use the latest available 2025 and 2024 PDFs for P2-P6 Maths, Science, English and Chinese revision.";
+  "Prepare for 2026 with free Singapore primary school exam papers. No sign-up needed. Use latest 2025 and 2024 PDFs for P2-P6 Maths, Science, English and Chinese.";
 const pageUrl = "https://sgexamhub.com/exam-papers/2026-revision";
 
 const latestPapers = allParsedPapers
@@ -232,8 +232,8 @@ useHead({
           <h1>{{ visibleTitle }}</h1>
           <p class="subtitle">
             Use the latest available 2025 and 2024 Singapore primary school exam
-            papers to prepare for 2026. Open a paper online first, then download
-            useful PDFs for timed practice.
+            papers to prepare for 2026. No sign-up needed: open a paper online
+            first, then download useful PDFs for timed practice.
           </p>
           <div class="hero-actions">
             <NuxtLink to="/exam-papers/2025-primary-6-sa2">

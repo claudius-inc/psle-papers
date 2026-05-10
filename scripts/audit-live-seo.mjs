@@ -100,6 +100,7 @@ const checks = [
     snippets: [
       "Top School Exam Papers Singapore",
       "Download free Singapore top school exam papers",
+      "No sign-up needed",
       "Start with a recent top school paper",
       "Choose a school collection",
       "Latest top school exam papers",
@@ -131,7 +132,7 @@ const checks = [
     snippets: [
       "PSLE Practice Papers | Primary 6 Revision PDFs",
       "PSLE Revision Papers",
-      "Use free PSLE revision papers and PSLE practice papers from Primary 6",
+      "No sign-up needed",
       "Choose a Primary 6 practice set",
       'href="/exam-papers/2025-primary-6-sa2"',
       "Recent Primary 6 papers for PSLE revision",
@@ -147,7 +148,7 @@ const checks = [
     path: "/exam-papers/2026-revision/",
     snippets: [
       "2026 Primary Exam Papers Revision",
-      "Use the latest available 2025 and 2024 Singapore primary school exam",
+      "No sign-up needed",
       "Choose a 2026 revision collection",
       'href="/exam-papers/2025-primary-6-sa2"',
       "Latest papers for 2026 revision",

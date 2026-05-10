@@ -271,7 +271,7 @@ const requiredSnippets = [
   ],
   [
     ".output/public/exam-papers/2026-revision/index.html",
-    "Use the latest available 2025 and 2024 Singapore primary school exam",
+    "No sign-up needed",
   ],
   [
     ".output/public/exam-papers/2026-revision/index.html",
@@ -315,7 +315,7 @@ const requiredSnippets = [
   ],
   [
     ".output/public/exam-papers/psle-revision/index.html",
-    "Use free PSLE revision papers and PSLE practice papers from Primary 6",
+    "No sign-up needed",
   ],
   [
     ".output/public/exam-papers/psle-revision/index.html",
@@ -560,6 +560,10 @@ const requiredSnippets = [
   [
     ".output/public/top-school-exam-papers/index.html",
     "Download free Singapore top school exam papers",
+  ],
+  [
+    ".output/public/top-school-exam-papers/index.html",
+    "No sign-up needed",
   ],
   [
     ".output/public/top-school-exam-papers/index.html",
@@ -1227,6 +1231,7 @@ for (const snippet of [
   "top_school_hero",
   "Raffles Girls' Primary School",
   "Nanyang Primary School",
+  "No sign-up needed",
   "FAQPage",
   "DownloadAction",
   "buildPdfFileUrl",
@@ -1238,6 +1243,7 @@ for (const snippet of [
 for (const snippet of [
   "2026 Primary Exam Papers Revision",
   "latest available 2025 and 2024",
+  "No sign-up needed",
   "revisionCollections",
   "trackRevisionPaperView",
   "trackRevisionPaperDownload",
@@ -1252,7 +1258,8 @@ for (const snippet of [
 for (const snippet of [
   "PSLE Practice Papers | Primary 6 Revision PDFs",
   "PSLE Revision Papers",
-  "PSLE practice papers from Primary 6",
+  "Primary 6 practice papers",
+  "No sign-up needed",
   "psleCollections",
   "trackPslePaperView",
   "trackPslePaperDownload",

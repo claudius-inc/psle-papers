@@ -9,7 +9,7 @@ import { trackPaperDownload, trackPaperViewClick } from "~/utils/analytics";
 const pageTitle = "PSLE Practice Papers | Primary 6 Revision PDFs";
 const visibleTitle = "PSLE Revision Papers";
 const pageDescription =
-  "Use free PSLE revision papers and PSLE practice papers from Primary 6. Open recent P6 SA2, Maths, Science, English and Chinese papers, then download useful PDFs.";
+  "Use free PSLE revision papers and Primary 6 practice papers. No sign-up needed. Open recent P6 SA2, Maths, Science, English and Chinese papers, then download PDFs.";
 const pageUrl = "https://sgexamhub.com/exam-papers/psle-revision";
 
 const latestPslePapers = allParsedPapers
@@ -251,8 +251,8 @@ useHead({
           <h1>{{ visibleTitle }}</h1>
           <p class="subtitle">
             Build a PSLE practice routine with free Primary 6 school exam papers.
-            Open a recent SA2 paper first, then download useful Maths, Science,
-            English or Chinese PDFs for timed revision.
+            No sign-up needed: open a recent SA2 paper first, then download
+            useful Maths, Science, English or Chinese PDFs for timed revision.
           </p>
           <div class="hero-actions">
             <NuxtLink to="/exam-papers/2025-primary-6-sa2">
