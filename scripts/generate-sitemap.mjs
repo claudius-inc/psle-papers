@@ -8,23 +8,41 @@ const today = new Date().toISOString().slice(0, 10);
 
 const toIsoDate = (date) => date.toISOString().slice(0, 10);
 
+const sitemapFreshnessInputs = [
+  "app",
+  "public/files",
+  "public/json/files.json",
+  "public/json/dropdownOptions.json",
+  "scripts/ensure-snippet-focused-ui.mjs",
+  "scripts/ensure-viewer-school-seo.mjs",
+  "scripts/generate-sitemap.mjs",
+];
+
+const staticFreshnessInputs = [
+  "app/app.vue",
+  "app/pages/index.vue",
+  "app/pages/free-exam-papers.vue",
+  "app/pages/past-year-exam-papers.vue",
+  "app/pages/test-papers.vue",
+  "app/pages/top-school-exam-papers.vue",
+  "app/pages/exam-papers/[[slug]].vue",
+  "app/pages/sitemap.vue",
+  "app/pages/view/[id].vue",
+  "app/utils/paperSeo.ts",
+  "public/json/files.json",
+  "public/json/dropdownOptions.json",
+  "scripts/ensure-snippet-focused-ui.mjs",
+  "scripts/ensure-viewer-school-seo.mjs",
+  "scripts/generate-sitemap.mjs",
+];
+
 const getGitLastModifiedDates = () => {
   const dates = new Map();
 
   try {
     const output = execFileSync(
       "git",
-      [
-        "log",
-        "--format=@@date:%cs",
-        "--name-only",
-        "--",
-        "app",
-        "public/files",
-        "public/json/files.json",
-        "public/json/dropdownOptions.json",
-        "scripts/generate-sitemap.mjs",
-      ],
+      ["log", "--format=@@date:%cs", "--name-only", "--", ...sitemapFreshnessInputs],
       { encoding: "utf8" },
     );
 
@@ -65,24 +83,11 @@ const paperLastModified = new Map(
   files.map((filename) => [filename, getPaperLastModified(filename)]),
 );
 
-const staticLastModified = [
-  "app/app.vue",
-  "app/pages/index.vue",
-  "app/pages/free-exam-papers.vue",
-  "app/pages/past-year-exam-papers.vue",
-  "app/pages/test-papers.vue",
-  "app/pages/top-school-exam-papers.vue",
-  "app/pages/exam-papers/[[slug]].vue",
-  "app/pages/sitemap.vue",
-  "app/pages/view/[id].vue",
-  "app/utils/paperSeo.ts",
-  "public/json/files.json",
-  "public/json/dropdownOptions.json",
-  "scripts/generate-sitemap.mjs",
-]
-  .map((path) => getPathLastModified(path))
-  .sort()
-  .at(-1) || today;
+const staticLastModified =
+  staticFreshnessInputs
+    .map((path) => getPathLastModified(path))
+    .sort()
+    .at(-1) || today;
 
 const slugify = (value) =>
   value
@@ -426,20 +431,11 @@ const routeEntries = [
 
 const urls = routeEntries
   .map(
-    (route) => `  <url>
-    <loc>${siteUrl}${route.path}</loc>
-    <lastmod>${getRouteLastModified(route)}</lastmod>
-    <changefreq>${route.changefreq || "weekly"}</changefreq>
-    <priority>${route.priority}</priority>
-  </url>`,
+    (route) => `  <url>\n    <loc>${siteUrl}${route.path}</loc>\n    <lastmod>${getRouteLastModified(route)}</lastmod>\n    <changefreq>${route.changefreq || "weekly"}</changefreq>\n    <priority>${route.priority}</priority>\n  </url>`,
   )
   .join("\n");
 
-const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-${urls}
-</urlset>
-`;
+const sitemap = `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${urls}\n</urlset>\n`;
 
 writeFileSync("public/sitemap.xml", sitemap);
 console.log(`Generated ${routeEntries.length} sitemap URLs`);
