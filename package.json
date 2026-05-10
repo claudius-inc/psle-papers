@@ -7,7 +7,7 @@
     "dev": "nuxt dev",
     "generate": "rm -rf .output && npm run seo:sitemap && nuxt generate",
     "preview": "nuxt preview",
-    "seo:audit": "node scripts/audit-seo-output.mjs && node scripts/audit-top-school-funnel.mjs && node scripts/audit-free-exam-funnel.mjs && node scripts/audit-broad-landing-funnels.mjs",
+    "seo:audit": "node scripts/audit-seo-output.mjs && node scripts/audit-top-school-funnel.mjs && node scripts/audit-free-exam-funnel.mjs && node scripts/audit-broad-landing-funnels.mjs && node scripts/audit-sitemap-priority-schools.mjs",
     "seo:audit:live": "node scripts/audit-live-seo.mjs && node scripts/audit-live-top-school-funnel.mjs && node scripts/audit-live-free-exam-funnel.mjs && node scripts/audit-live-broad-landing-funnels.mjs",
     "seo:sitemap": "node scripts/generate-sitemap.mjs",
     "postinstall": "nuxt prepare"
