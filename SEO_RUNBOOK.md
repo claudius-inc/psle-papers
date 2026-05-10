@@ -150,6 +150,8 @@ After Google has had time to recrawl and GA4 has collected organic sessions, exp
 Then run:
 
 ```sh
+npm run seo:export-templates
+
 npm run seo:outcomes -- \
   --gsc-before reports/seo/gsc-before.csv \
   --gsc-after reports/seo/gsc-after.csv \

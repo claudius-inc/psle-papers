@@ -171,8 +171,10 @@ const engagement = readText("app/composables/useEngagementTracking.ts");
 const keywordMap = readText("SEO_KEYWORD_MAP.md");
 const seoRunbook = readText("SEO_RUNBOOK.md");
 const packageJson = readText("package.json");
+const seoExportTemplateScript = readText("scripts/generate-seo-export-templates.mjs");
 const seoActionPackScript = readText("scripts/generate-seo-action-pack.mjs");
 const seoActionPack = readText("reports/seo/reindex-action-pack.md");
+const outcomeExportChecklist = readText("reports/seo/outcome-export-checklist.md");
 const homePage = readText("app/pages/index.vue");
 const freeExamPapersPage = readText("app/pages/free-exam-papers.vue");
 const pastYearPage = readText("app/pages/past-year-exam-papers.vue");
@@ -271,13 +273,46 @@ if (pagesWorkflow.includes("actions/checkout@v5")) {
 }
 
 for (const snippet of [
-  '"seo:audit": "node scripts/generate-seo-action-pack.mjs &&',
+  '"seo:audit": "node scripts/generate-seo-export-templates.mjs && node scripts/generate-seo-action-pack.mjs &&',
   '"seo:action-pack": "node scripts/generate-seo-action-pack.mjs"',
+  '"seo:export-templates": "node scripts/generate-seo-export-templates.mjs"',
   '"seo:outcomes": "node scripts/analyze-seo-outcomes.mjs"',
 ]) {
   if (!packageJson.includes(snippet)) {
     fail(`package.json is missing SEO workflow script: ${snippet}`);
   }
+}
+for (const snippet of [
+  "reports/seo/gsc-before-template.csv",
+  "reports/seo/gsc-after-template.csv",
+  "reports/seo/ga4-organic-events-template.csv",
+  "outcome-export-checklist.md",
+]) {
+  if (!seoExportTemplateScript.includes(snippet)) {
+    fail(`SEO export-template generator is missing expected snippet: ${snippet}`);
+  }
+}
+for (const [path, expected] of [
+  ["reports/seo/gsc-before-template.csv", "Query,Page,Clicks,Impressions,CTR,Position"],
+  ["reports/seo/gsc-after-template.csv", "Query,Page,Clicks,Impressions,CTR,Position"],
+  ["reports/seo/ga4-organic-events-template.csv", "Event name,Landing page,Session source / medium,Event count"],
+]) {
+  if (!readText(path).includes(expected)) {
+    fail(`${path} is missing expected export-template header: ${expected}`);
+  }
+}
+for (const snippet of [
+  "SEO Outcome Export Templates",
+  "Required GSC Export Shape",
+  "Required GA4 Export Shape",
+  "npm run seo:outcomes",
+]) {
+  if (!outcomeExportChecklist.includes(snippet)) {
+    fail(`SEO outcome export checklist is missing expected snippet: ${snippet}`);
+  }
+}
+if (!seoRunbook.includes("npm run seo:export-templates")) {
+  fail("SEO runbook is missing the export-template generation command.");
 }
 for (const snippet of [
   "reports/seo/reindex-action-pack.md",
@@ -296,6 +331,7 @@ for (const snippet of [
   "Public Google Recheck Queries",
   "GSC Outcome Export",
   "GA4 Organic Outcome Export",
+  "npm run seo:export-templates",
   "npm run seo:outcomes",
 ]) {
   if (!seoActionPack.includes(snippet) || !seoRunbook.includes("seo:action-pack")) {

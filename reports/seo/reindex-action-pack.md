@@ -133,6 +133,12 @@ Priority landing pages:
 
 ## Outcome Analyzer Command
 
+If the export CSVs do not exist yet, generate templates first:
+
+```sh
+npm run seo:export-templates
+```
+
 Run this after the GSC and GA4 exports are available:
 
 ```sh
