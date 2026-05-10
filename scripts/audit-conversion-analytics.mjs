@@ -27,6 +27,15 @@ const analytics = readRequiredFile("app/utils/analytics.ts");
 const engagement = readRequiredFile("app/composables/useEngagementTracking.ts");
 const viewer = readRequiredFile("app/pages/view/[id].vue");
 const home = readRequiredFile("app/pages/index.vue");
+const downloadExamPapers = readRequiredFile("app/pages/download-exam-papers.vue");
+const freeExamPapers = readRequiredFile("app/pages/free-exam-papers.vue");
+const pastYearExamPapers = readRequiredFile("app/pages/past-year-exam-papers.vue");
+const testPapers = readRequiredFile("app/pages/test-papers.vue");
+const topSchoolExamPapers = readRequiredFile("app/pages/top-school-exam-papers.vue");
+const revision2026 = readRequiredFile("app/pages/exam-papers/2026-revision.vue");
+const psleRevision = readRequiredFile("app/pages/exam-papers/psle-revision.vue");
+const collectionPage = readRequiredFile("app/pages/exam-papers/[[slug]].vue");
+const outcomeAnalyzer = readRequiredFile("scripts/analyze-seo-outcomes.mjs");
 
 assertIncludes(
   app,
@@ -100,6 +109,96 @@ assertIncludes(
 );
 
 assertIncludes(
+  downloadExamPapers,
+  [
+    'trackEvent("download_exam_collection_click"',
+    "download_exam_collection_grid",
+    "collection_title:",
+    "target_path:",
+  ],
+  "download exam papers page is missing required collection-path analytics",
+);
+
+assertIncludes(
+  freeExamPapers,
+  [
+    'trackEvent("free_exam_collection_click"',
+    "free_exam_collection_grid",
+    "collection_title:",
+    "target_path:",
+  ],
+  "free exam papers page is missing required collection-path analytics",
+);
+
+assertIncludes(
+  pastYearExamPapers,
+  [
+    'trackEvent("past_year_collection_click"',
+    "past_year_collection_grid",
+    "collection_title:",
+    "target_path:",
+  ],
+  "past year exam papers page is missing required collection-path analytics",
+);
+
+assertIncludes(
+  testPapers,
+  [
+    'trackEvent("test_paper_collection_click"',
+    "test_paper_collection_grid",
+    "collection_title:",
+    "target_path:",
+  ],
+  "test papers page is missing required collection-path analytics",
+);
+
+assertIncludes(
+  topSchoolExamPapers,
+  [
+    'trackEvent("top_school_collection_click"',
+    "top_school_collection_grid",
+    "school_name:",
+    "target_path:",
+  ],
+  "top school page is missing required collection-path analytics",
+);
+
+assertIncludes(
+  revision2026,
+  [
+    'trackEvent("revision_collection_click"',
+    "revision_collection_grid",
+    "collection_title:",
+    "target_path:",
+  ],
+  "2026 revision page is missing required collection-path analytics",
+);
+
+assertIncludes(
+  psleRevision,
+  [
+    'trackEvent("psle_collection_click"',
+    "psle_collection_grid",
+    "psle_school_grid",
+    "collection_title:",
+    "target_path:",
+  ],
+  "PSLE revision page is missing required collection-path analytics",
+);
+
+assertIncludes(
+  collectionPage,
+  [
+    'trackEvent("related_collection_click"',
+    "collection_related_collections",
+    "related_group:",
+    "related_path:",
+    "related_title:",
+  ],
+  "collection page is missing required related-collection analytics",
+);
+
+assertIncludes(
   home,
   [
     "trackHomePaperView",
@@ -112,6 +211,24 @@ assertIncludes(
     'trackEvent("empty_search_recovery_click"',
   ],
   "homepage is missing required paper discovery analytics",
+);
+
+assertIncludes(
+  outcomeAnalyzer,
+  [
+    "collectionPathClick",
+    "download_exam_collection_click",
+    "free_exam_collection_click",
+    "past_year_collection_click",
+    "test_paper_collection_click",
+    "top_school_collection_click",
+    "revision_collection_click",
+    "psle_collection_click",
+    "related_collection_click",
+    "viewer_collection_click",
+    "empty_search_recovery_click",
+  ],
+  "SEO outcome analyzer is missing required collection-path conversion evidence gate",
 );
 
 assertIncludes(

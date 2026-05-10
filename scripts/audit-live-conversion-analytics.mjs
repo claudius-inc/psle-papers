@@ -30,7 +30,18 @@ const extractNuxtAssetUrls = (html) => {
 };
 
 try {
-  const pages = ["/", "/view/6_1073_3_4_2025"];
+  const pages = [
+    "/",
+    "/download-exam-papers/",
+    "/free-exam-papers/",
+    "/past-year-exam-papers/",
+    "/test-papers/",
+    "/top-school-exam-papers/",
+    "/exam-papers/2026-revision/",
+    "/exam-papers/psle-revision/",
+    "/exam-papers/2025-primary-6-mathematics/",
+    "/view/6_1073_3_4_2025",
+  ];
   const pageHtml = await Promise.all(
     pages.map(async (path) => ({
       path,
@@ -87,6 +98,27 @@ try {
       "page_engaged_time",
       "page_scroll_depth",
       "page_session_summary",
+      "download_exam_collection_click",
+      "download_exam_collection_grid",
+      "free_exam_collection_click",
+      "free_exam_collection_grid",
+      "past_year_collection_click",
+      "past_year_collection_grid",
+      "test_paper_collection_click",
+      "test_paper_collection_grid",
+      "top_school_collection_click",
+      "top_school_collection_grid",
+      "revision_collection_click",
+      "revision_collection_grid",
+      "psle_collection_click",
+      "psle_collection_grid",
+      "psle_school_grid",
+      "related_collection_click",
+      "collection_related_collections",
+      "viewer_collection_click",
+      "collection_title",
+      "target_path",
+      "school_name",
       "collection_hero_cta",
       "collection_mobile_sticky",
       "matchMedia",
