@@ -22,10 +22,23 @@ const assertIncludes = (content, snippets, messagePrefix) => {
 };
 
 const packageJson = JSON.parse(readRequiredFile("package.json"));
+const app = readRequiredFile("app/app.vue");
 const analytics = readRequiredFile("app/utils/analytics.ts");
 const engagement = readRequiredFile("app/composables/useEngagementTracking.ts");
 const viewer = readRequiredFile("app/pages/view/[id].vue");
 const home = readRequiredFile("app/pages/index.vue");
+
+assertIncludes(
+  app,
+  [
+    "useEngagementTracking();",
+    "https://www.googletagmanager.com/gtag/js?id=G-7WKP91PV8C",
+    "window.dataLayer = window.dataLayer || [];",
+    "function gtag(){dataLayer.push(arguments);}",
+    "gtag('config', 'G-7WKP91PV8C', { send_page_view: false });",
+  ],
+  "app.vue is missing required GA4 tag or global engagement tracking setup",
+);
 
 assertIncludes(
   analytics,
