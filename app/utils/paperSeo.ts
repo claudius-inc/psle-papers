@@ -384,7 +384,7 @@ export const seoRoutes: PaperSeoRoute[] = [
     ),
   ),
   ...levelOptions.flatMap((level) =>
-    schools.map((school) =>
+    schoolOptions.map((school) =>
       buildRoute({
         slug: `${slugify(level.name)}-school-${slugify(school.name)}`,
         levelCode: level.code,
