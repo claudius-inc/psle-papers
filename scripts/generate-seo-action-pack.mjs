@@ -1,4 +1,4 @@
-import { mkdirSync, writeFileSync } from "node:fs";
+import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 
 const siteUrl = "https://sgexamhub.com";
 
@@ -78,6 +78,71 @@ const csvEscape = (value) => {
     : stringValue;
 };
 
+const normalizeHeader = (value) =>
+  String(value ?? "")
+    .trim()
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, " ")
+    .replace(/\s+/g, " ")
+    .trim();
+
+const parseCsv = (path) => {
+  if (!existsSync(path)) return [];
+
+  const text = readFileSync(path, "utf8").replace(/^\uFEFF/, "");
+  const rows = [];
+  let row = [];
+  let cell = "";
+  let inQuotes = false;
+
+  for (let index = 0; index < text.length; index += 1) {
+    const char = text[index];
+    const next = text[index + 1];
+    if (char === '"' && inQuotes && next === '"') {
+      cell += '"';
+      index += 1;
+    } else if (char === '"') {
+      inQuotes = !inQuotes;
+    } else if (char === "," && !inQuotes) {
+      row.push(cell);
+      cell = "";
+    } else if ((char === "\n" || char === "\r") && !inQuotes) {
+      if (char === "\r" && next === "\n") index += 1;
+      row.push(cell);
+      if (row.some((value) => value.trim())) rows.push(row);
+      row = [];
+      cell = "";
+    } else {
+      cell += char;
+    }
+  }
+
+  row.push(cell);
+  if (row.some((value) => value.trim())) rows.push(row);
+  if (rows.length < 2) return [];
+
+  const headers = rows[0].map(normalizeHeader);
+  return rows.slice(1).map((values) => {
+    const record = {};
+    headers.forEach((header, index) => {
+      record[header] = values[index] ?? "";
+    });
+    return record;
+  });
+};
+
+const existingUrlInspectionRows = new Map(
+  parseCsv("reports/seo/gsc-url-inspection-tracker.csv")
+    .filter((row) => row.url)
+    .map((row) => [row.url, row]),
+);
+
+const existingSnippetRows = new Map(
+  parseCsv("reports/seo/google-snippet-recheck-tracker.csv")
+    .filter((row) => row.query)
+    .map((row) => [row.query, row]),
+);
+
 const trackerRows = [
   [
     "Priority",
@@ -91,11 +156,11 @@ const trackerRows = [
   ...urlInspectionPriority.map((path, index) => [
     index + 1,
     `${siteUrl}${path}`,
-    "",
-    "",
-    "",
-    "Pending",
-    "",
+    existingUrlInspectionRows.get(`${siteUrl}${path}`)?.["gsc live test result"] || "",
+    existingUrlInspectionRows.get(`${siteUrl}${path}`)?.["indexing requested at"] || "",
+    existingUrlInspectionRows.get(`${siteUrl}${path}`)?.["google result rechecked at"] || "",
+    existingUrlInspectionRows.get(`${siteUrl}${path}`)?.status || "Pending",
+    existingUrlInspectionRows.get(`${siteUrl}${path}`)?.notes || "",
   ]),
 ];
 
@@ -111,10 +176,10 @@ const snippetTrackerRows = [
   ...searchRecheckQueries.map((query) => [
     query,
     googleSearchUrl(query),
-    "",
-    "",
-    "Pending",
-    "",
+    existingSnippetRows.get(query)?.["checked at"] || "",
+    existingSnippetRows.get(query)?.["stale snippet found"] || "",
+    existingSnippetRows.get(query)?.status || "Pending",
+    existingSnippetRows.get(query)?.notes || "",
   ]),
 ];
 

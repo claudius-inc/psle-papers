@@ -330,6 +330,8 @@ for (const snippet of [
   "reports/seo/reindex-action-pack.md",
   "reports/seo/gsc-url-inspection-tracker.csv",
   "reports/seo/google-snippet-recheck-tracker.csv",
+  "existingSnippetRows",
+  "existingUrlInspectionRows",
   "urlInspectionPriority",
   "searchRecheckQueries",
   "gscQueryClusters",
