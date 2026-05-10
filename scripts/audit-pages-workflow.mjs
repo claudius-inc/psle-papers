@@ -15,6 +15,7 @@ if (!existsSync(workflowPath)) {
 const workflow = readFileSync(workflowPath, "utf8");
 
 const requiredSnippets = [
+  "workflow_dispatch:",
   "FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true",
   'node-version: "24"',
   "actions/checkout@v5",
