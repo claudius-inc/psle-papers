@@ -59,4 +59,48 @@ body {
 ::-webkit-scrollbar-thumb:hover {
   background: #94a3b8;
 }
+
+@media (max-width: 640px) {
+  .index-page:has(.collection-action-strip) {
+    padding-bottom: calc(76px + env(safe-area-inset-bottom, 0px));
+  }
+
+  .collection-action-strip {
+    align-items: center !important;
+    background: rgba(255, 255, 255, 0.96) !important;
+    border: 0 !important;
+    border-top: 1px solid #dbe3ef !important;
+    border-radius: 0 !important;
+    bottom: 0 !important;
+    box-shadow: 0 -14px 28px -24px rgba(15, 23, 42, 0.5) !important;
+    display: block !important;
+    left: 0 !important;
+    margin: 0 !important;
+    max-width: none !important;
+    padding: 0.75rem 1rem calc(0.75rem + env(safe-area-inset-bottom, 0px)) !important;
+    position: fixed !important;
+    right: 0 !important;
+    z-index: 120 !important;
+  }
+
+  .collection-action-strip > div:first-child {
+    display: none !important;
+  }
+
+  .collection-action-buttons {
+    display: grid !important;
+    gap: 0.65rem !important;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) !important;
+  }
+
+  .collection-action-buttons a {
+    border-radius: 8px !important;
+    font-size: 0.9rem !important;
+    font-weight: 800 !important;
+    line-height: 1.2 !important;
+    min-height: 44px !important;
+    padding: 0.65rem 0.7rem !important;
+    width: 100% !important;
+  }
+}
 </style>
