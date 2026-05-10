@@ -316,7 +316,7 @@ const checks = [
   {
     path: "/view/6_1073_3_4_2025/",
     snippets: [
-      'content="index, follow"',
+      'name="robots" content="index, follow, max-snippet:160, max-image-preview:large"',
       "LearningResource",
       "Free PDF Download",
       "Free 2025 Raffles Girls' Primary School P6 Maths SA2 exam paper PDF",
@@ -487,6 +487,7 @@ try {
   console.log(`Live sitemap lastmod dates: ${uniqueSitemapLastmods.size}.`);
   if (process.exitCode) process.exit();
   console.log("Live SEO audit passed.");
+  process.exit(0);
 } catch (error) {
   fail(`Live SEO audit failed: ${error.message}`);
   process.exit();
