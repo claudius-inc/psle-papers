@@ -111,8 +111,7 @@ const formatSubjectName = (name: string) =>
   name === "Mathematics" ? "Maths" : name;
 const formatTypeTitle = (name: string) =>
   name === "Practice Paper" ? "Practice Papers" : name;
-const formatSchoolTitle = (name: string) =>
-  name.replace(/\s+\(primary\)$/i, "").replace(/\s+\(junior\)$/i, " Junior");
+const formatSchoolTitle = (name: string) => name;
 const latestYear = Math.max(...yearOptions.map((year) => Number(year.code))).toString();
 
 const countPapers = ({
@@ -385,7 +384,7 @@ export const seoRoutes: PaperSeoRoute[] = [
     ),
   ),
   ...levelOptions.flatMap((level) =>
-    schoolOptions.map((school) =>
+    schools.map((school) =>
       buildRoute({
         slug: `${slugify(level.name)}-school-${slugify(school.name)}`,
         levelCode: level.code,
