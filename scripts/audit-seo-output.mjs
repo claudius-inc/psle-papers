@@ -475,6 +475,12 @@ if (!appShell.includes("G-7WKP91PV8C") || !appShell.includes("useEngagementTrack
 if (!appShell.includes("max-snippet:160") || !appShell.includes("max-image-preview:large")) {
   fail("Global app shell is missing snippet-focused robots directives.");
 }
+if (
+  !appShell.includes('rel: "preconnect", href: "https://raw.githubusercontent.com"') ||
+  !appShell.includes('rel: "dns-prefetch", href: "https://raw.githubusercontent.com"')
+) {
+  fail("Global app shell is missing PDF host resource hints.");
+}
 if (!appShell.includes("send_page_view: false")) {
   fail("Global app shell must disable automatic GA4 page_view duplication.");
 }
