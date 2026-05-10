@@ -105,7 +105,8 @@ const typeOptions = options.Type.filter((option) => option.code !== "0");
 const schoolOptions = options.School.filter((option) => option.code !== "0");
 
 const formatLevelName = (name: string) => name.replace(/^P([1-6])$/, "Primary $1");
-const formatLevelTitle = (name: string) => name.replace(/^P([1-6])$/, "P$1");
+const formatLevelTitle = (name: string, useCompactTitle: boolean) =>
+  useCompactTitle ? name.replace(/^P([1-6])$/, "P$1") : formatLevelName(name);
 const formatSubjectName = (name: string) =>
   name === "Mathematics" ? "Maths" : name;
 const formatTypeTitle = (name: string) =>
@@ -200,7 +201,7 @@ const buildRoute = ({
   schoolCode?: string;
 }): PaperSeoRoute => {
   const levelName = formatLevelName(getOptionName("Level", levelCode));
-  const levelTitle = formatLevelTitle(getOptionName("Level", levelCode));
+  const levelTitle = formatLevelTitle(getOptionName("Level", levelCode), Boolean(schoolCode));
   const subjectName = formatSubjectName(getOptionName("Subject", subjectCode));
   const typeName = getOptionName("Type", typeCode);
   const typeTitle = formatTypeTitle(typeName);

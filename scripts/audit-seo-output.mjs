@@ -362,7 +362,7 @@ const requiredSnippets = [
   ],
   [
     ".output/public/sitemap/index.html",
-    "2025 P6 Maths SA2 Exam Papers",
+    "2025 Primary 6 Maths SA2 Exam Papers",
   ],
   [
     ".output/public/sitemap/index.html",
@@ -538,7 +538,7 @@ const requiredSnippets = [
   ],
   [
     ".output/public/exam-papers/2025-primary-6-mathematics/index.html",
-    "2025 P6 Maths Exam Papers",
+    "2025 Primary 6 Maths Exam Papers",
   ],
   [
     ".output/public/exam-papers/2025-primary-6-mathematics/index.html",
@@ -586,7 +586,7 @@ const requiredSnippets = [
   ],
   [
     ".output/public/exam-papers/primary-6-mathematics/index.html",
-    "P6 Maths Exam Papers",
+    "Primary 6 Maths Exam Papers",
   ],
   [
     ".output/public/exam-papers/primary-6-mathematics/index.html",
@@ -606,11 +606,11 @@ const requiredSnippets = [
   ],
   [
     ".output/public/exam-papers/2025-primary-6-sa2/index.html",
-    "2025 P6 SA2 Exam Papers",
+    "2025 Primary 6 SA2 Exam Papers",
   ],
   [
     ".output/public/exam-papers/2025-primary-6-mathematics-sa2/index.html",
-    "2025 P6 Maths SA2 Exam Papers",
+    "2025 Primary 6 Maths SA2 Exam Papers",
   ],
   [
     ".output/public/exam-papers/2025-primary-6-mathematics-sa2/index.html",
@@ -630,7 +630,7 @@ const requiredSnippets = [
   ],
   [
     ".output/public/exam-papers/2025-primary-6-mathematics-sa2/index.html",
-    "Are these 2025 P6 Maths SA2 Exam Papers useful for PSLE revision?",
+    "Are these 2025 Primary 6 Maths SA2 Exam Papers useful for PSLE revision?",
   ],
   [
     ".output/public/exam-papers/2025-primary-6-mathematics-sa2/index.html",
@@ -638,7 +638,7 @@ const requiredSnippets = [
   ],
   [
     ".output/public/exam-papers/primary-6-mathematics-sa2/index.html",
-    "P6 Maths SA2 Exam Papers",
+    "Primary 6 Maths SA2 Exam Papers",
   ],
   [
     ".output/public/exam-papers/primary-6-mathematics-sa2/index.html",

@@ -153,7 +153,7 @@ const checks = [
   {
     path: "/exam-papers/2025-primary-6-mathematics/",
     snippets: [
-      "2025 P6 Maths Exam Papers",
+      "2025 Primary 6 Maths Exam Papers",
       "View online or download free PDFs for PSLE revision.",
       'rel="canonical"',
       "CollectionPage",
@@ -175,14 +175,14 @@ const checks = [
   {
     path: "/exam-papers/2025-primary-6-mathematics-sa2/",
     snippets: [
-      "2025 P6 Maths SA2 Exam Papers",
+      "2025 Primary 6 Maths SA2 Exam Papers",
       "View online or download free PDFs for PSLE revision.",
       'rel="canonical"',
       "CollectionPage",
       "Start with recent papers",
       "PSLE practice focus",
       "Use these Primary 6 papers before PSLE revision",
-      "Are these 2025 P6 Maths SA2 Exam Papers useful for PSLE revision?",
+      "Are these 2025 Primary 6 Maths SA2 Exam Papers useful for PSLE revision?",
       'href="/exam-papers/primary-6-mathematics-sa2"',
       "Download PDF",
       'property="og:image" content="https://sgexamhub.com/og-image.png"',
@@ -192,7 +192,7 @@ const checks = [
   {
     path: "/exam-papers/primary-6-mathematics/",
     snippets: [
-      "P6 Maths Exam Papers",
+      "Primary 6 Maths Exam Papers",
       "Subject revision path",
       "Continue P6 Maths revision",
       'href="/exam-papers/2025-primary-6-mathematics"',
@@ -203,7 +203,7 @@ const checks = [
   {
     path: "/exam-papers/primary-6-mathematics-sa2/",
     snippets: [
-      "P6 Maths SA2 Exam Papers",
+      "Primary 6 Maths SA2 Exam Papers",
       "View online or download free PDFs for PSLE revision.",
       "Assessment practice path",
       "Compare P6 Maths assessment papers",
@@ -337,7 +337,7 @@ const checks = [
       'href="/exam-papers/2026-revision"',
       "PSLE Revision Papers",
       'href="/exam-papers/psle-revision"',
-      "2025 P6 Maths SA2 Exam Papers",
+      "2025 Primary 6 Maths SA2 Exam Papers",
       "P6 Maths Nanyang Primary School Exam Papers",
       'property="og:image" content="https://sgexamhub.com/og-image.png"',
     ],
