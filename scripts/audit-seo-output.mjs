@@ -210,6 +210,8 @@ for (const [file, snippet] of [
   [".output/public/index.html", "2,299 PDF exam papers indexed"],
   [".output/public/index.html", "SearchAction"],
   [".output/public/index.html", "raw.githubusercontent.com/airbob/PrimarySchoolExamPapers"],
+  [".output/public/index.html", '<link rel="preconnect" href="https://raw.githubusercontent.com">'],
+  [".output/public/index.html", '<link rel="dns-prefetch" href="https://raw.githubusercontent.com">'],
   [".output/public/exam-papers/index.html", "Singapore Primary Exam Papers PDF | Free Download"],
   [".output/public/exam-papers/2026-revision/index.html", "2026 Primary Exam Papers Revision"],
   [".output/public/exam-papers/psle-revision/index.html", "PSLE Revision Papers"],

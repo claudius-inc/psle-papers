@@ -38,6 +38,8 @@ const checks = [
       "isAccessibleForFree",
       "DownloadAction",
       "raw.githubusercontent.com/airbob/PrimarySchoolExamPapers",
+      '<link rel="preconnect" href="https://raw.githubusercontent.com">',
+      '<link rel="dns-prefetch" href="https://raw.githubusercontent.com">',
       "SearchAction",
       "search_term_string",
       "Search papers",
