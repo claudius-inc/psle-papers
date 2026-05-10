@@ -10,14 +10,25 @@ const staleTitleSchoolBlock = `const titleSchool = computed(() =>
 );`;
 
 const officialTitleSchoolBlock = `const titleSchool = computed(() => paper.value?.schoolName || "");`;
+const compactPracticeMeta = `<small>{{ item.levelName }} {{ item.subjectName }} {{ item.typeName }}</small>`;
+const readablePracticeMeta = `<small>Level {{ item.levelName }} · {{ item.subjectName }} · {{ item.typeName }}</small>`;
 
 let nextSource = source;
 
-if (source.includes(staleTitleSchoolBlock)) {
-  nextSource = source.replace(staleTitleSchoolBlock, officialTitleSchoolBlock);
-} else if (!source.includes(officialTitleSchoolBlock)) {
+if (nextSource.includes(staleTitleSchoolBlock)) {
+  nextSource = nextSource.replace(staleTitleSchoolBlock, officialTitleSchoolBlock);
+} else if (!nextSource.includes(officialTitleSchoolBlock)) {
   console.error(
     `${viewerPath} is missing the expected viewer school-title block. Review viewer SEO school-name handling.`,
+  );
+  process.exit(1);
+}
+
+if (nextSource.includes(compactPracticeMeta)) {
+  nextSource = nextSource.replace(compactPracticeMeta, readablePracticeMeta);
+} else if (!nextSource.includes(readablePracticeMeta)) {
+  console.error(
+    `${viewerPath} is missing the expected viewer practice-sequence metadata block.`,
   );
   process.exit(1);
 }
@@ -32,9 +43,14 @@ for (const staleSnippet of [
   }
 }
 
+if (nextSource.includes("{{ item.schoolName }}</strong>\n                <small>{{ item.levelName }}")) {
+  console.error(`${viewerPath} can concatenate school names and levels in rendered snippets.`);
+  process.exit(1);
+}
+
 if (nextSource !== source) {
   writeFileSync(viewerPath, nextSource);
-  console.log("Normalized viewer SEO school names.");
+  console.log("Normalized viewer SEO school names and sequence metadata.");
 } else {
-  console.log("Viewer SEO school names already normalized.");
+  console.log("Viewer SEO school names and sequence metadata already normalized.");
 }
