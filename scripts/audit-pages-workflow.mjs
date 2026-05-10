@@ -30,6 +30,9 @@ const scripts = packageJson.scripts || {};
 
 const requiredWorkflowSnippets = [
   "workflow_dispatch:",
+  "paths-ignore:",
+  '"*.md"',
+  '"docs/**"',
   "FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true",
   'node-version: "24"',
   "actions/checkout@v6",
