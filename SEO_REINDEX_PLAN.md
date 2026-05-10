@@ -6,13 +6,14 @@ Objective: after SEO fixes deploy, get Google to refresh stale snippets so searc
 
 Latest fully passing deployment evidence on 2026-05-10:
 
-- Commit `b48bd78583ba88a6c9c31874007c5c7a78821fbd` is deployed.
-- GitHub Actions run `25632069702` completed successfully for build and deploy.
+- Commit `a78e9a08e235294a9a5f828aa031673b39a10b69` is deployed.
+- GitHub Actions run `25632300375` completed successfully for build and deploy.
 - Build generated `6238` sitemap URLs and passed the generated SEO audit gate.
 - Deployed site passed `npm run seo:audit:live`, including live SEO, JSON-LD, stale-snippet page, school-name, OG image, snippet-focused UI, conversion analytics, top-school funnel, free-exam funnel, broad-landing funnel, sitemap priority-school, and sitemap lastmod checks.
 - Live sitemap audit reported `6238` URLs and `8` distinct `lastmod` dates.
 - Live JSON-LD audit reported `11` pages checked.
 - Live snippet-focused UI audit reported `10` pages and `15` assets checked, including `data-nosnippet` on repeated homepage, collection, broad landing, 2026 revision, and PSLE revision paper CTA/list blocks.
+- Generated SEO audit wrote `reports/seo/gsc-url-inspection-tracker.csv` for dated URL Inspection tracking.
 - Live conversion analytics audit reported `1` page and `7` assets checked.
 - Live OG image audit passed. Direct live hash verification showed `https://sgexamhub.com/og-image.png` matches manifest hash `d0b66da84ffab834550742fefdf57765cdbc3f4a306da35ba4096561e0d61bee`; OCR read `2,299 PDF papers`.
 - Fresh live homepage read after deployment showed `2,299 PDF exam papers indexed`; it no longer showed stale `2,200+Papers`, `2,200+`, or `2,300+` count copy.
@@ -23,7 +24,7 @@ Earlier evidence from runs `25626208854`, `25626609288`, `25627427402`, `2562766
 
 ## Current Search Evidence
 
-Checked on 2026-05-10 after the passing deployment in run `25632069702`.
+Checked on 2026-05-10 after the passing deployment in run `25632069702`. The newer run `25632300375` did not change live snippet content; it added the GSC URL Inspection tracker and passed generated/live SEO gates.
 
 | Query | Evidence | Follow-up |
 | --- | --- | --- |
@@ -70,11 +71,11 @@ The same list is generated for handoff by:
 npm run seo:action-pack
 ```
 
-See `reports/seo/reindex-action-pack.md`.
+See `reports/seo/reindex-action-pack.md` and track dated manual progress in `reports/seo/gsc-url-inspection-tracker.csv`.
 
 ## GSC Steps
 
-1. Confirm GitHub Pages deployment completed after the latest SEO commits. Current deployment proof is run `25632069702` for commit `b48bd78583ba88a6c9c31874007c5c7a78821fbd`.
+1. Confirm GitHub Pages deployment completed after the latest SEO commits. Current deployment proof is run `25632300375` for commit `a78e9a08e235294a9a5f828aa031673b39a10b69`.
 2. Confirm `npm run seo:audit:live` passes against `https://sgexamhub.com`. Current deployment logs show the live audit passed.
 3. In Google Search Console, inspect each priority URL and choose `Request indexing`.
 4. Resubmit `https://sgexamhub.com/sitemap.xml` in Sitemaps.
