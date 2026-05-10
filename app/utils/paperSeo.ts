@@ -153,20 +153,32 @@ const buildCollectionDescription = ({
   schoolCode?: string;
 }) => {
   const count = paperCount.toLocaleString();
+  const hasSinglePaper = paperCount === 1;
 
   if (!titleParts.length) {
     return `Download ${count} free Singapore primary exam papers PDF files for P2-P6 Maths, Science, English and Chinese. View online for 2026 revision.`;
   }
 
-  const focus = titleParts
+  const descriptionTitleParts = hasSinglePaper
+    ? titleParts.map((part) => (part === "Practice Papers" ? "Practice Paper" : part))
+    : titleParts;
+  const focus = descriptionTitleParts
     .map((part) => part.replace(/^P([1-6])$/, "Primary $1"))
     .join(" ");
   const fullPaperLabel = titleParts.includes("Practice Papers")
-    ? `${focus} PDFs`
-    : `${focus} exam papers`;
+    ? hasSinglePaper
+      ? `${focus} PDF`
+      : `${focus} PDFs`
+    : hasSinglePaper
+      ? `${focus} exam paper`
+      : `${focus} exam papers`;
   const shortPaperLabel = titleParts.includes("Practice Papers")
-    ? `${focus} PDFs`
-    : `${focus} papers`;
+    ? hasSinglePaper
+      ? `${focus} PDF`
+      : `${focus} PDFs`
+    : hasSinglePaper
+      ? `${focus} paper`
+      : `${focus} papers`;
   const action = schoolCode
     ? "Compare school papers online, then download free PDFs for revision."
     : levelCode === "6"
@@ -179,7 +191,9 @@ const buildCollectionDescription = ({
   const descriptions = [
     `${count} free ${fullPaperLabel}. ${action}`,
     `${count} free ${shortPaperLabel}. ${action}`,
-    `${count} free exam paper PDFs in this collection. ${action}`,
+    hasSinglePaper
+      ? `${count} free exam paper PDF in this collection. ${action}`
+      : `${count} free exam paper PDFs in this collection. ${action}`,
   ];
 
   return descriptions.find((description) => description.length <= 170) || descriptions[2];

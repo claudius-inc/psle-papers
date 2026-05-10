@@ -128,6 +128,9 @@ const shortDescriptions = rows.filter(
 const weakSchoolNameRows = rows.filter((row) =>
   /\b(?:Anglo chinese|Chij)\b/.test(`${row.title} ${row.description}`),
 );
+const onePaperPluralDescriptionRows = rows.filter((row) =>
+  /^1 free [^.]*\b(?:exam papers|papers|PDFs)\./i.test(row.description),
+);
 
 const sitemap = existsSync(sitemapPath) ? readFileSync(sitemapPath, "utf8") : "";
 const robots = existsSync(robotsPath) ? readFileSync(robotsPath, "utf8") : "";
@@ -906,6 +909,12 @@ if (weakSchoolNameRows.length) {
   fail(`Weak school-name casing in generated snippets: ${weakSchoolNameRows.length}`);
   for (const row of weakSchoolNameRows.slice(0, 20)) {
     console.error(`${row.url}: ${row.title} / ${row.description}`);
+  }
+}
+if (onePaperPluralDescriptionRows.length) {
+  fail(`One-paper descriptions use plural wording: ${onePaperPluralDescriptionRows.length}`);
+  for (const row of onePaperPluralDescriptionRows.slice(0, 20)) {
+    console.error(`${row.url}: ${row.description}`);
   }
 }
 if (jsonLdFailures.length) {
