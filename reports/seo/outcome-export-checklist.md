@@ -25,7 +25,7 @@ Use a baseline period before the latest SEO deployment and a matching comparison
 
 Export GA4 events filtered to Organic Search, or include `Session source / medium` so the analyzer can isolate `google / organic` rows.
 
-Include `Landing page` on every event row so the analyzer can prove the organic user journey starts from relevant site entry pages.
+Include `Landing page` on every event row so the analyzer can prove the organic user journey starts from relevant SEO entry pages. The analyzer accepts `/`, broad landing pages, `/exam-papers...` collection paths, and `/view/...` paper pages.
 
 Required event names:
 

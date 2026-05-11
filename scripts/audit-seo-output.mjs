@@ -333,6 +333,7 @@ for (const snippet of [
   "Required GSC Export Shape",
   "Required GA4 Export Shape",
   "Include `Landing page` on every event row",
+  "relevant SEO entry pages",
   "Required GA4 dimensions for collection-path click evidence",
   "Target path",
   "https://sgexamhub.com/exam-papers/mathematics",

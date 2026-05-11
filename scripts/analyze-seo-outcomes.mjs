@@ -31,7 +31,7 @@ Inputs:
 Expected GSC columns include query, page, clicks, impressions, CTR, and average position.
 Expected GA4 columns include event name, landing page, and event count, with optional source/medium, source, collection_title, school_name, and target_path.
 
-Every GA4 outcome row must include landing page values so the report proves organic users arrived through relevant site entry pages.
+Every GA4 outcome row must include relevant landing page values so the report proves organic users arrived through SEO entry pages.
 Collection-path click evidence must include target_path values so the report proves organic users continued into specific paper collections.`;
 
 const parseArgs = () => {
@@ -291,6 +291,18 @@ const isOrganicRow = (row) => {
   );
 };
 
+const broadSeoLandingPages = new Set([
+  "/",
+  "/download-exam-papers",
+  "/free-exam-papers",
+  "/past-year-exam-papers",
+  "/test-papers",
+  "/top-school-exam-papers",
+]);
+
+const isRelevantSeoLandingPage = (path) =>
+  broadSeoLandingPages.has(path) || path.startsWith("/exam-papers") || path.startsWith("/view/");
+
 const analyzeGa4 = (rows) => {
   const organicRows = rows.filter(isOrganicRow);
   const eventCounts = new Map();
@@ -301,7 +313,9 @@ const analyzeGa4 = (rows) => {
   return Object.entries(requiredGa4EventGroups).map(([group, events]) => {
     const matchingRows = organicRows.filter((row) => events.includes(row.eventName));
     const count = events.reduce((sum, eventName) => sum + (eventCounts.get(eventName) || 0), 0);
-    const landingPageRows = matchingRows.filter((row) => row.count > 0 && row.landingPage);
+    const landingPageRows = matchingRows.filter(
+      (row) => row.count > 0 && isRelevantSeoLandingPage(row.landingPage),
+    );
     const targetPathRows = matchingRows.filter((row) => row.count > 0 && row.targetPath);
     const targetPathRequired = group === "collectionPathClick";
     const landingPagePresent = landingPageRows.length > 0;
@@ -385,8 +399,8 @@ const buildReport = ({ gscResults, ga4Results }) => {
   for (const result of ga4Results) {
     const dimensionEvidence = [
       result.landingPageRows > 0
-        ? `${result.landingPageRows} row(s) with landing page`
-        : "Missing landing page",
+        ? `${result.landingPageRows} row(s) with relevant landing page`
+        : "Missing relevant landing page",
       result.targetPathRequired
         ? result.targetPathRows > 0
           ? `${result.targetPathRows} row(s) with target_path`
