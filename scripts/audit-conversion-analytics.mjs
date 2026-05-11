@@ -231,6 +231,8 @@ assertIncludes(
     "rankingImproved",
     "Ranking improved only",
     "GSC clusters with click or CTR improvement",
+    'paperOpen: ["paper_open"]',
+    'download: ["paper_download"]',
     "landingPageRows",
     "landingPagePresent",
     "isRelevantSeoLandingPage",

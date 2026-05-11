@@ -14,9 +14,9 @@ const requiredGa4EventGroups = {
     "viewer_collection_click",
     "empty_search_recovery_click",
   ],
-  paperOpen: ["paper_view_click", "paper_open"],
+  paperOpen: ["paper_open"],
   pdfPreview: ["paper_pdf_load"],
-  download: ["paper_download", "file_download"],
+  download: ["paper_download"],
 };
 
 const usage = `Usage:

@@ -191,7 +191,7 @@ npm run seo:outcomes -- \
   --out reports/seo/outcome-report.md
 ```
 
-The report maps GSC rows to `SEO_KEYWORD_MAP.md` and checks whether the supplied exports prove improved clicks or CTR plus organic GA4 landing-page engagement, collection-path clicks with `target_path`, paper-open, PDF-preview, and PDF-download events. Ranking-only movement is reported, but it is not enough to close the click-through goal. Treat an `INCOMPLETE` report as a sign that the SEO goal remains open.
+The report maps GSC rows to `SEO_KEYWORD_MAP.md` and checks whether the supplied exports prove improved clicks or CTR plus organic GA4 landing-page engagement, collection-path clicks with `target_path`, explicit `paper_open`, PDF-preview, and explicit `paper_download` events. Ranking-only movement is reported, but it is not enough to close the click-through goal. Treat an `INCOMPLETE` report as a sign that the SEO goal remains open.
 
 ## 2026 Revision Funnel Checks
 

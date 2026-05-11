@@ -27,7 +27,7 @@ Export GA4 events filtered to Organic Search, or include `Session source / mediu
 
 Include `Landing page` on every event row so the analyzer can prove the organic user journey starts from relevant SEO entry pages. The analyzer accepts `/`, broad landing pages, `/exam-papers...` collection paths, and `/view/...` paper pages.
 
-Required event names:
+Required outcome event names:
 
 - page_engaged_time
 - page_scroll_depth
@@ -45,10 +45,13 @@ Required event names:
 - related_collection_click
 - viewer_collection_click
 - empty_search_recovery_click
-- paper_view_click
 - paper_open
 - paper_pdf_load
 - paper_download
+
+Useful diagnostic event names:
+
+- paper_view_click
 - file_download
 
 Required GA4 dimensions for collection-path click evidence:
