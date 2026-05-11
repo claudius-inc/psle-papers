@@ -11,7 +11,7 @@ Improve website visibility, SEO, keywords, search ranking, Google click-through,
 - GSC URL Inspection requests are complete for priority pages.
 - Public Google snippets are fresh and no longer show stale counts, casing, or noisy paper-list snippets.
 - GSC exports show improved organic clicks, CTR, impressions, or ranking for target keyword clusters.
-- GA4 organic exports show collection-path clicks, engagement, paper opens, PDF previews, and PDF downloads.
+- GA4 organic exports show landing-page engagement, collection-path clicks with target_path values, paper opens, PDF previews, and PDF downloads.
 
 ## Checks
 
@@ -81,8 +81,9 @@ Inputs:
   --out         Optional markdown report path. Defaults to stdout only.
 
 Expected GSC columns include query, page, clicks, impressions, CTR, and average position.
-Expected GA4 columns include event name plus event count, with optional landing page, source/medium, source, collection_title, school_name, and target_path.
+Expected GA4 columns include event name, landing page, and event count, with optional source/medium, source, collection_title, school_name, and target_path.
 
+Every GA4 outcome row must include landing page values so the report proves organic users arrived through relevant site entry pages.
 Collection-path click evidence must include target_path values so the report proves organic users continued into specific paper collections.
 ```
 

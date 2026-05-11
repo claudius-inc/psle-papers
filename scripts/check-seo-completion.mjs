@@ -9,7 +9,7 @@ const usage = `Usage:
 Runs the final SEO objective checks:
   1. GSC URL Inspection tracker has every priority URL marked Complete.
   2. Public Google snippet tracker has every query marked Fresh.
-  3. Real GSC and GA4 exports prove organic acquisition, collection-path clicks, engagement, paper opens, PDF previews, and downloads.`;
+  3. Real GSC and GA4 exports prove organic acquisition, landing-page engagement, collection-path clicks, paper opens, PDF previews, and downloads.`;
 
 const parseArgs = () => {
   const args = process.argv.slice(2);
@@ -93,7 +93,7 @@ const lines = [
   "- GSC URL Inspection requests are complete for priority pages.",
   "- Public Google snippets are fresh and no longer show stale counts, casing, or noisy paper-list snippets.",
   "- GSC exports show improved organic clicks, CTR, impressions, or ranking for target keyword clusters.",
-  "- GA4 organic exports show collection-path clicks, engagement, paper opens, PDF previews, and PDF downloads.",
+  "- GA4 organic exports show landing-page engagement, collection-path clicks with target_path values, paper opens, PDF previews, and PDF downloads.",
   "",
   "## Checks",
   "",

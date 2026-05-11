@@ -34,6 +34,8 @@ const checklist = [
   "",
   "Export GA4 events filtered to Organic Search, or include `Session source / medium` so the analyzer can isolate `google / organic` rows.",
   "",
+  "Include `Landing page` on every event row so the analyzer can prove the organic user journey starts from relevant site entry pages.",
+  "",
   "Required event names:",
   "",
   "- page_engaged_time",

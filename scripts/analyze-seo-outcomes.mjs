@@ -29,8 +29,9 @@ Inputs:
   --out         Optional markdown report path. Defaults to stdout only.
 
 Expected GSC columns include query, page, clicks, impressions, CTR, and average position.
-Expected GA4 columns include event name plus event count, with optional landing page, source/medium, source, collection_title, school_name, and target_path.
+Expected GA4 columns include event name, landing page, and event count, with optional source/medium, source, collection_title, school_name, and target_path.
 
+Every GA4 outcome row must include landing page values so the report proves organic users arrived through relevant site entry pages.
 Collection-path click evidence must include target_path values so the report proves organic users continued into specific paper collections.`;
 
 const parseArgs = () => {
@@ -296,17 +297,21 @@ const analyzeGa4 = (rows) => {
   return Object.entries(requiredGa4EventGroups).map(([group, events]) => {
     const matchingRows = organicRows.filter((row) => events.includes(row.eventName));
     const count = events.reduce((sum, eventName) => sum + (eventCounts.get(eventName) || 0), 0);
+    const landingPageRows = matchingRows.filter((row) => row.count > 0 && row.landingPage);
     const targetPathRows = matchingRows.filter((row) => row.count > 0 && row.targetPath);
     const targetPathRequired = group === "collectionPathClick";
+    const landingPagePresent = landingPageRows.length > 0;
     const targetPathPresent = !targetPathRequired || targetPathRows.length > 0;
     return {
       group,
       events,
       count,
+      landingPageRows: landingPageRows.length,
+      landingPagePresent,
       targetPathRequired,
       targetPathRows: targetPathRows.length,
       targetPathPresent,
-      passed: count > 0 && targetPathPresent,
+      passed: count > 0 && landingPagePresent && targetPathPresent,
     };
   });
 };
@@ -362,11 +367,16 @@ const buildReport = ({ gscResults, ga4Results }) => {
   );
 
   for (const result of ga4Results) {
-    const dimensionEvidence = result.targetPathRequired
-      ? result.targetPathRows > 0
-        ? `${result.targetPathRows} row(s) with target_path`
-        : "Missing target_path"
-      : "Not required";
+    const dimensionEvidence = [
+      result.landingPageRows > 0
+        ? `${result.landingPageRows} row(s) with landing page`
+        : "Missing landing page",
+      result.targetPathRequired
+        ? result.targetPathRows > 0
+          ? `${result.targetPathRows} row(s) with target_path`
+          : "Missing target_path"
+        : "target_path not required",
+    ].join("; ");
     lines.push(
       `| ${result.group} | ${result.events.join(", ")} | ${result.count} | ${dimensionEvidence} | ${result.passed ? "Present" : "Missing"} |`,
     );
@@ -377,8 +387,8 @@ const buildReport = ({ gscResults, ga4Results }) => {
     "## Completion Interpretation",
     "",
     complete
-      ? "The supplied exports show improved GSC acquisition plus GA4 organic collection-path clicks, engagement, paper-open behavior, PDF previews, and downloads."
-      : "The supplied exports do not yet prove the SEO goal. Keep the goal open until GSC shows improved clicks, CTR, or average position and GA4 shows organic collection-path clicks, engagement, paper opens, PDF previews, and downloads.",
+      ? "The supplied exports show improved GSC acquisition plus GA4 organic landing-page engagement, collection-path clicks, paper-open behavior, PDF previews, and downloads."
+      : "The supplied exports do not yet prove the SEO goal. Keep the goal open until GSC shows improved clicks, CTR, or average position and GA4 shows organic landing-page engagement, collection-path clicks, paper opens, PDF previews, and downloads.",
   );
 
   return {
