@@ -232,7 +232,9 @@ const analyzeGsc = (beforeRows, afterRows, clusters) =>
     const clickDelta = after.clicks - before.clicks;
     const ctrDelta = after.ctr - before.ctr;
     const positionDelta = before.position && after.position ? before.position - after.position : 0;
-    const improved = clickDelta > 0 || ctrDelta > 0.0001 || positionDelta > 0.01;
+    const clickThroughImproved = clickDelta > 0 || ctrDelta > 0.0001;
+    const rankingImproved = positionDelta > 0.01;
+    const improved = clickThroughImproved || rankingImproved;
     return {
       ...cluster,
       before,
@@ -240,6 +242,8 @@ const analyzeGsc = (beforeRows, afterRows, clusters) =>
       clickDelta,
       ctrDelta,
       positionDelta,
+      clickThroughImproved,
+      rankingImproved,
       improved,
     };
   });
@@ -322,9 +326,15 @@ const formatIntegerDelta = (value) => (value > 0 ? `+${value}` : String(value));
 
 const buildReport = ({ gscResults, ga4Results }) => {
   const improvedClusters = gscResults.filter((result) => result.improved);
+  const clickThroughImprovedClusters = gscResults.filter(
+    (result) => result.clickThroughImproved,
+  );
+  const rankingOnlyClusters = gscResults.filter(
+    (result) => result.rankingImproved && !result.clickThroughImproved,
+  );
   const afterClusters = gscResults.filter((result) => result.after.rows > 0);
   const ga4Passed = ga4Results.every((result) => result.passed);
-  const gscPassed = improvedClusters.length > 0;
+  const gscPassed = clickThroughImprovedClusters.length > 0;
   const complete = gscPassed && ga4Passed;
 
   const lines = [
@@ -335,7 +345,9 @@ const buildReport = ({ gscResults, ga4Results }) => {
     "## Summary",
     "",
     `- GSC clusters with current-period data: ${afterClusters.length}/${gscResults.length}`,
-    `- GSC clusters improved: ${improvedClusters.length}/${gscResults.length}`,
+    `- GSC clusters with click or CTR improvement: ${clickThroughImprovedClusters.length}/${gscResults.length}`,
+    `- GSC clusters with ranking-only improvement: ${rankingOnlyClusters.length}/${gscResults.length}`,
+    `- GSC clusters with any improvement: ${improvedClusters.length}/${gscResults.length}`,
     `- GA4 organic event groups present: ${ga4Results.filter((result) => result.passed).length}/${ga4Results.length}`,
     "",
     "## GSC Click, CTR, And Ranking Evidence",
@@ -348,7 +360,11 @@ const buildReport = ({ gscResults, ga4Results }) => {
     .filter((item) => item.after.rows || item.before.rows || item.improved)
     .sort((a, b) => Math.abs(b.clickDelta) - Math.abs(a.clickDelta))
     .slice(0, 50)) {
-    const status = result.improved ? "Improved" : "No improvement yet";
+    const status = result.clickThroughImproved
+      ? "Click/CTR improved"
+      : result.rankingImproved
+        ? "Ranking improved only"
+        : "No improvement yet";
     lines.push(
       `| ${result.query} | ${result.page} | ${result.before.clicks} -> ${result.after.clicks} (${formatIntegerDelta(result.clickDelta)}) | ${formatPercent(result.before.ctr)} -> ${formatPercent(result.after.ctr)} (${formatPercent(result.ctrDelta)}) | ${result.before.position.toFixed(2)} -> ${result.after.position.toFixed(2)} (${formatDelta(result.positionDelta)}) | ${status} |`,
     );
@@ -388,7 +404,7 @@ const buildReport = ({ gscResults, ga4Results }) => {
     "",
     complete
       ? "The supplied exports show improved GSC acquisition plus GA4 organic landing-page engagement, collection-path clicks, paper-open behavior, PDF previews, and downloads."
-      : "The supplied exports do not yet prove the SEO goal. Keep the goal open until GSC shows improved clicks, CTR, or average position and GA4 shows organic landing-page engagement, collection-path clicks, paper opens, PDF previews, and downloads.",
+      : "The supplied exports do not yet prove the SEO goal. Keep the goal open until GSC shows improved clicks or CTR, and GA4 shows organic landing-page engagement, collection-path clicks, paper opens, PDF previews, and downloads.",
   );
 
   return {

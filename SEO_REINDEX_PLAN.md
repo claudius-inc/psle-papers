@@ -124,5 +124,5 @@ Do not count this SEO reindexing work as complete until all are true:
 1. The latest relevant deployment after SEO/conversion commits passed build, deploy, and live SEO audits.
 2. A fresh live homepage/rendered read is clean with no stale `2,200+Papers` or `2,200+` copy.
 3. Google snippets have refreshed with no stale `2,200+Papers` or stale school casing for the priority queries above.
-4. GSC Performance shows improved organic clicks, CTR, impressions, or average position for target query clusters in `SEO_KEYWORD_MAP.md`.
+4. GSC Performance shows improved organic clicks or CTR for target query clusters in `SEO_KEYWORD_MAP.md`; ranking-only movement is useful context but not enough to close the click-through goal.
 5. GA4 organic traffic shows collection-path clicks, engagement, paper opens, PDF previews, and PDF downloads from search users.
